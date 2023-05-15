@@ -4,7 +4,6 @@ import { ClientService } from './client.service';
 import { HttpParams } from '@angular/common/http';
 import { IpcRenderer } from 'electron';
 import { Comparison } from '../models/comparison';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

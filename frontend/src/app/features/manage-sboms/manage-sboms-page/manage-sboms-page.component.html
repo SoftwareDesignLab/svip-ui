@@ -1,10 +1,12 @@
 <section>
-  <ul>
-    <!-- <li *ngFor="let sbom of sboms"></li> -->
-  </ul>
+  <div class="uploaded-files flex col" *ngIf="ContainsFiles()">
+    <div class="file flex center" *ngFor="let item of GetFiles() | keyvalue">
+      {{ item.key }}
+    </div>
+  </div>
   <div class="flex">
     <app-button text="SELECT ALL"></app-button>
     <app-button text="CREATE SBOM FROM PROJECT"></app-button>
-    <app-button text="UPLOAD SBOM FILES"></app-button>
+    <app-button text="UPLOAD SBOM FILES" (click)="browse()"></app-button>
   </div>
 </section>
