@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ButtonComponent } from './shared/components/button/button.component';
-import { ManageSbomsPageComponent } from './features/manage-sboms/manage-sboms-page/manage-sboms-page.component';
+import { ManageSbomsPageComponent } from './features/manage-sboms/manage-sboms-page.component';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 @NgModule({
