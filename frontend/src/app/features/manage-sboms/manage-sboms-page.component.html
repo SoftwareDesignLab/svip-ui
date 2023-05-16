@@ -1,0 +1,33 @@
+<section>
+  <div class="uploaded-files flex col" *ngIf="ContainsFiles()">
+    <div
+      class="file flex center"
+      *ngFor="let item of GetLoadingFiles() | keyvalue"
+    >
+      <app-spinner></app-spinner>
+      {{ item.key }}
+      <span class="material-symbols-outlined" (click)="RemoveFile(item.key)">
+        delete
+      </span>
+    </div>
+    <div class="file flex center" *ngFor="let item of GetFiles() | keyvalue">
+      <span
+        [ngClass]="[
+          'material-symbols-outlined',
+          item.value !== null ? 'pass' : 'fail'
+        ]"
+      >
+        {{ item.value !== null ? "done" : "close" }}
+      </span>
+      {{ item.key }}
+      <span class="material-symbols-outlined" (click)="RemoveFile(item.key)">
+        delete
+      </span>
+    </div>
+  </div>
+  <div class="flex">
+    <app-button text="SELECT ALL"></app-button>
+    <app-button text="CREATE SBOM FROM PROJECT"></app-button>
+    <app-button text="UPLOAD SBOM FILES" (click)="browse()"></app-button>
+  </div>
+</section>
