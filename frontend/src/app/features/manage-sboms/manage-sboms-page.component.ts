@@ -108,10 +108,7 @@ export class ManageSbomsPageComponent implements OnInit {
     this.selectedFiles = [];
   }
 
-  // Uhhh whatever the fuck bootstraps doing
-  closeResult = '';
-
   open(content: any) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+    this.modalService.open(content);
   }
 }
