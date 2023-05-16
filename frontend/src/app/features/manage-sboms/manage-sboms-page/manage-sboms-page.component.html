@@ -1,7 +1,13 @@
 <section>
   <div class="uploaded-files flex col" *ngIf="ContainsFiles()">
+      <div class="file flex center" *ngFor="let item of GetLoadingFiles() | keyvalue">
+      <app-spinner></app-spinner>
+      {{ item.key }}
+      <span class="material-symbols-outlined" (click)="RemoveFile(item.key)"> delete </span>
+    </div>
     <div class="file flex center" *ngFor="let item of GetFiles() | keyvalue">
       {{ item.key }}
+      <span class="material-symbols-outlined" (click)="RemoveFile(item.key)"> delete </span>
     </div>
   </div>
   <div class="flex">
