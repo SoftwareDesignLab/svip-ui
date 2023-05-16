@@ -1,0 +1,7 @@
+.pass {
+    color: var(--green);
+}
+
+.fail {
+    color: var(--red);
+}
