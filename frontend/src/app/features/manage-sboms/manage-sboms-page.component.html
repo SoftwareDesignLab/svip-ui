@@ -25,9 +25,28 @@
         {{ item.value !== null ? "done" : "close" }}
       </span>
       {{ item.key }}
-      <span class="material-symbols-outlined" (click)="RemoveFile(item.key)">
+      <span class="material-symbols-outlined" (click)="open(deleteone)">
         delete
       </span>
+      <ng-template #deleteone let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">
+            Delete {{ item.key }}?
+          </h4>
+        </div>
+        <div class="modal-footer">
+          <app-button
+            text="DELETE"
+            aria-label="Delete"
+            (click)="RemoveFile(item.key); modal.dismiss()"
+          ></app-button>
+          <app-button
+            text="CLOSE"
+            aria-label="Close"
+            (click)="modal.dismiss()"
+          ></app-button>
+        </div> </ng-template
+      >
     </div>
   </div>
   <div class="flex">
@@ -35,13 +54,13 @@
       [text]="(areAllSelected() ? 'DESELECT' : 'SELECT') + ' ALL'"
       (click)="selectAll()"
     ></app-button>
-    <app-button text="DELETE SELECTED" (click)="open(content)"></app-button>
+    <app-button text="DELETE SELECTED" (click)="open(deletemany)"></app-button>
     <app-button text="CREATE SBOM FROM PROJECT"></app-button>
     <app-button text="UPLOAD SBOM FILES" (click)="browse()"></app-button>
   </div>
 </form>
 
-<ng-template #content let-modal>
+<ng-template #deletemany let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">
       Delete the following SBOMS?
