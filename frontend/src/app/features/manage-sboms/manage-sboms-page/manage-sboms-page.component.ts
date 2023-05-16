@@ -23,6 +23,9 @@ export class ManageSbomsPageComponent implements OnInit {
 
   ngOnInit() {}
 
+  /**
+   *  Prompts user to select files and tries to upload them
+   */
   browse() {
     this.ipc.invoke('selectFiles').then((files: string[]) => {
       if (files === undefined || files === null || files.length === 0) {
@@ -33,6 +36,9 @@ export class ManageSbomsPageComponent implements OnInit {
     });
   }
 
+  /**
+   *  Checks if any files have been uploaded
+   */
   ContainsFiles() {
     return (
       Object.keys(this.dataHandler.metrics).length > 0 ||
@@ -40,14 +46,24 @@ export class ManageSbomsPageComponent implements OnInit {
     );
   }
 
+  /**
+   *  Gets uploaded files
+   */
   GetFiles() {
     return this.dataHandler.metrics;
   }
 
+  /**
+   *  Gets files that are still being uploaded from data handler
+   */
   GetLoadingFiles() {
     return this.dataHandler.loadingFiles;
   }
 
+  /**
+   * Removes file from uploaded files
+   * @param file file to remove
+   */
   RemoveFile(file: string) {
     this.dataHandler.filePaths = this.dataHandler.filePaths.filter(
       (x) => x != file

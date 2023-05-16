@@ -83,6 +83,7 @@ export class DataHandlerService {
     return path.split(pathChar).pop();
   }
 
+
   async Compare(main: string, others: string[]): Promise<any> {
     this.loadingComparison = true;
 
