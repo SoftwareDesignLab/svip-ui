@@ -35,7 +35,31 @@
       [text]="(areAllSelected() ? 'DESELECT' : 'SELECT') + ' ALL'"
       (click)="selectAll()"
     ></app-button>
+    <app-button text="DELETE SELECTED" (click)="open(content)"></app-button>
     <app-button text="CREATE SBOM FROM PROJECT"></app-button>
     <app-button text="UPLOAD SBOM FILES" (click)="browse()"></app-button>
   </div>
 </form>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Delete the following SBOMS?
+    </h4>
+  </div>
+  <div class="modal-body">
+    <div *ngFor="let file of selectedFiles">{{ file }}</div>
+  </div>
+  <div class="modal-footer">
+    <app-button
+      text="DELETE"
+      aria-label="Delete"
+      (click)="delete(); modal.dismiss()"
+    ></app-button>
+    <app-button
+      text="CLOSE"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    ></app-button>
+  </div>
+</ng-template>

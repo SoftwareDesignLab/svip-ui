@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataHandlerService } from 'src/app/shared/services/data-handler.service';
 import { IpcRenderer } from 'electron';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-manage-sboms-page',
@@ -11,7 +12,10 @@ export class ManageSbomsPageComponent implements OnInit {
   private ipc!: IpcRenderer;
   selectedFiles: string[] = [];
 
-  constructor(private dataHandler: DataHandlerService) {
+  constructor(
+    private dataHandler: DataHandlerService,
+    private modalService: NgbModal
+  ) {
     if (window.require) {
       try {
         this.ipc = window.require('electron').ipcRenderer;
@@ -92,5 +96,22 @@ export class ManageSbomsPageComponent implements OnInit {
     } else {
       this.selectedFiles = this.dataHandler.GetValidSBOMs();
     }
+  }
+
+  /**
+   * Delete Multiple SBOMS at once
+   */
+  delete() {
+    this.selectedFiles.forEach((file) => {
+      this.RemoveFile(file);
+    });
+    this.selectedFiles = [];
+  }
+
+  // Uhhh whatever the fuck bootstraps doing
+  closeResult = '';
+
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 }
