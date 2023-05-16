@@ -1,0 +1,21 @@
+<div ngbAccordion>
+  <div ngbAccordionItem>
+    <div ngbAccordionHeader>
+      <button ngbAccordionToggle class="accordion-title">
+        <ng-content select="[title]"></ng-content>
+      </button>
+      <div *ngIf="extra.length > 0" class="accordion-desc flex col">
+        <div *ngFor="let item of extra">
+          {{ item }}
+        </div>
+      </div>
+      <div *ngIf="color != ''" class="color-bar" [style.background-color]="color"></div>
+    </div>
+    <div ngbAccordionCollapse>
+      <div ngbAccordionBody class="content">
+        <ng-content select="[body]"></ng-content>
+      </div>
+    </div>
+  </div>`
+</div>
+  
