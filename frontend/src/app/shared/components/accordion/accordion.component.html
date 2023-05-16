@@ -1,9 +1,10 @@
 <div ngbAccordion>
   <div ngbAccordionItem>
     <div ngbAccordionHeader>
-      <button ngbAccordionToggle class="accordion-title">
+      <h2 ngbAccordionToggle class="accordion-title">
         <ng-content select="[title]"></ng-content>
-      </button>
+        <span class="mat-expansion-indicator"></span>
+      </h2>
       <div *ngIf="extra.length > 0" class="accordion-desc flex col">
         <div *ngFor="let item of extra">
           {{ item }}
@@ -12,10 +13,7 @@
       <div *ngIf="color != ''" class="color-bar" [style.background-color]="color"></div>
     </div>
     <div ngbAccordionCollapse>
-      <div ngbAccordionBody class="content">
-        <ng-content select="[body]"></ng-content>
-      </div>
+      <ng-content select="[body]"></ng-content>
     </div>
-  </div>`
+  </div>
 </div>
-  

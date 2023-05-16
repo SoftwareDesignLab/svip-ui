@@ -1,15 +1,5 @@
-.icon-container {
-    border-radius: 50% !important;
-    color: white;
-    width: 32px;
-    height: 32px;
-}
 
-icon.ng-star-inserted {
-    border-radius: 50px;
-}
-
-.button {
+  .button {
     padding: 0px 15px;
     background-color: var(--secondary);
     gap: 10px;
@@ -17,24 +7,24 @@ icon.ng-star-inserted {
     height: 50px;
     border-radius: 12px;
     color: white;
-    transition-duration: .35s;
+    transition-duration: 0.35s;
     cursor: pointer;
-}
-
-.mat-expansion-panel-header-description {
+  }
+  
+  .mat-expansion-panel-header-description {
     text-align: right;
     align-items: inherit;
-}
-
-.color-bar {
+  }
+  
+  .color-bar {
     height: 100%;
     width: 5px;
     position: absolute;
     right: 0;
     top: 0;
-}
-
-.dropdown {
+  }
+  
+  .dropdown {
     background: var(--secondary);
     color: white;
     width: 100%;
@@ -42,50 +32,83 @@ icon.ng-star-inserted {
     height: 50px;
     align-items: center;
     cursor: pointer;
-}
-
-.dropdown > .selected {
+  }
+  
+  .dropdown > .selected {
     margin-left: 25px;
-}
-
-.dropdown > .mat-expansion-indicator {
+  }
+  
+  .dropdown > .mat-expansion-indicator {
     margin-left: auto;
     margin-right: 25px;
     width: 100%;
     height: 100%;
-}
+  }
+  
 
-.mat-expansion-indicator::after {
-    color: white !important
-}
-
-/*
-WIP overriding style
-
-*/
-
-.accordion-bar {
+  
+  .accordion-bar {
     background-color: var(--primary);
     color: white;
-}
-
-.accordion-bar:hover {
-    background-color: grey !important;
-
-}
-
-.accordion-title, .accordion-desc {
-    color: white;
-}
-
-.mat-mdc-form-field {
-    --mat-mdc-form-field-floating-label-scale: 0.75;
-    /* display: inline-flex; */
-    flex-direction: column;
-    width: 100%;
-    text-align: left;
-}
-
-.mat-expansion-panel-header.mat-expanded:focus {
-    background-color: var(--gray);
   }
+  
+  .accordion-bar:hover {
+    background-color: grey !important;
+  }
+
+  .accordion-title:hover {
+    cursor: pointer;
+  }  
+  
+  .ngb-accordion {
+    width: 100%;
+    display: block;
+  }
+  
+  .ngb-accordion-item {
+    margin-bottom: 10px;
+  }
+  
+  .ngb-accordion-header {
+    display: flex;
+    align-items: center;
+    background-color: var(--primary);
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  .ngb-accordion-header:hover {
+    background-color: grey;
+  }
+  
+  .ngb-accordion-toggle {
+    flex: 1;
+    border: none;
+    background: none;
+    color: white;
+  }
+  
+  .ngb-accordion-desc {
+    display: flex;
+    flex-direction: column;
+    color: white;
+  }
+  
+  .color-bar {
+    height: 100%;
+    width: 5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  
+  .ngb-accordion-body {
+    background-color: white;
+    padding: 10px;
+  }
+  
+  .content {
+    display: block;
+  }
+  
