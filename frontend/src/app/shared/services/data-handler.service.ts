@@ -35,6 +35,10 @@ export class DataHandlerService {
     }
   }
 
+  /**
+   * Attempts to add list of files to SBOM list
+   * @param paths list of SBOM file paths
+   */
   AddFiles(paths: string[]) {
     this.loadingFiles.push(...paths);
     this.filePaths.push(...paths);
@@ -44,16 +48,26 @@ export class DataHandlerService {
     });
   }
 
+  /**
+   * Runs all Metrics on all files
+   */
   RunAllMetrics() {
     this.filePaths.forEach((file) => {
       this.RunMetricsOnFile(file);
     });
   }
 
+  /**
+   * Checks if comparison is still loading
+   */
   IsLoadingComparison() {
     return this.loadingComparison;
   }
 
+  /**
+   * Runs tests on specified SBOM file
+   * @params path Filepath of SBOM
+   */
   RunMetricsOnFile(path: string) {
     this.ipc.invoke('getFileData', path).then((data: any) => {
       this.client
@@ -74,16 +88,26 @@ export class DataHandlerService {
     });
   }
 
+  /**
+   * Returns valid SBOMS
+   */
   GetValidSBOMs() {
     return Object.keys(this.metrics).filter((x) => this.metrics[x] !== null);
   }
 
+  /**
+   *  Gets name of SBOM file w/o the full file path
+   */
   getSBOMAlias(path: string) {
     const pathChar = path.indexOf('/') !== -1 ? '/' : '\\';
     return path.split(pathChar).pop();
   }
 
-
+  /**
+   *  Compares multiple SBOMS against a target SBOM
+   *  @param main  Target SBOM
+   *   @param others comparison SBOMS
+   */
   async Compare(main: string, others: string[]): Promise<any> {
     this.loadingComparison = true;
 
