@@ -9,6 +9,8 @@ import { IpcRenderer } from 'electron';
 })
 export class ManageSbomsPageComponent implements OnInit {
   private ipc!: IpcRenderer;
+  selectedFiles: string[] = [];
+
   constructor(private dataHandler: DataHandlerService) {
     if (window.require) {
       try {
@@ -69,5 +71,26 @@ export class ManageSbomsPageComponent implements OnInit {
       (x) => x != file
     );
     delete this.dataHandler.metrics[file];
+  }
+
+  /**
+   * Stores or removes sboms based on checkbox
+   */
+  check(sbom: any) {
+    console.log(sbom.target);
+  }
+
+  areAllSelected() {
+    return (
+      this.selectedFiles.length === this.dataHandler.GetValidSBOMs().length
+    );
+  }
+
+  selectAll() {
+    if (this.areAllSelected()) {
+      this.selectedFiles = [];
+    } else {
+      this.selectedFiles = this.dataHandler.GetValidSBOMs();
+    }
   }
 }
