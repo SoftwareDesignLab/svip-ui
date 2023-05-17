@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataHandlerService } from 'src/app/shared/services/data-handler.service';
 import { IpcRenderer } from 'electron';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-manage-sboms-page',
@@ -9,7 +10,13 @@ import { IpcRenderer } from 'electron';
 })
 export class ManageSbomsPageComponent implements OnInit {
   private ipc!: IpcRenderer;
-  constructor(private dataHandler: DataHandlerService) {
+  selectedFiles: string[] = [];
+  selectedFile: string = '';
+
+  constructor(
+    private dataHandler: DataHandlerService,
+    private modalService: NgbModal
+  ) {
     if (window.require) {
       try {
         this.ipc = window.require('electron').ipcRenderer;
@@ -69,5 +76,50 @@ export class ManageSbomsPageComponent implements OnInit {
       (x) => x != file
     );
     delete this.dataHandler.metrics[file];
+  }
+
+  /**
+   * Stores or removes sboms based on checkbox
+   */
+  check(sbom: any) {
+    console.log(sbom.target);
+  }
+
+  /**
+   * Checks if all valid SBOMS are selected
+   */
+  areAllSelected() {
+    return (
+      this.selectedFiles.length === this.dataHandler.GetValidSBOMs().length
+    );
+  }
+
+  /**
+   * Selects all sboms
+   */
+  selectAll() {
+    if (this.areAllSelected()) {
+      this.selectedFiles = [];
+    } else {
+      this.selectedFiles = this.dataHandler.GetValidSBOMs();
+    }
+  }
+
+  /**
+   * Delete Multiple SBOMS at once
+   */
+  delete() {
+    this.selectedFiles.forEach((file) => {
+      this.RemoveFile(file);
+    });
+    this.selectedFiles = [];
+  }
+
+  /**
+   * Opens modal
+   * @param content template reference
+   */
+  open(content: any) {
+    this.modalService.open(content);
   }
 }

@@ -5,3 +5,16 @@
 .fail {
     color: var(--red);
 }
+
+.file-container {
+    height: 20vh;
+    overflow-y: scroll;
+}
+
+.buttons > app-button {
+    margin: 20px;
+}
+
+form {
+    width: 100%;
+}
