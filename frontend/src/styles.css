@@ -9,7 +9,27 @@
     --gray: gray;
 }
 
+html, body { background-color: white; overflow: hidden;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-flex {
-    display: flex
+.flex {
+    display: flex;
+}
+
+.col {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.center {
+    align-items: center;
+    justify-content: center;
+}
+
+.hover:hover {
+    transition-duration: .35s;
+    transform: translate(0, -3px);
 }
