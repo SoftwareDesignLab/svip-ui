@@ -7,6 +7,9 @@ import { Router } from '@angular/router';
 export class RoutingService {
 
   private options: { [name: string]: Object } = {
+    "home": {
+      route: "/home"
+    },
     "manage": {
       desc: "Create, Upload, and Edit SBOMs",
       route: "/manage"

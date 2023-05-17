@@ -9,9 +9,10 @@ import { ButtonComponent } from './shared/components/button/button.component';
 import { ManageSbomsPageComponent } from './features/manage-sboms/manage-sboms-page.component';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { HomeComponent } from './features/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, ButtonComponent, ManageSbomsPageComponent, SpinnerComponent, NavbarComponent],
+  declarations: [AppComponent, ButtonComponent, ManageSbomsPageComponent, SpinnerComponent, NavbarComponent, HomeComponent],
   imports: [BrowserModule, NgbModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
