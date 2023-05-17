@@ -1,16 +1,14 @@
 <form>
-  <div class="uploaded-files flex col" *ngIf="ContainsFiles()">
-    <div
-      class="file flex center"
-      *ngFor="let item of GetLoadingFiles() | keyvalue"
-    >
+  <!-- Sboms -->
+  <div class="file-container" *ngIf="ContainsFiles()">
+    <div *ngFor="let item of GetLoadingFiles() | keyvalue">
       <app-spinner></app-spinner>
       {{ item.key }}
       <span class="material-symbols-outlined" (click)="RemoveFile(item.key)">
         delete
       </span>
     </div>
-    <div class="file flex center" *ngFor="let item of GetFiles() | keyvalue">
+    <div *ngFor="let item of GetFiles() | keyvalue">
       <input
         type="checkbox"
         (change)="check($event)"
@@ -25,31 +23,16 @@
         {{ item.value !== null ? "done" : "close" }}
       </span>
       {{ item.key }}
-      <span class="material-symbols-outlined" (click)="open(deleteone)">
+      <span
+        class="material-symbols-outlined"
+        (click)="selectedFile = item.key; open(deleteone)"
+      >
         delete
       </span>
-      <ng-template #deleteone let-modal>
-        <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">
-            Delete {{ item.key }}?
-          </h4>
-        </div>
-        <div class="modal-footer">
-          <app-button
-            text="DELETE"
-            aria-label="Delete"
-            (click)="RemoveFile(item.key); modal.dismiss()"
-          ></app-button>
-          <app-button
-            text="CLOSE"
-            aria-label="Close"
-            (click)="modal.dismiss()"
-          ></app-button>
-        </div> </ng-template
-      >
     </div>
   </div>
-  <div class="flex">
+  <!-- Buttons -->
+  <div class="flex buttons">
     <app-button
       [text]="(areAllSelected() ? 'DESELECT' : 'SELECT') + ' ALL'"
       (click)="selectAll()"
@@ -60,6 +43,7 @@
   </div>
 </form>
 
+<!-- Popup Modals -->
 <ng-template #deletemany let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">
@@ -74,6 +58,26 @@
       text="DELETE"
       aria-label="Delete"
       (click)="delete(); modal.dismiss()"
+    ></app-button>
+    <app-button
+      text="CLOSE"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    ></app-button>
+  </div>
+</ng-template>
+
+<ng-template #deleteone let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      Delete {{ selectedFile }}?
+    </h4>
+  </div>
+  <div class="modal-footer">
+    <app-button
+      text="DELETE"
+      aria-label="Delete"
+      (click)="RemoveFile(selectedFile); modal.dismiss()"
     ></app-button>
     <app-button
       text="CLOSE"

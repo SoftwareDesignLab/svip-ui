@@ -5,3 +5,17 @@
 .fail {
     color: var(--red);
 }
+
+.file-container {
+    height: 20vh;
+    overflow-y: scroll;
+}
+
+.buttons {
+    margin-top: 10px;
+}
+
+form {
+    border: 1px solid red;
+    width: 50%;
+}

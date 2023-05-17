@@ -11,6 +11,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ManageSbomsPageComponent implements OnInit {
   private ipc!: IpcRenderer;
   selectedFiles: string[] = [];
+  selectedFile: string = '';
 
   constructor(
     private dataHandler: DataHandlerService,
@@ -108,6 +109,10 @@ export class ManageSbomsPageComponent implements OnInit {
     this.selectedFiles = [];
   }
 
+  /**
+   * Opens modal
+   * @param content template reference
+   */
   open(content: any) {
     this.modalService.open(content);
   }
