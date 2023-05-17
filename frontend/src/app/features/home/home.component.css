@@ -1,0 +1,25 @@
+.home-page {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+.home-page > div {
+    cursor: pointer;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    height: 250px;
+    width: 250px;
+    background: gray;
+}
+  
