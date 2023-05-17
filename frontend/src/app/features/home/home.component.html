@@ -1,6 +1,6 @@
 <div class='home-page'>
     <div *ngFor="let item of routing.GetOptionKeys()">
-        <div class="item" *ngIf="routing.GetInfo(item).desc" onclick="routing.Redirect(item)">
+        <div class="item" *ngIf="routing.GetInfo(item).desc" (click)="routing.Redirect(item)">
             <div class="title">
                 {{item | titlecase}}
             </div>
