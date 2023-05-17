@@ -1,6 +1,6 @@
 <form>
   <!-- Sboms -->
-  <div class="file-container" *ngIf="ContainsFiles()">
+  <div class="file-container">
     <div *ngFor="let item of GetLoadingFiles() | keyvalue">
       <app-spinner></app-spinner>
       {{ item.key }}
@@ -38,8 +38,8 @@
       (click)="selectAll()"
     ></app-button>
     <app-button text="DELETE SELECTED" (click)="open(deletemany)"></app-button>
-    <app-button text="CREATE SBOM FROM PROJECT"></app-button>
     <app-button text="UPLOAD SBOM FILES" (click)="browse()"></app-button>
+    <app-button text="CREATE SBOM FROM PROJECT"></app-button>
   </div>
 </form>
 

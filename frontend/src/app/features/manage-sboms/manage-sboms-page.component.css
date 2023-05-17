@@ -11,8 +11,8 @@
     overflow-y: scroll;
 }
 
-.buttons {
-    margin-top: 10px;
+.buttons > app-button {
+    margin: 20px;
 }
 
 form {
