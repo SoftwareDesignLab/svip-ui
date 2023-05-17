@@ -8,7 +8,7 @@ import { Comparison } from '../comparison';
   styleUrls: ['./compare-sidepanel.component.css'],
 })
 export class CompareSidepanelComponent implements OnInit {
-  @Output() compare = new EventEmitter<Comparison>();
+  @Output() comparison = new EventEmitter<Comparison>();
   targetSbom: string = '';
   compareSboms: string[] = [];
 
@@ -24,5 +24,8 @@ export class CompareSidepanelComponent implements OnInit {
   onSelect(event: any) {
     const val = event.target.value;
     this.targetSbom = val;
+  }
+
+  compare() {
   }
 }

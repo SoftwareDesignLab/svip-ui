@@ -11,6 +11,7 @@ import { ManageSbomsPageComponent } from './features/manage-sboms/manage-sboms-p
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { ComparePageComponent } from './features/compare/compare-page/compare-page.component';
 import { CompareSidepanelComponent } from './features/compare/compare-sidepanel/compare-sidepanel.component';
+import { ComparisonComponent } from './features/compare/comparison/comparison.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { HomeComponent } from './features/home/home.component';
 import { MetricsSidePanelComponent } from './features/metrics/metrics-side-panel/metrics-side-panel.component';
@@ -24,6 +25,7 @@ import { AppRoutingModule } from './app-routing.module';
     ButtonComponent,
     ManageSbomsPageComponent,
     SpinnerComponent,
+    ComparisonComponent,
     ComparePageComponent,
     CompareSidepanelComponent,
     MetricsSidePanelComponent,

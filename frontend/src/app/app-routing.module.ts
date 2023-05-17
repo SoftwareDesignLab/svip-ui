@@ -3,10 +3,12 @@ import { ManageSbomsPageComponent } from './features/manage-sboms/manage-sboms-p
 import { HomeComponent } from './features/home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MetricsMainComponent } from './features/metrics/metrics-main/metrics-main.component';
+import { ComparePageComponent } from './features/compare/compare-page/compare-page.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'manage', component: ManageSbomsPageComponent },
+  { path: 'compare', component: ComparePageComponent },
   {path: 'metrics', component:  MetricsMainComponent},
   { path: '**', component: HomeComponent },
 ];
