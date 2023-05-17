@@ -1,5 +1,5 @@
 <div class="navbar flex">
-  <div *ngFor="let key of GetOptionKeys()" (click)="options[key]">
-    {{key}}
+  <div *ngFor="let key of routing.GetOptionKeys()" (click)="routing.GetInfo(key)">
+    {{key | titlecase}}
   </div>
 </div>
