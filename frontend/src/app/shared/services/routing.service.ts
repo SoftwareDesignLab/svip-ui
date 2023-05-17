@@ -14,9 +14,17 @@ export class RoutingService {
       desc: "Create, Upload, and Edit SBOMs",
       route: "/manage"
     },
-    'analytics': {
-      desc: "Compare, View SBOMS, Check Vulnerabilities",
-      route: "/analytics"
+    'metrics': {
+      desc: "Run tests on SBOMs",
+      route: "/metrics"
+    },
+    'compare': {
+      desc: "Compare SBOMs to a target",
+      route: "/compare"
+    },
+    'Vulnerabilities': {
+      desc: "Check for threats",
+      route: "/vulnerabilities"
     }
   }
 
