@@ -85,12 +85,18 @@ export class ManageSbomsPageComponent implements OnInit {
     console.log(sbom.target);
   }
 
+  /**
+   * Checks if all valid SBOMS are selected
+   */
   areAllSelected() {
     return (
       this.selectedFiles.length === this.dataHandler.GetValidSBOMs().length
     );
   }
 
+  /**
+   * Selects all sboms
+   */
   selectAll() {
     if (this.areAllSelected()) {
       this.selectedFiles = [];
