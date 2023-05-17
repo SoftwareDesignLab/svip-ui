@@ -1,3 +1,19 @@
-<p>
-  compare-sidepanel works!
-</p>
+<app-side-panel tabText="SBOMS">
+  <div class="content flex col">
+    <select>
+      <option
+        *ngFor="let sbom of compareSboms"
+        value="sbom"
+        [disabled]="sbom === targetSbom"
+        (changes)="onSelect($event)"
+      >
+        {{ sbom }}
+      </option>
+    </select>
+
+    <div *ngFor="let sbom of compareSboms">
+      <input type="radio" value="sbom" [disabled]="sbom === targetSbom" />
+      {{ sbom }}
+    </div>
+  </div>
+</app-side-panel>

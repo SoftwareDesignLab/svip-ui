@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Comparison } from 'src/app/shared/models/comparison';
-import { displ } from 'src/app/shared/models/sbom';
+import { Comparison } from '../comparison';
 
 @Component({
   selector: 'app-comparison',
