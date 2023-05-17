@@ -1,5 +1,5 @@
 /** Author: Tina DiLorenzo */
-import { SBOM } from './sbom';
+import { SBOM } from "src/app/shared/models/sbom";
 
 /** @TODO */
 // 1. CREATE A CONSTRUCTOR TAKING IN A JSON OBJECT to create comparisons

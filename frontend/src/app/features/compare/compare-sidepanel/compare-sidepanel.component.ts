@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { DataHandlerService } from 'src/app/shared/services/data-handler.service';
 
 @Component({
   selector: 'app-compare-sidepanel',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./compare-sidepanel.component.css']
 })
 export class CompareSidepanelComponent implements OnInit {
+  @Output() targetSBOM = new EventEmitter<[string, string[]]>();
+  targetSbom: string = '';
+  compareSboms: string[] = [];
 
-  constructor() { }
+  constructor(private dataHandler: DataHandlerService) { }
 
   ngOnInit() {
+    this.compareSboms = this.dataHandler.GetValidSBOMs();
+    
   }
 
 }
