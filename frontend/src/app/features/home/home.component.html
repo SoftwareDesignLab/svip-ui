@@ -1,10 +1,12 @@
-<div class='home-page flex'>
-    <div class="item">
-        <div class="title">
-            
-        </div>
-        <div class="desc">
-            
+<div class='home-page'>
+    <div *ngFor="let item of routing.GetOptionKeys()">
+        <div class="item" *ngIf="routing.GetInfo(item).desc" onclick="routing.Redirect(item)">
+            <div class="title">
+                {{item | titlecase}}
+            </div>
+            <div class="desc">
+                {{routing.GetInfo(item).desc}}
+            </div>
         </div>
     </div>
 </div>
