@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 })
 export class RoutingService {
 
-  private options: { [name: string]: Object } = {
+  private options: { [name: string]: any } = {
     "home": {
       route: "/home"
     },
@@ -22,8 +22,8 @@ export class RoutingService {
 
   constructor(private router: Router) {}
 
-  Redirect(route: string) {
-    this.router.navigate([route]);
+  Redirect(key: string) {
+    this.router.navigate([this.options[key].route]);
   }
 
   GetOptionKeys(): string[] {
