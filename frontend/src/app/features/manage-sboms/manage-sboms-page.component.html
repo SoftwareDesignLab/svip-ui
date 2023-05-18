@@ -12,6 +12,7 @@
     <div *ngFor="let item of GetFiles() | keyvalue">
       <input
         type="checkbox"
+        [value]="item.key"
         (change)="check($event)"
         [checked]="selectedFiles.indexOf(item.key) !== -1"
       />

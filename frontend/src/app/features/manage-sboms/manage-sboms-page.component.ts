@@ -82,7 +82,13 @@ export class ManageSbomsPageComponent implements OnInit {
    * Stores or removes sboms based on checkbox
    */
   check(sbom: any) {
-    console.log(sbom.target);
+    const value = sbom.target.value;
+    if (sbom.target.checked) {
+      this.selectedFiles.push(value)
+    } else {
+      this.selectedFiles.indexOf(value);
+      this.selectedFiles = this.selectedFiles.filter(file => file !== value)
+    }
   }
 
   /**
