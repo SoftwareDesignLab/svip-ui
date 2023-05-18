@@ -35,14 +35,13 @@
             name="comparison"
             [value]="sbom"
             [disabled]="sbom === targetSbom"
+            (change)="check($event)"
           />
-          <div class="sbom flex">
-            sbom
-          </div>
+          <div class="sbom flex">sbom</div>
         </div>
       </div>
     </div>
-    <app-button icon="compare_arrows" (click)="compare()" class="addSBOMScenter"
+    <app-button icon="compare_arrows"  class="addSBOMScenter"
       >COMPARE</app-button
     >
   </form>

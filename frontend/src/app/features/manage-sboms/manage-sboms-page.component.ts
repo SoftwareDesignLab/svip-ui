@@ -96,7 +96,7 @@ export class ManageSbomsPageComponent implements OnInit {
    */
   areAllSelected() {
     return (
-      this.selectedFiles.length === this.dataHandler.GetValidSBOMs().length
+      this.selectedFiles.length === this.dataHandler.filePaths.length
     );
   }
 
@@ -107,7 +107,7 @@ export class ManageSbomsPageComponent implements OnInit {
     if (this.areAllSelected()) {
       this.selectedFiles = [];
     } else {
-      this.selectedFiles = this.dataHandler.GetValidSBOMs();
+      this.selectedFiles = this.dataHandler.filePaths;
     }
   }
 

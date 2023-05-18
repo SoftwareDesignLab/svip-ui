@@ -11,6 +11,7 @@ export class CompareSidepanelComponent implements OnInit {
   @Output() comparison = new EventEmitter<Comparison>();
   targetSbom: string = '';
   compareSboms: string[] = [];
+  selectedSboms: string[] = [];
 
   constructor(private dataHandler: DataHandlerService) {}
 
@@ -26,6 +27,16 @@ export class CompareSidepanelComponent implements OnInit {
     this.targetSbom = val;
   }
 
-  compare() {
+  /**
+   * Stores or removes sboms based on checkbox
+   */
+  check(sbom: any) {
+    const value = sbom.target.value;
+    if (sbom.target.checked) {
+      this.selectedSboms.push(value);
+    } else {
+      this.selectedSboms.indexOf(value);
+      this.selectedSboms = this.selectedSboms.filter((sbom) => sbom !== value);
+    }
   }
 }
