@@ -20,6 +20,9 @@ export class CompareSidepanelComponent implements OnInit {
     this.targetSbom = this.compareSboms[0];
   }
 
+  /**
+   * Select a checkbox
+   */
   select(sbom: any) {
     this.targetSbom = sbom.target.value;
   }
@@ -51,11 +54,30 @@ export class CompareSidepanelComponent implements OnInit {
     if (this.areAllSelected()) {
       this.selectedSboms = [];
     } else {
-      this.selectedSboms = this.compareSboms.filter(sbom => sbom !== this.targetSbom);
+      this.selectedSboms = this.compareSboms.filter(
+        (sbom) => sbom !== this.targetSbom
+      );
     }
   }
 
+  /**
+   * Get SBOM filename
+   */
   getAlias(sbom: string) {
     return this.dataHandler.getSBOMAlias(sbom);
+  }
+
+  IsLoadingComparison(): boolean {
+    return this.dataHandler.IsLoadingComparison();
+  }
+
+  async compare() {
+    if (!this.targetSbom) return;
+
+    if (this.IsLoadingComparison()) return;
+
+    this.comparison.emit(
+      await this.dataHandler.Compare(this.targetSbom, this.selectedSboms)
+    );
   }
 }

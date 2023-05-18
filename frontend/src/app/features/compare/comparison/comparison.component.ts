@@ -7,7 +7,7 @@ import { Comparison } from '../comparison';
   styleUrls: ['./comparison.component.css']
 })
 export class ComparisonComponent implements OnInit {
-  @Input() comparison! : Comparison
+  @Input() comparison : Comparison | null = null;
 
   constructor() { }
 

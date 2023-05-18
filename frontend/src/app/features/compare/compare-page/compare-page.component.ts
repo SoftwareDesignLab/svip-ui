@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Comparison } from '../comparison';
 
 @Component({
   selector: 'app-compare-page',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./compare-page.component.css']
 })
 export class ComparePageComponent implements OnInit {
+  comparison: Comparison | null= null;
 
   constructor() { }
 
