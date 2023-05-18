@@ -6,14 +6,9 @@
         <span>Target</span>
       </div>
       <div>
-        <select>
-          <option
-            *ngFor="let sbom of compareSboms"
-            value="sbom"
-            [disabled]="sbom === targetSbom"
-            (changes)="onSelect($event)"
-          >
-            {{ sbom }}
+        <select (change)="select($event)">
+          <option *ngFor="let sbom of compareSboms" [value]="sbom">
+            {{ getAlias(sbom) }}
           </option>
         </select>
       </div>
@@ -22,10 +17,10 @@
       <div class="header flex">
         <div class="flex center">Comparisons</div>
         <div class="flex select-options">
-          <!-- <app-button (click)="setAllSelected(true)">Select All</app-button>
-            <app-button (click)="setAllSelected(false)" -->
-          <!-- >Unselect All</app-button -->
-          <!-- > -->
+          <app-button
+            [text]="(areAllSelected() ? 'DESELECT' : 'SELECT') + ' ALL'"
+            (click)="selectAll()"
+          ></app-button>
         </div>
       </div>
       <div class="content flex col">
@@ -36,12 +31,13 @@
             [value]="sbom"
             [disabled]="sbom === targetSbom"
             (change)="check($event)"
+            [checked]="selectedSboms.indexOf(sbom) !== -1"
           />
-          <div class="sbom flex">sbom</div>
+          <div class="sbom flex">{{ getAlias(sbom) }}</div>
         </div>
       </div>
     </div>
-    <app-button icon="compare_arrows"  class="addSBOMScenter"
+    <app-button icon="compare_arrows" class="addSBOMScenter"
       >COMPARE</app-button
     >
   </form>

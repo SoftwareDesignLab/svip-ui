@@ -17,14 +17,11 @@ export class CompareSidepanelComponent implements OnInit {
 
   ngOnInit() {
     this.compareSboms = this.dataHandler.GetValidSBOMs();
+    this.targetSbom = this.compareSboms[0];
   }
 
-  /**
-   * Set selected value as target SBOM
-   */
-  onSelect(event: any) {
-    const val = event.target.value;
-    this.targetSbom = val;
+  select(sbom: any) {
+    this.targetSbom = sbom.target.value;
   }
 
   /**
@@ -35,8 +32,30 @@ export class CompareSidepanelComponent implements OnInit {
     if (sbom.target.checked) {
       this.selectedSboms.push(value);
     } else {
-      this.selectedSboms.indexOf(value);
       this.selectedSboms = this.selectedSboms.filter((sbom) => sbom !== value);
     }
+  }
+
+  /**
+   * Checks if all valid SBOMS are selected
+   */
+  areAllSelected() {
+    const length = this.compareSboms.length + (this.targetSbom ? -1 : 0);
+    return this.selectedSboms.length === length;
+  }
+
+  /**
+   * Selects all sboms
+   */
+  selectAll() {
+    if (this.areAllSelected()) {
+      this.selectedSboms = [];
+    } else {
+      this.selectedSboms = this.compareSboms.filter(sbom => sbom !== this.targetSbom);
+    }
+  }
+
+  getAlias(sbom: string) {
+    return this.dataHandler.getSBOMAlias(sbom);
   }
 }
