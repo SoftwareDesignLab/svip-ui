@@ -14,6 +14,7 @@ import { HomeComponent } from './features/home/home.component';
 import { MetricsSidePanelComponent } from './features/metrics/metrics-side-panel/metrics-side-panel.component';
 import { MetricsBodyComponent } from './features/metrics/metrics-body/metrics-body.component';
 import { MetricsMainComponent } from './features/metrics/metrics-main/metrics-main.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { MetricsMainComponent } from './features/metrics/metrics-main/metrics-ma
     NavbarComponent,
     HomeComponent,
   ],
-  imports: [BrowserModule, NgbModule, HttpClientModule],
+  imports: [BrowserModule, NgbModule, HttpClientModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })
