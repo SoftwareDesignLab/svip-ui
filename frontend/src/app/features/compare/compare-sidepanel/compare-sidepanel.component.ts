@@ -75,9 +75,10 @@ export class CompareSidepanelComponent implements OnInit {
     if (!this.targetSbom) return;
 
     if (this.IsLoadingComparison()) return;
-
-    this.comparison.emit(
-      await this.dataHandler.Compare(this.targetSbom, this.selectedSboms)
+    const res = await this.dataHandler.Compare(
+      this.targetSbom,
+      this.selectedSboms
     );
+    this.comparison.emit(res);
   }
 }

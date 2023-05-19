@@ -1,0 +1,48 @@
+<div class="comparison" *ngIf="!IsLoadingComparison()">
+  <div class="header">Components /</div>
+  <div class="body" *ngIf="getComparison()">
+    <!-- All Components -->
+    <div *ngIf="path.length < 2">
+      <app-accordion
+        *ngFor="let component of getComponents()"
+        [title]="component"
+        [extra]="[compare[component].length + ' Values']"
+        (click)="path.push(component)"
+      ></app-accordion>
+    </div>
+    <!-- Component -->
+    <div *ngIf="path.length === 2">
+      <app-accordion
+        *ngFor="let componentVersion of compare[path[1]]"
+        [title]="path[1]"
+        [extra]="[
+          componentVersion.appearances.length +
+            '/' +
+            getComparisonFiles().length +
+            ' Match'
+        ]"
+        [color]="passed(componentVersion.appearances.length)"
+        (click)="
+          path.push(componentVersion.componentVersion || '');
+          version = componentVersion || undefined
+        "
+      >
+      </app-accordion>
+    </div>
+    <!-- Version Attributes -->
+    <div *ngIf="path.length === 3 && version">
+      <ng-template *ngFor="attr; in: attributes; let i = index">
+        <app-accordion
+          *ngFor="let attr of getKeys(getAttributes(i))"
+          [extra]="[
+            getAttributes(i)[attr].appearances +
+              '/' +
+              getComparisonFiles().length +
+              ' Match'
+          ]"
+          [color]="passed(getAttributes(i)[attr].appearances?.length || 0)"
+        ></app-accordion>
+      </ng-template>
+    </div>
+  </div>
+</div>
