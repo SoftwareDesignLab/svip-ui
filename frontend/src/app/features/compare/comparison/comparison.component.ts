@@ -4,6 +4,7 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  Attribute,
 } from '@angular/core';
 import { Comparison, ComponentVersion, Identifier } from '../comparison';
 import { DataHandlerService } from 'src/app/shared/services/data-handler.service';
@@ -22,6 +23,8 @@ export class ComparisonComponent {
     Identifier.purls,
   ];
   targetSBOM: any = {};
+  filtered = false;
+  markTarget = false;
 
   get compare() {
     return this.comparison?.comparisons ? this.comparison.comparisons : {};
@@ -55,13 +58,6 @@ export class ComparisonComponent {
     return num < this.getComparisonFiles().length ? `--red` : `--green`;
   }
 
-  getAttributes(attribute: Identifier) {
-    if (this.version) {
-      return Object.keys(this.version[attribute]);
-    }
-    return [];
-  }
-
   IsLoadingComparison(): boolean {
     return this.dataHandler.IsLoadingComparison();
   }
@@ -79,7 +75,28 @@ export class ComparisonComponent {
     return this.dataHandler.getSBOMAlias(path);
   }
 
-    getTargetSBOMValues() {
+  getAttributes(attribute: Identifier) {
+    if (this.version) {
+      return Object.keys(this.version[attribute]);
+    }
+    return [];
+  }
+
+  isInTarget(val: { component?: string; version?: string; value?: string }) {
+    let inTarget = false;
+    if (val.component) {
+      if (val.version) {
+        if (val.value) {
+          return !!this.targetSBOM[val.component][val.version][val.value];
+        }
+        return !!this.targetSBOM[val.component][val.version];
+      }
+      !!this.targetSBOM[val.component];
+    }
+    return false;
+  }
+
+  getTargetSBOMValues() {
     if (!this.comparison?.targetSBOM) {
       return;
     }
@@ -88,12 +105,40 @@ export class ComparisonComponent {
     targetSBOM.allComponents?.forEach((component) => {
       if (component.name) {
         if (!this.targetSBOM[component.name]) {
-          this.targetSBOM[component.name] = [];
+          this.targetSBOM[component.name] = true
         }
         if (component.version) {
-          this.targetSBOM[component.name].push(component.version);
+          this.targetSBOM[component.name][component.version]
         }
       }
     });
   }
+
+  componentHasConflict(component: string) {
+    let isConflict = false;
+    this.compare[component].forEach((version) => {
+      if (version) {
+        // First check CPES for unique values
+        this.attributes.forEach((attr) => {
+          const ids = Object.keys(version[attr]);
+          ids.forEach((id) => {
+            if (this.hasConflict(version[attr][id].appearances?.length)) {
+              isConflict = true;
+            }
+          });
+        });
+
+        if (this.hasConflict(version.appearances.length)) {
+          isConflict = true;
+        }
+      }
+    });
+    return isConflict;
+  }
+
+  hasConflict(appearances: number) {
+    if (!this.filtered) return true;
+    return appearances < this.dataHandler.lastSentFilePaths.length;
+  }
+
 }
