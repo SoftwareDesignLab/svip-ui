@@ -3,7 +3,7 @@
     <app-button (click)="filtered = !filtered">{{
       filtered ? "Show All" : "Filter Conflicts"
     }}</app-button>
-    <app-button (click)="markTarget = !markTarget"
+    <app-button (click)="markTarget = !markTarget; getTargetSBOMValues()"
       >{{ markTarget ? "Unmark" : "Mark" }} Target Values</app-button
     >
   </div>
@@ -22,7 +22,7 @@
       <ng-container *ngFor="let component of getComponents()">
         <app-accordion
           *ngIf="componentHasConflict(component)"
-          [title]="component"
+          [title]="(targetSBOM[component] && markTarget ? '*' : '') + component"
           [extra]="[(compare[component].length || 0) + ' Values']"
           (click)="path.push(component)"
         ></app-accordion>
@@ -33,7 +33,15 @@
       <ng-container *ngFor="let componentVersion of compare[path[1]]">
         <app-accordion
           *ngIf="hasConflict(componentVersion.appearances.length)"
-          [title]="componentVersion.componentVersion || 'N/A'"
+          [title]="
+            (targetSBOM[path[1]] && markTarget
+              ? targetSBOM[path[1]].indexOf(
+                  componentVersion.componentVersion
+                ) !== -1
+                ? '*'
+                : ''
+              : '') + (componentVersion.componentVersion || 'N/A')
+          "
           [extra]="[
             componentVersion.appearances.length +
               '/' +
@@ -60,7 +68,13 @@
               <ng-container *ngFor="let value of getAttributes(attr)">
                 <app-accordion
                   *ngIf="hasConflict(version[attr][value].appearances.length)"
-                  [title]="value"
+                  [title]="
+                    (version[attr][value].appearances && markTarget
+                      ? version[attr][value].appearances.indexOf(0) !== -1
+                        ? '*'
+                        : ''
+                      : '') + value
+                  "
                   [extra]="[
                     version[attr][value].appearances.length +
                       '/' +

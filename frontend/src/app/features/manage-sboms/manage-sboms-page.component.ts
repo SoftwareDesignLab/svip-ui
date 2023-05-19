@@ -84,10 +84,10 @@ export class ManageSbomsPageComponent implements OnInit {
   check(sbom: any) {
     const value = sbom.target.value;
     if (sbom.target.checked) {
-      this.selectedFiles.push(value)
+      this.selectedFiles.push(value);
     } else {
       this.selectedFiles.indexOf(value);
-      this.selectedFiles = this.selectedFiles.filter(file => file !== value)
+      this.selectedFiles = this.selectedFiles.filter((file) => file !== value);
     }
   }
 
@@ -95,9 +95,7 @@ export class ManageSbomsPageComponent implements OnInit {
    * Checks if all valid SBOMS are selected
    */
   areAllSelected() {
-    return (
-      this.selectedFiles.length === this.dataHandler.filePaths.length
-    );
+    return this.selectedFiles.length === this.dataHandler.filePaths.length;
   }
 
   /**
@@ -127,5 +125,12 @@ export class ManageSbomsPageComponent implements OnInit {
    */
   open(content: any) {
     this.modalService.open(content);
+  }
+
+  /**
+   * Get SBOM filename
+   */
+  getAlias(sbom: string) {
+    return this.dataHandler.getSBOMAlias(sbom);
   }
 }

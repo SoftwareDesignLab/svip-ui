@@ -1,11 +1,11 @@
-<app-navbar/>
+<app-navbar />
 <form>
   <!-- Sboms -->
   <div class="file-container">
-    <div *ngFor="let item of GetLoadingFiles() | keyvalue">
+    <div *ngFor="let item of GetLoadingFiles()">
       <app-spinner></app-spinner>
-      {{ item.key }}
-      <span class="material-symbols-outlined" (click)="RemoveFile(item.key)">
+      {{ getAlias(item) }}
+      <span class="material-symbols-outlined" (click)="RemoveFile(item)">
         delete
       </span>
     </div>
@@ -24,7 +24,7 @@
       >
         {{ item.value !== null ? "done" : "close" }}
       </span>
-      {{ item.key }}
+      {{ getAlias(item.key) }}
       <span
         class="material-symbols-outlined"
         (click)="selectedFile = item.key; open(deleteone)"

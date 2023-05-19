@@ -25,7 +25,7 @@ export interface SBOMComponent {
   unpackaged?: string | null;
   publisher?: string | null;
   licenses?: string[] | null;
-  cpes?: string[] | [] | null;
-  swids?: string[] | [] | null;
-  purls?: string[] | [] | null;
+  cpes: string[];
+  swids: string[];
+  purls: string[];
 }

@@ -94,6 +94,18 @@ export class ComparisonComponent {
       !!this.targetSBOM[val.component];
     }
     return false;
+
+    // targetSBOM[pathTitles[1]] && targetMarked
+    //   ? targetSBOM[pathTitles[1]].indexOf(version.componentVersion) !== -1
+    //     ? '*'
+    //     : ''
+    //   : '';
+
+    // value.appearances && targetMarked
+    //   ? value.appearances.indexOf(0) !== -1
+    //     ? '*'
+    //     : ''
+    //   : '';
   }
 
   getTargetSBOMValues() {
@@ -105,10 +117,10 @@ export class ComparisonComponent {
     targetSBOM.allComponents?.forEach((component) => {
       if (component.name) {
         if (!this.targetSBOM[component.name]) {
-          this.targetSBOM[component.name] = true
+          this.targetSBOM[component.name] = [];
         }
         if (component.version) {
-          this.targetSBOM[component.name][component.version]
+          this.targetSBOM[component.name].push(component.version);
         }
       }
     });
@@ -140,5 +152,4 @@ export class ComparisonComponent {
     if (!this.filtered) return true;
     return appearances < this.dataHandler.lastSentFilePaths.length;
   }
-
 }
