@@ -1,0 +1,29 @@
+<span class="material-symbols-outlined" (click)="open(info)">info</span>
+<ng-template #info let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+        SBOM INFORMATION
+          <!--div make these separate divs File: {{ #sbom.path# }} -->
+          <!--div make these separate divs Timestamp: 3/2/01 --> 
+          <!--div make these separate divs Publisher: fake publisher --> 
+    </h4> 
+  </div>
+  <div class="modal-body">
+    <p>
+        File:
+    </p>
+    <p>
+        Timestamp:
+    </p>
+    <p>
+        Publisher:
+    </p>    
+</div>
+  <div class="modal-footer">
+    <app-button
+      text="CLOSE"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    ></app-button>
+  </div>
+</ng-template>
