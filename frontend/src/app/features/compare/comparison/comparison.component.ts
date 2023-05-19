@@ -21,6 +21,7 @@ export class ComparisonComponent {
     Identifier.cpes,
     Identifier.purls,
   ];
+  targetSBOM: any = {};
 
   get compare() {
     return this.comparison?.comparisons ? this.comparison.comparisons : {};
@@ -56,9 +57,9 @@ export class ComparisonComponent {
 
   getAttributes(attribute: Identifier) {
     if (this.version) {
-      return this.version[attribute];
+      return Object.keys(this.version[attribute]);
     }
-    return {};
+    return [];
   }
 
   IsLoadingComparison(): boolean {
@@ -71,5 +72,28 @@ export class ComparisonComponent {
     }
     this.comparison = this.dataHandler.comparison;
     return this.dataHandler.comparison;
+  }
+
+  getAliasFromIndex(index: any) {
+    let path = this.dataHandler.lastSentFilePaths[index];
+    return this.dataHandler.getSBOMAlias(path);
+  }
+
+    getTargetSBOMValues() {
+    if (!this.comparison?.targetSBOM) {
+      return;
+    }
+    const targetSBOM = this.comparison.targetSBOM;
+
+    targetSBOM.allComponents?.forEach((component) => {
+      if (component.name) {
+        if (!this.targetSBOM[component.name]) {
+          this.targetSBOM[component.name] = [];
+        }
+        if (component.version) {
+          this.targetSBOM[component.name].push(component.version);
+        }
+      }
+    });
   }
 }
