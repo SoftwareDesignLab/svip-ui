@@ -35,17 +35,22 @@ interface DiffReport {
   componentConflicts?: readonly ComponentConflict[];
 }
 
-export interface ComponentVersion {
+export type ComponentVersion = {
+  [key: string | Identifier]: { [key: string]: Attributes };
+} & {
   componentName?: string;
   componentVersion?: string;
-  cpes: { [key: string]: Attributes };
-  purls: { [key: string]: Attributes };
-  swids: { [key: string]: Attributes };
   appearances: readonly number[] | readonly []; // number meaning SBOM ID
-}
+};
 
 export interface Comparison {
   targetSBOM?: SBOM;
   diffReports: readonly DiffReport[];
   comparisons: { [key: string]: readonly ComponentVersion[] };
+}
+
+export enum Identifier {
+  cpes='cpes',
+  swids='swids',
+  purls='purls',
 }

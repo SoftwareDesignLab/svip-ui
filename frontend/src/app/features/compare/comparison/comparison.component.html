@@ -1,8 +1,15 @@
 <div class="comparison" *ngIf="!IsLoadingComparison()">
-  <div class="header">Components /</div>
+  <div class="header">
+    <span
+      class="underline"
+      *ngFor="let title of path"
+      (click)="decreaseDepth(title)"
+      >{{ title }} /</span
+    >
+  </div>
   <div class="body" *ngIf="getComparison()">
     <!-- All Components -->
-    <div *ngIf="path.length < 2">
+    <div *ngIf="path.length === 1">
       <app-accordion
         *ngFor="let component of getComponents()"
         [title]="component"
@@ -14,7 +21,7 @@
     <div *ngIf="path.length === 2">
       <app-accordion
         *ngFor="let componentVersion of compare[path[1]]"
-        [title]="path[1]"
+        [title]="componentVersion.componentVersion || 'N/A'"
         [extra]="[
           componentVersion.appearances.length +
             '/' +
@@ -31,18 +38,19 @@
     </div>
     <!-- Version Attributes -->
     <div *ngIf="path.length === 3 && version">
-      <ng-template *ngFor="attr; in: attributes; let i = index">
+      <div *ngFor="let attr of attributes">
         <app-accordion
-          *ngFor="let attr of getKeys(getAttributes(i))"
+        [title]="attr"
+          *ngFor="let key of getKeys(getAttributes(attr))"
           [extra]="[
-            getAttributes(i)[attr].appearances +
+            getAttributes(attr)[key].appearances +
               '/' +
               getComparisonFiles().length +
               ' Match'
           ]"
-          [color]="passed(getAttributes(i)[attr].appearances?.length || 0)"
+          [color]="passed(getAttributes(attr)[key].appearances?.length || 0)"
         ></app-accordion>
-      </ng-template>
+      </div>
     </div>
   </div>
 </div>

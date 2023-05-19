@@ -5,7 +5,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { Comparison, ComponentVersion, Attributes } from '../comparison';
+import { Comparison, ComponentVersion, Identifier } from '../comparison';
 import { DataHandlerService } from 'src/app/shared/services/data-handler.service';
 @Component({
   selector: 'app-comparison',
@@ -16,7 +16,11 @@ export class ComparisonComponent {
   comparison: Comparison | undefined;
   path: string[] = ['Components'];
   version: ComponentVersion | undefined;
-  readonly attributes: ['cpes', 'purls', 'swids'] = ['cpes', 'purls', 'swids']; // Typescript work around
+  attributes: Identifier[] = [
+    Identifier.swids,
+    Identifier.cpes,
+    Identifier.purls,
+  ];
 
   get compare() {
     return this.comparison?.comparisons ? this.comparison.comparisons : {};
@@ -35,7 +39,6 @@ export class ComparisonComponent {
 
   getComponents() {
     if (!this.comparison) return;
-    console.log(this.comparison);
     return Object.keys(this.comparison?.comparisons);
   }
 
@@ -51,9 +54,9 @@ export class ComparisonComponent {
     return num < this.getComparisonFiles().length ? `--red` : `--green`;
   }
 
-  getAttributes(index: 0 | 1 | 2) {
+  getAttributes(attribute: Identifier) {
     if (this.version) {
-      return this.version[this.attributes[index]];
+      return this.version[attribute];
     }
     return {};
   }
