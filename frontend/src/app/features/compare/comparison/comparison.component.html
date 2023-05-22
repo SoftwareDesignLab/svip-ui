@@ -81,6 +81,7 @@
                       lastSentFilePaths.length +
                       ' Match'
                   ]"
+                  [color]="passed(version[attr][value].appearances.length)"
                 >
                   <div body>
                     <div *ngFor="let sbom of version[attr][value].appearances">
