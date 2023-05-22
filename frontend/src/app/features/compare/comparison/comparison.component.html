@@ -1,4 +1,4 @@
-<div class="comparison" *ngIf="!IsLoadingComparison()">
+<div class="comparison" *ngIf="!isLoadingComparison">
   <div class="flex filters">
     <app-button (click)="filtered = !filtered">{{
       filtered ? "Show All" : "Filter Conflicts"
@@ -19,7 +19,7 @@
     <!-- All Components -->
     <div></div>
     <div *ngIf="path.length === 1">
-      <ng-container *ngFor="let component of getComponents()">
+      <ng-container *ngFor="let component of components">
         <app-accordion
           *ngIf="componentHasConflict(component)"
           [title]="(targetSBOM[component] && markTarget ? '*' : '') + component"
@@ -45,7 +45,7 @@
           [extra]="[
             componentVersion.appearances.length +
               '/' +
-              getComparisonFiles().length +
+              lastSentFilePaths.length +
               ' Match'
           ]"
           [color]="passed(componentVersion.appearances.length)"
@@ -78,7 +78,7 @@
                   [extra]="[
                     version[attr][value].appearances.length +
                       '/' +
-                      getComparisonFiles().length +
+                      lastSentFilePaths.length +
                       ' Match'
                   ]"
                 >

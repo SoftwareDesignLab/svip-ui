@@ -30,6 +30,18 @@ export class ComparisonComponent {
     return this.comparison?.comparisons ? this.comparison.comparisons : {};
   }
 
+  get components() {
+    return !this.comparison ? [] : Object.keys(this.comparison?.comparisons);
+  }
+
+  get lastSentFilePaths() {
+    return this.dataHandler.lastSentFilePaths;
+  }
+
+  get isLoadingComparison(): boolean {
+    return this.dataHandler.IsLoadingComparison();
+  }
+
   constructor(private dataHandler: DataHandlerService) {}
 
   decreaseDepth(newLoc: string) {
@@ -39,27 +51,6 @@ export class ComparisonComponent {
     if (this.path.length < 2) {
       this.version = undefined;
     }
-  }
-
-  getComponents() {
-    if (!this.comparison) return;
-    return Object.keys(this.comparison?.comparisons);
-  }
-
-  getComparisonFiles() {
-    return this.dataHandler.lastSentFilePaths;
-  }
-
-  getKeys(obj: object) {
-    return Object.keys(obj);
-  }
-
-  passed(num: number) {
-    return num < this.getComparisonFiles().length ? `--red` : `--green`;
-  }
-
-  IsLoadingComparison(): boolean {
-    return this.dataHandler.IsLoadingComparison();
   }
 
   getComparison() {
@@ -83,7 +74,6 @@ export class ComparisonComponent {
   }
 
   isInTarget(val: { component?: string; version?: string; value?: string }) {
-    let inTarget = false;
     if (val.component) {
       if (val.version) {
         if (val.value) {
@@ -94,18 +84,6 @@ export class ComparisonComponent {
       !!this.targetSBOM[val.component];
     }
     return false;
-
-    // targetSBOM[pathTitles[1]] && targetMarked
-    //   ? targetSBOM[pathTitles[1]].indexOf(version.componentVersion) !== -1
-    //     ? '*'
-    //     : ''
-    //   : '';
-
-    // value.appearances && targetMarked
-    //   ? value.appearances.indexOf(0) !== -1
-    //     ? '*'
-    //     : ''
-    //   : '';
   }
 
   getTargetSBOMValues() {
@@ -124,6 +102,15 @@ export class ComparisonComponent {
         }
       }
     });
+  }
+
+  //#region Filters
+
+  /**
+  * Checks to see if 
+  */
+  passed(num: number) {
+    return num < this.lastSentFilePaths.length ? `--red` : `--green`;
   }
 
   componentHasConflict(component: string) {
@@ -152,4 +139,5 @@ export class ComparisonComponent {
     if (!this.filtered) return true;
     return appearances < this.dataHandler.lastSentFilePaths.length;
   }
+  //#endregion
 }
