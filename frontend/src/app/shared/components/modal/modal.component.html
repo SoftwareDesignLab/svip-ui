@@ -4,20 +4,23 @@
     <h4 class="modal-title" id="modal-basic-title">
         SBOM INFORMATION
           <!--div make these separate divs File: {{ #sbom.path# }} -->
-          <!--div make these separate divs Timestamp: 3/2/01 --> 
-          <!--div make these separate divs Publisher: fake publisher --> 
-    </h4> 
+          <!--div make these separate divs Timestamp: 3/2/01 -->
+          <!--div make these separate divs Publisher: fake publisher -->
+    </h4>
   </div>
   <div class="modal-body">
-    <p>
-        File:
-    </p>
+    <div>
+      <label class="form-label" for="customFile">File:</label>
+      <input type="file" class="form-control" id="customFile" />
+    </div>
+    <br>
     <p>
         Timestamp:
     </p>
+    <br>
     <p>
         Publisher:
-    </p>    
+    </p>
 </div>
   <div class="modal-footer">
     <app-button
