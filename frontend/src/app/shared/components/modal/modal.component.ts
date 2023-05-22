@@ -1,4 +1,7 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { DataHandlerService } from '../../services/data-handler.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-modal',
@@ -7,13 +10,10 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 })
 
 export class ModalComponent {
-  @Input() opened: boolean = false;
-  @Output() close = new EventEmitter<Boolean>();
+  constructor(private handler: DataHandlerService, public modalService: NgbModal){}
+  @Input() item: any = null;
 
-  /**
-   * Closes the modal
-   */
-  Close() {
-    this.close.emit(true);
+  open(content: any): NgbModalRef {
+    return this.modalService.open(content);
   }
 }

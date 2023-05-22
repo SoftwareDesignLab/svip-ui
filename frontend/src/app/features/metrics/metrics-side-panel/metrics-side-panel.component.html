@@ -10,7 +10,7 @@
                   <input type="radio" name="sbom" (click)="SetSelectedSBOM(item)" />
                   <div class="sbom flex">
                     {{ getSBOMAlias(item) }}
-                    <span class="material-symbols-outlined" (click)="openModal()">info</span>
+                    <app-modal [item]="item"></app-modal>
                   </div>
                 </div>
             </div>
@@ -18,14 +18,4 @@
     </div>
 </app-side-panel>
 
-<app-modal [opened]="sbomInfoOpened !== null" (close)="sbomInfoOpened = null">
-  <div title>
-    SBOM DETAILS
-  </div>
-  <div content>
-    <div class="item">
-      <div class="name">File Path:</div>
-      <div class="value">{{ sbomInfoOpened }}</div>
-    </div>
-  </div>
-</app-modal>
+<app-modal></app-modal>
