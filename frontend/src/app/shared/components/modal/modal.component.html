@@ -1,32 +1,15 @@
-<span class="material-symbols-outlined" (click)="open(info)">info</span>
-<ng-template #info let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">
-        SBOM INFORMATION
-          <!--div make these separate divs File: {{ #sbom.path# }} -->
-          <!--div make these separate divs Timestamp: 3/2/01 -->
-          <!--div make these separate divs Publisher: fake publisher -->
-    </h4>
-  </div>
-  <div class="modal-body">
-    <div>
-      <label class="form-label" for="customFile">File:</label>
-      <input type="file" class="form-control" id="customFile" />
+<div class="modal" *ngIf="opened">
+  <div class="content">
+    <div class="title">
+      <ng-content select="[title]"></ng-content>
     </div>
-    <br>
-    <p>
-        Timestamp:
-    </p>
-    <br>
-    <p>
-        Publisher:
-    </p>
-</div>
-  <div class="modal-footer">
-    <app-button
-      text="CLOSE"
-      aria-label="Close"
-      (click)="modal.dismiss()"
-    ></app-button>
+    <div class="body">
+      <ng-content select="[content]"></ng-content>
+    </div>
+    <div class="actions">
+      <ng-content select="[actions]"></ng-content>
+    </div>
+    <div class="close" (click)="Close()">x</div>
   </div>
-</ng-template>
+  <div class="click-off" (click)="Close()"></div>
+</div>

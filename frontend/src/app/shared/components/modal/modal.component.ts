@@ -1,21 +1,19 @@
-import { Component } from '@angular/core';
-import { DataHandlerService } from '../../services/data-handler.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css']
 })
-export class ModalComponent {
-  constructor( private dataHandler: DataHandlerService, private modalService: NgbModal
-    ) {}
 
- /**
-   * Opens modal
-   * @param content template reference
+export class ModalComponent {
+  @Input() opened: boolean = false;
+  @Output() close = new EventEmitter<Boolean>();
+
+  /**
+   * Closes the modal
    */
-  open(content: any) {
-    this.modalService.open(content);
+  Close() {
+    this.close.emit(true);
   }
 }
