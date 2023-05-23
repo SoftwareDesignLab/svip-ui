@@ -7,12 +7,15 @@
             </div>
             <div class="content flex col">
                 <div class="compare-item flex" *ngFor="let item of GetSBOMs()">
-                    <input type="radio" name="sbom" (click)="SetSelectedSBOM(item)"/>
-                    <div class="sbom flex">
-                        {{item}}
-                    </div>
+                  <input type="radio" name="sbom" (click)="SetSelectedSBOM(item)" />
+                  <div class="sbom flex">
+                    {{ getSBOMAlias(item) }}
+                    <app-modal [item]="item"></app-modal>
+                  </div>
                 </div>
             </div>
         </div>
     </div>
 </app-side-panel>
+
+<app-modal></app-modal>

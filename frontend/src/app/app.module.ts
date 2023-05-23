@@ -18,6 +18,7 @@ import { MetricsSidePanelComponent } from './features/metrics/metrics-side-panel
 import { MetricsBodyComponent } from './features/metrics/metrics-body/metrics-body.component';
 import { MetricsMainComponent } from './features/metrics/metrics-main/metrics-main.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ModalComponent } from './shared/components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { AppRoutingModule } from './app-routing.module';
     SidePanelComponent,
     NavbarComponent,
     HomeComponent,
+    ModalComponent,
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, AppRoutingModule],
   providers: [],
