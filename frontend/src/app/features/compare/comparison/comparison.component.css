@@ -1,0 +1,7 @@
+.underline:hover {
+  text-decoration: underline;
+}
+
+app-button {
+  margin-left: 10px;
+}

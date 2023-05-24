@@ -9,6 +9,9 @@ import { AccordionComponent } from './shared/components/accordion/accordion.comp
 import { SidePanelComponent } from './shared/components/side-panel/side-panel.component';
 import { ManageSbomsPageComponent } from './features/manage-sboms/manage-sboms-page.component';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
+import { ComparePageComponent } from './features/compare/compare-page/compare-page.component';
+import { CompareSidepanelComponent } from './features/compare/compare-sidepanel/compare-sidepanel.component';
+import { ComparisonComponent } from './features/compare/comparison/comparison.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { HomeComponent } from './features/home/home.component';
 import { MetricsSidePanelComponent } from './features/metrics/metrics-side-panel/metrics-side-panel.component';
@@ -23,6 +26,9 @@ import { ModalComponent } from './shared/components/modal/modal.component';
     ButtonComponent,
     ManageSbomsPageComponent,
     SpinnerComponent,
+    ComparisonComponent,
+    ComparePageComponent,
+    CompareSidepanelComponent,
     MetricsSidePanelComponent,
     MetricsBodyComponent,
     MetricsMainComponent,

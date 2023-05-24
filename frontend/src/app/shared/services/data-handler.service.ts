@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ClientService } from './client.service';
 import { HttpParams } from '@angular/common/http';
 import { IpcRenderer } from 'electron';
-import { Comparison } from '../models/comparison';
+import { Comparison } from 'src/app/features/compare/comparison';
 
 @Injectable({
   providedIn: 'root',

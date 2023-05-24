@@ -82,16 +82,20 @@ export class ManageSbomsPageComponent implements OnInit {
    * Stores or removes sboms based on checkbox
    */
   check(sbom: any) {
-    console.log(sbom.target);
+    const value = sbom.target.value;
+    if (sbom.target.checked) {
+      this.selectedFiles.push(value);
+    } else {
+      this.selectedFiles.indexOf(value);
+      this.selectedFiles = this.selectedFiles.filter((file) => file !== value);
+    }
   }
 
   /**
    * Checks if all valid SBOMS are selected
    */
   areAllSelected() {
-    return (
-      this.selectedFiles.length === this.dataHandler.GetValidSBOMs().length
-    );
+    return this.selectedFiles.length === this.dataHandler.filePaths.length;
   }
 
   /**
@@ -101,7 +105,7 @@ export class ManageSbomsPageComponent implements OnInit {
     if (this.areAllSelected()) {
       this.selectedFiles = [];
     } else {
-      this.selectedFiles = this.dataHandler.GetValidSBOMs();
+      this.selectedFiles = this.dataHandler.filePaths;
     }
   }
 
@@ -121,5 +125,12 @@ export class ManageSbomsPageComponent implements OnInit {
    */
   open(content: any) {
     this.modalService.open(content);
+  }
+
+  /**
+   * Get SBOM filename
+   */
+  getAlias(sbom: string) {
+    return this.dataHandler.getSBOMAlias(sbom);
   }
 }
