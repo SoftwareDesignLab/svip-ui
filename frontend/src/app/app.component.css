@@ -1,3 +1,5 @@
 #main-wrapper {
   background-color: var(--bg);
+  width: 100vw;
+  height: 100vh;
 }
