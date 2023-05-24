@@ -6,10 +6,10 @@
   --primary: #333333;
   --secondary: #1b1e21;
   --gray: gray;
-  --bg: #FFFFFF;
-  --background-1: #EEEEEE;
+  --bg: #ffffff;
+  --background-1: #eeeeee;
   --background-2: #326273;
-  --foreground-1: #5C9EAD;
+  --foreground-1: #5c9ead;
 }
 
 html,
@@ -42,4 +42,8 @@ body {
 .hover:hover {
   transition-duration: 0.35s;
   transform: translate(0, -3px);
+}
+
+.shadow {
+  box-shadow: 0px 5px 10px #0000006d;
 }
