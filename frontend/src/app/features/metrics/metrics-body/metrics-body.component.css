@@ -30,3 +30,14 @@
 .text {
     height: 100%;
 }
+
+span {
+    width: 100%;
+    display: inline-flex;
+}
+
+span.extra {
+    text-align: right;
+    margin-right: 5px;
+    display: inline-block;
+}
