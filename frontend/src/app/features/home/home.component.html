@@ -1,12 +1,18 @@
-<div class='home-page'>
-    <div *ngFor="let item of routing.GetOptionKeys()">
-        <div class="item" *ngIf="routing.GetInfo(item).desc" (click)="routing.Redirect(item)">
-            <div class="title">
-                {{item | titlecase}}
-            </div>
-            <div class="desc">
-                {{routing.GetInfo(item).desc}}
-            </div>
+<div class="home-page">
+  <ng-container *ngFor="let item of routing.GetOptionKeys()">
+    <div class="resizable" *ngIf="routing.GetInfo(item).desc">
+      <div
+        class="item hover"
+        *ngIf="routing.GetInfo(item).desc"
+        (click)="routing.Redirect(item)"
+      >
+        <div class="title">
+          {{ item | titlecase }}
         </div>
+        <div class="desc">
+          {{ routing.GetInfo(item).desc }}
+        </div>
+      </div>
     </div>
+  </ng-container>
 </div>

@@ -1,25 +1,51 @@
 .home-page {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 50px;
+  width: 100vw;
+  height: 100vh;
+  padding: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 5%;
 }
 
-.home-page > div {
-    cursor: pointer;
+
+.title {
+  font-size: 100%;
+  text-decoration: underline;
+  margin-bottom: 5%;
+}
+
+.desc {
+  font-size: 80%;
+  opacity: 70%;
 }
 
 .item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-    height: 250px;
-    width: 250px;
-    background: gray;
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 3%;
+
+  color: var(--foreground-2);
+  background-color: var(--background-1);
+  box-shadow: 0px 5px 10px #8888886d;
 }
-  
+
+.item:hover {
+  transition: box-shadow 0.35s, transform 0.35s;
+  transform: translate(0, -3px);
+}
+
+.resizable {
+  height: 20vw;
+  width: 20vw;
+  position: relative;
+  resize: both;
+}
