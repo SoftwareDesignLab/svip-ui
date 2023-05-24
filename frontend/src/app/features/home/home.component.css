@@ -9,13 +9,13 @@
 }
 
 .title {
-  font-size: 100%;
+  font-size: 120%;
   text-decoration: underline;
   margin-bottom: 5%;
 }
 
 .desc {
-  font-size: 80%;
+  font-size: 100%;
   opacity: 70%;
 }
 
