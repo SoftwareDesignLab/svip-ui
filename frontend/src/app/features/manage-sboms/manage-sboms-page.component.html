@@ -35,13 +35,13 @@
   </div>
   <!-- Buttons -->
   <div class="flex buttons">
+    <app-button text="UPLOAD SBOM FILES" (click)="browse()"></app-button>
     <app-button
       [text]="(areAllSelected() ? 'DESELECT' : 'SELECT') + ' ALL'"
       (click)="selectAll()"
     ></app-button>
     <app-button text="DELETE SELECTED" (click)="open(deletemany)"></app-button>
-    <app-button text="UPLOAD SBOM FILES" (click)="browse()"></app-button>
-    <app-button text="CREATE SBOM FROM PROJECT"></app-button>
+    <app-button text="CREATE SBOM"></app-button>
   </div>
 </form>
 

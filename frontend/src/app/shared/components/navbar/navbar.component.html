@@ -1,4 +1,4 @@
-<div class="navbar flex">
+<div class="navbar flex shadow">
   <div *ngFor="let key of routing.GetOptionKeys()" (click)="routing.Redirect(key)">
     {{key | titlecase}}
   </div>
