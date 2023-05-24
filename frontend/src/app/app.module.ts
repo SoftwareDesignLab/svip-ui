@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { ButtonComponent } from './shared/components/button/button.component';
@@ -39,13 +38,7 @@ import { ModalComponent } from './shared/components/modal/modal.component';
     HomeComponent,
     ModalComponent,
   ],
-  imports: [
-    BrowserModule,
-    NgbModule,
-    HttpClientModule,
-    AppRoutingModule,
-    NgbTooltipModule,
-  ],
+  imports: [BrowserModule, NgbModule, HttpClientModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })
