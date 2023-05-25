@@ -2,37 +2,24 @@
 <form>
   <!-- Sboms -->
   <div class="file-container">
-    <div *ngFor="let item of GetLoadingFiles()">
-      <app-spinner></app-spinner>
-      {{ getAlias(item) }}
-      <span class="material-symbols-outlined" (click)="RemoveFile(item)">
-        delete
-      </span>
+    <div class="table-row" *ngFor="let item of GetLoadingFiles()">
+      <div class="item-container">
+        <app-spinner></app-spinner>
+        <div class="file-name">{{ getAlias(item) }}</div>
+        <span class="material-symbols-outlined">edit</span>
+        <span class="material-symbols-outlined" (click)="RemoveFile(item)">delete</span>
+      </div>
     </div>
-    <div *ngFor="let item of GetFiles() | keyvalue">
-      <input
-        type="checkbox"
-        [value]="item.key"
-        (change)="check($event)"
-        [checked]="selectedFiles.indexOf(item.key) !== -1"
-      />
-      <span
-        [ngClass]="[
-          'material-symbols-outlined',
-          item.value !== null ? 'pass' : 'fail'
-        ]"
-      >
-        {{ item.value !== null ? "done" : "close" }}
-      </span>
-      {{ getAlias(item.key) }}
-      <span
-        class="material-symbols-outlined"
-        (click)="selectedFile = item.key; open(deleteone)"
-      >
-        delete
-      </span>
+    <div class="table-row" *ngFor="let item of GetFiles() | keyvalue">
+      <div class="item-container">
+        <input type="checkbox" [value]="item.key" (change)="check($event)" [checked]="selectedFiles.indexOf(item.key) !== -1" />
+        <div class="file-name">{{ getAlias(item.key) }}</div>
+        <span class="material-symbols-outlined">edit</span>
+        <span class="material-symbols-outlined" (click)="selectedFile = item.key; open(deleteone)">delete</span>
+      </div>
     </div>
   </div>
+  
   <!-- Buttons -->
   <div class="flex buttons">
     <app-button
