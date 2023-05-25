@@ -5,9 +5,12 @@ import { RoutingService } from '../../services/routing.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-
   constructor(public routing: RoutingService) {}
+
+  getRequiredSBOM(key: string) {
+    return this.routing.GetInfo(key).requireValidSBOM;
+  }
 }
