@@ -1,11 +1,7 @@
 <div class="comparison" *ngIf="!isLoadingComparison">
   <div class="flex filters">
-    <app-button (click)="filtered = !filtered">{{
-      filtered ? "Show All" : "Filter Conflicts"
-    }}</app-button>
-    <app-button (click)="markTarget = !markTarget; getTargetSBOMValues()"
-      >{{ markTarget ? "Unmark" : "Mark" }} Target Values</app-button
-    >
+    <app-button (click)="filtered = !filtered" text="{{filtered ? 'Show All' : 'Filter Conflicts'}}"></app-button>
+    <app-button (click)="markTarget = !markTarget; getTargetSBOMValues()" text="{{ markTarget ? 'Unmark' : 'Mark' }} Target Values"></app-button>
   </div>
   <div class="header">
     <span
