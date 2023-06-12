@@ -12,27 +12,38 @@
     --foreground-1: #5c9ead;
   }
 
-html, body { background-color: white; overflow: hidden;}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  background-color: white;
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .flex {
-    display: flex;
+  display: flex;
 }
 
 .col {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .row {
-    flex-direction: row;
+  flex-direction: row;
 }
 
 .center {
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .hover:hover {
-    transition-duration: .35s;
-    transform: translate(0, -3px);
+  transition-duration: 0.35s;
+  transform: translate(0, -3px);
+}
+
+.shadow {
+  box-shadow: 0px 5px 10px #0000006d;
 }

@@ -4,7 +4,7 @@
     </div>
     <div class="results" *ngIf="GetQualityReport() && GetQualityReport().testResults.length > 0">
       <app-accordion
-          [title]="'TEST RESULTS - ' + (GetQualityReport() ? GetQualityReport().testResults.length : '0') + ' COMPONENTS'"
+          [title]="(GetQualityReport() ? GetQualityReport().testResults.length : '0') + ' COMPONENTS'"
           style="flex-direction: column;">
           <div body>
               <app-accordion *ngFor="let testResult of GetQualityReport()?.testResults" style="flex-direction: column;">
