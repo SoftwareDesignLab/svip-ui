@@ -1,16 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
-  --accent: #58a5ff;
-  --green: #58ff82;
-  --red: #ff5858;
-  --primary: #333333;
-  --secondary: #1b1e21;
-  --gray: gray;
-  --bg: #c7c7c7;
-  --background-1: #eeeeee;
-  --background-2: #326273;
-  --foreground-1: #5c9ead;
-}
+    --accent: #58a5ff;
+    --green: #58ff82;
+    --red: #ff5858;
+    --primary: #333333;
+    --secondary: #1b1e21;
+    --gray: gray;
+    --bg: #c7c7c7;
+    --background-1: #eeeeee;
+    --background-2: #326273;
+    --foreground-1: #5c9ead;
+  }
 
 html,
 body {
