@@ -20,7 +20,7 @@
             </span>
           </div>
           <span class="material-symbols-outlined">edit</span>
-          <span class="material-symbols-outlined" (click)="selectedFile = item.key; open(deleteone)" placement="bottom">delete</span>
+          <span class="material-symbols-outlined" (click)="selectedFile = item.key; isDeleteOneOpen = true" placement="bottom">delete</span>
         </div>
       </div>
     </div>
@@ -31,40 +31,44 @@
         [text]="(areAllSelected() ? 'DESELECT' : 'SELECT') + ' ALL'"
         (click)="selectAll()"
       ></app-button>
-      <app-button text="DELETE SELECTED" (click)="open(deletemany)"></app-button>
+      <app-button text="DELETE SELECTED" (click)="isDeleteManyOpen = true"></app-button>
       <app-button text="UPLOAD SBOM FILES" (click)="browse()"></app-button>
       <app-button text="CREATE SBOM FROM PROJECT"></app-button>
     </div>
   </form>
   <!-- Popup Modals -->
-  <app-modal #deletemany (delete)="delete()" dismiss="close()">
-    <div title>
-      Delete the following SBOMS?
-    </div>
-    <div content>
-      <div *ngFor="let file of selectedFiles">{{ file }}</div>
-    </div>
-    <div actions>
-      <app-button text="DELETE" aria-label="Delete" (click)="delete()"></app-button>
-      <app-button text="CLOSE" aria-label="Close" (click)="close()"></app-button>
-    </div>
-  </app-modal>
+  <ng-container>
+    <app-modal *ngIf="isDeleteManyOpen">
+      <div title>
+        Delete the following SBOMS?
+      </div>
+      <div content>
+        <div *ngFor="let file of selectedFiles">{{ file }}</div>
+      </div>
+      <div actions>
+        <app-button text="DELETE" aria-label="Delete" (click)="delete()"></app-button>
+        <app-button text="CLOSE" aria-label="Close" (click)="isDeleteManyOpen = false"></app-button>
+      </div>
+    </app-modal>
+  </ng-container>
 
-  <app-modal #deleteone (delete)="delete()" dismiss="close()">
-    <div title>
-      Delete {{ selectedFile }}?
-    </div>
-    <div actions>
-      <app-button
-        text="DELETE"
-        aria-label="Delete"
-        (click)="RemoveFile(selectedFile); close()"
-      ></app-button>
-      <app-button
-        text="CLOSE"
-        aria-label="Close"
-        (click)="close()"
-      ></app-button>
-    </div>
-  </app-modal>
+  <ng-container #deleteone>
+    <app-modal *ngIf="isDeleteOneOpen" (delete)="delete()" dismiss="isDeleteOneOpen = false">
+      <div title>
+        Delete {{ selectedFile }}?
+      </div>
+      <div actions>
+        <app-button
+          text="DELETE"
+          aria-label="Delete"
+          (click)="RemoveFile(selectedFile); isDeleteOneOpen = false"
+        ></app-button>
+        <app-button
+          text="CLOSE"
+          aria-label="Close"
+          (click)="isDeleteOneOpen = false"
+        ></app-button>
+      </div>
+    </app-modal>
+  </ng-container>
 </div>

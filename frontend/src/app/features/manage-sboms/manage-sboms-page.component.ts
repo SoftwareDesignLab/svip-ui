@@ -13,6 +13,8 @@ export class ManageSbomsPageComponent implements OnInit {
   selectedFiles: string[] = [];
   selectedFile: string = '';
   modalRef: NgbModalRef | undefined;
+  isDeleteManyOpen = false;
+  isDeleteOneOpen = false;
 
   constructor(
     private dataHandler: DataHandlerService,
@@ -120,19 +122,6 @@ export class ManageSbomsPageComponent implements OnInit {
     this.selectedFiles = [];
   }
 
-  /**
-   * Opens modal
-   * @param content template reference
-   */
-  open(content: any) {
-    this.modalRef = this.modalService.open(content);
-  }
-
-  close() {
-    if (this.modalRef) {
-      this.modalRef.close();
-    }
-  }
 
   /**
    * Get SBOM filename
