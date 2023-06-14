@@ -43,7 +43,7 @@
         Delete the following SBOMS?
       </div>
       <div content>
-        <div *ngFor="let file of selectedFiles">{{ file }}</div>
+        <div *ngFor="let file of selectedFiles">{{ getAlias(file) }}</div>
       </div>
       <div actions>
         <app-button text="DELETE" aria-label="Delete" (click)="delete()"></app-button>
@@ -55,7 +55,7 @@
   <ng-container #deleteone>
     <app-modal *ngIf="isDeleteOneOpen" (delete)="delete()" dismiss="isDeleteOneOpen = false">
       <div title>
-        Delete {{ selectedFile }}?
+        Delete {{ getAlias(selectedFile) }}?
       </div>
       <div actions>
         <app-button
