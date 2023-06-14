@@ -46,28 +46,20 @@
         <div *ngFor="let file of selectedFiles">{{ getAlias(file) }}</div>
       </div>
       <div actions>
-        <app-button text="DELETE" aria-label="Delete" (click)="delete()"></app-button>
+        <app-button text="DELETE" aria-label="Delete" (click)="delete(); isDeleteManyOpen = false"></app-button>
         <app-button text="CLOSE" aria-label="Close" (click)="isDeleteManyOpen = false"></app-button>
       </div>
     </app-modal>
   </ng-container>
-
+  
   <ng-container #deleteone>
     <app-modal *ngIf="isDeleteOneOpen" (delete)="delete()" dismiss="isDeleteOneOpen = false">
       <div title>
         Delete {{ getAlias(selectedFile) }}?
       </div>
       <div actions>
-        <app-button
-          text="DELETE"
-          aria-label="Delete"
-          (click)="RemoveFile(selectedFile); isDeleteOneOpen = false"
-        ></app-button>
-        <app-button
-          text="CLOSE"
-          aria-label="Close"
-          (click)="isDeleteOneOpen = false"
-        ></app-button>
+        <app-button text="DELETE" aria-label="Delete" (click)="RemoveFile(selectedFile); isDeleteOneOpen = false"></app-button>
+        <app-button text="CLOSE" aria-label="Close" (click)="isDeleteOneOpen = false"></app-button>
       </div>
     </app-modal>
   </ng-container>
