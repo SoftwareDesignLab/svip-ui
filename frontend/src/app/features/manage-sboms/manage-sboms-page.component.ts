@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataHandlerService } from 'src/app/shared/services/data-handler.service';
 import { IpcRenderer } from 'electron';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-manage-sboms-page',
@@ -12,6 +12,7 @@ export class ManageSbomsPageComponent implements OnInit {
   private ipc!: IpcRenderer;
   selectedFiles: string[] = [];
   selectedFile: string = '';
+  modalRef: NgbModalRef | undefined;
 
   constructor(
     private dataHandler: DataHandlerService,
@@ -124,7 +125,13 @@ export class ManageSbomsPageComponent implements OnInit {
    * @param content template reference
    */
   open(content: any) {
-    this.modalService.open(content);
+    this.modalRef = this.modalService.open(content);
+  }
+
+  close() {
+    if (this.modalRef) {
+      this.modalRef.close();
+    }
   }
 
   /**

@@ -37,46 +37,34 @@
     </div>
   </form>
   <!-- Popup Modals -->
-  <ng-template #deletemany let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">
-        Delete the following SBOMS?
-      </h4>
+  <app-modal #deletemany (delete)="delete()" dismiss="close()">
+    <div title>
+      Delete the following SBOMS?
     </div>
-    <div class="modal-body">
+    <div content>
       <div *ngFor="let file of selectedFiles">{{ file }}</div>
     </div>
-    <div class="modal-footer">
-      <app-button
-        text="DELETE"
-        aria-label="Delete"
-        (click)="delete(); modal.dismiss()"
-      ></app-button>
-      <app-button
-        text="CLOSE"
-        aria-label="Close"
-        (click)="modal.dismiss()"
-      ></app-button>
+    <div actions>
+      <app-button text="DELETE" aria-label="Delete" (click)="delete()"></app-button>
+      <app-button text="CLOSE" aria-label="Close" (click)="close()"></app-button>
     </div>
-  </ng-template>
+  </app-modal>
 
-  <ng-template #deleteone let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">
-        Delete {{ selectedFile }}?
-      </h4>
+  <app-modal #deleteone (delete)="delete()" dismiss="close()">
+    <div title>
+      Delete {{ selectedFile }}?
     </div>
-    <div class="modal-footer">
+    <div actions>
       <app-button
         text="DELETE"
         aria-label="Delete"
-        (click)="RemoveFile(selectedFile); modal.dismiss()"
+        (click)="RemoveFile(selectedFile); close()"
       ></app-button>
       <app-button
         text="CLOSE"
         aria-label="Close"
-        (click)="modal.dismiss()"
+        (click)="close()"
       ></app-button>
     </div>
-  </ng-template>
+  </app-modal>
 </div>

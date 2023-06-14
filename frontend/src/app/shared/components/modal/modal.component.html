@@ -1,31 +1,13 @@
-<span class="flex center material-symbols-outlined" (click)="open(content)">info</span>
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">
-        SBOM INFORMATION
+      <ng-content select='[title]'/>
     </h4>
   </div>
   <div class="modal-body">
-    <div>
-      <h5>Filepath:</h5>
-      {{ item }}
-    </div>
-    <br>
-    <div>
-      <h5>Timestamp:</h5>
-      5/22/2023 12:00:00 AM
-    </div>
-    <br>
-    <div>
-      <h5>Publisher:</h5>
-      John Doe
-    </div>
-</div>
+    <ng-content select='[content]'/>
+  </div>
   <div class="modal-footer">
-    <app-button
-      text="CLOSE"
-      aria-label="Close"
-      (click)="modal.dismiss()"
-    ></app-button>
+    <ng-content select='[actions]'/>
   </div>
 </ng-template>
