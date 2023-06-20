@@ -121,15 +121,16 @@ export class DataHandlerService {
 
     this.lastSentFilePaths = paths;
 
-    this.client.post("compare", files, new HttpParams().set('targetIndex', 0)).subscribe((result: any) => {
-      this.comparison = result;
-      this.loadingComparison = false;
-    },
-    (error: any) => {
-      //TODO: Add error message here
-      this.comparison = null;
-      this.loadingComparison = false;
-    })
+    return this.client.post("compare", files, new HttpParams().set('targetIndex', 0));
+
+  }
+
+  generateSBOM(fileContents : string[], fileNames : string[], schema? : string, format? : string){
+    return this.client.post("generate", {'fileContents': fileContents, 'fileNames': fileNames, 'schema': schema, 'format': format});
+  }
+
+  merge(fileContents : string[], fileNames : string[], schema : string, format : string){
+    return this.client.post("merge", {'fileContents': fileContents, 'fileNames': fileNames, 'schema': schema, 'format': format});
   }
 }
 
