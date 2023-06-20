@@ -1,25 +1,25 @@
 /**@author Justin Jantzi*/
+import { Comparison } from 'src/app/features/compare/comparison';
 import { Injectable } from '@angular/core';
 import { ClientService } from './client.service';
-import { HttpParams } from '@angular/common/http';
 import { IpcRenderer } from 'electron';
-import { Comparison } from 'src/app/features/compare/comparison';
+import { QualityReport, test } from 'src/app/features/metrics/test';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class DataHandlerService {
-  private ipc!: IpcRenderer;
-  public filePaths: string[] = [];
 
+  private ipc!: IpcRenderer;
   public lastSentFilePaths: string[] = [];
 
-  public metrics: { [id: string]: Object | null } = {};
-  public loadingFiles: string[] = [];
+  private files: { [path: string]: SBOMInfo } = {};
 
-  public comparison!: Comparison;
+  public comparison!: Comparison | null;
 
   private loadingComparison: boolean = false;
+  private loadingMetrics: boolean = false;
 
   public selectedQualityReport!: string;
 
@@ -35,129 +35,118 @@ export class DataHandlerService {
     }
   }
 
-  /**
-   * Attempts to add list of files to SBOM list
-   * @param paths list of SBOM file paths
-   */
   AddFiles(paths: string[]) {
-    this.loadingFiles.push(...paths);
-    this.filePaths.push(...paths);
-
     paths.forEach((path) => {
-      this.RunMetricsOnFile(path);
-    });
+
+      this.files[path] = {
+        status: FileStatus.LOADING,
+      }
+
+      this.ValidateFile(path);
+    })
   }
 
-  /**
-   * Runs all Metrics on all files
-   */
   RunAllMetrics() {
-    this.filePaths.forEach((file) => {
-      this.RunMetricsOnFile(file);
-    });
+    Object.keys(this.files).forEach((file) => {
+      this.ValidateFile(file, true);
+    })
   }
 
-  /**
-   * Checks if comparison is still loading
-   */
   IsLoadingComparison() {
     return this.loadingComparison;
   }
 
-  /**
-   * Runs tests on specified SBOM file
-   * @params path Filepath of SBOM
-   */
-  RunMetricsOnFile(path: string) {
+  IsLoadingMetrics() {
+    return this.loadingMetrics;
+  }
+
+  ValidateFile(path: string, metrics: boolean = false) {
+    if (metrics) {
+      this.loadingMetrics = true;
+    }
     this.ipc.invoke('getFileData', path).then((data: any) => {
-      this.client
-        .post(
-          'qa',
-          new HttpParams().set('contents', data).set('fileName', path)
-        )
-        .subscribe(
-          (result) => {
-            this.metrics[path] = result;
-            this.loadingFiles = this.loadingFiles.filter((x) => x !== path);
-          },
-          (error) => {
-            this.metrics[path] = null;
-            this.loadingFiles = this.loadingFiles.filter((x) => x !== path);
-          }
-        );
+      this.client.post(metrics ? "qa" : "parse", {'fileName': path, 'contents': data}).subscribe((result) => {
+        this.files[path].status = FileStatus.VALID;
+
+        if(metrics) {
+          this.loadingMetrics = false;
+          this.files[path].metrics = new QualityReport(result as test);
+        }
+      },
+      (error) => {
+        this.loadingMetrics = false;
+        this.files[path].status = FileStatus.ERROR;
+        this.files[path].extra = error.error;
+      })
     });
   }
 
-  /**
-   * Returns valid SBOMS
-   */
-  GetValidSBOMs() {
-    return Object.keys(this.metrics).filter((x) => this.metrics[x] !== null);
+
+  DeleteFile(path: string) {
+    delete this.files[path];
   }
 
-  /**
-   *  Gets name of SBOM file w/o the full file path
-   */
+  GetSBOMsOfType(status: FileStatus) {
+    return Object.keys(this.files).filter((x) => this.files[x].status === status);
+  }
+
+  GetSBOMInfo(path: string) {
+    return this.files[path];
+  }
+
+  GetMetrics(path: string) {
+    return this.GetSBOMInfo(path).metrics;
+  }
+
+
   getSBOMAlias(path: string) {
-    const pathChar = path.indexOf('/') !== -1 ? '/' : '\\';
+    const pathChar =  path.indexOf('/') !== -1 ? '/' : '\\';
     return path.split(pathChar).pop();
   }
 
-  /**
-   *  Compares multiple SBOMS against a target SBOM
-   *  @param main  Target SBOM
-   *   @param others comparison SBOMS
-   */
   async Compare(main: string, others: string[]): Promise<any> {
     this.loadingComparison = true;
-
-    let toSend: { [path: string]: any } = {};
-    let total = others.length + 1;
-    let i = 0;
-
     let paths = [main, ...others];
+    let files: File[] = [];
 
-    paths.forEach((path) => {
-      this.ipc.invoke('getFileData', path).then((data: any) => {
-        toSend[path] = data;
-        i++;
+    for(let i = 0; i < paths.length; i++) {
+      let path = paths[i];
+      let data = await this.ipc.invoke('getFileData', path);
 
-        //last time running
-        if (i == total) {
-          let fileData: string[] = [];
-          let filePaths: string[] = [];
+      files.push({
+        'fileName': path,
+        'contents': data
+      })
+    }
 
-          //Ensure that the compare is first in list
+    this.lastSentFilePaths = paths;
 
-          let keys = Object.keys(toSend);
+    return this.client.post("compare", files, new HttpParams().set('targetIndex', 0));
 
-          for (let i = 0; i < keys.length; i++) {
-            let path = keys[i];
-
-            if (path === main) {
-              fileData.unshift(toSend[path]);
-              filePaths.unshift(path);
-            } else {
-              fileData.push(toSend[path]);
-              filePaths.push(path);
-            }
-          }
-
-          this.lastSentFilePaths = filePaths;
-
-          this.client
-            .post(
-              'compare',
-              new HttpParams()
-                .set('contents', JSON.stringify(fileData))
-                .set('fileNames', JSON.stringify(filePaths))
-            )
-            .subscribe((result: any) => {
-              this.comparison = result;
-              this.loadingComparison = false;
-            });
-        }
-      });
-    });
   }
+
+  generateSBOM(fileContents : string[], fileNames : string[], schema? : string, format? : string){
+    return this.client.post("generate", {'fileContents': fileContents, 'fileNames': fileNames, 'schema': schema, 'format': format});
+  }
+
+  merge(fileContents : string[], fileNames : string[], schema : string, format : string){
+    return this.client.post("merge", {'fileContents': fileContents, 'fileNames': fileNames, 'schema': schema, 'format': format});
+  }
+}
+
+export interface File {
+  fileName: string;
+  contents: string;
+}
+
+export interface SBOMInfo {
+  status: FileStatus;
+  metrics?: QualityReport;
+  extra?: string;
+}
+
+export enum FileStatus {
+  LOADING,
+  ERROR,
+  VALID
 }
