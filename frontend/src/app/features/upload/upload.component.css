@@ -71,3 +71,12 @@ hr{
     color: #007bff;
     border-width: 2px;
 }
+
+.btn-secondary{
+    background-color: transparent; 
+    border-color: #007bff; 
+    color: #007bff;
+    border-width: 2px;
+}
+
+
