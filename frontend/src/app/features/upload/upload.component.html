@@ -1,0 +1,14 @@
+<div class="upload-container">
+    <div class="file-name">
+        <input mdbCheckbox class="form-check-input" type="checkbox"/>
+    </div>
+    <div class="file-dropzone" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+        <span class="material-symbols-outlined">publish</span>        
+        <hr>
+        <p class="text-center">Drag and drop SBOMS</p>
+        <label class="btn btn-primary">
+            Select Files
+            <input type="file" (change)="onFileSelected($event)" multiple style="display: none;">
+        </label>            
+    </div>
+</div>
