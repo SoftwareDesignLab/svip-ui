@@ -1,0 +1,95 @@
+<div class="comparison" *ngIf="!isLoadingComparison">
+  <div class="flex filters">
+    <app-button (click)="filtered = !filtered" text="{{filtered ? 'Show All' : 'Filter Conflicts'}}"></app-button>
+    <app-button (click)="markTarget = !markTarget; getTargetSBOMValues()" text="{{ markTarget ? 'Unmark' : 'Mark' }} Target Values"></app-button>
+  </div>
+  <div class="header">
+    <span
+      class="underline"
+      *ngFor="let title of path"
+      (click)="decreaseDepth(title)"
+      >{{ title }} /</span
+    >
+  </div>
+  <div class="body" *ngIf="getComparison()">
+    <!-- All Components -->
+    <div></div>
+    <div *ngIf="path.length === 1">
+      <ng-container *ngFor="let component of components">
+        <app-accordion
+          *ngIf="componentHasConflict(component)"
+          [title]="(targetSBOM[component] && markTarget ? '*' : '') + component"
+          [extra]="[(compare[component].length || 0) + ' Values']"
+          (click)="path.push(component)"
+        ></app-accordion>
+      </ng-container>
+    </div>
+    <!-- Component -->
+    <div *ngIf="path.length === 2">
+      <ng-container *ngFor="let componentVersion of compare[path[1]]">
+        <app-accordion
+          *ngIf="hasConflict(componentVersion.appearances.length)"
+          [title]="
+            (targetSBOM[path[1]] && markTarget
+              ? targetSBOM[path[1]].indexOf(
+                  componentVersion.componentVersion
+                ) !== -1
+                ? '*'
+                : ''
+              : '') + (componentVersion.componentVersion || 'N/A')
+          "
+          [extra]="[
+            componentVersion.appearances.length +
+              '/' +
+              lastSentFilePaths.length +
+              ' Match'
+          ]"
+          [color]="passed(componentVersion.appearances.length)"
+          (click)="
+            path.push(componentVersion.componentVersion || '');
+            version = componentVersion || undefined
+          "
+        >
+        </app-accordion>
+      </ng-container>
+    </div>
+    <!-- Version Attributes -->
+    <div *ngIf="path.length === 3 && version">
+      <ng-container *ngFor="let attr of attributes">
+        <div *ngIf="getAttributes(attr).length">
+          <app-accordion
+            [title]="attr"
+            [extra]="[getAttributes(attr).length + 'values']"
+            ><div body>
+              <ng-container *ngFor="let value of getAttributes(attr)">
+                <app-accordion
+                  *ngIf="hasConflict(version[attr][value].appearances.length)"
+                  [title]="
+                    (version[attr][value].appearances && markTarget
+                      ? version[attr][value].appearances.indexOf(0) !== -1
+                        ? '*'
+                        : ''
+                      : '') + value
+                  "
+                  [extra]="[
+                    version[attr][value].appearances.length +
+                      '/' +
+                      lastSentFilePaths.length +
+                      ' Match'
+                  ]"
+                  [color]="passed(version[attr][value].appearances.length)"
+                >
+                  <div body>
+                    <div *ngFor="let sbom of version[attr][value].appearances">
+                      {{ getAliasFromIndex(sbom) }} {{ sbom }}
+                    </div>
+                  </div>
+                </app-accordion>
+              </ng-container>
+            </div>
+          </app-accordion>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
