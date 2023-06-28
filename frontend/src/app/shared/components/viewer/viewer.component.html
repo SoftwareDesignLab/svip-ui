@@ -1,26 +1,9 @@
 <div class="upload-container">
-    <h3>SBOM Files</h3>
-    <form class="">
-        <input type="text" placeholder="Search.." name="search">
-        <button type="submit"><i class="btn-secondary material-symbols-outlined">Search</i></button>
-    </form>
-    <div class="file-name">
-        <input mdbCheckbox class="form-check-input" type="checkbox"/>
-        <h3>File Name</h3>
-    </div>
-    <div class="file-dropzone" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
-        <label class="btn btn-primary">
-            Add SBOMS
-            <span class="material-symbols-outlined">Add</span>        
-            <input type="file" (change)="onFileSelected($event)" multiple style="display: none;">
-        </label>            
-    </div>
-    <h3>Generate SBOM</h3>
-    <div class="generate-dropzone" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
-        <label class="btn btn-primary">
-            Select Files
-            <input type="file" (change)="onFileSelected($event)" multiple style="display: none;">
-        </label>        
-        <p class="text-center">or drag project directory in here</p>
+    <h3>View SBOM</h3>
+    <div class="data-display">
+        <div class="btn-group">
+            <button class="btn-secondary">Pretty</button>
+            <button class="btn-secondary">Raw</button>
+        </div>
     </div>
 </div>

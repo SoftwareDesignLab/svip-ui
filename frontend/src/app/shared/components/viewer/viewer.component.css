@@ -74,9 +74,33 @@ hr{
 
 .btn-secondary{
     background-color: transparent; 
-    border-color: #007bff; 
+    border-color: transparent; 
     color: #007bff;
     border-width: 2px;
+}
+
+.btn-group {
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    border-width: 2px;
+    position:relative;
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.data-display {
+    border-radius:15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 40px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-start;
+    padding: 10px;
 }
 
 
