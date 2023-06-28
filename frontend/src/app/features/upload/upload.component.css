@@ -3,7 +3,9 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 40%;
+    width: 80%;
+    margin: 10px auto;
+    overflow: hidden;
 }
 
 .file-name {
@@ -77,6 +79,7 @@ hr{
     border-color: #007bff;
     color: #007bff;
     border-width: 2px;
+    margin-top: 8px;
 }
 
 
@@ -92,4 +95,34 @@ hr{
     justify-content: flex-start;
     padding: 10px;
 }
+
+.search-container button:hover {
+    background: #ccc;
+  }
+
+.search-container {
+    float: right;
+  }
+  
+.search-container button {
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 0px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .wrapper {
+    border:1px solid #000;
+    display:inline-block;
+}
+
+input,
+button {
+    background-color:transparent;
+    border:0;
+}
+  
 
