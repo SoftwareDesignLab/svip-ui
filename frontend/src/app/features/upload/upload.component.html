@@ -9,24 +9,37 @@
         <h3>File Name</h3>
     </div>
 
-    <div *ngFor="let item of GetErrorSBOMs()">
-        <div class="file-dropzone">
-            <span class="material-symbols-outlined">publish</span>        
-            <hr>
-            <p class="text-center">Drag and drop SBOMS</p>
-            <label class="btn btn-primary">
-                Select Files
-                <input type="file" (click)= "browse()" multiple style="display: none;">
-            </label>           
+    <div class="files-container" *ngIf="GetAllFiles().length > 0">
+      <div class="file flex center" *ngFor="let item of GetValidSBOMs()">
+        <div class="sbom flex" style="color: var(--green);">
+            <input type="checkbox" [value]="item"/>
+            {{getAlias(item)}}
         </div>
+      </div>
+
+      <div class="file flex center" *ngFor="let item of GetErrorSBOMs()">
+          <div class="sbom flex" style="color: var(--red);">
+            <input type="checkbox" [value]="item"/>
+            {{getAlias(item)}}
+          </div>
+      </div>
+      <div class="file flex center" *ngFor="let item of GetLoadingSBOMs()">
+          <div class="sbom flex" style="color: var(--accent);">
+              {{getAlias(item)}}
+          </div>
+      </div>
     </div>
-    
+
+    <div class="file-dropzone" *ngIf="GetAllFiles().length === 0">
+        <span class="material-symbols-outlined">publish</span>
+        <hr>
+        <p class="text-center">Drag and drop SBOMS</p>
+        <app-button text="Select Files" (click)="browse()"/>
+    </div>
+
     <h3>Generate SBOM</h3>
     <div class="generate-dropzone">
-        <label class="btn btn-primary">
-            Select Files
-            <input type="file" (click)= "browse()" multiple style="display: none;">
-        </label>        
+      <app-button text="Select Files" (click)="browse()"/>
         <p class="text-center">or drag project directory in here</p>
     </div>
 </div>

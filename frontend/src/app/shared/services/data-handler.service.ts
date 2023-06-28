@@ -90,6 +90,10 @@ export class DataHandlerService {
     return Object.keys(this.files).filter((x) => this.files[x].status === status);
   }
 
+  GetAllFiles() {
+    return Object.keys(this.files);
+  }
+
   GetSBOMInfo(path: string) {
     return this.files[path];
   }

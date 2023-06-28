@@ -48,19 +48,27 @@ export class UploadComponent implements OnInit{
     this.dataHandler.GetSBOMsOfType(FileStatus.VALID).length > 0 || this.dataHandler.GetSBOMsOfType(FileStatus.LOADING).length > 0;
   }
 
+  GetAllFiles() {
+    return this.dataHandler.GetAllFiles();
+  }
   /**
    *  Gets uploaded files
    */
-  GetFiles() {
+  GetValidSBOMs() {
     return this.dataHandler.GetSBOMsOfType(FileStatus.VALID);
   }
 
   /**
    *  Gets files that are still being uploaded from data handler
    */
-  GetLoadingFiles() {
+  GetLoadingSBOMs() {
     return this.dataHandler.GetSBOMsOfType(FileStatus.LOADING);
   }
+
+  GetErrorSBOMs() {
+    return this.dataHandler.GetSBOMsOfType(FileStatus.ERROR);
+  }
+
 
   GetSBOMInfo(file: string) {
     return this.dataHandler.GetSBOMInfo(file);
