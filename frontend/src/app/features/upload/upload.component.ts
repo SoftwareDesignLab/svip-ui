@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { IpcRenderer } from 'electron';
 import { DataHandlerService, FileStatus } from 'src/app/shared/services/data-handler.service';
 
@@ -110,7 +110,7 @@ export class UploadComponent implements OnInit{
     if (this.areAllSelected()) {
       this.selectedFiles = [];
     } else {
-      this.selectedFiles = this.dataHandler.GetSBOMsOfType(FileStatus.VALID);
+      this.selectedFiles = this.GetValidSBOMs();
     }
   }
 
@@ -131,4 +131,51 @@ export class UploadComponent implements OnInit{
   getAlias(sbom: string) {
     return this.dataHandler.getSBOMAlias(sbom);
   }
+
+   /**
+   * Handles the file drop event
+   * @param event The drop event
+   */
+   @HostListener('document:drop', ['$event'])
+   onDocumentDrop(event: DragEvent) {
+     event.preventDefault();
+     event.stopPropagation();
+     this.onFileDrop(event);
+   }
+ 
+   /**
+    * Handles the drag over event
+    * @param event The drag over event
+    */
+   onDragOver(event: DragEvent) {
+     event.preventDefault();
+     event.stopPropagation();
+     // Add any visual indication for the drag over event (e.g., highlighting the dropzone)
+   }
+ 
+   /**
+    * Handles the drag leave event
+    * @param event The drag leave event
+    */
+   onDragLeave(event: DragEvent) {
+     event.preventDefault();
+     event.stopPropagation();
+     // Remove any visual indication for the drag leave event
+   }
+ 
+   /**
+    * Handles the file drop event
+    * @param event The drop event
+    */
+   onFileDrop(event: DragEvent) {
+     event.preventDefault();
+     event.stopPropagation();
+ 
+     const files = event.dataTransfer?.files;
+     if (files && files.length > 0) {
+       const filePaths = Array.from(files).map((file) => file.path);
+       this.dataHandler.AddFiles(filePaths);
+     }
+   }
+ 
 }
