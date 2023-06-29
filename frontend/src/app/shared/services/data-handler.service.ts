@@ -145,6 +145,14 @@ export class DataHandlerService {
   saveSBOM(fileName: string, contents: string) {
     return this.client.post("upload", {'contents': contents, 'fileName': fileName});
   }
+
+  getSavedSBOMNames(): Promise<Object> {
+    return new Promise<Object>((resolve) => {
+      this.client.get("viewFiles").subscribe((result) => {
+        resolve(result);
+      });
+    });
+  }
 }
 
 export interface File {
