@@ -4,8 +4,8 @@
     flex-direction: column;
     gap: 10px;
     width: 80%;
-    margin: 10px auto;
-    overflow: hidden;
+    margin: auto;
+    overflow: auto;
 }
 
 .file-name {
@@ -41,6 +41,7 @@
 }
 
 .generate-dropzone {
+    color: var(--primary-accent);
     border-radius: 15px 15px 15px 15px;
     border: #007bff dashed 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -59,29 +60,25 @@
     color: #aaa;
 }
 
-.file-dropzone span{
+.file-dropzone span {
     font-size: 75px
 }
 
-hr{
+hr {
     width: 25%;
 }
 
-.btn-primary{
+.btn-primary {
     background-color: transparent;
     border-color: #007bff;
     color: #007bff;
     border-width: 2px;
 }
 
-.btn-secondary{
+.search-btn {
     background-color: transparent;
-    border-color: #007bff;
-    color: #007bff;
-    border-width: 2px;
-    margin-top: 8px;
+    color: var(--primary-accent);
 }
-
 
 .files-container {
     border-radius: 0 0 15px 15px;
@@ -98,31 +95,44 @@ hr{
 
 .search-container button:hover {
     background: #ccc;
-  }
+}
 
 .search-container {
+    display: flex;
+    align-items: center;
     float: right;
-  }
-  
+    border: var(--primary-accent);
+    border-width: 2px;
+    border-style: solid;
+    background-color: white;
+    border-radius: 6px;
+    width: 40%;
+}
+
+.search-container input {
+    border: 0;
+    color: var(--primary-accent);
+    background-color: transparent;
+    flex: auto;
+}
+
+.search-container ::placeholder {
+    color: var(--primary-accent);
+}
+
+.search-parent-container {
+    display: flex;
+}
+
 .search-container button {
-    padding: 6px 10px;
-    margin-top: 8px;
-    margin-right: 0px;
-    background: #ddd;
-    font-size: 17px;
+    background: transparent;
     border: none;
     cursor: pointer;
-  }
-
-  .wrapper {
-    border:1px solid #000;
-    display:inline-block;
+    line-height: 0;
+    padding: 0;
 }
 
-input,
-button {
-    background-color:transparent;
-    border:0;
+.wrapper {
+    border: 1px solid #000;
+    display: inline-block;
 }
-  
-

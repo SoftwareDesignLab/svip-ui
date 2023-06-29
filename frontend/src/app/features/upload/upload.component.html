@@ -1,34 +1,34 @@
 <div class="upload-container">
     <h3>SBOM Files</h3>
-    <div class="search-container">
-        <form>
+    <div class="search-parent-container">
+        <form class="search-container">
             <input type="text" placeholder="Search.." name="search">
-            <button type="submit"><i class="btn-secondary material-symbols-outlined">Search</i></button>
-            <hr>
+            <button><i class="search-btn material-symbols-outlined">Search</i></button>
         </form>
     </div>
     <div class="file-name">
-        <input type="checkbox"/>
+        <input type="checkbox" />
         <h3>File Name</h3>
     </div>
 
-    <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+    <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
+        (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
         <div *ngFor="let item of GetValidSBOMs()">
             <div class="sbom" style="color: var(--green);">
-                <input type="checkbox" [value]="item"/>
+                <input type="checkbox" [value]="item" />
                 {{getAlias(item)}}
             </div>
         </div>
-    
+
         <div *ngFor="let item of GetErrorSBOMs()">
             <div class="sbom" style="color: var(--red);">
-              <input type="checkbox" [value]="item"/>
-              <span ngbTooltip="SBOM is not valid!">
-                {{ getAlias(item) }}
-              </span>
+                <input type="checkbox" [value]="item" />
+                <span ngbTooltip="SBOM is not valid!">
+                    {{ getAlias(item) }}
+                </span>
             </div>
-          </div>
-    
+        </div>
+
         <div *ngFor="let item of GetLoadingSBOMs()">
             <div class="sbom" style="color: var(--accent);">
                 {{getAlias(item)}}
@@ -36,17 +36,18 @@
         </div>
     </div>
 
-    <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+    <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
+        (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
         <span class="material-symbols-outlined">publish</span>
         <hr>
         <p class="text-center">Drag and drop SBOMS</p>
         <app-button text="Select Files" (click)="browse()"></app-button>
     </div>
-    
+
 
     <h3>Generate SBOM</h3>
     <div class="generate-dropzone">
-      <app-button text="Select Files" (click)="browse()"/>
+        <app-button text="Select Files" (click)="browse()" />
         <p class="text-center">or drag project directory in here</p>
     </div>
 </div>
