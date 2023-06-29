@@ -1,6 +1,6 @@
 /**@author Justin Jantzi*/
 import { Comparison } from 'src/app/features/compare/comparison';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { ClientService } from './client.service';
 import { IpcRenderer } from 'electron';
 import { QualityReport, test } from 'src/app/features/metrics/test';
@@ -9,7 +9,7 @@ import { HttpParams } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class DataHandlerService {
+export class DataHandlerService implements OnInit {
 
   private ipc!: IpcRenderer;
   public lastSentFilePaths: string[] = [];
@@ -33,6 +33,18 @@ export class DataHandlerService {
     } else {
       console.warn('App not running inside Electron!');
     }
+  }
+
+  ngOnInit(): void {
+      this.getSavedSBOMNames().then((results) => {
+        if(Array.isArray(results)) {
+          results.forEach((fileName) => {
+            this.getSavedSBOM(fileName).then((data) => {
+              this.ValidateFile(fileName, data);
+            })
+          })
+        }
+      })
   }
 
   AddFiles(paths: string[]) {
@@ -60,27 +72,28 @@ export class DataHandlerService {
     return this.loadingMetrics;
   }
 
-  ValidateFile(path: string, metrics: boolean = false) {
+  async ValidateFile(path: string, metrics: boolean = false, contents='') {
     if (metrics) {
       this.loadingMetrics = true;
     }
-    this.ipc.invoke('getFileData', path).then((data: any) => {
-      this.client.post(metrics ? "qa" : "parse", {'fileName': path, 'contents': data}).subscribe((result) => {
-        this.files[path].status = FileStatus.VALID;
 
-        if(metrics) {
-          this.loadingMetrics = false;
-          this.files[path].metrics = new QualityReport(result as test);
-        }
+    let data = contents === '' ? await this.ipc.invoke('getFileData', path) : contents;
 
-        this.saveSBOM(path, data);
-      },
-      (error) => {
+    this.client.post(metrics ? "qa" : "parse", {'fileName': path, 'contents': data}).subscribe((result) => {
+      this.files[path].status = FileStatus.VALID;
+
+      if(metrics) {
         this.loadingMetrics = false;
-        this.files[path].status = FileStatus.ERROR;
-        this.files[path].extra = error.error;
-      })
-    });
+        this.files[path].metrics = new QualityReport(result as test);
+      }
+
+      this.saveSBOM(path, data);
+    },
+    (error) => {
+      this.loadingMetrics = false;
+      this.files[path].status = FileStatus.ERROR;
+      this.files[path].extra = error.error;
+    })
   }
 
 
@@ -157,7 +170,11 @@ export class DataHandlerService {
   }
 
   getSavedSBOM(name: string) {
-    return this.client.get("view", new HttpParams().set("id", name));
+    return new Promise<any>((resolve) => {
+      this.client.get("view", new HttpParams().set("id", name)).subscribe((result) => {
+        resolve(result);
+      });
+    });
   }
 }
 
