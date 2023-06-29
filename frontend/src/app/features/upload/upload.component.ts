@@ -160,7 +160,6 @@ export class UploadComponent implements OnInit{
 
    UpdateSearch(event: any) {
     this.filterSearch = event.target.value;
-    console.log(this.filterSearch);
    }
 
    GetFilter() {
