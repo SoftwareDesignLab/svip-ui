@@ -81,6 +81,7 @@ export class DataHandlerService implements OnInit {
 
     this.client.post(metrics ? "qa" : "parse", {'fileName': path, 'contents': data}).subscribe((result) => {
       this.files[path].status = FileStatus.VALID;
+      this.files[path].contents = data;
 
       if(metrics) {
         this.loadingMetrics = false;
@@ -187,6 +188,7 @@ export interface SBOMInfo {
   status: FileStatus;
   metrics?: QualityReport;
   extra?: string;
+  contents?: string;
 }
 
 export enum FileStatus {
