@@ -150,6 +150,7 @@ hr {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    justify-content: space-between;
 }
 
 .topnav a:hover {
