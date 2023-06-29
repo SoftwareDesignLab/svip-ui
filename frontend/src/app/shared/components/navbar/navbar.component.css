@@ -1,6 +1,6 @@
 .topnav {
     overflow: hidden;
-    background-color: #6889AF ;
+    background-color: var(--primary) ;
     /* check if its the primary accent */
     width: 100%;
     justify-content: center;
