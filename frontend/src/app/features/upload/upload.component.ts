@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { IpcRenderer } from 'electron';
 import { DataHandlerService, FileStatus } from 'src/app/shared/services/data-handler.service';
+import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 
 @Component({
   selector: 'app-upload',
@@ -11,9 +12,7 @@ export class UploadComponent implements OnInit{
   private ipc!: IpcRenderer;
   private filterSearch: string = '';
 
-  constructor(
-    private dataHandler: DataHandlerService,
-    ) {
+  constructor(private dataHandler: DataHandlerService, public routing: RoutingService) {
     if (window.require) {
       try {
         this.ipc = window.require('electron').ipcRenderer;
@@ -93,15 +92,24 @@ export class UploadComponent implements OnInit{
     }
   }
 
-  DeleteSelected() {
+  GetSelected() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let selected: string[] = [];
 
     for (let i = 0; i < checkboxes.length; i++) {
       const checkbox = checkboxes[i] as HTMLInputElement;
       if (checkbox.checked && !checkbox.disabled) {
-        this.RemoveFile(checkbox.value);
+        selected.push(checkbox.value);
       }
     }
+
+    return selected;
+  }
+
+  DeleteSelected() {
+    this.GetSelected().forEach((file) => {
+      this.RemoveFile(file);
+    })
   }
 
   /**
@@ -164,5 +172,15 @@ export class UploadComponent implements OnInit{
 
    GetFilter() {
     return this.filterSearch;
+   }
+
+   ViewSBOM() {
+    let selected = this.GetSelected();
+
+    if(selected.length !== 1)
+      return;
+
+    this.routing.SetPage(PAGES.VIEW);
+    this.routing.data = this.dataHandler.GetSBOMInfo(selected[0]);
    }
 }
