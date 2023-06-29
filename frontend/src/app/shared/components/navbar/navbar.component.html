@@ -1,5 +1,7 @@
-<div class="navbar flex shadow">
-  <div *ngFor="let key of routing.GetOptionKeys()" (click)="routing.Redirect(key)" placement="bottom" [ngbTooltip]="getRequiredSBOM(key) > 0 ? getRequiredSBOM(key) + ' SBOM(s) Required' : ''">
-    {{key | titlecase}}
-  </div>
+<div class="topnav">
+    <!-- <img /> -->
+    <a href="#Home">Home</a>
+    <a href="#Metrics">Metrics</a>
+    <a href="#Repair">Repair</a>
+    <a href="#Visualize">Visualize</a>
 </div>
