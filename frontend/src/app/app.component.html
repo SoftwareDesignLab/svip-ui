@@ -2,6 +2,6 @@
   <app-navbar/>
   <div class="body flex">
     <app-upload/>
-    <app-viewer/>
+    <app-viewer *ngIf="routing.GetPage() === 1"/>
   </div>
 </div>
