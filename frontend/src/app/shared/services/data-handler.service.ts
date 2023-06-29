@@ -153,6 +153,10 @@ export class DataHandlerService {
       });
     });
   }
+
+  getSavedSBOM(name: string) {
+    return this.client.get("view", new HttpParams().set("id", name));
+  }
 }
 
 export interface File {
