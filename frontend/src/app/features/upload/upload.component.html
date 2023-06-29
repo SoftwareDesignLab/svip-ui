@@ -2,13 +2,13 @@
     <app-navbar></app-navbar>
     <div class="upload-container">
         <h3>SBOM Files</h3>
-        <div class="search-parent-container">
+        <div class="search-parent-container" *ngIf="GetAllFiles().length > 0" >
             <form class="search-container">
                 <input type="text" placeholder="Search.." name="search">
                 <button><i class="search-btn material-symbols-outlined">Search</i></button>
             </form>
         </div>
-        <div class="file-name">
+        <div class="file-name" *ngIf="GetAllFiles().length > 0" >
             <input type="checkbox" (change)="setAllSelected($event)"/>
             <h3>File Name</h3>
         </div>
