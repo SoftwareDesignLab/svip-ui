@@ -9,6 +9,7 @@ import { DataHandlerService, FileStatus } from 'src/app/shared/services/data-han
 })
 export class UploadComponent implements OnInit{
   private ipc!: IpcRenderer;
+  private filterSearch: string = '';
 
   constructor(
     private dataHandler: DataHandlerService,
@@ -156,4 +157,13 @@ export class UploadComponent implements OnInit{
      }
    }
 
+
+   UpdateSearch(event: any) {
+    this.filterSearch = event.target.value;
+    console.log(this.filterSearch);
+   }
+
+   GetFilter() {
+    return this.filterSearch;
+   }
 }

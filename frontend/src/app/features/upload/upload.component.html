@@ -3,10 +3,10 @@
     <div class="upload-container">
         <h3>SBOM Files</h3>
         <div class="search-parent-container" *ngIf="GetAllFiles().length > 0" >
-            <form class="search-container">
-                <input type="text" placeholder="Search.." name="search">
+            <div class="search-container">
+                <input type="text" placeholder="Search.." name="search" (input)="UpdateSearch($event)">
                 <button><i class="search-btn material-symbols-outlined">Search</i></button>
-            </form>
+            </div>
         </div>
         <div class="file-name" *ngIf="GetAllFiles().length > 0" >
             <input type="checkbox" (change)="setAllSelected($event)"/>
@@ -16,19 +16,24 @@
         <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
             (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
             <div *ngFor="let item of GetValidSBOMs()">
+              <ng-container  *ngIf="getAlias(item)?.includes(GetFilter())">
                 <div class="sbom" style="color: var(--green);">
-                    <input type="checkbox" [value]="item" />
-                    {{getAlias(item)}}
+                  <input type="checkbox" [value]="item" />
+                  {{getAlias(item)}}
                 </div>
+              </ng-container>
+
             </div>
 
             <div *ngFor="let item of GetErrorSBOMs()">
+              <ng-container  *ngIf="getAlias(item)?.includes(GetFilter())">
                 <div class="sbom" style="color: var(--red);">
                     <input type="checkbox" [value]="item" />
                     <span ngbTooltip="SBOM is not valid!">
                         {{ getAlias(item) }}
                     </span>
                 </div>
+              </ng-container>
             </div>
 
             <div *ngFor="let item of GetLoadingSBOMs()">
