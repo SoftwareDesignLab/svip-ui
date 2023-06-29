@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 80%;
+    width: 50%;
     margin: auto;
     margin-top: 5%;
     overflow: auto;
@@ -11,7 +11,7 @@
 
 .file-name {
     border-radius: 15px 15px 0 0;
-    border-color: #007bff;
+    border-color: var(--primary-accent);
     background-color: white;
     display: flex;
     align-items: center;
@@ -33,8 +33,10 @@
 }
 
 .file-dropzone {
-    border-radius: 0 0 15px 15px;
+    border-radius: 15px 15px 15px 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: var(--primary-accent) dashed 2px;
+    color: var(--primary-accent);
     background-color: white;
     padding: 40px;
     cursor: pointer;
@@ -47,7 +49,7 @@
 .generate-dropzone {
     color: var(--primary-accent);
     border-radius: 15px 15px 15px 15px;
-    border: #007bff dashed 2px;
+    border: var(--primary-accent) dashed 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: white;
     padding: 40px;
@@ -58,24 +60,19 @@
     gap: 10px;
 }
 
-.file-dropzone p {
-    margin: 0;
-    font-size: 16px;
-    color: #aaa;
-}
-
 .file-dropzone span {
     font-size: 75px
 }
 
 hr {
-    width: 25%;
+    width: 15%;
+    border-top: 3px solid var(--primary-accent);
 }
 
 .btn-primary {
     background-color: transparent;
-    border-color: #007bff;
-    color: #007bff;
+    border-color: var(--primary-accent);
+    color: var(--primary-accent);
     border-width: 2px;
 }
 
