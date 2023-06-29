@@ -92,6 +92,17 @@ export class UploadComponent implements OnInit{
     }
   }
 
+  DeleteSelected() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    for (let i = 0; i < checkboxes.length; i++) {
+      const checkbox = checkboxes[i] as HTMLInputElement;
+      if (checkbox.checked && !checkbox.disabled) {
+        this.RemoveFile(checkbox.value);
+      }
+    }
+  }
+
   /**
    * Get SBOM filename
    */

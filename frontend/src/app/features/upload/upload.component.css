@@ -170,3 +170,7 @@ hr {
     border-width: 2px;
     border-color: black;
 }
+
+.buttons {
+  gap: 15px;
+}
