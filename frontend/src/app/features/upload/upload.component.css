@@ -135,3 +135,27 @@ hr {
     border: 1px solid #000;
     display: inline-block;
 }
+
+.topnav {
+    overflow: hidden;
+    background-color: #6889AF ;
+    /* check if its the primary accent */
+}
+
+.topnav a {
+    float: right;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+}
+
+.topnav a:hover {
+    background-color: #ddd;
+    color: #000;
+}
+
+.topnav a.active {
+    background-color: white;
+    color: #6889AF;
+    border-color: #6889AF;
+}
