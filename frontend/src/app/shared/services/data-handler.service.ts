@@ -145,7 +145,7 @@ export class DataHandlerService implements OnInit {
   }
 
   generateSBOM(fileContents : string[], fileNames : string[], schema? : string, format? : string){
-    return this.client.post("generate", {'fileContents': fileContents, 'fileNames': fileNames, 'schema': schema, 'format': format});
+    return this.client.post("generate", {'fileContents': fileContents, 'fileNames': fileNames, 'schemaName': schema, 'formatName': format});
   }
 
   merge(fileContents : string[], fileNames : string[], schema : string, format : string){
