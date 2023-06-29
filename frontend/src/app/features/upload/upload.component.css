@@ -99,6 +99,7 @@ hr {
 
 .search-container button:hover {
     background: #ccc;
+    border-radius: 6px;
 }
 
 .search-container {
