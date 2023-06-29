@@ -136,6 +136,15 @@ export class DataHandlerService {
   merge(fileContents : string[], fileNames : string[], schema : string, format : string){
     return this.client.post("merge", {'fileContents': fileContents, 'fileNames': fileNames, 'schema': schema, 'format': format});
   }
+
+  /**
+   * Save an SBOM in the database for future use
+   * @param fileName File name
+   * @param contents contents of the sbom
+   */
+  saveSBOM(fileName: string, contents: string) {
+    return this.client.post("upload", {'contents': contents, 'fileName': fileName});
+  }
 }
 
 export interface File {
