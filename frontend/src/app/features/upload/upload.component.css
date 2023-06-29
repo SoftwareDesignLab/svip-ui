@@ -5,6 +5,7 @@
     gap: 10px;
     width: 80%;
     margin: auto;
+    margin-top: 5%;
     overflow: auto;
 }
 
@@ -140,6 +141,7 @@ hr {
     overflow: hidden;
     background-color: #6889AF ;
     /* check if its the primary accent */
+    width: 100%;
 }
 
 .topnav a {
@@ -147,15 +149,19 @@ hr {
     color: white;
     text-align: center;
     padding: 14px 16px;
+    text-decoration: none;
 }
 
 .topnav a:hover {
     background-color: #ddd;
-    color: #000;
+    color: var(--primary-accent);
+    border-radius: 6px;
 }
 
 .topnav a.active {
     background-color: white;
-    color: #6889AF;
-    border-color: #6889AF;
+    color: var(--primary-accent);
+    border-color: var(--primary-accent);
+    border-width: 2px;
+    border-color: black;
 }
