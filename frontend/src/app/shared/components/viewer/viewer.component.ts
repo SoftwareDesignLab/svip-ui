@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class ViewerComponent {
   files: File[] = [];
+  pretty: boolean = false;
+  text: string = '';
 
   onDrop(event: DragEvent): void {
     event.preventDefault();
