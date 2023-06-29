@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { ButtonComponent } from './shared/components/button/button.component';
 import { UploadComponent } from './features/upload/upload.component';
 import { ViewerComponent } from './shared/components/viewer/viewer.component';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ButtonComponent,
     UploadComponent,
-    ViewerComponent
+    ViewerComponent,
+    NavbarComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule],
   providers: [],
