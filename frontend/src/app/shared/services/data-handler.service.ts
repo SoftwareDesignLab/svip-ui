@@ -72,6 +72,8 @@ export class DataHandlerService {
           this.loadingMetrics = false;
           this.files[path].metrics = new QualityReport(result as test);
         }
+
+        this.saveSBOM(path, data);
       },
       (error) => {
         this.loadingMetrics = false;
