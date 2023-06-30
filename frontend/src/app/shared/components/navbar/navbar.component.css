@@ -28,6 +28,7 @@
     border-color: black;
 }
 
-img {
+.topnav img {
     max-width: 100px;
+    margin-top: 5px;
 }
