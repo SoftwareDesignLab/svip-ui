@@ -3,4 +3,17 @@
         <div class="option" [id]='upload ? "selected" : ""' (click)="upload = true">Upload</div>
         <div class="option" [id]='!upload ? "selected" : ""' (click)="upload = false">Generate</div>
     </div>
+    <ng-container *ngIf="upload">
+        <div class="dropzone">
+            <app-button text="Select Files" (click)="browse()" />
+            <p class="text-center">or drag and drop SBOMS</p>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="!upload">
+        <div class="dropzone">
+            <app-button text="Generate" (click)="browse()" />
+            <p class="text-center">or drag project directory in here</p>
+        </div>
+    </ng-container>
 </div>

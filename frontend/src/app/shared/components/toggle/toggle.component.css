@@ -54,3 +54,14 @@
     border: 2px solid var(--primary);
     height: 40px;
 }
+
+.dropzone {
+  color: var(--primary);
+  border-radius: 15px 15px 15px 15px;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
