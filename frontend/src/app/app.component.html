@@ -1,3 +1,7 @@
 <div id="main-wrapper">
-<app-upload></app-upload>
+  <app-navbar/>
+  <div class="body flex">
+    <app-upload/>
+    <app-viewer *ngIf="routing.GetPage() === 1"/>
+  </div>
 </div>
