@@ -11,7 +11,7 @@
 
 .file-name {
     border-radius: 15px 15px 0 0;
-    border-color: var(--primary-accent);
+    border-color: var(--primary);
     background-color: white;
     display: flex;
     align-items: center;
@@ -35,8 +35,8 @@
 .file-dropzone {
     border-radius: 15px 15px 15px 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: var(--primary-accent) dashed 2px;
-    color: var(--primary-accent);
+    border: var(--primary) dashed 2px;
+    color: var(--primary);
     background-color: white;
     padding: 40px;
     cursor: pointer;
@@ -47,9 +47,9 @@
 }
 
 .generate-dropzone {
-    color: var(--primary-accent);
+    color: var(--primary);
     border-radius: 15px 15px 15px 15px;
-    border: var(--primary-accent) dashed 2px;
+    border: var(--primary) dashed 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: white;
     padding: 40px;
@@ -66,19 +66,19 @@
 
 hr {
     width: 15%;
-    border-top: 3px solid var(--primary-accent);
+    border-top: 3px solid var(--primary);
 }
 
 .btn-primary {
     background-color: transparent;
-    border-color: var(--primary-accent);
-    color: var(--primary-accent);
+    border-color: var(--primary);
+    color: var(--primary);
     border-width: 2px;
 }
 
 .search-btn {
     background-color: transparent;
-    color: var(--primary-accent);
+    color: var(--primary);
 }
 
 .files-container {
@@ -103,7 +103,7 @@ hr {
     display: flex;
     align-items: center;
     float: right;
-    border: var(--primary-accent);
+    border: var(--primary);
     border-width: 2px;
     border-style: solid;
     background-color: white;
@@ -112,13 +112,13 @@ hr {
 
 .search-container input {
     border: 0;
-    color: var(--primary-accent);
+    color: var(--primary);
     background-color: transparent;
     flex: auto;
 }
 
 .search-container ::placeholder {
-    color: var(--primary-accent);
+    color: var(--primary);
 }
 
 .search-parent-container {
@@ -140,8 +140,7 @@ hr {
 
 .topnav {
     overflow: hidden;
-    background-color: #6889AF ;
-    /* check if its the primary accent */
+    background-color: var(--primary) ;
     width: 100%;
 }
 
@@ -156,14 +155,13 @@ hr {
 
 .topnav a:hover {
     background-color: #ddd;
-    color: var(--primary-accent);
-    border-radius: 6px;
+    color: var(--primary);
 }
 
 .topnav a.active {
     background-color: white;
-    color: var(--primary-accent);
-    border-color: var(--primary-accent);
+    color: var(--primary);
+    border-color: var(--primary);
     border-width: 2px;
     border-color: black;
 }
