@@ -1,0 +1,7 @@
+<div class="body">
+    <div class="header">
+        <div class="option" [id]='upload ? "selected" : ""' (click)="upload = true">Upload</div>
+        <div class="vl"></div>
+        <div class="option" [id]='!upload ? "selected" : ""' (click)="upload = false">Generate</div>
+    </div>
+</div>
