@@ -52,15 +52,19 @@
             (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
             <span class="material-symbols-outlined">publish</span>
             <hr>
-            <p class="text-center">Drag and drop SBOMS</p>
+            <p>Drag and drop SBOMS</p>
             <app-button text="Select Files" (click)="browse()"></app-button>
         </div>
 
+        <div class="generate-dropzone" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
+            (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+            <p>Drag and drop more SBOMS</p>
+            <app-button text="Select Files" (click)="browse()"></app-button>
+        </div>
 
-        <h3>Generate SBOM</h3>
-        <div class="generate-dropzone">
+        <div class="generate-dropzone" *ngIf="GetAllFiles().length === 0">
             <app-button text="Select Files" (click)="browse()" />
-            <p class="text-center">or drag project directory in here</p>
+            <p class="text-center">or drag project directory in here to generate an SBOM</p>
         </div>
     </div>
 </div>
