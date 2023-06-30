@@ -54,9 +54,14 @@
       <app-button text="Select Files" (click)="browse()"></app-button>
   </div>
 
-  <h3>Generate SBOM</h3>
-  <div class="generate-dropzone">
-      <app-button text="Select Files" (click)="browse()" />
-      <p class="text-center">or drag project directory in here</p>
+  <div class="generate-dropzone" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
+    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"> 
+    <app-toggle></app-toggle>
+  </div>
+
+  <div class="generate-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
+  (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+    <app-button text="Generate" (click)="browse()" />
+    <p class="text-center">or drag project directory in here</p>
   </div>
 </div>

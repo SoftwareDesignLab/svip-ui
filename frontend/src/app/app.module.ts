@@ -9,6 +9,7 @@ import { ButtonComponent } from './shared/components/button/button.component';
 import { UploadComponent } from './features/upload/upload.component';
 import { ViewerComponent } from './shared/components/viewer/viewer.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { ToggleComponent } from './shared/components/toggle/toggle.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
     ButtonComponent,
     UploadComponent,
     ViewerComponent,
-    NavbarComponent
+    NavbarComponent,
+    ToggleComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule],
   providers: [],
