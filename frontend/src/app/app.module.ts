@@ -12,6 +12,7 @@ import { ViewerComponent } from './shared/components/viewer/viewer.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ToggleComponent } from './shared/components/toggle/toggle.component';
 import { MultiselectDropdownComponent } from './shared/components/multiselect-dropdown/multiselect-dropdown.component';
+import { ModalComponent } from './shared/components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MultiselectDropdownComponent } from './shared/components/multiselect-dr
     ViewerComponent,
     NavbarComponent,
     ToggleComponent,
-    MultiselectDropdownComponent
+    MultiselectDropdownComponent,
+    ModalComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
