@@ -14,11 +14,7 @@ export class DataHandlerService implements OnInit {
   private ipc!: IpcRenderer;
   public lastSentFilePaths: string[] = [];
 
-  private files: { [path: string]: SBOMInfo } = {
-    'maxxy': {
-      status: FileStatus.VALID
-    }
-  };
+  private files: { [path: string]: SBOMInfo } = {};
 
   public comparison!: Comparison | null;
 
