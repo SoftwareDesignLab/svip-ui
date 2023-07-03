@@ -11,6 +11,7 @@ import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 export class UploadComponent implements OnInit{
   private ipc!: IpcRenderer;
   private filterSearch: string = '';
+  public deleteModal: boolean = false;
 
   constructor(private dataHandler: DataHandlerService, public routing: RoutingService) {
     if (window.require) {
@@ -128,6 +129,8 @@ export class UploadComponent implements OnInit{
     this.GetSelected().forEach((file) => {
       this.RemoveFile(file);
     })
+
+    this.deleteModal = false;
   }
 
   ConvertSelected() {
