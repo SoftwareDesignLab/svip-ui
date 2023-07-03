@@ -9,6 +9,8 @@ import { HttpParams } from '@angular/common/http';
 })
 export class DataHandlerService implements OnInit {
   private ipc!: IpcRenderer;
+  public lastSentFilePaths: string[] = [];
+
   private files: { [path: string]: SBOMInfo } = {};
 
   private sbomFormats: { [name: string]: boolean} = {};
