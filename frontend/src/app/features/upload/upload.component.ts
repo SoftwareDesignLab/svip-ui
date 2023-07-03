@@ -77,6 +77,12 @@ export class UploadComponent implements OnInit{
    * @param file file to remove
    */
   RemoveFile(file: string) {
+
+    if(this.routing.GetPage() === PAGES.VIEW && this.routing.data === file) {
+      this.routing.SetPage(PAGES.NONE);
+      this.routing.data = undefined;
+    }
+
     this.dataHandler.DeleteFile(file);
   }
 
@@ -181,6 +187,6 @@ export class UploadComponent implements OnInit{
       return;
 
     this.routing.SetPage(PAGES.VIEW);
-    this.routing.data = this.dataHandler.GetSBOMInfo(selected[0]);
+    this.routing.data = selected[0];
    }
 }
