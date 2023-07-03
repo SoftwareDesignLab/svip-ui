@@ -22,8 +22,8 @@ import { MultiselectDropdownComponent } from './shared/components/multiselect-dr
     ViewerComponent,
     NavbarComponent,
     ToggleComponent,
-    ModalComponent,
-    MultiselectDropdownComponent
+    MultiselectDropdownComponent,
+    ModalComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
