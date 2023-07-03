@@ -12,6 +12,6 @@
   cursor: pointer;
   text-align: center;
   align-items: center;
-  border-color: var(--primary-accent);
-  color: var(--primary-accent);
+  border-color: var(--primary);
+  color: var(--primary);
 }
