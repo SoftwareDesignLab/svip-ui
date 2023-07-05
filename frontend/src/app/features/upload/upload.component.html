@@ -1,67 +1,80 @@
 <div class="upload-container">
   <h3>SBOM Files</h3>
-  <div class="search-parent-container" *ngIf="GetAllFiles().length > 0" >
-      <div class="search-container">
-          <input type="text" placeholder="Search.." name="search" (input)="UpdateSearch($event)">
-          <button><i class="search-btn material-symbols-outlined">Search</i></button>
-      </div>
+  <div class="search-parent-container" *ngIf="GetAllFiles().length > 0">
+    <div class="search-container">
+      <input type="text" placeholder="Search.." name="search" (input)="UpdateSearch($event)">
+      <button><i class="search-btn material-symbols-outlined">Search</i></button>
+    </div>
   </div>
-  <div class="file-name" *ngIf="GetAllFiles().length > 0" >
-      <input type="checkbox" (change)="setAllSelected($event)"/>
-      <h3>File Name</h3>
+  <div class="file-name" *ngIf="GetAllFiles().length > 0">
+    <input type="checkbox" (change)="setAllSelected($event)" />
+    <h3>File Name</h3>
   </div>
 
   <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
-      (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
-      <div *ngFor="let item of GetValidSBOMs()">
-        <ng-container  *ngIf="getAlias(item)?.includes(GetFilter())">
-          <div class="sbom" style="color: var(--green);">
-            <input type="checkbox" [value]="item" />
-            {{getAlias(item)}}
-          </div>
-        </ng-container>
+    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+    <div *ngFor="let item of GetValidSBOMs()">
+      <ng-container *ngIf="getAlias(item)?.includes(GetFilter())">
+        <div class="sbom" style="color: var(--green);">
+          <input type="checkbox" [value]="item" />
+          {{getAlias(item)}}
+        </div>
+      </ng-container>
 
-      </div>
+    </div>
 
-      <div *ngFor="let item of GetErrorSBOMs()">
-        <ng-container  *ngIf="getAlias(item)?.includes(GetFilter())">
-          <div class="sbom" style="color: var(--red);">
-              <input type="checkbox" [value]="item" />
-              <span ngbTooltip="SBOM is not valid!">
-                  {{ getAlias(item) }}
-              </span>
-          </div>
-        </ng-container>
-      </div>
+    <div *ngFor="let item of GetErrorSBOMs()">
+      <ng-container *ngIf="getAlias(item)?.includes(GetFilter())">
+        <div class="sbom" style="color: var(--red);">
+          <input type="checkbox" [value]="item" />
+          <span ngbTooltip="SBOM is not valid!">
+            {{ getAlias(item) }}
+          </span>
+        </div>
+      </ng-container>
+    </div>
 
-      <div *ngFor="let item of GetLoadingSBOMs()">
-          <div class="sbom" style="color: var(--accent);">
-              {{getAlias(item)}}
-          </div>
+    <div *ngFor="let item of GetLoadingSBOMs()">
+      <div class="sbom" style="color: var(--accent);">
+        {{getAlias(item)}}
       </div>
+    </div>
   </div>
 
   <div class="buttons flex" *ngIf="GetAllFiles().length > 0">
-    <app-button text="Delete Selected" (click)="DeleteSelected()"/>
-    <app-button text="View" (click)="ViewSBOM()"/>
+    <app-button text="Delete Selected" (click)="deleteModal = true" />
+    <app-button text="View" (click)="ViewSBOM()" />
   </div>
 
   <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
-      (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
-      <span class="material-symbols-outlined">publish</span>
-      <hr>
-      <p class="text-center">Drag and drop SBOMS</p>
-      <app-button text="Select Files" (click)="browse()"></app-button>
+    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+    <span class="material-symbols-outlined">publish</span>
+    <hr>
+    <p class="text-center">Drag and drop SBOMS</p>
+    <app-button text="Select Files" (click)="browse()"></app-button>
   </div>
 
   <div class="generate-dropzone" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
-    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"> 
+    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <app-toggle></app-toggle>
   </div>
 
   <div class="generate-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
-  (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <app-button text="Generate" (click)="browse()" />
     <p class="text-center">or drag project directory in here</p>
   </div>
 </div>
+
+<app-modal [opened]="deleteModal" (close)="deleteModal = false">
+  <div title>
+    Delete Selected
+  </div>
+  <div content>
+    Are you sure you want to delete the selected files?
+  </div>
+  <div actions style="display: flex; gap: 15px;">
+    <app-button text="Delete" (click)="DeleteSelected()"></app-button>
+    <app-button text="Cancel" (click)="deleteModal = false"></app-button>
+  </div>
+</app-modal>
