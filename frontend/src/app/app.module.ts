@@ -10,6 +10,7 @@ import { UploadComponent } from './features/upload/upload.component';
 import { ViewerComponent } from './shared/components/viewer/viewer.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ToggleComponent } from './shared/components/toggle/toggle.component';
+import { ModalComponent } from './shared/components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ToggleComponent } from './shared/components/toggle/toggle.component';
     UploadComponent,
     ViewerComponent,
     NavbarComponent,
-    ToggleComponent
+    ToggleComponent,
+    ModalComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule],
   providers: [],
