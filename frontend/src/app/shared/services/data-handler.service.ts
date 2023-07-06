@@ -86,6 +86,8 @@ export class DataHandlerService implements OnInit {
       if(metrics) {
         this.loadingMetrics = false;
         this.files[path].metrics = new QualityReport(result as test);
+      } else {
+        this.files[path].qr = result;
       }
 
       this.saveSBOM(path, data);
@@ -187,6 +189,7 @@ export interface File {
 export interface SBOMInfo {
   status: FileStatus;
   metrics?: QualityReport;
+  qr?: any;
   extra?: string;
   contents?: string;
 }

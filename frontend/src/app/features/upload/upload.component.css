@@ -13,10 +13,13 @@
     border-radius: 15px 15px 0 0;
     border-color: var(--primary);
     background-color: white;
-    display: flex;
     align-items: center;
     justify-content: flex-start;
     padding: 10px;
+}
+
+.file-name > div {
+    width: 300px;
 }
 
 .file-name input {
@@ -168,4 +171,9 @@ hr {
 
 .buttons {
   gap: 15px;
+}
+
+.sbom > div {
+    width: 300px;  
+    color: var(--primary);
 }
