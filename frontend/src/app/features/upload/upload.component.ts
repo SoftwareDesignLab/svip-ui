@@ -125,8 +125,9 @@ export class UploadComponent implements OnInit{
 
   DownloadSelected() {
     this.GetSelected().forEach((file) => {
-      // download
+      this.dataHandler.downloadSBOM(file);
     })
+    this.menu = false;
   }
 
   /**

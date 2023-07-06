@@ -124,6 +124,32 @@ export class DataHandlerService implements OnInit {
     return path.split(pathChar).pop();
   }
 
+  downloadSBOM(fileName: string) {
+    const mock = 'svip\svip-ui\frontend\src\assets\tests\mock.txt'
+    const params = new HttpParams({
+      fromObject: {
+        'fileName': fileName,
+      }
+    });
+
+    const response = TEST_DATA.JSON;
+    const file = new File([response.content], response.fileName, {
+    type: 'text/plain'
+  });
+
+  const url = URL.createObjectURL(file);
+  const link = document.createElement('a')
+  link.href = url;
+  link.download = file.name;
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link)
+  window.URL.revokeObjectURL(url)
+  //this.client.post("download", {}, params);
+
+  }
+
   async Compare(main: string, others: string[]): Promise<any> {
     this.loadingComparison = true;
     let paths = [main, ...others];
@@ -195,4 +221,10 @@ export enum FileStatus {
   LOADING,
   ERROR,
   VALID
+}
+
+const TEST_DATA = {
+  "JSON": {"fileName": "sbom.json", "content": "{\"bomFormat\" : \"CycloneDX\"}"},
+  "XML": {"fileName": "sbom.xml", "content": ""},
+  "SPDX": {"fileName": "sbom.spdx", "content": ""},
 }

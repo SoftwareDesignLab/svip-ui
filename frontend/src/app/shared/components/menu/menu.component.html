@@ -1,9 +1,12 @@
 <div class="menu" *ngIf="opened">
-    <div class="content">
-        <div class="actions">
-            <ng-content select='[actions]'/>
+    <div class="dropdown">
+        <button class="dropbtn">Dropdown</button>
+        <div class="options">
+            <!-- <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a> -->
+            <ng-content select='[options]'/>
         </div>
     </div>
     <div class="click-off" (click)="Close()"></div>
 </div>
-
