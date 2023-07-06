@@ -11,6 +11,8 @@ import { ViewerComponent } from './shared/components/viewer/viewer.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ToggleComponent } from './shared/components/toggle/toggle.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
+import { DownloadComponent } from './shared/components/download/download.component';
+import { MenuComponent } from './shared/components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { ModalComponent } from './shared/components/modal/modal.component';
     ViewerComponent,
     NavbarComponent,
     ToggleComponent,
-    ModalComponent
+    ModalComponent,
+    DownloadComponent,
+    MenuComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule],
   providers: [],

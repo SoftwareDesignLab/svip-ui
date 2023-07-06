@@ -1,3 +1,29 @@
-<div>
-    <div>Download</div>
-</div>
+<!-- <div class="menu" *ngIf="opened">
+    <div class="content">
+        <div class="actions">
+            <ng-content select='[actions]'/>
+        </div>
+    </div>
+    <div class="click-off" (click)="Close()"></div>
+</div> -->
+
+<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+
+
+<h4>
+    Click on the below button in-order
+    to activate mat-menu
+</h4>
+  
+<button mat-button [matMenuTriggerFor]="menu">
+    Web Technologies
+</button>
+  
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>HTML</button>
+  <button mat-menu-item>CSS</button>
+  <button mat-menu-item>JQuery</button>
+  <button mat-menu-item>Bootstrap</button>
+  <button mat-menu-item>Angular</button>
+  <button mat-menu-item>React.js</button>
+</mat-menu>

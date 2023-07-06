@@ -12,6 +12,8 @@ export class UploadComponent implements OnInit{
   private ipc!: IpcRenderer;
   private filterSearch: string = '';
   public deleteModal: boolean = false;
+  public menu: boolean = false;
+
 
   constructor(private dataHandler: DataHandlerService, public routing: RoutingService) {
     if (window.require) {
@@ -121,6 +123,12 @@ export class UploadComponent implements OnInit{
     this.deleteModal = false;
   }
 
+  DownloadSelected() {
+    this.GetSelected().forEach((file) => {
+      // download
+    })
+  }
+
   /**
    * Get SBOM filename
    */
@@ -128,6 +136,12 @@ export class UploadComponent implements OnInit{
     return this.dataHandler.getSBOMAlias(sbom);
   }
 
+  /**
+   * SBOM filename into link
+   */
+  linkAlias(sbom: LinkStyle) {
+
+  }
    /**
    * Handles the file drop event
    * @param event The drop event
