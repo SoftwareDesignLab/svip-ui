@@ -1,10 +1,15 @@
 <div class="upload-container">
   <h3>SBOM Files</h3>
-  <div class="search-parent-container" *ngIf="GetAllFiles().length > 0">
-    <div class="search-container">
-      <input type="text" placeholder="Search.." name="search" (input)="UpdateSearch($event)">
-      <button><i class="search-btn material-symbols-outlined">Search</i></button>
-    </div>
+  <div class="search-parent-container" *ngIf="GetAllFiles().length > 0" >
+      <div class="search-container">
+          <input type="text" placeholder="Search.." name="search" (input)="UpdateSearch($event)">
+          <button><i class="search-btn material-symbols-outlined">Search</i></button>
+      </div>
+      <div class="format-filter">
+        <app-multiselect-dropdown>
+          
+        </app-multiselect-dropdown>
+      </div>
   </div>
   <div class="file-name flex" *ngIf="GetAllFiles().length > 0">
       <div class="flex">
@@ -29,6 +34,7 @@
            
           </div>
         </ng-container>
+<<<<<<< HEAD
     </div>
 
     <div *ngFor="let item of GetErrorSBOMs()">
@@ -41,6 +47,9 @@
         </div>
       </ng-container>
     </div>
+=======
+      </div>
+>>>>>>> 9beec0a... add dropdown
 
     <div *ngFor="let item of GetLoadingSBOMs()">
       <div class="sbom" style="color: var(--accent);">
