@@ -62,6 +62,34 @@ export class DataHandlerService implements OnInit {
     });
   }
 
+  
+  async ValidateFile(path: string, metrics: boolean = false, contents='') {
+    if (metrics) {
+      this.loadingMetrics = true;
+    }
+
+    let data = contents === '' ? await this.ipc.invoke('getFileData', path) : contents;
+
+    this.client.post(metrics ? "qa" : "parse", {'fileName': path, 'contents': data}).subscribe((result) => {
+      this.files[path].status = FileStatus.VALID;
+      this.files[path].contents = data;
+
+      if(metrics) {
+        this.loadingMetrics = false;
+        this.files[path].metrics = new QualityReport(result as test);
+      } else {
+        this.files[path].qr = result;
+      }
+
+      this.saveSBOM(path, data);
+    },
+    (error) => {
+      this.loadingMetrics = false;
+      this.files[path].status = FileStatus.ERROR;
+      this.files[path].extra = error.error;
+    })
+  }
+
   //@TODO add delete endpoint
   DeleteFile(path: string) {
     delete this.files[path];
@@ -132,6 +160,8 @@ export interface File {
 export interface SBOMInfo {
   status: FileStatus;
   id?: number;
+  metrics?: any;
+  qr?: any;
   extra?: string;
   qr?: any;
   contents?: string;
