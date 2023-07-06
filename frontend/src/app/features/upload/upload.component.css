@@ -195,3 +195,7 @@ hr {
     border-color: black;
     color: black;
   }
+.sbom > div {
+    width: 300px;  
+    color: var(--primary);
+}

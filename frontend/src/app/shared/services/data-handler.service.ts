@@ -126,6 +126,8 @@ export interface File {
 export interface SBOMInfo {
   status: FileStatus;
   id?: number;
+  metrics?: any;
+  qr?: any;
   extra?: string;
   qr?: any;
   contents?: string;
