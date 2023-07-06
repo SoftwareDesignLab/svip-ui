@@ -72,7 +72,7 @@ export class DataHandlerService implements OnInit {
                   status: FileStatus.VALID,
                   id: result as number,
                   fileName: this.getSBOMAlias(path),
-                  raw: contents,
+                  contents: contents,
                 };
               }
             },
@@ -114,10 +114,10 @@ export interface File {
 export interface SBOMInfo {
   status: FileStatus;
   id?: number;
+  qr?: any;
   extra?: string;
   contents?: string;
   fileName?: string;
-  raw?: string;
 }
 
 export enum FileStatus {
