@@ -5,6 +5,11 @@
           <input type="text" placeholder="Search.." name="search" (input)="UpdateSearch($event)">
           <button><i class="search-btn material-symbols-outlined">Search</i></button>
       </div>
+      <div class="format-filter">
+        <app-multiselect-dropdown>
+          
+        </app-multiselect-dropdown>
+      </div>
   </div>
   <div class="file-name flex" *ngIf="GetAllFiles().length > 0">
       <div class="flex">
@@ -29,7 +34,6 @@
            
           </div>
         </ng-container>
-
       </div>
 
       <div *ngFor="let item of GetErrorSBOMs()">
