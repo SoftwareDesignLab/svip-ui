@@ -36,7 +36,6 @@ export class DataHandlerService implements OnInit {
       this.files[path] = {
         status: FileStatus.LOADING,
       };
-      console.log(path);
       this.ipc.invoke('getFileData', path).then((contents) => {
         if (contents) {
           this.saveSBOM(path, contents).subscribe(
