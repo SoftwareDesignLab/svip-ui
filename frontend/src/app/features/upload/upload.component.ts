@@ -123,12 +123,12 @@ export class UploadComponent implements OnInit{
     this.deleteModal = false;
   }
 
-  DownloadSelected() {
-    this.GetSelected().forEach((file) => {
-      this.dataHandler.downloadSBOM(file);
-    })
-    this.menu = false;
-  }
+  // DownloadSelected() {
+  //   this.GetSelected().forEach((file) => {
+  //     this.dataHandler.downloadSBOM(file);
+  //   })
+  //   this.menu = false;
+  // }
 
   /**
    * Get SBOM filename

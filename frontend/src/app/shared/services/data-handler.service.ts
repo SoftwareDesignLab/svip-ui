@@ -5,6 +5,7 @@ import { ClientService } from './client.service';
 import { IpcRenderer } from 'electron';
 import { QualityReport, test } from 'src/app/features/metrics/test';
 import { HttpParams } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -36,15 +37,15 @@ export class DataHandlerService implements OnInit {
   }
 
   ngOnInit(): void {
-      this.getSavedSBOMNames().then((results) => {
-        if(Array.isArray(results)) {
-          results.forEach((fileName) => {
-            this.getSavedSBOM(fileName).then((data) => {
-              this.ValidateFile(fileName, data);
-            })
+    this.getSavedSBOMNames().then((results) => {
+      if (Array.isArray(results)) {
+        results.forEach((fileName) => {
+          this.getSavedSBOM(fileName).then((data) => {
+            this.ValidateFile(fileName, data);
           })
-        }
-      })
+        })
+      }
+    })
   }
 
   AddFiles(paths: string[]) {
@@ -72,29 +73,29 @@ export class DataHandlerService implements OnInit {
     return this.loadingMetrics;
   }
 
-  async ValidateFile(path: string, metrics: boolean = false, contents='') {
+  async ValidateFile(path: string, metrics: boolean = false, contents = '') {
     if (metrics) {
       this.loadingMetrics = true;
     }
 
     let data = contents === '' ? await this.ipc.invoke('getFileData', path) : contents;
 
-    this.client.post(metrics ? "qa" : "parse", {'fileName': path, 'contents': data}).subscribe((result) => {
+    this.client.post(metrics ? "qa" : "parse", { 'fileName': path, 'contents': data }).subscribe((result) => {
       this.files[path].status = FileStatus.VALID;
       this.files[path].contents = data;
 
-      if(metrics) {
+      if (metrics) {
         this.loadingMetrics = false;
         this.files[path].metrics = new QualityReport(result as test);
       }
 
       this.saveSBOM(path, data);
     },
-    (error) => {
-      this.loadingMetrics = false;
-      this.files[path].status = FileStatus.ERROR;
-      this.files[path].extra = error.error;
-    })
+      (error) => {
+        this.loadingMetrics = false;
+        this.files[path].status = FileStatus.ERROR;
+        this.files[path].extra = error.error;
+      })
   }
 
 
@@ -120,42 +121,68 @@ export class DataHandlerService implements OnInit {
 
 
   getSBOMAlias(path: string) {
-    const pathChar =  path.indexOf('/') !== -1 ? '/' : '\\';
+    const pathChar = path.indexOf('/') !== -1 ? '/' : '\\';
     return path.split(pathChar).pop();
   }
 
-  downloadSBOM(fileName: string) {
-    const mock = 'svip\svip-ui\frontend\src\assets\tests\mock.txt'
+  
+  async downloadSBOM(id: number){
+    let cpn = 0;
+    let filename = '';
+    let content = '';
+    let tpn = 1;
+    while( cpn != tpn) {
+    // increase cpn count
+    ++cpn;
+    // downlod file
+    let download: any = await firstValueFrom(this._downloadSBOM(id, cpn));
+    // set file name
+    filename = download.fileName;
+    // concat file contents 
+    content += download.contents;
+    // set var tpn to response's tpn
+    tpn = download.tpn;
+    }
+    
+    // return fully downloaded file
+    const file = { cpn, filename, content, tpn }
+    console.log(file);
+  }
+
+  private _downloadSBOM(id: number, cpn: number) {
     const params = new HttpParams({
       fromObject: {
-        'fileName': fileName,
+        'id': id,
+        'cpn': cpn
       }
     });
+    return this.client.post('download', undefined, params)
 
-    const response = TEST_DATA.JSON;
-    const file = new File([response.content], response.fileName, {
-    type: 'text/plain'
-  });
 
-  const url = URL.createObjectURL(file);
-  const link = document.createElement('a')
-  link.href = url;
-  link.download = file.name;
+    // const response = TEST_DATA.JSON;
+    // const file = new File([response.content], response.fileName, {
+    //   type: 'text/plain'
+    // });
 
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link)
-  window.URL.revokeObjectURL(url)
-  //this.client.post("download", {}, params);
+    // const url = URL.createObjectURL(file);
+    // const link = document.createElement('a')
+    // link.href = url;
+    // link.download = file.name;
 
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link)
+    // window.URL.revokeObjectURL(url)
+    //this.client.post("download", {}, params);
   }
+
 
   async Compare(main: string, others: string[]): Promise<any> {
     this.loadingComparison = true;
     let paths = [main, ...others];
     let files: File[] = [];
 
-    for(let i = 0; i < paths.length; i++) {
+    for (let i = 0; i < paths.length; i++) {
       let path = paths[i];
       let data = await this.ipc.invoke('getFileData', path);
 
@@ -171,12 +198,12 @@ export class DataHandlerService implements OnInit {
 
   }
 
-  generateSBOM(fileContents : string[], fileNames : string[], schema? : string, format? : string){
-    return this.client.post("generate", {'fileContents': fileContents, 'fileNames': fileNames, 'schemaName': schema, 'formatName': format});
+  generateSBOM(fileContents: string[], fileNames: string[], schema?: string, format?: string) {
+    return this.client.post("generate", { 'fileContents': fileContents, 'fileNames': fileNames, 'schemaName': schema, 'formatName': format });
   }
 
-  merge(fileContents : string[], fileNames : string[], schema : string, format : string){
-    return this.client.post("merge", {'fileContents': fileContents, 'fileNames': fileNames, 'schema': schema, 'format': format});
+  merge(fileContents: string[], fileNames: string[], schema: string, format: string) {
+    return this.client.post("merge", { 'fileContents': fileContents, 'fileNames': fileNames, 'schema': schema, 'format': format });
   }
 
   /**
@@ -185,7 +212,7 @@ export class DataHandlerService implements OnInit {
    * @param contents contents of the sbom
    */
   saveSBOM(fileName: string, contents: string) {
-    return this.client.post("upload", {'contents': contents, 'fileName': fileName});
+    return this.client.post("upload", { 'contents': contents, 'fileName': fileName });
   }
 
   getSavedSBOMNames(): Promise<Object> {
@@ -224,7 +251,7 @@ export enum FileStatus {
 }
 
 const TEST_DATA = {
-  "JSON": {"fileName": "sbom.json", "content": "{\"bomFormat\" : \"CycloneDX\"}"},
-  "XML": {"fileName": "sbom.xml", "content": ""},
-  "SPDX": {"fileName": "sbom.spdx", "content": ""},
+  "JSON": { "fileName": "sbom.json", "content": "{\"bomFormat\" : \"CycloneDX\"}" },
+  "XML": { "fileName": "sbom.xml", "content": "SPDXVersion : SPDX-2.2" },
+  "SPDX": { "fileName": "sbom.spdx", "content": "" },
 }
