@@ -27,7 +27,7 @@
       <ng-container *ngFor="let item of GetValidSBOMs()">
         <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMFormat(item)">
           <div class="sbom flex">
-            <div class="flex" style="gap: 10px; color: var(--green);">
+            <div class="flex">
                 <input type="checkbox" [value]="item" />
                 {{getAlias(item)}}
             </div>
