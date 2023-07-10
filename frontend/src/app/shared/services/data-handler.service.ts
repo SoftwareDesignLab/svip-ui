@@ -126,8 +126,8 @@ export interface File {
 export interface SBOMInfo {
   status: FileStatus;
   id?: number;
-  qr?: any;
   extra?: string;
+  qr?: any;
   contents?: string;
   fileName?: string;
 }
