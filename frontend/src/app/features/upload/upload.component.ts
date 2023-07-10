@@ -72,6 +72,10 @@ export class UploadComponent implements OnInit{
     return this.dataHandler.GetSBOMInfo(file);
   }
 
+  GetSBOMFormats() {
+    return this.dataHandler.GetSBOMFormats();
+  }
+
   /**
    * Removes file from uploaded files
    * @param file file to remove

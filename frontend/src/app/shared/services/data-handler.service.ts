@@ -16,6 +16,8 @@ export class DataHandlerService implements OnInit {
 
   private files: { [path: string]: SBOMInfo } = {};
 
+  private sbomFormats: { [name: string]: boolean} = {};
+
   public comparison!: Comparison | null;
 
   private loadingComparison: boolean = false;
@@ -79,7 +81,7 @@ export class DataHandlerService implements OnInit {
 
     let data = contents === '' ? await this.ipc.invoke('getFileData', path) : contents;
 
-    this.client.post(metrics ? "qa" : "parse", {'fileName': path, 'contents': data}).subscribe((result) => {
+    this.client.post(metrics ? "qa" : "parse", {'fileName': path, 'contents': data}).subscribe((result: any) => {
       this.files[path].status = FileStatus.VALID;
       this.files[path].contents = data;
 
@@ -88,6 +90,11 @@ export class DataHandlerService implements OnInit {
         this.files[path].metrics = new QualityReport(result as test);
       } else {
         this.files[path].qr = result;
+
+        let format = result.originFormat;
+
+        if(!this.ContainsSBOMFormat(format))
+          this.sbomFormats[format] = true;
       }
 
       this.saveSBOM(path, data);
@@ -97,6 +104,10 @@ export class DataHandlerService implements OnInit {
       this.files[path].status = FileStatus.ERROR;
       this.files[path].extra = error.error;
     })
+  }
+
+  GetSBOMFormats() {
+    return this.sbomFormats;
   }
 
 
@@ -118,6 +129,10 @@ export class DataHandlerService implements OnInit {
 
   GetMetrics(path: string) {
     return this.GetSBOMInfo(path).metrics;
+  }
+
+  ContainsSBOMFormat(format: string) {
+    return this.sbomFormats[format] !== undefined;
   }
 
 
