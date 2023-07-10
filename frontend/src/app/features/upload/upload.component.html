@@ -6,8 +6,7 @@
           <button><i class="search-btn material-symbols-outlined">Search</i></button>
       </div>
       <div class="format-filter">
-        <app-multiselect-dropdown>
-          
+        <app-multiselect-dropdown title="Filter Formats" [options]="GetSBOMFormats()">
         </app-multiselect-dropdown>
       </div>
   </div>

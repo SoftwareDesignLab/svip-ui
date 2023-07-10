@@ -11,6 +11,8 @@ export class DataHandlerService implements OnInit {
   private ipc!: IpcRenderer;
   private files: { [path: string]: SBOMInfo } = {};
 
+  private sbomFormats: { [name: string]: boolean} = {};
+
   constructor(private client: ClientService) {
     if (window.require) {
       try {
@@ -96,6 +98,10 @@ export class DataHandlerService implements OnInit {
   GetSBOMInfo(path: string) {
     return this.files[path];
   }
+  ContainsSBOMFormat(format: string) {
+    return this.sbomFormats[format] !== undefined;
+  }
+
 
   getSBOMAlias(path: string) {
     const pathChar = path.indexOf('/') !== -1 ? '/' : '\\';
