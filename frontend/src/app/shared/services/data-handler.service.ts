@@ -99,53 +99,36 @@ export class DataHandlerService implements OnInit {
     return path.split(pathChar).pop();
   }
 
-  async downloadSBOM(id: number) {
-    let cpn = 0;
-    let filename = '';
-    let content = '';
-    let tpn = 1;
-    while (cpn != tpn) {
-      // increase cpn count
-      ++cpn;
-      // downlod file
-      let download: any = await firstValueFrom(this._downloadSBOM(id, cpn));
-      // set file name
-      filename = download.fileName;
-      // concat file contents
-      content += download.contents;
-      // set var tpn to response's tpn
-      tpn = download.tpn;
+  // async downloadSBOM(id: number) {
+  //   let cpn = 0;
+  //   let filename = '';
+  //   let content = '';
+  //   let tpn = 1;
+  //   while (cpn != tpn) {
+  //     // increase cpn count
+  //     ++cpn;
+  //     // downlod file
+  //     let download: any = await firstValueFrom(this._downloadSBOM(id, cpn));
+  //     // set file name
+  //     filename = download.fileName;
+  //     // concat file contents
+  //     content += download.contents;
+  //     // set var tpn to response's tpn
+  //     tpn = download.tpn;
+  //   }
+  // 
+  //   // return fully downloaded file
+  //   const file = { cpn, filename, content, tpn };
+  //   console.log(file);
+  // }
+
+  downloadSBOM(filePath: string) {
+    const file = this.files[filePath]?.raw;
+    if (file !== undefined) {
+      return new Blob([file]);
     }
-
-    // return fully downloaded file
-    const file = { cpn, filename, content, tpn };
-    console.log(file);
-  }
-
-  private _downloadSBOM(id: number, cpn: number) {
-    const params = new HttpParams({
-      fromObject: {
-        id: id,
-        cpn: cpn,
-      },
-    });
-    return this.client.post('download', undefined, params);
-
-    // const response = TEST_DATA.JSON;
-    // const file = new File([response.content], response.fileName, {
-    //   type: 'text/plain'
-    // });
-
-    // const url = URL.createObjectURL(file);
-    // const link = document.createElement('a')
-    // link.href = url;
-    // link.download = file.name;
-
-    // document.body.appendChild(link);
-    // link.click();
-    // document.body.removeChild(link)
-    // window.URL.revokeObjectURL(url)
-    //this.client.post("download", {}, params);
+    return null;
+    // this.client.post("download", {}, params);
   }
 
   getSavedSBOMNames(): Promise<Object> {
@@ -189,7 +172,7 @@ export enum FileStatus {
 }
 
 const TEST_DATA = {
-  JSON: { fileName: 'sbom.json', content: '{"bomFormat" : "CycloneDX"}' },
+  JSON: { filePath: 'sbom.json', content: '{"bomFormat" : "CycloneDX"}' },
   XML: { fileName: 'sbom.xml', content: 'SPDXVersion : SPDX-2.2' },
   SPDX: { fileName: 'sbom.spdx', content: '' },
 };

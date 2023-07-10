@@ -8,7 +8,7 @@ import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css']
 })
-export class UploadComponent implements OnInit{
+export class UploadComponent implements OnInit {
   private ipc!: IpcRenderer;
   private filterSearch: string = '';
   public deleteModal: boolean = false;
@@ -27,7 +27,7 @@ export class UploadComponent implements OnInit{
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   /**
    *  Prompts user to select files and tries to upload them
@@ -81,7 +81,7 @@ export class UploadComponent implements OnInit{
    */
   RemoveFile(file: string) {
 
-    if(this.routing.GetPage() === PAGES.VIEW && this.routing.data === file) {
+    if (this.routing.GetPage() === PAGES.VIEW && this.routing.data === file) {
       this.routing.SetPage(PAGES.NONE);
       this.routing.data = undefined;
     }
@@ -123,12 +123,22 @@ export class UploadComponent implements OnInit{
     this.deleteModal = false;
   }
 
-  // DownloadSelected() {
-  //   this.GetSelected().forEach((file) => {
-  //     this.dataHandler.downloadSBOM(file);
-  //   })
-  //   this.menu = false;
-  // }
+  DownloadSelected() {
+    this.GetSelected().forEach((file) => {
+      const sbom = this.dataHandler.downloadSBOM(file);
+      if( sbom ) {
+      const url = URL.createObjectURL(sbom);
+      const link = document.createElement('a')
+      link.href = url;
+      link.download = sbom.name;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      }
+    })
+  }
 
   /**
    * Get SBOM filename
@@ -143,68 +153,68 @@ export class UploadComponent implements OnInit{
   linkAlias(sbom: LinkStyle) {
 
   }
-   /**
+  /**
+  * Handles the file drop event
+  * @param event The drop event
+  */
+  @HostListener('document:drop', ['$event'])
+  onDocumentDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.onFileDrop(event);
+  }
+
+  /**
+   * Handles the drag over event
+   * @param event The drag over event
+   */
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    // Add any visual indication for the drag over event (e.g., highlighting the dropzone)
+  }
+
+  /**
+   * Handles the drag leave event
+   * @param event The drag leave event
+   */
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    // Remove any visual indication for the drag leave event
+  }
+
+  /**
    * Handles the file drop event
    * @param event The drop event
    */
-   @HostListener('document:drop', ['$event'])
-   onDocumentDrop(event: DragEvent) {
-     event.preventDefault();
-     event.stopPropagation();
-     this.onFileDrop(event);
-   }
+  onFileDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
 
-   /**
-    * Handles the drag over event
-    * @param event The drag over event
-    */
-   onDragOver(event: DragEvent) {
-     event.preventDefault();
-     event.stopPropagation();
-     // Add any visual indication for the drag over event (e.g., highlighting the dropzone)
-   }
-
-   /**
-    * Handles the drag leave event
-    * @param event The drag leave event
-    */
-   onDragLeave(event: DragEvent) {
-     event.preventDefault();
-     event.stopPropagation();
-     // Remove any visual indication for the drag leave event
-   }
-
-   /**
-    * Handles the file drop event
-    * @param event The drop event
-    */
-   onFileDrop(event: DragEvent) {
-     event.preventDefault();
-     event.stopPropagation();
-
-     const files = event.dataTransfer?.files;
-     if (files && files.length > 0) {
-       const filePaths = Array.from(files).map((file) => file.path);
-       this.dataHandler.AddFiles(filePaths);
-     }
-   }
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      const filePaths = Array.from(files).map((file) => file.path);
+      this.dataHandler.AddFiles(filePaths);
+    }
+  }
 
 
-   UpdateSearch(event: any) {
+  UpdateSearch(event: any) {
     this.filterSearch = event.target.value;
-   }
+  }
 
-   GetFilter() {
+  GetFilter() {
     return this.filterSearch;
-   }
+  }
 
-   ViewSBOM() {
+  ViewSBOM() {
     let selected = this.GetSelected();
 
-    if(selected.length !== 1)
+    if (selected.length !== 1)
       return;
 
     this.routing.SetPage(PAGES.VIEW);
     this.routing.data = selected[0];
-   }
+  }
 }
