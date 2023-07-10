@@ -76,6 +76,14 @@ export class UploadComponent implements OnInit{
     return this.dataHandler.GetSBOMFormats();
   }
 
+  ValidSBOMFormat(path: string) {
+     return this.GetSBOMFormats()[this.GetSBOMInfo(path).qr.originFormat] === true;
+  }
+
+  SbomFormatFilterChange(event: any) {
+    this.dataHandler.SetSBOMFormat(event.name, event.value);
+  }
+
   /**
    * Removes file from uploaded files
    * @param file file to remove

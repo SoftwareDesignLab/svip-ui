@@ -50,7 +50,14 @@ export class DataHandlerService implements OnInit {
     });
   }
 
-  //@TODO add delete endpoint
+  IncludeSBOMFormat(name: string) {
+    return this.sbomFormats[name];
+  }
+
+  SetSBOMFormat(name: string, value: boolean) {
+    this.sbomFormats[name] = value;
+  }
+
   DeleteFile(path: string) {
     delete this.files[path];
   }
