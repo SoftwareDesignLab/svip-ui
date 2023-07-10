@@ -62,35 +62,6 @@ export class DataHandlerService implements OnInit {
     });
   }
 
-  
-  async ValidateFile(path: string, metrics: boolean = false, contents='') {
-    if (metrics) {
-      this.loadingMetrics = true;
-    }
-
-    let data = contents === '' ? await this.ipc.invoke('getFileData', path) : contents;
-
-    this.client.post(metrics ? "qa" : "parse", {'fileName': path, 'contents': data}).subscribe((result) => {
-      this.files[path].status = FileStatus.VALID;
-      this.files[path].contents = data;
-
-      if(metrics) {
-        this.loadingMetrics = false;
-        this.files[path].metrics = new QualityReport(result as test);
-      } else {
-        this.files[path].qr = result;
-      }
-
-      this.saveSBOM(path, data);
-    },
-    (error) => {
-      this.loadingMetrics = false;
-      this.files[path].status = FileStatus.ERROR;
-      this.files[path].extra = error.error;
-    })
-  }
-
-  //@TODO add delete endpoint
   DeleteFile(path: string) {
     delete this.files[path];
   }
@@ -114,7 +85,7 @@ export class DataHandlerService implements OnInit {
                   status: FileStatus.VALID,
                   id: result as number,
                   fileName: this.getSBOMAlias(path),
-                  raw: contents,
+                  contents: contents,
                 };
               }
             },
@@ -135,12 +106,11 @@ export class DataHandlerService implements OnInit {
     );
   }
 
-  ContainsSBOMFormat(format: string) {
-    return this.sbomFormats[format] !== undefined;
-  }
-
   GetSBOMInfo(path: string) {
     return this.files[path];
+  }
+  ContainsSBOMFormat(format: string) {
+    return this.sbomFormats[format] !== undefined;
   }
 
   getSBOMAlias(path: string) {
@@ -163,10 +133,8 @@ export interface SBOMInfo {
   metrics?: any;
   qr?: any;
   extra?: string;
-  qr?: any;
   contents?: string;
   fileName?: string;
-  raw?: string;
 }
 
 export enum FileStatus {
