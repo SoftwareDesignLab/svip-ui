@@ -38,10 +38,10 @@ export class DataHandlerService implements OnInit {
     });
   }
 
-  getSavedSBOM(name: string) {
+  getSavedSBOM(id: number) {
     return new Promise<any>((resolve) => {
       this.client
-        .get('view', new HttpParams().set('id', name))
+        .get('view', new HttpParams().set('id', id))
         .subscribe((result) => {
           resolve(result);
         });
