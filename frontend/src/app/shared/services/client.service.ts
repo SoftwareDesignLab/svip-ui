@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class ClientService {
 
-  private readonly SERVER_URL: string = 'http://localhost:8080/plugfest/';
+  private readonly SERVER_URL: string = 'http://localhost:8080/svip/';
   private loggedIn: boolean = false;
   public showLogin: boolean = false;
 
