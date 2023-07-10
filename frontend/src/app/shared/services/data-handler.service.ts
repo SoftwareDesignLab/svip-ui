@@ -110,6 +110,15 @@ export class DataHandlerService implements OnInit {
     return this.sbomFormats;
   }
 
+  IncludeSBOMFormat(name: string) {
+    return this.sbomFormats[name];
+  }
+
+  SetSBOMFormat(name: string, value: boolean) {
+    this.sbomFormats[name] = value;
+  }
+
+
 
   DeleteFile(path: string) {
     delete this.files[path];
