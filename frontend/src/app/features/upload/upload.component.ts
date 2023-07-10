@@ -130,6 +130,10 @@ export class UploadComponent implements OnInit{
     })
   }
 
+  ConvertSelected() {
+    
+  }
+
   /**
    * Get SBOM filename
    */
