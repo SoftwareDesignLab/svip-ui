@@ -2,7 +2,7 @@
     <span class="anchor" (click)="SetOpened(!opened)">{{ title }}</span>
     <ul class="items" [class]="{ 'visible': opened }">
         <li *ngFor="let item of GetOptions() | keyvalue">
-            <input type="checkbox" [value]="item.value" />
+            <input type="checkbox" [(ngModel)]="item.value" [value]="item.key"/>
             {{ item.key }}
         </li>
     </ul>
