@@ -7,11 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class MultiselectDropdownComponent {
   @Input() title: string = 'Select Options';
-  @Input() options: { [name: string]: boolean} = {
-    'bob': true,
-    'rat': false,
-    "joe": true,
-  };
+  @Input() options: { [name: string]: boolean} = {};
 
   opened: boolean = false;
 
@@ -29,6 +25,5 @@ export class MultiselectDropdownComponent {
 
   SetOpened(value: boolean) {
     this.opened = value;
-    console.log("opened: " + value)
   }
 }
