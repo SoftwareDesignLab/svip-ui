@@ -9,8 +9,6 @@ import { HttpParams } from '@angular/common/http';
 })
 export class DataHandlerService implements OnInit {
   private ipc!: IpcRenderer;
-  public lastSentFilePaths: string[] = [];
-
   private files: { [path: string]: SBOMInfo } = {};
 
   private sbomFormats: { [name: string]: boolean} = {};
@@ -110,7 +108,6 @@ export class DataHandlerService implements OnInit {
   ContainsSBOMFormat(format: string) {
     return this.sbomFormats[format] !== undefined;
   }
-
 
   getSBOMAlias(path: string) {
     const pathChar = path.indexOf('/') !== -1 ? '/' : '\\';
