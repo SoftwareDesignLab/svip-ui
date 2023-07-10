@@ -126,6 +126,7 @@ hr {
 
 .search-parent-container {
     display: flex;
+    gap: 15px;
 }
 
 .search-container button {
