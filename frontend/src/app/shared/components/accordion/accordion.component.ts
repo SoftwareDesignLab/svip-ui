@@ -1,4 +1,4 @@
-/** @Author Justin Jantzi */
+/** @Author Justin Jantzi, Max Stein */
 
 import { Component, Input } from '@angular/core';
 
