@@ -44,6 +44,7 @@ export class DataHandlerService implements OnInit {
                 this.files[path] = {
                   status: FileStatus.VALID,
                   id: result as number,
+                  fileName: this.getSBOMAlias(path),
                 };
               }
             },
@@ -64,10 +65,16 @@ export class DataHandlerService implements OnInit {
    * @param contents contents of the sbom
    */
   saveSBOM(fileName: string, contents: string) {
-    return this.client.post('upload', {
+    const save = this.client.post('upload', {
       contents: contents,
       fileName: fileName,
     });
+    save.subscribe(result => {
+      if (result) {
+        this.downloadSBOM(result as number)
+      }
+    })
+    return save;
   }
 
   DeleteFile(path: string) {
@@ -176,6 +183,7 @@ export interface SBOMInfo {
   metrics?: QualityReport;
   extra?: string;
   contents?: string;
+  fileName?: string;
 }
 
 export enum FileStatus {
