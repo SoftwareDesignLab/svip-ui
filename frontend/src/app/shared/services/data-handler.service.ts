@@ -1,9 +1,7 @@
 /**@author Justin Jantzi*/
-import { Comparison } from 'src/app/features/compare/comparison';
 import { Injectable, OnInit } from '@angular/core';
 import { ClientService } from './client.service';
 import { IpcRenderer } from 'electron';
-import { QualityReport, test } from 'src/app/features/metrics/test';
 import { HttpParams } from '@angular/common/http';
 
 @Injectable({
@@ -116,7 +114,6 @@ export interface File {
 export interface SBOMInfo {
   status: FileStatus;
   id?: number;
-  metrics?: QualityReport;
   extra?: string;
   contents?: string;
   fileName?: string;
