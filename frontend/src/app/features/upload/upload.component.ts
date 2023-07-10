@@ -132,6 +132,10 @@ export class UploadComponent implements OnInit{
     this.deleteModal = false;
   }
 
+  ConvertSelected() {
+    
+  }
+
   /**
    * Get SBOM filename
    */
