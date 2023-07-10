@@ -129,7 +129,6 @@ export interface SBOMInfo {
   metrics?: any;
   qr?: any;
   extra?: string;
-  qr?: any;
   contents?: string;
   fileName?: string;
 }
