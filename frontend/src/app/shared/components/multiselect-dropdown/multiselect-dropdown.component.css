@@ -9,6 +9,7 @@
     display: inline-block;
     padding: 5px 50px 5px 10px;
     border: 1px solid #ccc;
+    background: white;
 }
 
 .dropdown-check-list .anchor:after {
@@ -48,4 +49,8 @@
 
 .visible {
     display: list-item !important;
+}
+
+::marker {
+    color: transparent !important;
 }
