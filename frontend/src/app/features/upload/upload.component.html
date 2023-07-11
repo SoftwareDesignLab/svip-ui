@@ -18,6 +18,7 @@
         <div class="sbom" style="color: var(--green);">
           <input type="checkbox" [value]="item" />
           {{getAlias(item)}}
+          <app-menu></app-menu>
         </div>
       </ng-container>
 
@@ -83,11 +84,3 @@
     </div>
   </div>
 </app-modal>
-
-<!-- <app-menu [opened]="menu" (close)="menu = false">
-  <div actions style="display: flex; flex-direction: column;">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-  </div>
-</app-menu> -->

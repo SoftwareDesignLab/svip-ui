@@ -6,11 +6,5 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-  @Input() opened: boolean = false;
-  @Output() close = new EventEmitter<Boolean>();
-
-  Close() {
-    this.close.emit(true);
-  }
   
 }
