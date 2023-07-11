@@ -13,6 +13,13 @@ export class UploadComponent implements OnInit{
   private filterSearch: string = '';
   public deleteModal: boolean = false;
 
+  private sortingOptions: { [type: string]: boolean } = {
+    "NAME": true,
+    "FORMAT": true,
+  }
+
+  private selectedSorting: SORT_OPTIONS = SORT_OPTIONS.NAME;
+
   constructor(private dataHandler: DataHandlerService, public routing: RoutingService) {
     if (window.require) {
       try {
@@ -50,24 +57,25 @@ export class UploadComponent implements OnInit{
   GetAllFiles() {
     return this.dataHandler.GetAllFiles();
   }
+
   /**
    *  Gets uploaded files
    */
-  GetValidSBOMs() {
-    return this.dataHandler.GetSBOMsOfType(FileStatus.VALID);
-  }
+  GetSBOMsOfType(statusString: string) {
 
-  /**
-   *  Gets files that are still being uploaded from data handler
-   */
-  GetLoadingSBOMs() {
-    return this.dataHandler.GetSBOMsOfType(FileStatus.LOADING);
-  }
+    let status = FileStatus[statusString as keyof typeof FileStatus];
 
-  GetErrorSBOMs() {
-    return this.dataHandler.GetSBOMsOfType(FileStatus.ERROR);
-  }
+    if(this.selectedSorting === SORT_OPTIONS.NAME)
+      return this.dataHandler.GetSBOMsOfType(status).sort((a: string, b: string) => {return this.sortingOptions[SORT_OPTIONS.NAME] ? a.localeCompare(b) : b.localeCompare(a)});
 
+      return this.dataHandler.GetSBOMsOfType(status).sort((a: string, b: string) => {
+
+        let aFormat = this.dataHandler.GetSBOMFormat(a);
+        let bFormat = this.dataHandler.GetSBOMFormat(b);
+
+        return this.sortingOptions[SORT_OPTIONS.FORMAT] ? aFormat.localeCompare(bFormat) : bFormat.localeCompare(aFormat)
+      });
+  }
 
   GetSBOMInfo(file: string) {
     return this.dataHandler.GetSBOMInfo(file);
@@ -134,7 +142,7 @@ export class UploadComponent implements OnInit{
   }
 
   ConvertSelected() {
-    
+
   }
 
   /**
@@ -208,4 +216,9 @@ export class UploadComponent implements OnInit{
     this.routing.SetPage(PAGES.VIEW);
     this.routing.data = selected[0];
    }
+}
+
+export enum SORT_OPTIONS {
+  NAME = "NAME",
+  FORMAT = "FORMAT"
 }
