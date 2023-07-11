@@ -136,6 +136,10 @@ export class DataHandlerService implements OnInit {
     return this.files[path];
   }
 
+  GetSBOMFormat(path: string) {
+    return this.files[path].qr.originFormat;
+  }
+
   GetMetrics(path: string) {
     return this.GetSBOMInfo(path).metrics;
   }
@@ -219,7 +223,7 @@ export interface SBOMInfo {
 }
 
 export enum FileStatus {
-  LOADING,
-  ERROR,
-  VALID
+  LOADING = "LOADING",
+  ERROR = "ERROR",
+  VALID = "VALID"
 }

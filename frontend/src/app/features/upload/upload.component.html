@@ -6,8 +6,8 @@
           <button><i class="search-btn material-symbols-outlined">Search</i></button>
       </div>
       <div class="format-filter">
-        <app-multiselect-dropdown 
-          title="Filter Formats" 
+        <app-multiselect-dropdown
+          title="Filter Formats"
           [options]="GetSBOMFormats()"
           (checkboxChange)="SbomFormatFilterChange($event)"
         >
@@ -24,7 +24,7 @@
 
   <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
       (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
-      <ng-container *ngFor="let item of GetValidSBOMs()">
+      <ng-container *ngFor="let item of GetSBOMsOfType('VALID')">
         <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMFormat(item)">
           <div class="sbom flex">
             <div class="flex" style="gap: 10px; color: var(--green);">
@@ -34,12 +34,12 @@
             <div>
               {{GetSBOMInfo(item).qr.originFormat}}
             </div>
-           
+
           </div>
         </div>
       </ng-container>
 
-      <ng-container *ngFor="let item of GetErrorSBOMs()">
+      <ng-container *ngFor="let item of GetSBOMsOfType('ERROR')">
         <div  *ngIf="getAlias(item)?.includes(GetFilter())">
           <div class="sbom" style="color: var(--red);">
               <input type="checkbox" [value]="item" />
@@ -50,7 +50,7 @@
         </div>
       </ng-container>
 
-      <div *ngFor="let item of GetLoadingSBOMs()">
+      <div *ngFor="let item of GetSBOMsOfType('LOADING')">
           <div class="sbom" style="color: var(--accent);">
               {{getAlias(item)}}
           </div>
@@ -72,7 +72,7 @@
   </div>
 
   <div class="generate-dropzone" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
-    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)"> 
+    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <app-toggle></app-toggle>
   </div>
 
