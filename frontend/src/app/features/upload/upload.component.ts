@@ -86,7 +86,9 @@ export class UploadComponent implements OnInit{
   }
 
   ValidSBOMFormat(path: string) {
-     return this.GetSBOMFormats()[this.GetSBOMInfo(path).qr?.originFormat] === true;
+      // @HOTFIX !! No origin format rn
+      return true;
+     return this.GetSBOMFormats()[this.GetSBOMInfo(path).qr?.originFormat] === true ;
   }
 
   SbomFormatFilterChange(event: any) {
