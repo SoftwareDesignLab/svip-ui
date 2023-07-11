@@ -1,12 +1,12 @@
-.menubutton{
+.dropdown{
     background-color: transparent;
     border-color: white;
-    box-shadow: coral;
-
 }
 
-.menubutton::after {
+.dropdown::after {
     content: none;
-    color: none;
-    box-shadow: none;
+}
+
+.dropdown:hover {
+  color: var(--primary);
 }

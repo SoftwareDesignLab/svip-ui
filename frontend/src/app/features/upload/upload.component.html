@@ -15,7 +15,7 @@
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <div *ngFor="let item of GetValidSBOMs()">
       <ng-container *ngIf="getAlias(item)?.includes(GetFilter())">
-        <div class="sbom" style="color: var(--green);">
+        <div class="sbom">
           <input type="checkbox" [value]="item" />
           <app-menu text="{{getAlias(item)}}"></app-menu>
         </div>
