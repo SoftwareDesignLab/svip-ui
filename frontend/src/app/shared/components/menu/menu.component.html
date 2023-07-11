@@ -1,11 +1,11 @@
 <div class="col">
 	<div ngbDropdown>
 		<button type="button" class="menubutton dropdown-toggle" id="dropdownBasic2" ngbDropdownToggle>
-            <span>{{text}}</span>
+        <span>{{text}}</span>
 		</button>
 		<div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-			<button (click)="RemoveFile()" ngbDropdownItem>Delete</button>
-            <button ngbDropdownItem>Download</button>
+      <button (click)="RemoveFile(text)" ngbDropdownItem>Delete</button>
+      <button ngbDropdownItem>Download</button>
 		</div>
 	</div>
 </div>
