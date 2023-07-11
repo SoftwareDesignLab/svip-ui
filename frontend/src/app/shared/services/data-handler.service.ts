@@ -40,14 +40,8 @@ export class DataHandlerService implements OnInit {
     });
   }
 
-  getSavedSBOM(id: number) {
-    return new Promise<any>((resolve) => {
-      this.client
-        .get('view', new HttpParams().set('id', id))
-        .subscribe((result) => {
-          resolve(result);
-        });
-    });
+  GetSBOMFormats() {
+    return this.sbomFormats;
   }
 
   IncludeSBOMFormat(name: string) {
@@ -56,6 +50,16 @@ export class DataHandlerService implements OnInit {
 
   SetSBOMFormat(name: string, value: boolean) {
     this.sbomFormats[name] = value;
+  }
+
+  getSavedSBOM(id: number) {
+    return new Promise<any>((resolve) => {
+      this.client
+        .get('view', new HttpParams().set('id', id))
+        .subscribe((result) => {
+          resolve(result);
+        });
+    });
   }
 
   DeleteFile(path: string) {
