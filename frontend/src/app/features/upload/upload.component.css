@@ -187,3 +187,9 @@ hr {
     border-color: black;
     color: black;
   }
+
+  .sbom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
