@@ -27,14 +27,13 @@
       <ng-container *ngFor="let item of GetSBOMsOfType('VALID')">
         <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMFormat(item)">
           <div class="sbom flex">
-            <div class="flex">
-                <input type="checkbox" [value]="item" />
-                {{getAlias(item)}}
+            <div class="sbom">
+              <input type="checkbox" [value]="item" />
+              {{getAlias(item)}}
             </div>
             <div>
               {{GetSBOMInfo(item).qr.originFormat}}
             </div>
-
           </div>
         </div>
       </ng-container>
@@ -42,10 +41,10 @@
       <ng-container *ngFor="let item of GetSBOMsOfType('ERROR')">
         <div  *ngIf="getAlias(item)?.includes(GetFilter())">
           <div class="sbom" style="color: var(--red);">
-              <input type="checkbox" [value]="item" />
-              <span ngbTooltip="SBOM is not valid!">
-                  {{ getAlias(item) }}
-              </span>
+            <input type="checkbox" [value]="item" />
+            <span ngbTooltip="SBOM is not valid!">
+                {{ getAlias(item) }}
+            </span>
           </div>
         </div>
       </ng-container>
