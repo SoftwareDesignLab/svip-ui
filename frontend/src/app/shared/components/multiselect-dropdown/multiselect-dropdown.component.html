@@ -1,0 +1,10 @@
+<div class="dropdown-check-list" (blur)="SetOpened(false)">
+    <span class="anchor" (click)="SetOpened(!opened)">{{ title }}</span>
+    <ul class="items" [class]="{ 'visible': opened }">
+        <li *ngFor="let item of GetOptions() | keyvalue">
+            <input type="checkbox" [(ngModel)]="item.value" [value]="item.key" (change)="onCheckboxChange($event, item.key)"/>
+            {{ item.key }}
+        </li>
+    </ul>
+</div>
+  

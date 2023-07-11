@@ -11,6 +11,8 @@ export class DataHandlerService implements OnInit {
   private ipc!: IpcRenderer;
   private files: { [path: string]: SBOMInfo } = {};
 
+  private sbomFormats: { [name: string]: boolean} = {};
+
   constructor(private client: ClientService) {
     if (window.require) {
       try {
@@ -38,6 +40,18 @@ export class DataHandlerService implements OnInit {
     });
   }
 
+  GetSBOMFormats() {
+    return this.sbomFormats;
+  }
+
+  IncludeSBOMFormat(name: string) {
+    return this.sbomFormats[name];
+  }
+
+  SetSBOMFormat(name: string, value: boolean) {
+    this.sbomFormats[name] = value;
+  }
+
   getSavedSBOM(id: number) {
     return new Promise<any>((resolve) => {
       this.client
@@ -48,7 +62,6 @@ export class DataHandlerService implements OnInit {
     });
   }
 
-  //@TODO add delete endpoint
   DeleteFile(path: string) {
     delete this.files[path];
   }
@@ -72,7 +85,7 @@ export class DataHandlerService implements OnInit {
                   status: FileStatus.VALID,
                   id: result as number,
                   fileName: this.getSBOMAlias(path),
-                  raw: contents,
+                  contents: contents,
                 };
               }
             },
@@ -93,8 +106,15 @@ export class DataHandlerService implements OnInit {
     );
   }
 
+  GetSBOMFormat(path: string) {
+    return this.files[path].qr.originFormat;
+  }
+
   GetSBOMInfo(path: string) {
     return this.files[path];
+  }
+  ContainsSBOMFormat(format: string) {
+    return this.sbomFormats[format] !== undefined;
   }
 
   getSBOMAlias(path: string) {
@@ -114,15 +134,16 @@ export interface File {
 export interface SBOMInfo {
   status: FileStatus;
   id?: number;
+  metrics?: any;
+  qr?: any;
   extra?: string;
   contents?: string;
   fileName?: string;
-  raw?: string;
 }
 
 export enum FileStatus {
-  LOADING,
-  ERROR,
-  VALID,
+  LOADING = "LOADING",
+  ERROR = "ERROR",
+  VALID = "VALID"
 }
 //#endregion

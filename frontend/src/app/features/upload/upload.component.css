@@ -13,10 +13,13 @@
     border-radius: 15px 15px 0 0;
     border-color: var(--primary);
     background-color: white;
-    display: flex;
     align-items: center;
     justify-content: flex-start;
     padding: 10px;
+}
+
+.file-name > div {
+    width: 300px;
 }
 
 .file-name input {
@@ -123,6 +126,7 @@ hr {
 
 .search-parent-container {
     display: flex;
+    gap: 15px;
 }
 
 .search-container button {
@@ -170,6 +174,10 @@ hr {
   gap: 15px;
 }
 
+.sbom > div {
+    width: 300px;  
+    color: var(--primary);
+}
 .btn-modal {
     padding: 5px;
     gap: 10px;
@@ -187,3 +195,7 @@ hr {
     border-color: black;
     color: black;
   }
+.sbom > div {
+    width: 300px;  
+    color: var(--primary);
+}
