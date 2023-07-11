@@ -1,5 +1,12 @@
-.btn-primary {
+.menubutton{
     background-color: transparent;
-    border-color: var(--primary);
-    color: var(--primary);
+    border-color: white;
+    box-shadow: coral;
+
+}
+
+.menubutton::after {
+    content: none;
+    color: none;
+    box-shadow: none;
 }

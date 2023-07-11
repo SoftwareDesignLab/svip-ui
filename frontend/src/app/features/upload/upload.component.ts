@@ -12,7 +12,6 @@ export class UploadComponent implements OnInit {
   private ipc!: IpcRenderer;
   private filterSearch: string = '';
   public deleteModal: boolean = false;
-  public menu: boolean = false;
 
 
   constructor(private dataHandler: DataHandlerService, public routing: RoutingService) {

@@ -17,8 +17,7 @@
       <ng-container *ngIf="getAlias(item)?.includes(GetFilter())">
         <div class="sbom" style="color: var(--green);">
           <input type="checkbox" [value]="item" />
-          {{getAlias(item)}}
-          <app-menu></app-menu>
+          <app-menu text="{{getAlias(item)}}"></app-menu>
         </div>
       </ng-container>
 

@@ -13,7 +13,11 @@ import { firstValueFrom } from 'rxjs';
 export class DataHandlerService implements OnInit {
   private ipc!: IpcRenderer;
   public lastSentFilePaths: string[] = [];
-  private files: { [path: string]: SBOMInfo } = {};
+  private files: { [path: string]: SBOMInfo } = {
+    'hello': {
+      status: FileStatus.VALID
+    }
+  };
 
   public selectedQualityReport!: string;
 
