@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import qualityReport from './qa';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-metrics',
@@ -10,7 +9,9 @@ import { BehaviorSubject } from 'rxjs';
 export class MetricsComponent implements OnInit {
   qa: any = null;
   components: string[] = [];
-  attributes: string[] = [];
+  attributes: {[key: string]: boolean } = {};
+  attributeNames: string[] = [];
+
   _sbom: any = null;
 
   @Input() set sbom(sbom: any) {
@@ -28,15 +29,14 @@ export class MetricsComponent implements OnInit {
 
   getKeys() {
     this.components = Object.keys(this.qa.components);
-    const attributes = new Set<string>();
     this.components.forEach((component) => {
       this.qa.components[component].forEach((test: any) => {
         if (test) {
           const processors = test.attributes as string[];
-          processors.forEach((processor: any) => attributes.add(processor));
+          processors.forEach((processor: string) => this.attributes[processor] = true );
         }
       });
     });
-    this.attributes = Array.from(attributes);
+    this.attributeNames = Object.keys(this.attributes);
   }
 }

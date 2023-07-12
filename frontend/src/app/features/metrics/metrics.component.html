@@ -8,7 +8,12 @@
       <ng-container *ngFor="let component of components"> </ng-container>
     </div>
     <div class="filters">
-      <app-circle
+      <app-circle-toggle
+        *ngFor="let attribute of attributeNames"
+        [toggle]="attributes[attribute]"
+        (click)="attributes[attribute] = !attributes[attribute]"
+        >{{ attribute }}</app-circle-toggle
+      >
     </div>
   </section>
   <div></div>
