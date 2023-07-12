@@ -1,11 +1,15 @@
 <div *ngIf="qa">
-<!-- Header -->
+  <!-- Header -->
   <div class="header">Metrics</div>
-  <div class="fileName">{{sbom.name}}</div>
-<!-- Body -->
+  <div class="fileName">{{ sbom.name }}</div>
+  <!-- Body -->
   <section class="body">
-    <ng-container *ngFor="let component of components">
-    </ng-container>
-
+    <div class="components">
+      <ng-container *ngFor="let component of components"> </ng-container>
+    </div>
+    <div class="filters">
+      <app-circle
+    </div>
   </section>
-<div>
+  <div></div>
+</div>
