@@ -14,21 +14,22 @@ export class MenuComponent {
   constructor(public routing: RoutingService, private dataHandler: DataHandlerService) {
   }
 
-  /**
-   * Removes file from uploaded files
-   * @param file file to remove
-   */
   RemoveFile() {
     this.dataHandler.DeleteFile(this.data);
   }
 
+  GetSBOMInfo(file: string) {
+    return this.dataHandler.GetSBOMInfo(file);
+  }
+
   DownloadOne() {
+    const name = this.GetSBOMInfo(this.data).fileName;
     const sbom = this.dataHandler.downloadSBOM(this.data);
     if( sbom ) {
     const url = URL.createObjectURL(sbom);
     const link = document.createElement('a')
     link.href = url;
-    link.download = sbom.name;
+    link.download = JSON.stringify(name);
 
     document.body.appendChild(link);
     link.click();
