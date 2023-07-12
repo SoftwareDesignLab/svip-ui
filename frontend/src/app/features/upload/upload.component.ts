@@ -143,8 +143,22 @@ export class UploadComponent implements OnInit{
     this.deleteModal = false;
   }
 
-  ConvertSelected() {
+  DownloadSelected() {
+    this.GetSelected().forEach((file) => {
+      const name = this.GetSBOMInfo(file).fileName;
+      const sbom = this.dataHandler.downloadSBOM(file);
+      if( sbom ) {
+      const url = URL.createObjectURL(sbom);
+      const link = document.createElement('a')
+      link.href = url;
+      link.download = JSON.stringify(name);
 
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link)
+      window.URL.revokeObjectURL(url)
+      }
+    })
   }
 
   /**

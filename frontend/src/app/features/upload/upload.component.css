@@ -199,3 +199,9 @@ hr {
     width: 300px;  
     color: var(--primary);
 }
+
+.sbom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }

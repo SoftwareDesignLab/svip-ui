@@ -65,6 +65,16 @@ export class DataHandlerService implements OnInit {
   DeleteFile(path: string) {
     delete this.files[path];
   }
+
+  downloadSBOM(filePath: string) {
+    const file = this.files[filePath]?.raw;
+    if (file !== undefined) {
+      console.log('ssss');
+      return new Blob([file]);
+    }
+    return null;
+  }
+
   //#endregion
   //#region SBOM/File Helpers
   GetAllFiles() {
@@ -139,6 +149,7 @@ export interface SBOMInfo {
   extra?: string;
   contents?: string;
   fileName?: string;
+  raw?: string;
 }
 
 export enum FileStatus {
