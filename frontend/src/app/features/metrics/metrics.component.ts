@@ -35,15 +35,11 @@ export class MetricsComponent implements OnInit {
       const componentTestNames = Object.keys(this.qa.components[component]);
       this.components[component] = componentTestNames;
       // Component tests
-      this.log('component tests')
       this.components[component].forEach((test: any) => {
-      this.log(`test: ${test}`);
         // test results
-        this.log('test result')
         this.getTestResults(component, test).forEach((testResult) => {
-        this.log(`result: ${testResult}`);
-        this.log(testResult);
-          const processors = testResult.attributes as string[];
+          const processors = testResult.attribute as string[];
+          // Processors/Attributes
           processors.forEach(
             (processor: string) => (this.attributes[processor] = true)
           );
