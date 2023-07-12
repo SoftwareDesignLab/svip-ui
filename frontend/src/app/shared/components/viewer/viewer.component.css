@@ -40,3 +40,9 @@
   word-break: break-word;
   overflow-y: scroll;
 }
+
+.title{
+  font-size: 20px;
+  padding: 10px;
+  align-self: center;
+}
