@@ -1,3 +1,11 @@
-<p>
-  metrics works!
-</p>
+<div *ngIf="qa">
+<!-- Header -->
+  <div class="header">Metrics</div>
+  <div class="fileName">{{sbom.name}}</div>
+<!-- Body -->
+  <section class="body">
+    <ng-container *ngFor="let component of components">
+    </ng-container>
+
+  </section>
+<div>

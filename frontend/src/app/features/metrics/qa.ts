@@ -1,4 +1,4 @@
-{
+export default {
   "fileName": "ExampleQA",
   "components": {
     "metadata": {
@@ -20,7 +20,7 @@
       ],
       "licenses": [
         {
-          "attribute": ["CompletenessProcessor"], 
+          "attribute": ["CompletenessProcessor"],
           "test": "IsEmptyOrNull",
           "message": "SBOM has Licenses",
           "details": "SBOM has 2 licenses: 'MIT', 'Foobar'",
