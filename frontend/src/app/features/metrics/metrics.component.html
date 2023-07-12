@@ -4,9 +4,25 @@
   <div class="fileName">{{ sbom.name }}</div>
   <!-- Body -->
   <section class="body">
+    <!-- Components -->
     <div class="components">
-      <ng-container *ngFor="let component of components"> </ng-container>
+      <ng-container *ngFor="let component of componentNames">
+        <app-accordion>
+          <div header>{{ component }}</div>
+          <div body>
+            <!-- Tests -->
+            <ng-container *ngFor="let test of components[component]">
+              <!-- Test results -->
+              <app-accordion *ngFor="let testResult of getTestResults(component, test)">
+                <span header>{{ testResult.message }}</span>
+                <span body>{{ testResult.details }}</span>
+              </app-accordion>
+            </ng-container>
+          </div>
+        </app-accordion>
+      </ng-container>
     </div>
+    <!-- Filters -->
     <div class="filters">
       <app-circle-toggle
         *ngFor="let attribute of attributeNames"

@@ -8,16 +8,17 @@ import qualityReport from './qa';
 })
 export class MetricsComponent implements OnInit {
   qa: any = null;
-  components: string[] = [];
-  attributes: {[key: string]: boolean } = {};
+  componentNames: string[] = [];
+  components: { [componentName: string]: string[] } = {};
+  attributes: { [ProcessorName: string]: boolean } = {};
   attributeNames: string[] = [];
 
   _sbom: any = null;
 
   @Input() set sbom(sbom: any) {
     this.qa = qualityReport;
+    this._sbom = { name: this.qa.fileName };
     this.getKeys();
-    this._sbom = {name: 'SBOM A'};
   }
   get sbom() {
     return this._sbom;
@@ -28,15 +29,35 @@ export class MetricsComponent implements OnInit {
   ngOnInit() {}
 
   getKeys() {
-    this.components = Object.keys(this.qa.components);
-    this.components.forEach((component) => {
-      this.qa.components[component].forEach((test: any) => {
-        if (test) {
-          const processors = test.attributes as string[];
-          processors.forEach((processor: string) => this.attributes[processor] = true );
-        }
+    this.componentNames = Object.keys(this.qa.components);
+    // Components
+    this.componentNames.forEach((component) => {
+      const componentTestNames = Object.keys(this.qa.components[component]);
+      this.components[component] = componentTestNames;
+      // Component tests
+      this.log('component tests')
+      this.components[component].forEach((test: any) => {
+      this.log(`test: ${test}`);
+        // test results
+        this.log('test result')
+        this.getTestResults(component, test).forEach((testResult) => {
+        this.log(`result: ${testResult}`);
+        this.log(testResult);
+          const processors = testResult.attributes as string[];
+          processors.forEach(
+            (processor: string) => (this.attributes[processor] = true)
+          );
+        });
       });
     });
     this.attributeNames = Object.keys(this.attributes);
+  }
+
+  getTestResults(component: string, test: string): any[] {
+    return this.qa.components[component][test];
+  }
+
+  log(text: string) {
+    console.log(text);
   }
 }
