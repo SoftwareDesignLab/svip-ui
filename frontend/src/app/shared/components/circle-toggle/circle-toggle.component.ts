@@ -3,23 +3,21 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
   selector: 'app-circle-toggle',
   templateUrl: './circle-toggle.component.html',
-  styleUrls: ['../components.css']
+  styleUrls: ['../components.css'],
 })
 export class CircleToggleComponent implements OnInit {
   @Input() color = 'red';
   @Input() toggle = true;
 
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
-  toggleStyle(){
-    let style: {[key: string]: any} = {};
-    const property = this.toggle ? 'background-color' : 'border'
-    style[property] = this.toggle ? `1px solid ${this.color}` : this.color;
-    console.log(JSON.stringify(style));
+  toggleStyle() {
+    let style: { [key: string]: any } = {};
+    const property = this.toggle ? 'background-color' : 'border';
+    const value = this.toggle ? this.color : `1px solid ${this.color}`;
+    style[property] = value;
     return style;
   }
 }

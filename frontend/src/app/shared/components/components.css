@@ -99,7 +99,8 @@
   display: flex;
   margin-top: 5px;
 }
-.circle-toggle > .circle {
+
+.circle-toggle > .toggle {
   width: 25px;
   height: 25px;
   border-radius: 50%;
