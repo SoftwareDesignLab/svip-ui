@@ -28,6 +28,7 @@
 
 .file-name h3{
     margin-bottom: 0rem !important;
+    cursor: pointer;
 }
 .card-title {
     font-weight: bold;
@@ -175,7 +176,7 @@ hr {
 }
 
 .sbom > div {
-    width: 300px;  
+    width: 300px;
     color: var(--primary);
 }
 .btn-modal {
@@ -196,6 +197,6 @@ hr {
     color: black;
   }
 .sbom > div {
-    width: 300px;  
+    width: 300px;
     color: var(--primary);
 }
