@@ -49,6 +49,10 @@ export class MetricsComponent implements OnInit {
     this.attributeNames = Object.keys(this.attributes);
   }
 
+  isFiltered(testResult: any) {
+    return !!testResult.attribute.filter((attr: string) =>  this.attributes[attr]).length;
+  }
+
   getTestResults(component: string, test: string): any[] {
     return this.qa.components[component][test];
   }

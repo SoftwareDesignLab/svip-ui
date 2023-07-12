@@ -13,10 +13,14 @@
             <!-- Tests -->
             <ng-container *ngFor="let test of components[component]">
               <!-- Test results -->
-              <app-accordion *ngFor="let testResult of getTestResults(component, test)">
-                <span title>{{ testResult.message }}</span>
-                <span body>{{ testResult.details }}</span>
-              </app-accordion>
+              <ng-container
+                *ngFor="let testResult of getTestResults(component, test)"
+              >
+                <app-accordion *ngIf="isFiltered(testResult)">
+                  <span title>{{ testResult.message }}</span>
+                  <span body>{{ testResult.details }}</span>
+                </app-accordion>
+              </ng-container>
             </ng-container>
           </div>
         </app-accordion>
@@ -32,5 +36,4 @@
       >
     </div>
   </section>
-  <div></div>
 </div>

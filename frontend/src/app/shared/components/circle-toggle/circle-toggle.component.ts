@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['../components.css']
 })
 export class CircleToggleComponent implements OnInit {
-  @Input() color = 'Red';
+  @Input() color = 'red';
   @Input() toggle = true;
 
 
@@ -15,4 +15,11 @@ export class CircleToggleComponent implements OnInit {
   ngOnInit() {
   }
 
+  toggleStyle(){
+    let style: {[key: string]: any} = {};
+    const property = this.toggle ? 'background-color' : 'border'
+    style[property] = this.toggle ? `1px solid ${this.color}` : this.color;
+    console.log(JSON.stringify(style));
+    return style;
+  }
 }
