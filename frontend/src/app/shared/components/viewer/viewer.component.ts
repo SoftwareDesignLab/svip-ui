@@ -10,7 +10,7 @@ import { data } from '../../models/mockMeta';
 })
 export class ViewerComponent {
   files: File[] = [];
-  pretty: boolean = false;
+  pretty: boolean = true;
   data = data;
 
   constructor(public routing: RoutingService, public dataHandler: DataHandlerService) {

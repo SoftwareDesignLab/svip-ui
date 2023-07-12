@@ -7,23 +7,36 @@
       <div class="option" [id]='!pretty ? "selected" : ""' (click)="pretty = false">RAW</div>
     </div>
     <div class="title">
-      {{getAlias(routing.data)}}
+      <!-- {{getAlias(routing.data)}} -->
     </div>
     <ng-container *ngIf= "pretty">
-    <div *ngFor="let component of data.components">
-      <app-accordion [title]="component.name">
-        <div body>
-            <app-accordion *ngFor="let item of component | keyvalue"
-            [title]="item.key"
-          >
-            <div body>
-              {{ item.value }}
-            </div>
-          </app-accordion>
+      <app-accordion [title]="'Components'">
+        <div body *ngFor="let component of data.components">
+          <div body>
+            <app-accordion [title]="component.name">
+              <div body class="component-container">
+                <app-accordion *ngFor="let item of component | keyvalue"
+                [title]="item.key">
+                  <div body>
+                  {{ item.value }}
+                  </div>
+                </app-accordion>
+              </div>
+            </app-accordion>
+          </div>
         </div>
-       
       </app-accordion>
-    </div> 
+      <app-accordion [title]="'Metadata'">
+        <div body class="component-container">
+          <ng-container *ngFor="let item of data | keyvalue">
+            <app-accordion [title]="item.key">
+              <div body>
+                {{ item.value }}
+              </div>
+            </app-accordion>
+          </ng-container>
+        </div>
+      </app-accordion>
     </ng-container>
 
     <ng-container *ngIf="!pretty">
@@ -32,5 +45,5 @@
       </div>
     </ng-container>
   </div>
-
 </div>
+
