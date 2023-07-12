@@ -13,6 +13,7 @@ import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ToggleComponent } from './shared/components/toggle/toggle.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { MultiselectDropdownComponent } from './shared/components/multiselect-dropdown/multiselect-dropdown.component';
+import { AccordionComponent } from './shared/components/accordion/accordion.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MultiselectDropdownComponent } from './shared/components/multiselect-dr
     NavbarComponent,
     ToggleComponent,
     MultiselectDropdownComponent,
-    ModalComponent
+    ModalComponent,
+    AccordionComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
