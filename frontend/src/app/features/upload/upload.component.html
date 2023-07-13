@@ -124,7 +124,7 @@
       <div>Overwrite Files:</div>
       <select [(ngModel)]="convertOptions.overwrite">
         <option value=""></option>
-        <option *ngFor="let option of ['True', 'False']" [value]="option">{{ option }}</option>
+        <option *ngFor="let option of [true, false]" [value]="option">{{ option }}</option>
       </select>
     </div>
   </div>
