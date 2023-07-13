@@ -9,4 +9,5 @@
 
 .dropdown:hover {
   color: var(--primary);
+  cursor: pointer;
 }
