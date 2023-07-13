@@ -1,4 +1,7 @@
 <div class="upload-container">
+  <div class="center">
+    <app-toast [opened]="show"></app-toast>
+  </div>
   <h3>SBOM Files</h3>
   <div class="search-parent-container" *ngIf="GetAllFiles().length > 0" >
       <div class="search-container">
@@ -98,3 +101,5 @@
     </div>
   </div>
 </app-modal>
+
+

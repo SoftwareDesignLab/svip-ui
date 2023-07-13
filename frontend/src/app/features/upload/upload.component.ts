@@ -12,6 +12,7 @@ export class UploadComponent implements OnInit{
   private ipc!: IpcRenderer;
   private filterSearch: string = '';
   public deleteModal: boolean = false;
+  public show: boolean = false;
 
   protected sortingOptions: { [type: string]: boolean } = {
     "NAME": true,
@@ -152,6 +153,9 @@ export class UploadComponent implements OnInit{
 
   DownloadSelected() {
     this.GetSelected().forEach((file) => {
+      if (this.GetSelected().length === 0 || this.dataHandler.GetSBOMInfo(file).status === FileStatus.ERROR) {
+        this.show = true;
+      }
       const name = this.GetSBOMInfo(file).fileName;
       const sbom = this.dataHandler.downloadSBOM(file);
       if( sbom ) {
