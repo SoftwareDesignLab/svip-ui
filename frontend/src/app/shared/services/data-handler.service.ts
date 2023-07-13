@@ -148,7 +148,6 @@ export interface SBOMInfo {
   extra?: string;
   contents?: string;
   fileName?: string;
-  raw?: string;
 }
 
 export enum FileStatus {
