@@ -3,18 +3,25 @@
   <section class="body">
     <!-- Components -->
     <div class="components scroll-y">
-      <ng-container *ngFor="let component of componentNames">
+      <ng-container *ngFor="let component of components | keyvalue">
         <app-accordion>
-          <div title>{{ component }}</div>
+          <div title>{{ component.key }}</div>
           <div body class="scroll-y component">
             <!-- Tests -->
-            <ng-container *ngFor="let test of components[component]">
+            <ng-container *ngFor="let test of component.value">
               <!-- Test results -->
               <ng-container
-                *ngFor="let testResult of getTestResults(component, test)"
+                *ngFor="let testResult of getTestResults(component.key, test)"
               >
                 <app-accordion *ngIf="isFiltered(testResult)">
-                  <span title>{{ testResult.message }}</span>
+                  <div title class="test-result">
+                    <span>{{ testResult.message }}</span>
+                    <div
+                      class="circle"
+                      *ngFor="let tag of testResult.attributes"
+                      [ngStyle]="{ 'background-color': attributes[tag].color }"
+                    ></div>
+                  </div>
                   <span body>{{ testResult.details }}</span>
                 </app-accordion>
               </ng-container>
@@ -25,12 +32,13 @@
     </div>
     <!-- Filters -->
     <div class="filters">
-    <div>Shown Tests</div>
+      <div>Shown Tests</div>
       <app-circle-toggle
-        *ngFor="let attribute of attributeNames"
-        [toggle]="attributes[attribute]"
-        (click)="attributes[attribute] = !attributes[attribute]"
-        >{{ attribute }}</app-circle-toggle
+        *ngFor="let attribute of attributes | keyvalue"
+        [color]="attribute.value.color"
+        [toggle]="attribute.value.shown"
+        (click)="attribute.value.shown = !attribute.value.shown"
+        >{{ attribute.key }}</app-circle-toggle
       >
     </div>
   </section>

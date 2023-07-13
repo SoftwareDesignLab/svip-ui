@@ -10,15 +10,19 @@ export class MetricsComponent implements OnInit {
   qa: any = null;
   componentNames: string[] = [];
   components: { [componentName: string]: string[] } = {};
-  attributes: { [ProcessorName: string]: boolean } = {};
+  attributes: { [ProcessorName: string]: { color: string; shown: boolean } } =
+    {};
   attributeNames: string[] = [];
-
   _sbom: any = null;
+  colors: string[] = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
+
+  // TODO: why did i make an arrays of names... I could've just used entries/key value in html
 
   @Input() set sbom(sbom: any) {
     this.qa = qualityReport;
     this._sbom = { name: this.qa.fileName };
     this.getKeys();
+    this.setColor();
   }
   get sbom() {
     return this._sbom;
@@ -40,9 +44,9 @@ export class MetricsComponent implements OnInit {
         this.getTestResults(component, test).forEach((testResult) => {
           const processors = testResult.attributes as string[];
           // Processors/Attributes
-          processors.forEach(
-            (processor: string) => (this.attributes[processor] = true)
-          );
+          processors.forEach((processor: string) => {
+            this.attributes[processor] = {shown: true, color: ''}
+          });
         });
       });
     });
@@ -50,7 +54,9 @@ export class MetricsComponent implements OnInit {
   }
 
   isFiltered(testResult: any) {
-    return !!testResult.attributes.filter((attr: string) =>  this.attributes[attr]).length;
+    return !!testResult.attributes.filter(
+      (attr: string) => this.attributes[attr].shown
+    ).length;
   }
 
   getTestResults(component: string, test: string): any[] {
@@ -59,5 +65,11 @@ export class MetricsComponent implements OnInit {
 
   log(text: string) {
     console.log(text);
+  }
+
+  setColor() {
+    Object.keys(this.attributes).forEach((attr, index) => {
+      this.attributes[attr].color = this.colors[index]
+    });
   }
 }
