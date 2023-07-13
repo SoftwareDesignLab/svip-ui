@@ -26,7 +26,6 @@ export class MenuComponent {
     const name = this.GetSBOMInfo(this.data).fileName;
     const sbom = this.dataHandler.downloadSBOM(this.data);
     if( sbom ) {
-    console.log("test");
     const url = URL.createObjectURL(sbom);
     const link = document.createElement('a')
     link.href = url;
