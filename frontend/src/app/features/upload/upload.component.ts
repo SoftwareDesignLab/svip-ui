@@ -13,6 +13,20 @@ export class UploadComponent implements OnInit{
   private filterSearch: string = '';
   public deleteModal: boolean = false;
 
+  public convertModal: boolean = false;
+  public convertOptions: {
+    schema?: string,
+    format?: string
+    overwrite?: boolean
+  } = {
+    schema: '',
+    format: '',
+    overwrite: undefined,
+  };
+  public schemaOptions: string[] = ['TAGVALUE', "JSON"];
+  public formatOptions: string[] = ['CDX14', "SPDX23", "SVIP"];
+
+
   protected sortingOptions: { [type: string]: boolean } = {
     "NAME": true,
     "FORMAT": true,
