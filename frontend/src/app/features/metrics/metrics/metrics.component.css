@@ -13,7 +13,7 @@
 
 .components {
   height: 100%;
-  width: 90%;
+  width: 80%;
 }
 .component {
   height: 30%;
@@ -21,4 +21,8 @@
 
 .scroll-y {
   overflow-y: scroll;
+}
+
+.filters {
+  margin-left: 5px;
 }
