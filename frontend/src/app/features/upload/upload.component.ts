@@ -124,9 +124,7 @@ export class UploadComponent implements OnInit{
   }
 
   setAllSelected(event: any) {
-
     let value = event.target.checked;
-
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
     for (let i = 0; i < checkboxes.length; i++) {
@@ -180,7 +178,9 @@ export class UploadComponent implements OnInit{
       window.URL.revokeObjectURL(url)
       }
     })
-    
+  }
+
+  ConvertSelected() {
     if(this.convertOptions.schema === '' || this.convertOptions.format === '')
       return;
 
