@@ -14,6 +14,7 @@ import { ToggleComponent } from './shared/components/toggle/toggle.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
 import { MultiselectDropdownComponent } from './shared/components/multiselect-dropdown/multiselect-dropdown.component';
 import { AccordionComponent } from './shared/components/accordion/accordion.component';
+import { MenuComponent } from './shared/components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AccordionComponent } from './shared/components/accordion/accordion.comp
     ToggleComponent,
     MultiselectDropdownComponent,
     ModalComponent,
-    AccordionComponent
+    AccordionComponent,
+    MenuComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],

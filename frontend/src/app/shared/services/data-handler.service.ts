@@ -65,6 +65,15 @@ export class DataHandlerService implements OnInit {
   DeleteFile(path: string) {
     delete this.files[path];
   }
+
+  downloadSBOM(filePath: string) {
+    const file = this.files[filePath]?.contents;
+    if (file !== undefined) {
+      return new Blob([file]);
+    }
+    return null;
+  }
+
   //#endregion
   //#region SBOM/File Helpers
   GetAllFiles() {

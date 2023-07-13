@@ -1,0 +1,12 @@
+.dropdown{
+    background-color: transparent;
+    border-color: white;
+}
+
+.dropdown::after {
+    content: none;
+}
+
+.dropdown:hover {
+  color: var(--primary);
+}
