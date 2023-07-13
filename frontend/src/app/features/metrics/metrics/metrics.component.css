@@ -1,0 +1,14 @@
+.body {
+  display: flex;
+  justify-content: space-around;
+}
+
+.components {
+  width: 50vw;
+}
+
+.scroll-y {
+  border: 1px solid red;
+  height: 30vh;
+  overflow-y: scroll;
+}

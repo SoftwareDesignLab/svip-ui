@@ -18,7 +18,8 @@ import { AccordionComponent } from './shared/components/accordion/accordion.comp
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ComparisonComponent } from './features/comparison/comparison.component';
 import { CircleToggleComponent } from './shared/components/circle-toggle/circle-toggle.component';
-import { MetricsComponent } from './features/metrics/metrics.component';
+import { MetricsComponent } from './features/metrics/metrics/metrics.component';
+import { MetricsBodyComponent } from './features/metrics/metrics-body/metrics-body.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MetricsComponent } from './features/metrics/metrics.component';
     ComparisonComponent,
     CircleToggleComponent,
     MetricsComponent,
+    MetricsBodyComponent,
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],

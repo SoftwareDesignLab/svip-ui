@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import qualityReport from './qa';
+import qualityReport from '../qa';
 
 @Component({
   selector: 'app-metrics',
