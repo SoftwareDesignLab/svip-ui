@@ -67,9 +67,8 @@ export class DataHandlerService implements OnInit {
   }
 
   downloadSBOM(filePath: string) {
-    const file = this.files[filePath]?.raw;
+    const file = this.files[filePath]?.contents;
     if (file !== undefined) {
-      console.log('ssss');
       return new Blob([file]);
     }
     return null;
