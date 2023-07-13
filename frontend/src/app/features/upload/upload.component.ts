@@ -13,7 +13,7 @@ export class UploadComponent implements OnInit{
   private filterSearch: string = '';
   public deleteModal: boolean = false;
 
-  private sortingOptions: { [type: string]: boolean } = {
+  protected sortingOptions: { [type: string]: boolean } = {
     "NAME": true,
     "FORMAT": true,
   }
@@ -119,6 +119,13 @@ export class UploadComponent implements OnInit{
       const checkbox = checkboxes[i] as HTMLInputElement;
       checkbox.checked = value;
     }
+  }
+
+  UpdateSort(type: string) {
+    let sort = SORT_OPTIONS[type as keyof typeof SORT_OPTIONS];
+
+    this.sortingOptions[sort] = !this.sortingOptions[sort];
+    this.selectedSorting = sort;
   }
 
   GetSelected() {

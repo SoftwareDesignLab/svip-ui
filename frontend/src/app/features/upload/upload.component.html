@@ -17,9 +17,9 @@
   <div class="file-name flex" *ngIf="GetAllFiles().length > 0">
       <div class="flex">
         <input type="checkbox" (change)="setAllSelected($event)"/>
-        <h3>File Name</h3>
+        <h3 (click)="UpdateSort('NAME')">File Name {{sortingOptions['NAME'] ? '▴' : '▾'}}</h3>
       </div>
-      <h3>Format</h3>
+      <h3  (click)="UpdateSort('FORMAT')">Format {{sortingOptions['FORMAT'] ? '▴' : '▾'}}</h3>
   </div>
 
   <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
