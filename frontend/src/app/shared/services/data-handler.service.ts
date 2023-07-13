@@ -130,6 +130,27 @@ export class DataHandlerService implements OnInit {
     const pathChar = path.indexOf('/') !== -1 ? '/' : '\\';
     return path.split(pathChar).pop();
   }
+
+  ConvertSBOM(path: string, schema: string, format: string, overwrite: boolean) {
+
+    let sbom = this.files[path];
+    let id = sbom.id ? sbom.id : -1;
+
+    this.client.get('convert', new HttpParams().set('id', id)
+    .set('schema', schema)
+    .set('format', format)
+    .set('overwrite', overwrite)).subscribe((result) => {
+
+      //Add error message?
+      if(typeof result !== 'string')
+        return;
+
+        sbom.contents = result;
+        sbom.qr.originFormat = format; //update format, will most likely change
+        this.files[path] = sbom;
+    });
+
+  }
   //#endregion
 }
 

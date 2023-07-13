@@ -13,6 +13,20 @@ export class UploadComponent implements OnInit{
   private filterSearch: string = '';
   public deleteModal: boolean = false;
 
+  public convertModal: boolean = false;
+  public convertOptions: {
+    schema: string,
+    format: string
+    overwrite: boolean
+  } = {
+    schema: '',
+    format: '',
+    overwrite: true,
+  };
+  public schemaOptions: string[] = ['TAGVALUE', "JSON"];
+  public formatOptions: string[] = ['CDX14', "SPDX23", "SVIP"];
+
+
   protected sortingOptions: { [type: string]: boolean } = {
     "NAME": true,
     "FORMAT": true,
@@ -110,9 +124,7 @@ export class UploadComponent implements OnInit{
   }
 
   setAllSelected(event: any) {
-
     let value = event.target.checked;
-
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
     for (let i = 0; i < checkboxes.length; i++) {
@@ -166,6 +178,17 @@ export class UploadComponent implements OnInit{
       window.URL.revokeObjectURL(url)
       }
     })
+  }
+
+  ConvertSelected() {
+    if(this.convertOptions.schema === '' || this.convertOptions.format === '')
+      return;
+
+   this.GetSelected().forEach((file) => {
+        this.dataHandler.ConvertSBOM(file, this.convertOptions.schema, this.convertOptions.format, this.convertOptions.overwrite);
+    })
+
+    this.convertModal = false;
   }
 
   /**
