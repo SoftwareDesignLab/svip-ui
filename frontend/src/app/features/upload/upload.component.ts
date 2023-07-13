@@ -15,13 +15,13 @@ export class UploadComponent implements OnInit{
 
   public convertModal: boolean = false;
   public convertOptions: {
-    schema?: string,
-    format?: string
-    overwrite?: boolean
+    schema: string,
+    format: string
+    overwrite: boolean
   } = {
     schema: '',
     format: '',
-    overwrite: undefined,
+    overwrite: true,
   };
   public schemaOptions: string[] = ['TAGVALUE', "JSON"];
   public formatOptions: string[] = ['CDX14', "SPDX23", "SVIP"];
@@ -180,6 +180,15 @@ export class UploadComponent implements OnInit{
       window.URL.revokeObjectURL(url)
       }
     })
+    
+    if(this.convertOptions.schema === '' || this.convertOptions.format === '')
+      return;
+
+   this.GetSelected().forEach((file) => {
+        this.dataHandler.ConvertSBOM(file, this.convertOptions.schema, this.convertOptions.format, this.convertOptions.overwrite);
+    })
+
+    this.convertModal = false;
   }
 
   /**
