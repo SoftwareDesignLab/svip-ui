@@ -38,7 +38,7 @@ export class MetricsComponent implements OnInit {
       this.components[component].forEach((test: any) => {
         // test results
         this.getTestResults(component, test).forEach((testResult) => {
-          const processors = testResult.attribute as string[];
+          const processors = testResult.attributes as string[];
           // Processors/Attributes
           processors.forEach(
             (processor: string) => (this.attributes[processor] = true)
@@ -50,7 +50,7 @@ export class MetricsComponent implements OnInit {
   }
 
   isFiltered(testResult: any) {
-    return !!testResult.attribute.filter((attr: string) =>  this.attributes[attr]).length;
+    return !!testResult.attributes.filter((attr: string) =>  this.attributes[attr]).length;
   }
 
   getTestResults(component: string, test: string): any[] {

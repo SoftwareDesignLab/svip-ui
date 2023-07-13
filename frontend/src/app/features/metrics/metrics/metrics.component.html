@@ -1,12 +1,12 @@
-<div *ngIf="qa">
+<div *ngIf="qa" class="wrapper">
   <!-- Body -->
   <section class="body">
     <!-- Components -->
-    <div class="components">
+    <div class="components scroll-y">
       <ng-container *ngFor="let component of componentNames">
         <app-accordion>
           <div title>{{ component }}</div>
-          <div body class="scroll-y">
+          <div body class="scroll-y component">
             <!-- Tests -->
             <ng-container *ngFor="let test of components[component]">
               <!-- Test results -->
