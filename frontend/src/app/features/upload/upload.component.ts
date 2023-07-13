@@ -158,7 +158,7 @@ export class UploadComponent implements OnInit{
       const url = URL.createObjectURL(sbom);
       const link = document.createElement('a')
       link.href = url;
-      link.download = JSON.stringify(name);
+      link.download = name as string;
 
       document.body.appendChild(link);
       link.click();
