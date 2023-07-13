@@ -1,0 +1,16 @@
+.toast {
+    text-align: center;
+    border-width: 2px;
+}
+
+.toast-body {
+    display: flex;
+    display: inline;
+    align-items: center;
+    justify-items: center;
+    text-justify: auto;
+}
+
+.toast span {
+    color: gray;
+}
