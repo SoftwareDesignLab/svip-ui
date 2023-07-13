@@ -4,14 +4,14 @@ export default {
     "metadata": {
       "uid": [
         {
-          "attribute": ["CompletenessProcessor"],
+          "attributes": ["CompletenessProcessor"],
           "test": "IsEmptyOrNull",
           "message": "SBOM has a uid",
           "details": "uid: 'my-uid'",
           "pass": 1
         },
         {
-          "attribute": ["CDXProcessor"],
+          "attributes": ["CDXProcessor"],
           "test": "IsValidUID",
           "message": "SBOM has an invalid Serial Number",
           "details": "'my-uid' is an invalid serial number",
@@ -20,21 +20,21 @@ export default {
       ],
       "licenses": [
         {
-          "attribute": ["CompletenessProcessor"],
+          "attributes": ["CompletenessProcessor"],
           "test": "IsEmptyOrNull",
           "message": "SBOM has Licenses",
           "details": "SBOM has 2 licenses: 'MIT', 'Foobar'",
           "pass": 1
         },
         {
-          "attribute": ["LicenseProcessor"],
+          "attributes": ["LicenseProcessor"],
           "test": "IsValidLicense",
           "message": "SBOM has an valid license",
           "details": "'MIT' is a valid license",
           "pass": 1
         },
         {
-          "attribute": ["LicenseProcessor"],
+          "attributes": ["LicenseProcessor"],
           "test": "IsValidLicense",
           "message": "SBOM has an invalid license",
           "details": "'Foobar' is an invalid license",
@@ -45,7 +45,7 @@ export default {
     "numpy": {
       "version": [
         {
-          "attribute": ["CompletenessProcessor"],
+          "attributes": ["CompletenessProcessor"],
           "test": "IsEmptyOrNull",
           "message": "Component has a version",
           "details": "version: 1.3.2",
@@ -54,14 +54,14 @@ export default {
       ],
       "cpes": [
         {
-          "attribute": ["CompletenessProcessor"],
+          "attributes": ["CompletenessProcessor"],
           "test": "IsEmptyOrNull",
           "message": "Component has CPEs",
           "details": "Component has 1 CPE: 'my-cpe'",
           "pass": 1
         },
         {
-          "attribute": ["AccuracyProcessor"],
+          "attributes": ["AccuracyProcessor"],
           "test": "IsValidCPE",
           "message": "Component has an invalid CPE",
           "details": "'my-cpe' is an invalid CPE",
