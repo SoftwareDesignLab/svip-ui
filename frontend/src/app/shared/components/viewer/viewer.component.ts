@@ -22,4 +22,32 @@ export class ViewerComponent {
   getAlias(sbom: string) {
     return this.dataHandler.getSBOMAlias(sbom);
   }
+
+  isObjectType(value: any): boolean {
+    return typeof value === 'object' && !Array.isArray(value);
+  }
+
+  isStringOrArray(value: any): boolean {
+    return typeof value === 'string' || Array.isArray(value) || (typeof value === 'object' && value !== null);
+  }
+
+  getItemValue(value: any): string {
+    if (Array.isArray(value)) {
+      return value.join(', ');
+    } else if (typeof value === 'string') {
+      return value;
+    } else {
+      return '';
+    }
+  }
+
+  convertToString(value: any): string {
+    if (typeof value === 'string') {
+      return value;
+    } else if (Array.isArray(value)) {
+      return value.join(', ');
+    } else {
+      return '';
+    }
+  }
 }

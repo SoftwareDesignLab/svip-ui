@@ -7,7 +7,7 @@
       <div class="option" [id]='!pretty ? "selected" : ""' (click)="pretty = false">RAW</div>
     </div>
     <div class="title">
-      <!-- {{getAlias(routing.data)}} -->
+      {{getAlias(routing.data)}}
     </div>
     <ng-container *ngIf= "pretty">
       <app-accordion [title]="'Components'">
@@ -26,15 +26,25 @@
           </div>
         </div>
       </app-accordion>
+
+      <ng-template #recursiveTemplate let-data>
+        <ng-container *ngFor="let item of data | keyvalue">
+          <app-accordion [title]="convertToString(item.key)">
+            <div body>
+              <ng-container *ngIf="isObjectType(item.value)">
+                <ng-container *ngTemplateOutlet="recursiveTemplate; context:{ $implicit: item.value }"></ng-container>
+              </ng-container>
+              <ng-container *ngIf="isStringOrArray(item.value)">
+                {{ getItemValue(item.value) }}
+              </ng-container>
+            </div>
+          </app-accordion>
+        </ng-container>
+      </ng-template>
+
       <app-accordion [title]="'Metadata'">
         <div body class="component-container">
-          <ng-container *ngFor="let item of data | keyvalue">
-            <app-accordion [title]="item.key">
-              <div body>
-                {{ item.value }}
-              </div>
-            </app-accordion>
-          </ng-container>
+          <ng-container *ngTemplateOutlet="recursiveTemplate; context:{ $implicit: data }"></ng-container>
         </div>
       </app-accordion>
     </ng-container>
@@ -46,4 +56,3 @@
     </ng-container>
   </div>
 </div>
-
