@@ -28,13 +28,13 @@
             </div>
           </div>
         </ng-template>
-        
+
         <app-accordion [title]="'Components'">
           <div body class="component-container">
             <ng-container *ngTemplateOutlet="components; context:{ $implicit: data }"></ng-container>
           </div>
-        </app-accordion>      
-  
+        </app-accordion>
+
         <ng-template #metadata let-data>
           <ng-container *ngFor="let item of data | keyvalue; let first = first">
             <ng-container *ngIf="!first">
@@ -51,8 +51,8 @@
             </ng-container>
           </ng-container>
         </ng-template>
-        
-  
+
+
         <app-accordion [title]="'Metadata'">
           <div body class="component-container">
             <ng-container *ngTemplateOutlet="metadata; context:{ $implicit: data }"></ng-container>
@@ -60,11 +60,11 @@
         </app-accordion>
       </ng-container>
     </div>
-    
+
     <ng-container *ngIf="!pretty">
-      <div class="content">
+      <pre class="content">
         {{routing.data ? dataHandler.GetSBOMInfo(routing.data).contents : ''}}
-      </div>
+      </pre>
     </ng-container>
   </div>
 </div>

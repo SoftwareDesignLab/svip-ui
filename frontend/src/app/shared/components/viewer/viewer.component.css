@@ -36,6 +36,7 @@
 
 .content {
   height: 100%;
+  width: 100%;
   padding: 10px;
   word-break: break-word;
   overflow-y: scroll;
@@ -54,4 +55,8 @@
 
 .test-container{
   border: 1px solid red;
+}
+
+pre{
+    white-space:pre-wrap;
 }
