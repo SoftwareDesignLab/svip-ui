@@ -100,6 +100,7 @@
 .circle-toggle {
   display: flex;
   margin-top: 5px;
+  white-space: nowrap;
 }
 
 .circle-toggle > .toggle {

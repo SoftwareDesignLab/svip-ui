@@ -17,12 +17,14 @@
                   <div title class="test-result">
                     <span>{{ testResult.message }}</span>
                   </div>
-                  <div
-                    extra
-                    class="circle"
-                    *ngFor="let tag of testResult.attributes"
-                    [ngStyle]="{ 'background-color': attributes[tag].color }"
-                  ></div>
+                  <div extra class="attributes">
+                    <div
+                      class="circle"
+                      *ngFor="let tag of testResult.attributes"
+                      [ngStyle]="{ 'background-color': attributes[tag].color }"
+                      [ngbTooltip]="tag"
+                    ></div>
+                  </div>
                   <span body>{{ testResult.details }}</span>
                 </app-accordion>
               </ng-container>
