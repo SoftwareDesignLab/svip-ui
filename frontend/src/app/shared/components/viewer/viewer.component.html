@@ -35,7 +35,7 @@
                 <ng-container *ngTemplateOutlet="recursiveTemplate; context:{ $implicit: item.value }"></ng-container>
               </ng-container>
               <ng-container *ngIf="isStringOrArray(item.value)">
-                {{ getItemValue(item.value) }}
+                <pre>{{ formatValue(item.value) }}</pre>
               </ng-container>
             </div>
           </app-accordion>
