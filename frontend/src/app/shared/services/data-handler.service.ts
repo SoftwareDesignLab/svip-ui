@@ -13,7 +13,7 @@ export class DataHandlerService implements OnInit {
 
   private sbomFormats: { [name: string]: boolean} = {};
 
-  public comparison: any = {};
+  public comparison: any;
 
   constructor(private client: ClientService) {
     if (window.require) {
