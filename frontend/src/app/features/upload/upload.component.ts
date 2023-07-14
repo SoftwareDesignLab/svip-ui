@@ -15,6 +15,8 @@ export class UploadComponent implements OnInit {
   public show: boolean = false;
 
   public convertModal: boolean = false;
+  public downloadModal: boolean = false;
+
   public convertOptions: {
     schema: string,
     format: string
@@ -165,11 +167,17 @@ export class UploadComponent implements OnInit {
 
   DownloadSelected() {
     if (this.GetSelected().length === 0) {
-      this.show = true;
+      this.downloadModal = true;
+      setTimeout(() => {
+        this.downloadModal=false;
+      }, 3000);
     }
     this.GetSelected().forEach((file) => {
       if (this.dataHandler.GetSBOMInfo(file).status === FileStatus.ERROR) {
-        this.show = true;
+        this.downloadModal= true;
+        setTimeout(() => {
+          this.downloadModal=false;
+        }, 4000);
         return;
       }
       const name = this.GetSBOMInfo(file).fileName;
