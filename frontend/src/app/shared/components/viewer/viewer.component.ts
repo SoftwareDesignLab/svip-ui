@@ -31,16 +31,6 @@ export class ViewerComponent {
     return typeof value === 'string' || Array.isArray(value) || (typeof value === 'object' && value !== null);
   }
 
-  getItemValue(value: any): string {
-    if (Array.isArray(value)) {
-      return value.join(', ');
-    } else if (typeof value === 'string') {
-      return value;
-    } else {
-      return '';
-    }
-  }
-
   convertToString(value: any): string {
     if (typeof value === 'string') {
       return value;
@@ -50,4 +40,10 @@ export class ViewerComponent {
       return '';
     }
   }
+
+  formatValue(value: any): string {
+    const formattedValue = JSON.stringify(value, null, 2);
+    return formattedValue.replace(/[[\]{},"]/g, '') + '\n';
+  }
+
 }
