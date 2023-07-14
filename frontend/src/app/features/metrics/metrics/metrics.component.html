@@ -16,12 +16,13 @@
                 <app-accordion *ngIf="isFiltered(testResult)">
                   <div title class="test-result">
                     <span>{{ testResult.message }}</span>
-                    <div
-                      class="circle"
-                      *ngFor="let tag of testResult.attributes"
-                      [ngStyle]="{ 'background-color': attributes[tag].color }"
-                    ></div>
                   </div>
+                  <div
+                    extra
+                    class="circle"
+                    *ngFor="let tag of testResult.attributes"
+                    [ngStyle]="{ 'background-color': attributes[tag].color }"
+                  ></div>
                   <span body>{{ testResult.details }}</span>
                 </app-accordion>
               </ng-container>
