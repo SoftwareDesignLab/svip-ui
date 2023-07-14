@@ -15,9 +15,8 @@ export class CircleToggleComponent implements OnInit {
 
   toggleStyle() {
     let style: { [key: string]: any } = {};
-    const property = this.toggle ? 'background-color' : 'border';
-    const value = this.toggle ? this.color : `1px solid ${this.color}`;
-    style[property] = value;
+    style['background-color'] = this.toggle ? this.color : 'transparent'
+    style['border'] =  `2px solid ${this.color}`;
     return style;
   }
 }
