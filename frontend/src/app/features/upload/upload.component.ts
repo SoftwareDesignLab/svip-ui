@@ -170,7 +170,7 @@ export class UploadComponent implements OnInit{
       this.downloadModal = true;
       setTimeout(() => {
         this.downloadModal=false;
-      }, 3000);
+      }, 4000);
     }
     this.GetSelected().forEach((file) => {
       if (this.dataHandler.GetSBOMInfo(file).status === FileStatus.ERROR) {
