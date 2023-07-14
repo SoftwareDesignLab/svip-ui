@@ -26,6 +26,8 @@ export class UploadComponent implements OnInit{
   public schemaOptions: string[] = ['TAGVALUE', "JSON"];
   public formatOptions: string[] = ['CDX14', "SPDX23", "SVIP"];
 
+  public compareModal: boolean = false;
+  protected compareTarget: string = '';
 
   protected sortingOptions: { [type: string]: boolean } = {
     "NAME": true,
@@ -146,7 +148,7 @@ export class UploadComponent implements OnInit{
 
     for (let i = 0; i < checkboxes.length; i++) {
       const checkbox = checkboxes[i] as HTMLInputElement;
-      if (checkbox.checked && !checkbox.disabled) {
+      if (checkbox.checked && !checkbox.disabled && checkbox.value != 'null') {
         selected.push(checkbox.value);
       }
     }
@@ -160,6 +162,11 @@ export class UploadComponent implements OnInit{
     })
 
     this.deleteModal = false;
+  }
+
+  CompareSelected() {
+    this.routing.SetPage(2);
+    this.dataHandler.com
   }
 
   DownloadSelected() {
