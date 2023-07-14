@@ -40,3 +40,18 @@
   word-break: break-word;
   overflow-y: scroll;
 }
+
+.title{
+  font-size: 20px;
+  padding: 10px;
+  align-self: center;
+}
+
+.component-container{
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.test-container{
+  border: 1px solid red;
+}

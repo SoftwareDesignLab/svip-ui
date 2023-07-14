@@ -13,3 +13,11 @@
 .body > * {
   width: 100%;
 }
+
+.flex {
+  display: flex;
+}
+
+.col{
+  flex-direction: column;
+}
