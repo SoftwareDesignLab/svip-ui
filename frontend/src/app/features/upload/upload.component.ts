@@ -13,7 +13,6 @@ export class UploadComponent implements OnInit{
   private filterSearch: string = '';
   public deleteModal: boolean = false;
   public show: boolean = false;
-<<<<<<< HEAD
 
   public convertModal: boolean = false;
   public convertOptions: {
@@ -28,8 +27,6 @@ export class UploadComponent implements OnInit{
   public formatOptions: string[] = ['TAGVALUE', "JSON"];
   public schemaOptions: string[] = ['CDX14', "SPDX23", "SVIP"];
 
-=======
->>>>>>> 7f4e4ac (added half of the toast pop up function)
 
   protected sortingOptions: { [type: string]: boolean } = {
     "NAME": true,
