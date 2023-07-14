@@ -166,7 +166,9 @@ export class UploadComponent implements OnInit{
 
   CompareSelected() {
     this.routing.SetPage(2);
-    this.dataHandler.com
+
+    let others = this.GetSelected().filter((x) => x !== this.compareTarget);
+    this.dataHandler.CompareSBOMs(this.compareTarget, others);
   }
 
   DownloadSelected() {
