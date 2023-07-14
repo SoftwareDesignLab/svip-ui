@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RoutingService } from '../../services/routing.service';
 import { DataHandlerService } from '../../services/data-handler.service';
 import { data } from '../../models/mockMeta';
@@ -12,6 +12,7 @@ export class ViewerComponent {
   files: File[] = [];
   pretty: boolean = true;
   data = data;
+  @Input() components: any[] | undefined;
 
   constructor(public routing: RoutingService, public dataHandler: DataHandlerService) {
   }

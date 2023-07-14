@@ -9,46 +9,58 @@
     <div class="title">
       {{getAlias(routing.data)}}
     </div>
-    <ng-container *ngIf= "pretty">
-      <app-accordion [title]="'Components'">
-        <div body *ngFor="let component of data.components">
-          <div body>
-            <app-accordion [title]="component.name">
-              <div body class="component-container">
-                <app-accordion *ngFor="let item of component | keyvalue"
-                [title]="item.key">
-                  <div body>
-                  {{ item.value }}
-                  </div>
-                </app-accordion>
-              </div>
-            </app-accordion>
-          </div>
-        </div>
-      </app-accordion>
-
-      <ng-template #recursiveTemplate let-data>
-        <ng-container *ngFor="let item of data | keyvalue">
-          <app-accordion [title]="convertToString(item.key)">
+    <div class="component-container">
+      <ng-container *ngIf="pretty">
+        <ng-template #components let-data>
+          <div body *ngFor="let component of data.components">
             <div body>
-              <ng-container *ngIf="isObjectType(item.value)">
-                <ng-container *ngTemplateOutlet="recursiveTemplate; context:{ $implicit: item.value }"></ng-container>
-              </ng-container>
-              <ng-container *ngIf="isStringOrArray(item.value) && !isObjectType(item.value)">
-                <pre>{{ formatValue(item.value) }}</pre>
-              </ng-container>
+              <app-accordion [title]="component.name">
+                <div body class="component-container">
+                  <ng-container *ngFor="let item of component | keyvalue">
+                    <app-accordion [title]="convertToString(item.key)">
+                      <div body>
+                        <pre>{{ formatValue(item.value) }}</pre>
+                      </div>
+                    </app-accordion>
+                  </ng-container>
+                </div>
+              </app-accordion>
             </div>
-          </app-accordion>
-        </ng-container>
-      </ng-template>
-
-      <app-accordion [title]="'Metadata'">
-        <div body class="component-container">
-          <ng-container *ngTemplateOutlet="recursiveTemplate; context:{ $implicit: data }"></ng-container>
-        </div>
-      </app-accordion>
-    </ng-container>
-
+          </div>
+        </ng-template>
+        
+        <app-accordion [title]="'Components'">
+          <div body class="component-container">
+            <ng-container *ngTemplateOutlet="components; context:{ $implicit: data }"></ng-container>
+          </div>
+        </app-accordion>      
+  
+        <ng-template #metadata let-data>
+          <ng-container *ngFor="let item of data | keyvalue; let first = first">
+            <ng-container *ngIf="!first">
+              <app-accordion [title]="convertToString(item.key)">
+                <div body>
+                  <ng-container *ngIf="isObjectType(item.value)">
+                    <ng-container *ngTemplateOutlet="metadata; context:{ $implicit: item.value }"></ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="isStringOrArray(item.value) && !isObjectType(item.value)">
+                    <pre>{{ formatValue(item.value) }}</pre>
+                  </ng-container>
+                </div>
+              </app-accordion>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+        
+  
+        <app-accordion [title]="'Metadata'">
+          <div body class="component-container">
+            <ng-container *ngTemplateOutlet="metadata; context:{ $implicit: data }"></ng-container>
+          </div>
+        </app-accordion>
+      </ng-container>
+    </div>
+    
     <ng-container *ngIf="!pretty">
       <div class="content">
         {{routing.data ? dataHandler.GetSBOMInfo(routing.data).contents : ''}}
