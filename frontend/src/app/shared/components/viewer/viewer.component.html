@@ -28,7 +28,6 @@
             </div>
           </div>
         </ng-template>
-
         <app-accordion [title]="'Components'">
           <div body class="component-container">
             <ng-container *ngTemplateOutlet="components; context:{ $implicit: data }"></ng-container>
@@ -60,7 +59,6 @@
         </app-accordion>
       </ng-container>
     </div>
-
     <ng-container *ngIf="!pretty">
       <div class="content">
         {{routing.data ? dataHandler.GetSBOMInfo(routing.data).contents : ''}}
