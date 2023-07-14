@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-toast',
@@ -7,6 +7,10 @@ import { Component, Input } from '@angular/core';
 })
 export class ToastComponent {
   @Input() opened: boolean = false;
+  @Output() close = new EventEmitter<Boolean>();
 
-  show = false;
+  Close() {
+    this.close.emit(true);
+  }
+
 }

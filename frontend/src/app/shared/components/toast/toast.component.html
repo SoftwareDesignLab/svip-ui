@@ -1,7 +1,13 @@
-<div *ngIf="opened">
-    <ngb-toast class="toast" [autohide]="true">      
-        <span class="material-symbols-outlined">warning</span>
-        Select valid SBOM to download.
-        <span class="material-symbols-outlined">warning</span>
-    </ngb-toast>
-</div>
+<div class="toast" *ngIf="opened">
+    <div class="content">
+        <div class="title">
+            <ng-content select='[title]'/>
+        </div>
+        <div class="body">
+            <ng-content select='[content]'/>
+        </div>
+        <div class="close" (click)="Close()">x</div>
+    </div>
+    <div class="click-off" (click)="Close()"></div>
+  </div>
+  
