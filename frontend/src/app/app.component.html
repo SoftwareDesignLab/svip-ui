@@ -1,8 +1,8 @@
 <div id="main-wrapper">
-  <!-- <app-navbar/>
+  <app-navbar/>
   <div class="body flex">
     <app-upload/>
     <app-viewer *ngIf="routing.GetPage() === 1"/>
-  </div> -->
-  <app-metrics-body/>
+    <app-metrics-body *ngIf="routing.GetPage() === 2" />
+  </div>
 </div>
