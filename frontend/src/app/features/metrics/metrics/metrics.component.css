@@ -13,10 +13,12 @@
 }
 
 .components {
+  padding-top: 50px;
   height: 100%;
   width: 80%;
 }
 .component {
+  padding-top: 15px;
   height: 30%;
 }
 

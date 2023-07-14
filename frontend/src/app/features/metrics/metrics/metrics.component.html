@@ -23,6 +23,7 @@
                       *ngFor="let tag of testResult.attributes"
                       [ngStyle]="{ 'background-color': attributes[tag].color }"
                       [ngbTooltip]="tag"
+                      placement="top"
                     ></div>
                   </div>
                   <span body>{{ testResult.details }}</span>
