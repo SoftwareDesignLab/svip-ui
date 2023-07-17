@@ -1,0 +1,57 @@
+.viewer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 80%;
+  height: 80%;
+  margin: auto;
+  margin-top: 5%;
+}
+
+.body {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 16px;
+}
+
+.header {
+  width: 100%;
+  height: 75px;
+  background-color: var(--primary);
+  color: #ffffff7a;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  border-radius: 16px 16px 0 0;
+}
+
+.option {
+  cursor: pointer;
+}
+
+#selected {
+  color: white;
+}
+
+.content {
+  height: 100%;
+  padding: 10px;
+  word-break: break-word;
+  overflow-y: scroll;
+}
+
+.title{
+  font-size: 20px;
+  padding: 10px;
+  align-self: center;
+}
+
+.component-container{
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.test-container{
+  border: 1px solid red;
+}
