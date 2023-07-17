@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RoutingService } from './shared/services/routing.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +7,4 @@ import { RoutingService } from './shared/services/routing.service';
 })
 export class AppComponent {
   title = 'frontend';
-
-  constructor(public routing: RoutingService) {}
 }
