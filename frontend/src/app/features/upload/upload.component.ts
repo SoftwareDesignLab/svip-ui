@@ -23,8 +23,8 @@ export class UploadComponent implements OnInit{
     format: '',
     overwrite: true,
   };
-  public schemaOptions: string[] = ['TAGVALUE', "JSON"];
-  public formatOptions: string[] = ['CDX14', "SPDX23", "SVIP"];
+  public formatOptions: string[] = ['TAGVALUE', "JSON"];
+  public schemaOptions: string[] = ['CDX14', "SPDX23", "SVIP"];
 
   public compareModal: boolean = false;
   protected compareTarget: string = '';
