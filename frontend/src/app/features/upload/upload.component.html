@@ -1,6 +1,5 @@
 <div class="upload-container">
   <div class="center">
-    <app-toast [opened]="show"></app-toast>
   </div>
   <h3>SBOM Files</h3>
   <div class="search-parent-container" *ngIf="GetAllFiles().length > 0" >
@@ -140,4 +139,8 @@
     </div>
   </div>
 </app-modal>
+
+<app-toast [opened]="downloadModal" (close)="downloadModal = false" >
+  <div content>Error: Select valid SBOM to download.</div>
+</app-toast>
 
