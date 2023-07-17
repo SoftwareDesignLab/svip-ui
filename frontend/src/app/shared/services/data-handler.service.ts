@@ -13,6 +13,8 @@ export class DataHandlerService implements OnInit {
 
   private sbomFormats: { [name: string]: boolean} = {};
 
+  public comparison: any;
+
   constructor(private client: ClientService) {
     if (window.require) {
       try {
@@ -129,6 +131,24 @@ export class DataHandlerService implements OnInit {
   getSBOMAlias(path: string) {
     const pathChar = path.indexOf('/') !== -1 ? '/' : '\\';
     return path.split(pathChar).pop();
+  }
+
+  CompareSBOMs(target: string, others: string[]) {
+    let targetID = this.files[target].id;
+
+    let idList = [];
+
+    for(let i = 0; i < others.length; i++) {
+      let other = others[i];
+      idList.push(this.files[other].id);
+    }
+
+    idList.unshift(targetID);
+
+    this.client.get('compare', new HttpParams().set('Ids', JSON.stringify(idList))
+    .set('targetIndex', 0)).subscribe((result) => {
+      this.comparison = result;
+    });
   }
 
   ConvertSBOM(path: string, schema: string, format: string, overwrite: boolean) {
