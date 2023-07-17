@@ -11,12 +11,6 @@
     color: black;
     flex-direction: row;
     background-color: transparent;
-
-    opacity: 1;
-    transition: opacity 3s linear;
-    -webkit-transition: opacity 3s linear;
-    -moz-transition: opacity 3s linear;
-    -o-transition: opacity 3s linear;
 }
 
 .click-off {
@@ -42,10 +36,8 @@
     margin-bottom: 10px;
     margin-right: 10px;
 
-    animation-name: change-color;
-    animation-duration: 2s;
-    animation-iteration-count: 2;
-    animation-direction: alternate-reverse;
+    opacity: 1;
+    animation: fade-in 4s linear;
 }
 
 .title {
@@ -65,16 +57,20 @@
     color: black;
 }
 
-@keyframes change-color {
-    from {
-        background-color: white;
-        color: black;
-        border-right-color: var(--warn);
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+          }
+          25% {
+            opacity: 1;   
+          }
+          50% {
+            opacity: 1;
+          }
+          75% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
     }
-
-    to {
-        background-color: transparent;
-        color: transparent;
-        border-right-color:transparent;
-    }
-}
