@@ -36,7 +36,17 @@
     </div>
     <!-- Filters -->
     <div class="filters">
-      <div>Shown Tests</div>
+      <div class="title">
+        Shown Tests
+        <span
+          class="material-symbols-outlined"
+          (click)="accessibilityModal = true"
+        >
+          <span class="material-symbols-outlined">
+            settings_accessibility
+          </span></span
+        >
+      </div>
       <app-circle-toggle
         *ngFor="let attribute of attributes | keyvalue"
         [color]="attribute.value.color"
@@ -47,3 +57,26 @@
     </div>
   </section>
 </div>
+
+<app-modal [opened]="accessibilityModal" (close)="accessibilityModal = false">
+  <div title>Accessibility Settings</div>
+  <div content class="palettes">
+    <div>Test Color Palette:</div>
+    <div *ngFor="let palette of palettes | keyvalue">
+      <input
+        type="radio"
+        [value]="palette.key"
+        (click)="selectedPalette = palette.key"
+        [checked]="selectedPalette === palette.key"
+      />{{ palette.key | titlecase }}
+    </div>
+  </div>
+  <div actions style="display: flex; gap: 15px">
+    <div
+      class="btn-modal button flex center hover"
+      (click)="accessibilityModal = false"
+    >
+      <span (click)="setColor()">done</span>
+    </div>
+  </div>
+</app-modal>

@@ -14,7 +14,12 @@ export class MetricsComponent implements OnInit {
     {};
   attributeNames: string[] = [];
   _sbom: any = null;
-  colors: string[] = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'];
+  palettes: { [key: string]: string[] } = {
+    default: ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'],
+    wong: ['#000000', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
+  };
+  selectedPalette = 'default';
+  accessibilityModal = false;
 
   // TODO: why did i make an arrays of names... I could've just used entries/key value in html
 
@@ -45,7 +50,7 @@ export class MetricsComponent implements OnInit {
           const processors = testResult.attributes as string[];
           // Processors/Attributes
           processors.forEach((processor: string) => {
-            this.attributes[processor] = {shown: true, color: ''}
+            this.attributes[processor] = { shown: true, color: '' };
           });
         });
       });
@@ -69,7 +74,8 @@ export class MetricsComponent implements OnInit {
 
   setColor() {
     Object.keys(this.attributes).forEach((attr, index) => {
-      this.attributes[attr].color = this.colors[index]
+      this.attributes[attr].color = this.palettes[this.selectedPalette][index];
+      console.log(this.attributes[attr].color);
     });
   }
 }
