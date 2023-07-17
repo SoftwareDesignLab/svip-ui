@@ -1,0 +1,17 @@
+.button {
+  padding: 5px;
+  gap: 10px;
+  width: fit-content;
+  height: 50px;
+  border-radius: 15px;
+  background-color: white;
+  border: 2px solid rgba(255, 255, 255, 0.752);
+  box-shadow: 0px 5px 5px #00000025;
+  display: flex;
+  transition-duration: 0.35s;
+  cursor: pointer;
+  text-align: center;
+  align-items: center;
+  border-color: var(--primary);
+  color: var(--primary);
+}
