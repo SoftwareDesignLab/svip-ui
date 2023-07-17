@@ -172,13 +172,15 @@ export class UploadComponent implements OnInit {
         this.downloadModal=false;
       }, 4000);
     }
-    this.GetSelected().forEach((file) => {
+    const selectedFiles = this.GetSelected();
+    for (let i = 0; i < selectedFiles.length; i++){
+      const file = selectedFiles[i];
       if (this.dataHandler.GetSBOMInfo(file).status === FileStatus.ERROR) {
         this.downloadModal= true;
         setTimeout(() => {
           this.downloadModal=false;
         }, 4000);
-        return;
+        break;
       }
       const name = this.GetSBOMInfo(file).fileName;
       const sbom = this.dataHandler.downloadSBOM(file);
@@ -193,7 +195,7 @@ export class UploadComponent implements OnInit {
         document.body.removeChild(link)
         window.URL.revokeObjectURL(url)
       }
-    })
+    }
   }
 
   ConvertSelected() {
