@@ -144,6 +144,9 @@
   </div>
   <div content style="display: flex; gap: 15px; flex-direction: column;">
     <div>
+      {{ selectedFileAlias }}
+    </div>
+    <div>
       <div>Schema:</div>
       <select [(ngModel)]="convertOptions.schema">
         <option value=""></option>
@@ -168,4 +171,5 @@
     </div>
   </div>
 </app-modal>
+
 

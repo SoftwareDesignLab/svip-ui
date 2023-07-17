@@ -25,7 +25,8 @@ export class UploadComponent implements OnInit{
   };
   public schemaOptions: string[] = ['TAGVALUE', "JSON"];
   public formatOptions: string[] = ['CDX14', "SPDX23", "SVIP"];
-
+  public selectedFileAlias: string | undefined = undefined;
+  public selectedFilePath: string | undefined = undefined;
 
   protected sortingOptions: { [type: string]: boolean } = {
     "NAME": true,
@@ -247,8 +248,16 @@ export class UploadComponent implements OnInit{
    onGenerateDrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
-    this.generateModal = true;
+
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      const filePath = files[0].path;
+      this.selectedFilePath = filePath;
+      this.selectedFileAlias = this.getAlias(filePath);
+      this.generateModal = true;
+    }
   }
+
 
    UpdateSearch(event: any) {
     this.filterSearch = event.target.value;
