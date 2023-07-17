@@ -76,7 +76,7 @@
     <app-toggle></app-toggle>
   </div>
 
-  <div class="generate-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
+  <div class="generate-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onGenerateDrop($event)"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <app-button text="Generate" (click)="browse()" />
     <p class="text-center">or drag project directory in here</p>
@@ -133,6 +133,37 @@
       <span>Convert</span>
     </div>
     <div class="btn-modal button flex center hover" (click)="convertModal = false">
+      <span>Cancel</span>
+    </div>
+  </div>
+</app-modal>
+
+<app-modal [opened]="generateModal" (close)="generateModal = false">
+  <div title>
+    Generate
+  </div>
+  <div content style="display: flex; gap: 15px; flex-direction: column;">
+    <div>
+      <div>Schema:</div>
+      <select [(ngModel)]="convertOptions.schema">
+        <option value=""></option>
+        <option *ngFor="let option of schemaOptions" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+    <div>
+      <div>Format:</div>
+      <select [(ngModel)]="convertOptions.format">
+        <option value=""></option>
+        <option *ngFor="let option of formatOptions" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div actions style=" display: flex; gap: 15px;">
+    <div class="btn-modal button flex center hover">
+      <span>Generate</span>
+    </div>
+    <div class="btn-modal button flex center hover" (click)="generateModal = false">
       <span>Cancel</span>
     </div>
   </div>

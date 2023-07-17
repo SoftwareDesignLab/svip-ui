@@ -12,7 +12,7 @@ export class UploadComponent implements OnInit{
   private ipc!: IpcRenderer;
   private filterSearch: string = '';
   public deleteModal: boolean = false;
-
+  public generateModal: boolean = false;
   public convertModal: boolean = false;
   public convertOptions: {
     schema: string,
@@ -244,6 +244,11 @@ export class UploadComponent implements OnInit{
      }
    }
 
+   onGenerateDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.generateModal = true;
+  }
 
    UpdateSearch(event: any) {
     this.filterSearch = event.target.value;
