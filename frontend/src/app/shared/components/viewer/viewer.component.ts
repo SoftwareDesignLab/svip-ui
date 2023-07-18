@@ -6,15 +6,29 @@ import { data } from '../../models/mockMeta';
 @Component({
   selector: 'app-viewer',
   templateUrl: './viewer.component.html',
-  styleUrls: ['./viewer.component.css']
+  styleUrls: ['./viewer.component.css'],
 })
 export class ViewerComponent {
   files: File[] = [];
   pretty: boolean = true;
-  data = data;
+  data: any;;
   @Input() components: any[] | undefined;
 
-  constructor(public routing: RoutingService, public dataHandler: DataHandlerService) {
+  constructor(
+    public routing: RoutingService,
+    public dataHandler: DataHandlerService
+  ) {
+    routing.data$.subscribe((data) => {
+      this.data = data;
+      if (data) {
+        const sbomData = dataHandler.GetSBOMInfo(data);
+        if (sbomData.id) {
+          this.dataHandler.getSBOM(sbomData.id).subscribe(sbom => {
+            this.data = sbom;
+          })
+        }
+      }
+    });
   }
 
   /**
@@ -29,7 +43,11 @@ export class ViewerComponent {
   }
 
   isStringOrArray(value: any): boolean {
-    return typeof value === 'string' || Array.isArray(value) || (typeof value === 'object' && value !== null);
+    return (
+      typeof value === 'string' ||
+      Array.isArray(value) ||
+      (typeof value === 'object' && value !== null)
+    );
   }
 
   convertToString(value: any): string {
@@ -46,5 +64,4 @@ export class ViewerComponent {
     const formattedValue = JSON.stringify(value, null, 2);
     return formattedValue.replace(/[[\]{},"]/g, '') + '\n';
   }
-
 }

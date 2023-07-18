@@ -11,7 +11,7 @@ export class DataHandlerService implements OnInit {
   private ipc!: IpcRenderer;
   private files: { [path: string]: SBOMInfo } = {};
 
-  private sbomFormats: { [name: string]: boolean} = {};
+  private sbomFormats: { [name: string]: boolean } = {};
 
   public comparison: any;
 
@@ -40,6 +40,15 @@ export class DataHandlerService implements OnInit {
       contents: contents,
       fileName: fileName,
     });
+  }
+
+  /**
+   * Get an SBOM in the database
+   * @param id SBOM id
+   */
+  getSBOM(id: number) {
+    const params = new HttpParams().set('id', id);
+    return this.client.get('getSBOM', params);
   }
 
   GetSBOMFormats() {
@@ -138,38 +147,51 @@ export class DataHandlerService implements OnInit {
 
     let idList = [];
 
-    for(let i = 0; i < others.length; i++) {
+    for (let i = 0; i < others.length; i++) {
       let other = others[i];
       idList.push(this.files[other].id);
     }
 
     idList.unshift(targetID);
 
-    this.client.get('compare', new HttpParams().set('Ids', JSON.stringify(idList))
-    .set('targetIndex', 0)).subscribe((result) => {
-      this.comparison = result;
-    });
+    this.client
+      .get(
+        'compare',
+        new HttpParams()
+          .set('Ids', JSON.stringify(idList))
+          .set('targetIndex', 0)
+      )
+      .subscribe((result) => {
+        this.comparison = result;
+      });
   }
 
-  ConvertSBOM(path: string, schema: string, format: string, overwrite: boolean) {
-
+  ConvertSBOM(
+    path: string,
+    schema: string,
+    format: string,
+    overwrite: boolean
+  ) {
     let sbom = this.files[path];
     let id = sbom.id ? sbom.id : -1;
 
-    this.client.get('convert', new HttpParams().set('id', id)
-    .set('schema', schema)
-    .set('format', format)
-    .set('overwrite', overwrite)).subscribe((result) => {
-
-      //Add error message?
-      if(typeof result !== 'string')
-        return;
+    this.client
+      .get(
+        'convert',
+        new HttpParams()
+          .set('id', id)
+          .set('schema', schema)
+          .set('format', format)
+          .set('overwrite', overwrite)
+      )
+      .subscribe((result) => {
+        //Add error message?
+        if (typeof result !== 'string') return;
 
         sbom.contents = result;
         sbom.qr.originFormat = format; //update format, will most likely change
         this.files[path] = sbom;
-    });
-
+      });
   }
   //#endregion
 }
@@ -192,8 +214,8 @@ export interface SBOMInfo {
 }
 
 export enum FileStatus {
-  LOADING = "LOADING",
-  ERROR = "ERROR",
-  VALID = "VALID"
+  LOADING = 'LOADING',
+  ERROR = 'ERROR',
+  VALID = 'VALID',
 }
 //#endregion
