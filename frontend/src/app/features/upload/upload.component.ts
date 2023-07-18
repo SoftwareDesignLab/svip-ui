@@ -1,12 +1,15 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { IpcRenderer } from 'electron';
-import { DataHandlerService, FileStatus } from 'src/app/shared/services/data-handler.service';
+import {
+  DataHandlerService,
+  FileStatus,
+} from 'src/app/shared/services/data-handler.service';
 import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.css']
+  styleUrls: ['./upload.component.css'],
 })
 export class UploadComponent implements OnInit {
   private ipc!: IpcRenderer;
@@ -18,28 +21,31 @@ export class UploadComponent implements OnInit {
   public downloadModal: boolean = false;
 
   public convertOptions: {
-    schema: string,
-    format: string
-    overwrite: boolean
+    schema: string;
+    format: string;
+    overwrite: boolean;
   } = {
-      schema: '',
-      format: '',
-      overwrite: true,
-    };
-  public formatOptions: string[] = ['TAGVALUE', "JSON"];
-  public schemaOptions: string[] = ['CDX14', "SPDX23", "SVIP"];
+    schema: '',
+    format: '',
+    overwrite: true,
+  };
+  public formatOptions: string[] = ['TAGVALUE', 'JSON'];
+  public schemaOptions: string[] = ['CDX14', 'SPDX23', 'SVIP'];
 
   public compareModal: boolean = false;
   protected compareTarget: string = '';
 
   protected sortingOptions: { [type: string]: boolean } = {
-    "NAME": true,
-    "FORMAT": true,
-  }
+    NAME: true,
+    FORMAT: true,
+  };
 
   private selectedSorting: SORT_OPTIONS = SORT_OPTIONS.NAME;
 
-  constructor(private dataHandler: DataHandlerService, public routing: RoutingService) {
+  constructor(
+    private dataHandler: DataHandlerService,
+    public routing: RoutingService
+  ) {
     if (window.require) {
       try {
         this.ipc = window.require('electron').ipcRenderer;
@@ -51,7 +57,7 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   /**
    *  Prompts user to select files and tries to upload them
@@ -70,7 +76,8 @@ export class UploadComponent implements OnInit {
    *  Checks if any files have been uploaded
    */
   ContainsFiles() {
-    this.dataHandler.GetSBOMsOfType(FileStatus.VALID).length > 0 || this.dataHandler.GetSBOMsOfType(FileStatus.LOADING).length > 0;
+    this.dataHandler.GetSBOMsOfType(FileStatus.VALID).length > 0 ||
+      this.dataHandler.GetSBOMsOfType(FileStatus.LOADING).length > 0;
   }
 
   GetAllFiles() {
@@ -81,19 +88,27 @@ export class UploadComponent implements OnInit {
    *  Gets uploaded files
    */
   GetSBOMsOfType(statusString: string) {
-
     let status = FileStatus[statusString as keyof typeof FileStatus];
 
     if (this.selectedSorting === SORT_OPTIONS.NAME)
-      return this.dataHandler.GetSBOMsOfType(status).sort((a: string, b: string) => { return this.sortingOptions[SORT_OPTIONS.NAME] ? a.localeCompare(b) : b.localeCompare(a) });
+      return this.dataHandler
+        .GetSBOMsOfType(status)
+        .sort((a: string, b: string) => {
+          return this.sortingOptions[SORT_OPTIONS.NAME]
+            ? a.localeCompare(b)
+            : b.localeCompare(a);
+        });
 
-    return this.dataHandler.GetSBOMsOfType(status).sort((a: string, b: string) => {
+    return this.dataHandler
+      .GetSBOMsOfType(status)
+      .sort((a: string, b: string) => {
+        let aFormat = this.dataHandler.GetSBOMFormat(a);
+        let bFormat = this.dataHandler.GetSBOMFormat(b);
 
-      let aFormat = this.dataHandler.GetSBOMFormat(a);
-      let bFormat = this.dataHandler.GetSBOMFormat(b);
-
-      return this.sortingOptions[SORT_OPTIONS.FORMAT] ? aFormat.localeCompare(bFormat) : bFormat.localeCompare(aFormat)
-    });
+        return this.sortingOptions[SORT_OPTIONS.FORMAT]
+          ? aFormat.localeCompare(bFormat)
+          : bFormat.localeCompare(aFormat);
+      });
   }
 
   GetSBOMInfo(file: string) {
@@ -107,7 +122,9 @@ export class UploadComponent implements OnInit {
   ValidSBOMFormat(path: string) {
     // @HOTFIX !! No origin format rn
     return true;
-    return this.GetSBOMFormats()[this.GetSBOMInfo(path).qr?.originFormat] === true;
+    return (
+      this.GetSBOMFormats()[this.GetSBOMInfo(path).qr?.originFormat] === true
+    );
   }
 
   SbomFormatFilterChange(event: any) {
@@ -119,7 +136,6 @@ export class UploadComponent implements OnInit {
    * @param file file to remove
    */
   RemoveFile(file: string) {
-
     if (this.routing.GetPage() === PAGES.VIEW && this.routing.data === file) {
       this.routing.SetPage(PAGES.NONE);
       this.routing.data = undefined;
@@ -162,7 +178,7 @@ export class UploadComponent implements OnInit {
   DeleteSelected() {
     this.GetSelected().forEach((file) => {
       this.RemoveFile(file);
-    })
+    });
 
     this.deleteModal = false;
   }
@@ -177,40 +193,32 @@ export class UploadComponent implements OnInit {
   }
 
   DownloadSelected() {
-    if (!this.GetSelected().length) {
+    const selectedFiles = this.GetSelected();
+    const hasFiles = selectedFiles.length;
+    const hasErroredFiles = selectedFiles.filter((sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR).length;
+
+    if (!hasFiles || hasErroredFiles) {
       this.downloadModal = true;
       setTimeout(() => {
         this.downloadModal = false;
       }, 4000);
+      return;
     }
-    const selectedFiles = this.GetSelected();
-    let valid = true;
+
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
-      if (this.dataHandler.GetSBOMInfo(file).status === FileStatus.ERROR) {
-        this.downloadModal = true;
-        setTimeout(() => {
-          this.downloadModal = false;
-        }, 4000);
-        valid = false;
-      }
-    }
-    for (let i = 0; i < selectedFiles.length; i++) {
-      if (valid) {
-        const file = selectedFiles[i];
-        const name = this.GetSBOMInfo(file).fileName;
-        const sbom = this.dataHandler.downloadSBOM(file);
-        if (sbom) {
-          const url = URL.createObjectURL(sbom);
-          const link = document.createElement('a')
-          link.href = url;
-          link.download = name as string;
+      const name = this.GetSBOMInfo(file).fileName;
+      const sbom = this.dataHandler.downloadSBOM(file);
+      if (sbom) {
+        const url = URL.createObjectURL(sbom);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = name as string;
 
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link)
-          window.URL.revokeObjectURL(url)
-        }
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
       }
       break;
     }
@@ -221,8 +229,13 @@ export class UploadComponent implements OnInit {
       return;
 
     this.GetSelected().forEach((file) => {
-      this.dataHandler.ConvertSBOM(file, this.convertOptions.schema, this.convertOptions.format, this.convertOptions.overwrite);
-    })
+      this.dataHandler.ConvertSBOM(
+        file,
+        this.convertOptions.schema,
+        this.convertOptions.format,
+        this.convertOptions.overwrite
+      );
+    });
 
     this.convertModal = false;
   }
@@ -235,9 +248,9 @@ export class UploadComponent implements OnInit {
   }
 
   /**
-  * Handles the file drop event
-  * @param event The drop event
-  */
+   * Handles the file drop event
+   * @param event The drop event
+   */
   @HostListener('document:drop', ['$event'])
   onDocumentDrop(event: DragEvent) {
     event.preventDefault();
@@ -280,7 +293,6 @@ export class UploadComponent implements OnInit {
     }
   }
 
-
   UpdateSearch(event: any) {
     this.filterSearch = event.target.value;
   }
@@ -292,8 +304,7 @@ export class UploadComponent implements OnInit {
   ViewSBOM() {
     let selected = this.GetSelected();
 
-    if (selected.length !== 1)
-      return;
+    if (selected.length !== 1) return;
 
     this.routing.SetPage(PAGES.VIEW);
     this.routing.data = selected[0];
@@ -301,6 +312,6 @@ export class UploadComponent implements OnInit {
 }
 
 export enum SORT_OPTIONS {
-  NAME = "NAME",
-  FORMAT = "FORMAT"
+  NAME = 'NAME',
+  FORMAT = 'FORMAT',
 }
