@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { RoutingService } from '../../services/routing.service';
 import { DataHandlerService } from '../../services/data-handler.service';
-import { data } from '../../models/mockMeta';
 
 @Component({
   selector: 'app-viewer',
