@@ -3,5 +3,6 @@
   <div class="body flex">
     <app-upload/>
     <app-viewer *ngIf="routing.GetPage() === 1"/>
+    <app-comparison *ngIf="routing.GetPage() === 2"/>
   </div>
 </div>
