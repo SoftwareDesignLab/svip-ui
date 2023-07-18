@@ -3,6 +3,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { ClientService } from './client.service';
 import { IpcRenderer } from 'electron';
 import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +11,10 @@ import { HttpParams } from '@angular/common/http';
 export class DataHandlerService implements OnInit {
   private ipc!: IpcRenderer;
   private files: { [path: string]: SBOMInfo } = {};
-
   private sbomFormats: { [name: string]: boolean } = {};
-
   public comparison: any;
+
+  sboms = new BehaviorSubject<any[]>([]);
 
   constructor(private client: ClientService) {
     if (window.require) {
@@ -27,7 +28,15 @@ export class DataHandlerService implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getSavedSBOMs().forEach(id => {
+      this.getSBOM(id as number).subscribe(sbom => {
+        if (sbom) {
+          console.log(sbom);
+        }
+      })
+    })
+  }
 
   //#region SBOMS/File Endpoints
   /**
@@ -35,18 +44,18 @@ export class DataHandlerService implements OnInit {
    * @param fileName File name
    * @param contents contents of the sbom
    */
-  saveSBOM(fileName: string, contents: string) {
+  saveSBOM(fileName: string, contents: string): Observable<number> {
     return this.client.post('upload', {
       contents: contents,
       fileName: fileName,
-    });
+    }) as Observable<number>;
   }
 
   /**
    * Get an SBOM in the database
    * @param id SBOM id
    */
-  getSBOM(id: number) {
+  getSBOM(id: number): Observable<any> {
     const params = new HttpParams().set('id', id);
     return this.client.get('getSBOM', params);
   }
@@ -63,18 +72,26 @@ export class DataHandlerService implements OnInit {
     this.sbomFormats[name] = value;
   }
 
-  getSavedSBOM(id: number) {
-    return new Promise<any>((resolve) => {
-      this.client
-        .get('view', new HttpParams().set('id', id))
-        .subscribe((result) => {
-          resolve(result);
-        });
-    });
+  getSBOMContents(id: number) {
+    return this.client.get('view', new HttpParams().set('id', id));
   }
 
-  DeleteFile(path: string) {
+  getSavedSBOMs() {
+    return this.client.get('viewFiles');
+  }
+
+
+
+  deleteFile(path: string) {
+    const id = this.files[path].id;
+    if (typeof id === 'number') {
+      this._deleteSBOM(id);
+    }
     delete this.files[path];
+  }
+
+  private _deleteSBOM(id: number) {
+    return this.client.get('delete', new HttpParams().set('id', id));
   }
 
   downloadSBOM(filePath: string) {
@@ -85,6 +102,8 @@ export class DataHandlerService implements OnInit {
     return null;
   }
 
+
+
   //#endregion
   //#region SBOM/File Helpers
   GetAllFiles() {
@@ -94,23 +113,29 @@ export class DataHandlerService implements OnInit {
   async AddFiles(paths: string[]) {
     paths.forEach((path) => {
       this.files[path] = {
+        id: -1,
         status: FileStatus.LOADING,
       };
       this.ipc.invoke('getFileData', path).then((contents) => {
         if (contents) {
           this.saveSBOM(path, contents).subscribe(
-            (result) => {
-              if (result) {
-                this.files[path] = {
-                  status: FileStatus.VALID,
-                  id: result as number,
-                  fileName: this.getSBOMAlias(path),
-                  contents: contents,
-                };
+            (id) => {
+              if (id) {
+                this.getSBOM(id).subscribe((sbom) => {
+                  sbom as any;
+                  this.files[path] = {
+                    status: FileStatus.VALID,
+                    id: id,
+                    type: sbom?.format,
+                    fileName: this.getSBOMAlias(path),
+                    contents: contents,
+                  };
+                });
               }
             },
             (error) => {
               this.files[path] = {
+                id: -1,
                 status: FileStatus.ERROR,
               };
             }
@@ -185,13 +210,22 @@ export class DataHandlerService implements OnInit {
           .set('overwrite', overwrite)
       )
       .subscribe((result) => {
-        //Add error message?
-        if (typeof result !== 'string') return;
-
-        sbom.contents = result;
-        sbom.qr.originFormat = format; //update format, will most likely change
-        this.files[path] = sbom;
+        if (result) {
+          delete this.files[path].contents;
+          if (this.files[path].id !== undefined){
+            this.files[path].id += 1;
+          }
+          this.setContents(path);
+          this.files[path].type = format;
+        }
       });
+  }
+
+  setContents(path: string) {
+    const sbom = this.files[path];
+    // Hotfix: not returning as string for some reason
+    this.getSBOMContents(sbom.id).subscribe(content => {this.files[path].contents = JSON.stringify(content)});
+    return this.files[path].contents;
   }
   //#endregion
 }
@@ -205,12 +239,13 @@ export interface File {
 
 export interface SBOMInfo {
   status: FileStatus;
-  id?: number;
+  id: number;
   metrics?: any;
   qr?: any;
   extra?: string;
   contents?: string;
   fileName?: string;
+  type?: string;
 }
 
 export enum FileStatus {

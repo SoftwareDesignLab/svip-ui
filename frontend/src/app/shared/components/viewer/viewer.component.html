@@ -61,7 +61,7 @@
     </div>
     <ng-container *ngIf="!pretty">
       <pre class="content">
-        {{routing.data ? dataHandler.GetSBOMInfo(routing.data).contents : ''}}
+        {{ getContents(routing.data)}}
       </pre>
     </ng-container>
   </div>

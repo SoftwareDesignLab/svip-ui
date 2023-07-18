@@ -4,10 +4,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClientService {
-
   private readonly SERVER_URL: string = 'http://localhost:8080/svip/';
   private loggedIn: boolean = false;
   public showLogin: boolean = false;
@@ -15,20 +14,24 @@ export class ClientService {
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://localhost:4200'
+      'Access-Control-Allow-Origin': 'http://localhost:4200',
     }),
-    params: new HttpParams()
+    params: new HttpParams(),
   };
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   get(path: string, params: HttpParams = new HttpParams()) {
     this.httpOptions.params = params;
     return this.http.get(this.SERVER_URL + path, this.httpOptions);
   }
 
-  post(path: string, body: any,  params: HttpParams = new HttpParams()) {
+  delete(path: string, params: HttpParams = new HttpParams()) {
+    this.httpOptions.params = params;
+    return this.http.delete(this.SERVER_URL + path, this.httpOptions);
+  }
+
+  post(path: string, body: any, params: HttpParams = new HttpParams()) {
     this.httpOptions.params = params;
     return this.http.post(this.SERVER_URL + path, body, this.httpOptions);
   }

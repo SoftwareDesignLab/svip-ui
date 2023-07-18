@@ -11,6 +11,7 @@ export class ViewerComponent {
   files: File[] = [];
   pretty: boolean = true;
   data: any;;
+  raw: string = '';
   @Input() components: any[] | undefined;
 
   constructor(
@@ -62,5 +63,9 @@ export class ViewerComponent {
   formatValue(value: any): string {
     const formattedValue = JSON.stringify(value, null, 2);
     return formattedValue.replace(/[[\]{},"]/g, '') + '\n';
+  }
+
+  getContents(path: string) {
+    return this.dataHandler.GetSBOMInfo(path).contents;
   }
 }
