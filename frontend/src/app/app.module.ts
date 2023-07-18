@@ -15,6 +15,7 @@ import { ModalComponent } from './shared/components/modal/modal.component';
 import { MultiselectDropdownComponent } from './shared/components/multiselect-dropdown/multiselect-dropdown.component';
 import { MenuComponent } from './shared/components/menu/menu.component';
 import { AccordionComponent } from './shared/components/accordion/accordion.component';
+import { ToastComponent } from './shared/components/toast/toast.component';
 import { ComparisonComponent } from './features/comparison/comparison.component';
 
 @NgModule({
@@ -26,10 +27,10 @@ import { ComparisonComponent } from './features/comparison/comparison.component'
     NavbarComponent,
     ToggleComponent,
     MultiselectDropdownComponent,
-    ModalComponent,
     AccordionComponent,
     MenuComponent,
     ModalComponent,
+    ToastComponent,
     ComparisonComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
