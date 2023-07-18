@@ -5,6 +5,7 @@
     width: 100%;
     justify-content: center;
     display: flex;
+    height: 75px;
 }
 
 .topnav a {
@@ -14,8 +15,9 @@
     padding: 17px;
     text-decoration: none;
     justify-content: center;
-    align-content: center;
     display: flex;
+    font-size: 25px;
+    height: 100%;
 }
 
 .topnav a:hover {
@@ -33,7 +35,7 @@
 }
 
 .topnav img {
-    max-width: 100px;
-    margin-top: 5px;
+    height: 100%;
+    margin-top: 10px;
     margin-right: auto;
 }
