@@ -22,10 +22,10 @@ export class UploadComponent implements OnInit {
     format: string
     overwrite: boolean
   } = {
-    schema: '',
-    format: '',
-    overwrite: true,
-  };
+      schema: '',
+      format: '',
+      overwrite: true,
+    };
   public formatOptions: string[] = ['TAGVALUE', "JSON"];
   public schemaOptions: string[] = ['CDX14', "SPDX23", "SVIP"];
 
@@ -177,35 +177,42 @@ export class UploadComponent implements OnInit {
   }
 
   DownloadSelected() {
-    if (this.GetSelected().length === 0) {
+    if (!this.GetSelected().length) {
       this.downloadModal = true;
       setTimeout(() => {
-        this.downloadModal=false;
+        this.downloadModal = false;
       }, 4000);
     }
     const selectedFiles = this.GetSelected();
-    for (let i = 0; i < selectedFiles.length; i++){
+    let valid = true;
+    for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
       if (this.dataHandler.GetSBOMInfo(file).status === FileStatus.ERROR) {
-        this.downloadModal= true;
+        this.downloadModal = true;
         setTimeout(() => {
-          this.downloadModal=false;
+          this.downloadModal = false;
         }, 4000);
-        break;
+        valid = false;
       }
-      const name = this.GetSBOMInfo(file).fileName;
-      const sbom = this.dataHandler.downloadSBOM(file);
-      if (sbom) {
-        const url = URL.createObjectURL(sbom);
-        const link = document.createElement('a')
-        link.href = url;
-        link.download = name as string;
+    }
+    for (let i = 0; i < selectedFiles.length; i++) {
+      if (valid) {
+        const file = selectedFiles[i];
+        const name = this.GetSBOMInfo(file).fileName;
+        const sbom = this.dataHandler.downloadSBOM(file);
+        if (sbom) {
+          const url = URL.createObjectURL(sbom);
+          const link = document.createElement('a')
+          link.href = url;
+          link.download = name as string;
 
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link)
-        window.URL.revokeObjectURL(url)
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link)
+          window.URL.revokeObjectURL(url)
+        }
       }
+      break;
     }
   }
 
