@@ -57,7 +57,9 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.dataHandler.startSVIP();
+  }
 
   /**
    *  Prompts user to select files and tries to upload them

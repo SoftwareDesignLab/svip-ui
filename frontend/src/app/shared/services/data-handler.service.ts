@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class DataHandlerService implements OnInit {
+export class DataHandlerService{
   private ipc!: IpcRenderer;
   private files: { [path: string]: SBOMInfo } = {};
   private sbomFormats: { [name: string]: boolean } = {};
@@ -28,14 +28,23 @@ export class DataHandlerService implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.getSavedSBOMs().forEach(id => {
-      this.getSBOM(id as number).subscribe(sbom => {
-        if (sbom) {
-          console.log(sbom);
-        }
-      })
-    })
+  startSVIP() {
+    this.getSavedSBOMs().subscribe((ids) => {
+      if (ids) {
+        ids.forEach((id,index) => {
+          const path = `sbom ${index}`;
+          this.getSBOM(id as number).subscribe((sbom) => {
+            this.files[path] = {
+              status: FileStatus.VALID,
+              id,
+              type: sbom.format,
+              fileName: path,
+            };
+            this.setContents(path)
+          });
+        });
+      }
+    });
   }
 
   //#region SBOMS/File Endpoints
@@ -76,22 +85,18 @@ export class DataHandlerService implements OnInit {
     return this.client.get('view', new HttpParams().set('id', id));
   }
 
-  getSavedSBOMs() {
-    return this.client.get('viewFiles');
+  getSavedSBOMs(): Observable<number[]> {
+    return this.client.get('viewFiles') as Observable<number[]>;
   }
-
-
 
   deleteFile(path: string) {
     const id = this.files[path].id;
-    if (typeof id === 'number') {
-      this._deleteSBOM(id);
-    }
-    delete this.files[path];
+    // TODO: Add error handling for when file cannot be delted
+    this._deleteSBOM(id).subscribe(() => delete this.files[path])
   }
 
   private _deleteSBOM(id: number) {
-    return this.client.get('delete', new HttpParams().set('id', id));
+    return this.client.delete('delete', new HttpParams().set('id', id));
   }
 
   downloadSBOM(filePath: string) {
@@ -101,8 +106,6 @@ export class DataHandlerService implements OnInit {
     }
     return null;
   }
-
-
 
   //#endregion
   //#region SBOM/File Helpers
@@ -212,7 +215,7 @@ export class DataHandlerService implements OnInit {
       .subscribe((result) => {
         if (result) {
           delete this.files[path].contents;
-          if (this.files[path].id !== undefined){
+          if (this.files[path].id !== undefined) {
             this.files[path].id += 1;
           }
           this.setContents(path);
@@ -224,7 +227,9 @@ export class DataHandlerService implements OnInit {
   setContents(path: string) {
     const sbom = this.files[path];
     // Hotfix: not returning as string for some reason
-    this.getSBOMContents(sbom.id).subscribe(content => {this.files[path].contents = JSON.stringify(content)});
+    this.getSBOMContents(sbom.id).subscribe((content) => {
+      this.files[path].contents = JSON.stringify(content);
+    });
     return this.files[path].contents;
   }
   //#endregion
