@@ -171,10 +171,6 @@ hr {
     border-color: black;
 }
 
-.buttons {
-  gap: 15px;
-}
-
 .sbom > div {
     width: 300px;
     color: var(--primary);

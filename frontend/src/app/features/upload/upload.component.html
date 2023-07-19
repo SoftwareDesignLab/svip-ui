@@ -58,12 +58,8 @@
       </div>
   </div>
 
-  <div class="buttons flex" *ngIf="GetAllFiles().length > 0">
-    <app-button text="Delete Selected" (click)="deleteModal = true"/>
-    <app-button text="Download Selected" (click)="DownloadSelected()"/>
-    <app-button text="Compare" (click)="this.GetSelected().length >= 1 ? compareModal = true : ''"/>
-    <app-button text="Convert" (click)="this.GetSelected().length >= 1 ? convertModal = true : ''"/>
-    <app-button text="View" (click)="ViewSBOM()"/>
+  <div *ngIf="GetAllFiles().length > 0">
+   <app-toolbar></app-toolbar>
   </div>
 
   <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
@@ -86,84 +82,3 @@
   </div>
 </div>
 
-<app-modal [opened]="deleteModal" (close)="deleteModal = false">
-  <div title>
-    Delete Selected
-  </div>
-  <div content>
-    Are you sure you want to delete the selected files?
-  </div>
-  <div actions style=" display: flex; gap: 15px;">
-    <div class="btn-modal button flex center hover" (click)="DeleteSelected()">
-      <span>Delete</span>
-    </div>
-    <div class="btn-modal button flex center hover" (click)="deleteModal = false">
-      <span>Cancel</span>
-    </div>
-  </div>
-</app-modal>
-
-
-<app-modal [opened]="convertModal" (close)="convertModal = false">
-  <div title>
-    Convert Selected
-  </div>
-  <div content style="display: flex; gap: 15px; flex-direction: column;">
-    <div>
-      <div>Schema:</div>
-      <select [(ngModel)]="convertOptions.schema">
-        <option value=""></option>
-        <option *ngFor="let option of schemaOptions" [value]="option">{{ option }}</option>
-      </select>
-    </div>
-    <div>
-      <div>Format:</div>
-      <select [(ngModel)]="convertOptions.format">
-        <option value=""></option>
-        <option *ngFor="let option of formatOptions" [value]="option">{{ option }}</option>
-      </select>
-    </div>
-    <div>
-      <div>Overwrite Files:</div>
-      <select [(ngModel)]="convertOptions.overwrite">
-        <option value=""></option>
-        <option *ngFor="let option of [true, false]" [value]="option">{{ option }}</option>
-      </select>
-    </div>
-  </div>
-  <div actions style=" display: flex; gap: 15px;">
-    <div class="btn-modal button flex center hover" (click)="ConvertSelected()">
-      <span>Convert</span>
-    </div>
-    <div class="btn-modal button flex center hover" (click)="convertModal = false">
-      <span>Cancel</span>
-    </div>
-  </div>
-</app-modal>
-
-<app-toast [opened]="downloadModal" (close)="downloadModal = false" >
-  <div content>Error: Select valid SBOM to download.</div>
-</app-toast>
-
-<app-modal [opened]="compareModal" (close)="compareModal = false">
-  <div title>
-    Compare Selected
-  </div>
-  <div content style="display: flex; gap: 15px; flex-direction: column;">
-    <div>
-      <div>Select Target:</div>
-      <select [(ngModel)]="compareTarget">
-        <option value=""></option>
-        <option *ngFor="let option of GetSelected()" [value]="option">{{ option }}</option>
-      </select>
-    </div>
-  </div>
-  <div actions style=" display: flex; gap: 15px;">
-    <div class="btn-modal button flex center hover" (click)="CompareSelected()">
-      <span>Compare</span>
-    </div>
-    <div class="btn-modal button flex center hover" (click)="compareModal = false">
-      <span>Cancel</span>
-    </div>
-  </div>
-</app-modal>

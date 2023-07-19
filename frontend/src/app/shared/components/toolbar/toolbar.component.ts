@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FileStatus, DataHandlerService } from '../../services/data-handler.service';
+import { SbomService } from '../../services/sbom.service';
 import { PAGES, RoutingService } from '../../services/routing.service';
+import { FileStatus } from '../../models/file';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,7 +10,7 @@ import { PAGES, RoutingService } from '../../services/routing.service';
 })
 
 export class ToolbarComponent {
-  constructor(private dataHandler: DataHandlerService, public routing: RoutingService) {}
+  constructor(private sbomService: SbomService, public routing: RoutingService) {}
   
   public deleteModal: boolean = false;
   public downloadModal: boolean = false;
@@ -30,11 +31,11 @@ export class ToolbarComponent {
   protected compareTarget: string = '';
 
   GetAllFiles() {
-    return this.dataHandler.GetAllFiles();
+    return this.sbomService.getSBOMNames();
   }
 
   GetSBOMInfo(file: string) {
-    return this.dataHandler.GetSBOMInfo(file);
+    return this.sbomService.GetSBOMInfo(file);
   }
 
   GetSelected() {
@@ -67,7 +68,7 @@ export class ToolbarComponent {
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
       const name = this.GetSBOMInfo(file).fileName;
-      const sbom = this.dataHandler.downloadSBOM(file);
+      const sbom = this.sbomService.downloadSBOM(file);
       if (sbom) {
         const url = URL.createObjectURL(sbom);
         const link = document.createElement('a');
@@ -88,7 +89,7 @@ export class ToolbarComponent {
       return;
 
     this.GetSelected().forEach((file) => {
-      this.dataHandler.ConvertSBOM(
+      this.sbomService.ConvertSBOM(
         file,
         this.convertOptions.schema,
         this.convertOptions.format,
@@ -103,7 +104,7 @@ export class ToolbarComponent {
     this.routing.SetPage(2);
 
     let others = this.GetSelected().filter((x) => x !== this.compareTarget);
-    this.dataHandler.CompareSBOMs(this.compareTarget, others);
+    this.sbomService.CompareSBOMs(this.compareTarget, others);
 
     this.compareModal = false;
   }
@@ -118,7 +119,7 @@ export class ToolbarComponent {
       this.routing.data = undefined;
     }
 
-    this.dataHandler.deleteFile(file);
+    this.sbomService.deleteFile(file);
   }
 
   DeleteSelected() {
