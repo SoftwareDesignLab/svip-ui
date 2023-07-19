@@ -5,6 +5,7 @@ import { ClientService } from './client.service';
 import { IpcRenderer } from 'electron';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { SBOM } from '../models/sbom';
 
 @Injectable({
   providedIn: 'root',
@@ -42,16 +43,16 @@ export class SVIPService {
    * Get an SBOM in the database
    * @param id SBOM id
    */
-  getSBOM(id: number): Observable<any> {
+  getSBOM(id: number): Observable<SBOM> {
     const params = new HttpParams().set('id', id);
-    return this.client.get('getSBOM', params);
+    return this.client.get('getSBOM', params) as Observable<SBOM>;
   }
 
   /**
    * Get an SBOM's file contents
    * @param id SBOM id
    */
-  getSBOMContents(id: number) {
+  getSBOMContents(id: number): Observable<object> {
     return this.client.get('view', new HttpParams().set('id', id));
   }
 
@@ -66,7 +67,7 @@ export class SVIPService {
    * Delete an  SBOM in the database
    * @param id SBOM id
    */
-  deleteSBOM(id: number) {
+  deleteSBOM(id: number): Observable<object> {
     return this.client.delete('delete', new HttpParams().set('id', id));
   }
 
@@ -86,7 +87,7 @@ export class SVIPService {
    *  Resulting SBOM will have a new id, overwritten or not
    * @param id SBOM id
    */
-  convertSBOM(id: number, schema: string, format: string, overwrite: boolean) {
+  convertSBOM(id: number, schema: string, format: string, overwrite: boolean): Observable<string> {
     return this.client.get(
       'convert',
       new HttpParams()
@@ -94,7 +95,7 @@ export class SVIPService {
         .set('schema', schema)
         .set('format', format)
         .set('overwrite', overwrite)
-    );
+    ) as Observable<string>;
   }
   //#region Electron
   /**

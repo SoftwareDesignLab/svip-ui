@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DataHandlerService } from 'src/app/shared/services/data-handler.service';
+import { SbomService } from 'src/app/shared/services/sbom.service';
 
 @Component({
   selector: 'app-comparison',
@@ -8,10 +8,10 @@ import { DataHandlerService } from 'src/app/shared/services/data-handler.service
 })
 export class ComparisonComponent {
 
-  constructor(public dataHandler: DataHandlerService) { }
+  constructor(public sbomService: SbomService) { }
 
   GetComparison() {
-    return this.dataHandler.comparison;
+    return this.sbomService.comparison;
   }
 
   protected castToString(value: unknown): string {

@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import { SVIPService } from './SVIP.service';
-import { SBOM } from '../models/sbom';
+import File, { FileStatus } from '../models/file';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SbomService {
-  private sbomFormats: { [name: string]: boolean } = {};
+  private sbomSchemas: { [name: string]: boolean } = {};
   public comparison: any;
   private files: { [path: string]: File } = {};
-  private failedUploadCount = -1;
 
   constructor(private SVIPService: SVIPService) {}
 
+  /**
+   * Gets all SBOMS in database and sets up SBOM service
+   */
   getAllSBOMs() {
     this.SVIPService.getSBOMS().subscribe((ids) => {
       if (ids) {
@@ -20,12 +22,9 @@ export class SbomService {
           // Hotfix: talk to backend to get a path/filename sent back
           const path = `sbom ${index}`;
           this.SVIPService.getSBOM(id as number).subscribe((sbom) => {
-            this.files[path] = {
-              status: FileStatus.VALID,
-              id,
-              type: sbom.format,
-              fileName: path,
-            };
+            const file = new File();
+            file.setValid(id, path, 'n/a', sbom);
+            this.files[path] = file;
             this.setContents(path);
           });
         });
@@ -33,58 +32,64 @@ export class SbomService {
     });
   }
 
-  GetSBOMFormats() {
-    return this.sbomFormats;
+  /**
+   * Gets all SBOM schemas
+   */
+  getSBOMschemas() {
+    return this.sbomSchemas;
   }
 
-  IncludeSBOMFormat(name: string) {
-    return this.sbomFormats[name];
+  /**
+   * Set valid SBOM formats for filters
+   * @param schema SBOM schema
+   * @param value true if shown; false if filtered out
+   */
+  SetSBOMSchema(schema: string, value: boolean) {
+    this.sbomSchemas[schema] = value;
   }
 
-  SetSBOMFormat(name: string, value: boolean) {
-    this.sbomFormats[name] = value;
-  }
-
-  downloadSBOM(filePath: string) {
+  /**
+   * Download SBOM file
+   *
+   */
+  downloadSBOM(filePath: string): Blob {
     const file = this.files[filePath]?.contents;
-    if (file !== undefined) {
+    if (file !== null) {
       return new Blob([file]);
     }
-    return null;
+    throw new Error('File does not exist!');
   }
 
-  GetAllFiles() {
+  /**
+   * Gets all SBOM file names
+   */
+  getSBOMNames() {
     return Object.keys(this.files);
   }
 
+  /**
+   * Uploads files and checks to see if they are sboms
+   * @param paths file paths
+   */
   async AddFiles(paths: string[]) {
     paths.forEach((path) => {
-      this.files[path] = {
-        id: -1,
-        status: FileStatus.LOADING,
-      };
+      // File is loading
+      this.files[path] = new File();
       this.SVIPService.getFileData(path).then((contents) => {
         if (contents) {
           this.SVIPService.uploadSBOM(path, contents).subscribe(
             (id) => {
               if (id) {
+                // Successful upload
                 this.SVIPService.getSBOM(id).subscribe((sbom) => {
-                  sbom as any;
-                  this.files[path] = {
-                    status: FileStatus.VALID,
-                    id: id,
-                    type: sbom?.format,
-                    fileName: this.getSBOMAlias(path),
-                    contents: contents,
-                  };
+                  this.files[path].setValid(id, path, contents, sbom);
+                  this.SetSBOMSchema(sbom.format, true);
                 });
               }
             },
-            (error) => {
-              this.files[path] = {
-                id: -1,
-                status: FileStatus.ERROR,
-              };
+            () => {
+              // Failed upload
+              this.files[path].setError();
             }
           );
         }
@@ -92,21 +97,30 @@ export class SbomService {
     });
   }
 
-  GetSBOMsOfType(status: FileStatus) {
+  /**
+   * Gets SBOMS matching requested status
+   * @param status file status
+   */
+  GetSBOMsOfStatus(status: FileStatus) {
     return Object.keys(this.files).filter(
       (x) => this.files[x].status === status
     );
   }
 
-  GetSBOMFormat(path: string) {
-    return this.files[path].type;
+  /**
+   * Gets schema of sbom
+   * @param path sbom to check for
+   */
+  GetSBOMSchema(path: string) {
+    return this.files[path].schema;
   }
 
   GetSBOMInfo(path: string) {
     return this.files[path];
   }
-  ContainsSBOMFormat(format: string) {
-    return this.sbomFormats[format] !== undefined;
+
+  ContainsSBOMSchema(schema: string) {
+    return this.sbomSchemas[schema] !== undefined;
   }
 
   getSBOMAlias(path: string) {
@@ -135,9 +149,12 @@ export class SbomService {
    * @param: file ID
    */
   deleteFile(path: string) {
-    const id = this.files[path].id
+    const id = this.files[path].id;
+    if (id > 0) {
+      this.SVIPService.deleteSBOM(id);
+    }
     // TODO: Add error handling for when file cannot be delted
-    this.SVIPService.deleteSBOM(id).subscribe(() => delete this.files[id]);
+    delete this.files[path];
   }
 
   ConvertSBOM(
@@ -148,17 +165,18 @@ export class SbomService {
   ) {
     let sbom = this.files[path];
     let id = sbom.id ? sbom.id : -1;
-      this.SVIPService.convertSBOM(id, schema, format, overwrite)
-      .subscribe((result) => {
+    this.SVIPService.convertSBOM(id, schema, format, overwrite).subscribe(
+      (result) => {
         if (result) {
-          delete this.files[path].contents;
+          this.files[path].contents = result;
           if (this.files[path].id !== undefined) {
             this.files[path].id += 1;
           }
           this.setContents(path);
-          this.files[path].type = format;
+          this.files[path].schema = schema;
         }
-      });
+      }
+    );
   }
 
   setContents(path: string) {
@@ -170,14 +188,3 @@ export class SbomService {
     return this.files[path].contents;
   }
 }
-
-export interface File {
-  fileName?: string;
-  type: string;
-  contents?: string;
-  sbom?: SBOM;
-  status?: FileStatus;
-  id: number;
-
-}
-

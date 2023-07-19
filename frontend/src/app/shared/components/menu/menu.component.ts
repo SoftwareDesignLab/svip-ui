@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DataHandlerService } from '../../services/data-handler.service';
 import { PAGES, RoutingService } from '../../services/routing.service';
+import { SbomService } from '../../services/sbom.service';
 
 @Component({
   selector: 'app-menu',
@@ -11,20 +11,20 @@ export class MenuComponent {
   @Input() text: string = '';
   @Input() data: string= '';
 
-  constructor(public routing: RoutingService, private dataHandler: DataHandlerService) {
+  constructor(public routing: RoutingService, private sbomService: SbomService) {
   }
 
   RemoveFile() {
-    this.dataHandler.deleteFile(this.data);
+    this.sbomService.deleteFile(this.data);
   }
 
   GetSBOMInfo(file: string) {
-    return this.dataHandler.GetSBOMInfo(file);
+    return this.sbomService.GetSBOMInfo(file);
   }
 
   DownloadOne() {
     const name = this.GetSBOMInfo(this.data).fileName;
-    const sbom = this.dataHandler.downloadSBOM(this.data);
+    const sbom = this.sbomService.downloadSBOM(this.data);
     if( sbom ) {
     const url = URL.createObjectURL(sbom);
     const link = document.createElement('a')

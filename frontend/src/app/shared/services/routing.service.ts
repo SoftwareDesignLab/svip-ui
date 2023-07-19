@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { DataHandlerService } from './data-handler.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

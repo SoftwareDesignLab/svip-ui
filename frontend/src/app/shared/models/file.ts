@@ -1,14 +1,44 @@
-import { SBOM } from "./sbom";
+import { SBOM } from './sbom';
 
 export default class File {
-    sbom: SBOM | null = null;
-    status: FileStatus;
+  static fileCount = -1;
+  sbom: SBOM | null = null;
+  format: string;
+  schema: string;
+  status: FileStatus;
+  fileName: string;
+  contents: string | null;
+  id: number;
 
-    constructor() {
-        this.status = FileStatus.LOADING;
-    }
+  /**
+   * creates a new file. Set to loading on launch
+   */
+  constructor() {
+    this.status = FileStatus.LOADING;
+    this.format = 'n/a';
+    this.schema = 'n/a';
+    this.contents = null;
+    this.fileName = 'n/a';
+    this.id = File.fileCount;
+    File.fileCount -= 1;
+  }
 
+  setValid(id: number, filePath: string, contents: string, sbom: SBOM) {
+    this.status = FileStatus.VALID;
+    this.contents = contents;
+    this.fileName = filePath;
+    this.sbom = sbom;
+    this.schema = sbom.format;
+    this.id = id;
+  }
 
+  setError() {
+    this.status = FileStatus.ERROR;
+  }
+
+  removeContents() {
+    this.contents = null;
+  }
 }
 
 export enum FileStatus {

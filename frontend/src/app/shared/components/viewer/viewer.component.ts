@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RoutingService } from '../../services/routing.service';
-import { DataHandlerService } from '../../services/data-handler.service';
+import { SbomService } from '../../services/sbom.service';
+import { SVIPService } from '../../services/SVIP.service';
 
 @Component({
   selector: 'app-viewer',
@@ -16,14 +17,15 @@ export class ViewerComponent {
 
   constructor(
     public routing: RoutingService,
-    public dataHandler: DataHandlerService
+    public sbomService: SbomService,
+    private svipService: SVIPService
   ) {
     routing.data$.subscribe((data) => {
       this.data = data;
       if (data) {
-        const sbomData = dataHandler.GetSBOMInfo(data);
+        const sbomData = sbomService.GetSBOMInfo(data);
         if (sbomData.id) {
-          this.dataHandler.getSBOM(sbomData.id).subscribe(sbom => {
+          this.svipService.getSBOM(sbomData.id).subscribe(sbom => {
             this.data = sbom;
           })
         }
@@ -35,7 +37,7 @@ export class ViewerComponent {
    * Get SBOM filename
    */
   getAlias(sbom: string) {
-    return this.dataHandler.getSBOMAlias(sbom);
+    return this.sbomService.getSBOMAlias(sbom);
   }
 
   isObjectType(value: any): boolean {
@@ -66,6 +68,6 @@ export class ViewerComponent {
   }
 
   getContents(path: string) {
-    return this.dataHandler.GetSBOMInfo(path).contents;
+    return this.sbomService.GetSBOMInfo(path).contents;
   }
 }

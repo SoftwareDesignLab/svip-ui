@@ -1,7 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { IpcRenderer } from 'electron';
-import { FileStatus, SbomService } from 'src/app/shared/services/sbom.service';
+import { SbomService } from 'src/app/shared/services/sbom.service';
 import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
+import { FileStatus } from 'src/app/shared/models/file';
+import { SVIPService } from 'src/app/shared/services/SVIP.service';
 
 @Component({
   selector: 'app-upload',
@@ -9,7 +10,6 @@ import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
   styleUrls: ['./upload.component.css'],
 })
 export class UploadComponent implements OnInit {
-  private ipc!: IpcRenderer;
   private filterSearch: string = '';
   public deleteModal: boolean = false;
   public show: boolean = false;
@@ -41,18 +41,9 @@ export class UploadComponent implements OnInit {
 
   constructor(
     private sbomService: SbomService,
-    public routing: RoutingService
-  ) {
-    if (window.require) {
-      try {
-        this.ipc = window.require('electron').ipcRenderer;
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      console.warn('App not running inside Electron!');
-    }
-  }
+    public routing: RoutingService,
+    private svipService: SVIPService,
+  ) {}
 
   ngOnInit() {
     this.sbomService.getAllSBOMs();
@@ -62,7 +53,7 @@ export class UploadComponent implements OnInit {
    *  Prompts user to select files and tries to upload them
    */
   browse() {
-    this.ipc.invoke('selectFiles').then((files: string[]) => {
+    this.svipService.browseFiles().then((files: string[]) => {
       if (files === undefined || files === null || files.length === 0) {
         return;
       }
@@ -75,12 +66,12 @@ export class UploadComponent implements OnInit {
    *  Checks if any files have been uploaded
    */
   ContainsFiles() {
-    this.sbomService.GetSBOMsOfType(FileStatus.VALID).length > 0 ||
-      this.sbomService.GetSBOMsOfType(FileStatus.LOADING).length > 0;
+    this.sbomService.GetSBOMsOfStatus(FileStatus.VALID).length > 0 ||
+      this.sbomService.GetSBOMsOfStatus(FileStatus.LOADING).length > 0;
   }
 
   GetAllFiles() {
-    return this.sbomService.GetAllFiles();
+    return this.sbomService.getSBOMNames();
   }
 
   /**
@@ -91,7 +82,7 @@ export class UploadComponent implements OnInit {
 
     if (this.selectedSorting === SORT_OPTIONS.NAME)
       return this.sbomService
-        .GetSBOMsOfType(status)
+        .GetSBOMsOfStatus(status)
         .sort((a: string, b: string) => {
           return this.sortingOptions[SORT_OPTIONS.NAME]
             ? a.localeCompare(b)
@@ -99,12 +90,12 @@ export class UploadComponent implements OnInit {
         });
 
     return this.sbomService
-      .GetSBOMsOfType(status)
+      .GetSBOMsOfStatus(status)
       .sort((a: string, b: string) => {
-        let aFormat = this.sbomService.GetSBOMFormat(a);
-        let bFormat = this.sbomService.GetSBOMFormat(b);
+        let aFormat = this.sbomService.GetSBOMSchema(a);
+        let bFormat = this.sbomService.GetSBOMSchema(b);
 
-        return this.sortingOptions[SORT_OPTIONS.FORMAT]
+        return this.sortingOptions[SORT_OPTIONS.SCHEMA]
           ? aFormat.localeCompare(bFormat)
           : bFormat.localeCompare(aFormat);
       });
@@ -114,20 +105,16 @@ export class UploadComponent implements OnInit {
     return this.sbomService.GetSBOMInfo(file);
   }
 
-  GetSBOMFormats() {
-    return this.sbomService.GetSBOMFormats();
+  GetSBOMSchemas() {
+    return this.sbomService.getSBOMschemas();
   }
 
   ValidSBOMFormat(path: string) {
-    // @HOTFIX !! No origin format rn
-    return true;
-    return (
-      this.GetSBOMFormats()[this.GetSBOMInfo(path).qr?.originFormat] === true
-    );
+    return this.GetSBOMSchemas()[path];
   }
 
   SbomFormatFilterChange(event: any) {
-    this.sbomService.SetSBOMFormat(event.name, event.value);
+    this.sbomService.SetSBOMSchema(event.name, event.value);
   }
 
   /**
@@ -194,7 +181,9 @@ export class UploadComponent implements OnInit {
   DownloadSelected() {
     const selectedFiles = this.GetSelected();
     const hasFiles = selectedFiles.length;
-    const hasErroredFiles = selectedFiles.filter((sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR).length;
+    const hasErroredFiles = selectedFiles.filter(
+      (sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR
+    ).length;
 
     if (!hasFiles || hasErroredFiles) {
       this.downloadModal = true;
@@ -207,7 +196,7 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
       const name = this.GetSBOMInfo(file).fileName;
-      const sbom = this.dataHandler.downloadSBOM(file);
+      const sbom = this.sbomService.downloadSBOM(file);
       if (sbom) {
         const url = URL.createObjectURL(sbom);
         const link = document.createElement('a');
@@ -228,7 +217,7 @@ export class UploadComponent implements OnInit {
       return;
 
     this.GetSelected().forEach((file) => {
-      this.dataHandler.ConvertSBOM(
+      this.sbomService.ConvertSBOM(
         file,
         this.convertOptions.schema,
         this.convertOptions.format,
@@ -288,7 +277,7 @@ export class UploadComponent implements OnInit {
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
       const filePaths = Array.from(files).map((file) => file.path);
-      this.dataHandler.AddFiles(filePaths);
+      this.sbomService.AddFiles(filePaths);
     }
   }
 
@@ -312,5 +301,5 @@ export class UploadComponent implements OnInit {
 
 export enum SORT_OPTIONS {
   NAME = 'NAME',
-  FORMAT = 'FORMAT',
+  SCHEMA = 'SCHEMA',
 }
