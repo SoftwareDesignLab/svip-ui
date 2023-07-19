@@ -7,14 +7,15 @@ import { SVIPService } from './SVIP.service';
 export class SbomService {
   private sbomFormats: { [name: string]: boolean } = {};
   public comparison: any;
-  private files: { [id: number]: SBOMInfo } = {};
+  private files: { [path: string]: SBOMInfo } = {};
 
   constructor(private SVIPService: SVIPService) {}
 
   getAllSBOMs() {
-    this.SVIPService.getSavedSBOMs().subscribe((ids) => {
+    this.SVIPService.getSBOMS().subscribe((ids) => {
       if (ids) {
         ids.forEach((id, index) => {
+          // Hotfix: talk to backend to get a path/filename sent back
           const path = `sbom ${index}`;
           this.SVIPService.getSBOM(id as number).subscribe((sbom) => {
             this.files[path] = {
@@ -60,7 +61,7 @@ export class SbomService {
         id: -1,
         status: FileStatus.LOADING,
       };
-      this.ipc.invoke('getFileData', path).then((contents) => {
+      this.SVIPService.getFileData(path).then((contents) => {
         if (contents) {
           this.saveSBOM(path, contents).subscribe(
             (id) => {
@@ -165,4 +166,15 @@ export class SbomService {
     });
     return this.files[path].contents;
   }
+}
+
+export enum FileStatus {
+  LOADING = 'LOADING',
+  ERROR = 'ERROR',
+  VALID = 'VALID',
+}
+
+export interface File {
+  fileName: string;
+  contents: string;
 }

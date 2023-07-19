@@ -1,3 +1,5 @@
+/**@author Justin Jantzi, Tina DiLorenzo*/
+
 import { Injectable } from '@angular/core';
 import { ClientService } from './client.service';
 import { IpcRenderer } from 'electron';
@@ -94,15 +96,21 @@ export class SVIPService {
         .set('overwrite', overwrite)
     );
   }
-}
+  //#region Electron
+  /**
+   *  Get file information from filepath
+   * @param path File path
+   */
+  getFileData(path: string) {
+    return this.ipc.invoke('getFileData', path);
+  }
 
-export enum FileStatus {
-  LOADING = 'LOADING',
-  ERROR = 'ERROR',
-  VALID = 'VALID',
-}
-
-export interface File {
-  fileName: string;
-  contents: string;
+  /**
+   * Open file explorer and prompts user to upload fiels
+   * @param id SBOM id
+   */
+  browseFiles() {
+    return this.ipc.invoke('selectFiles');
+  }
+  //#endregion
 }
