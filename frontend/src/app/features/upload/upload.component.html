@@ -9,7 +9,7 @@
       </div>
       <div class="format-filter">
         <app-multiselect-dropdown
-          title="Filter Formats"
+          title="Filter Schemas"
           [options]="GetSBOMSchemas()"
           (checkboxChange)="SbomFormatFilterChange($event)"
         >
@@ -21,13 +21,13 @@
         <input type="checkbox" (change)="setAllSelected($event)" value="null"/>
         <h3 (click)="UpdateSort('NAME')">File Name {{sortingOptions['NAME'] ? '▴' : '▾'}}</h3>
       </div>
-      <h3  (click)="UpdateSort('FORMAT')">Format {{sortingOptions['FORMAT'] ? '▴' : '▾'}}</h3>
+      <h3  (click)="UpdateSort('SCHEMA')">Schema {{sortingOptions['SCHEMA'] ? '▴' : '▾'}}</h3>
   </div>
 
   <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
       (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
       <ng-container *ngFor="let item of GetSBOMsOfType('VALID')">
-        <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMFormat(item)">
+        <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMSchema(item)">
           <div class="sbom flex">
             <div class="sbom">
               <input type="checkbox" [value]="item" />

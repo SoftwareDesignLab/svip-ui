@@ -109,7 +109,7 @@ export class UploadComponent implements OnInit {
     return this.sbomService.getSBOMschemas();
   }
 
-  ValidSBOMFormat(path: string) {
+  ValidSBOMSchema(path: string) {
     return this.GetSBOMSchemas()[this.sbomService.GetSBOMInfo(path).schema];
   }
 
