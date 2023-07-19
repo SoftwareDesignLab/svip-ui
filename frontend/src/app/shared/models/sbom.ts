@@ -32,9 +32,9 @@ export class SBOM implements ISBOM {
     creatorComment: string | null;
   };
   documentComment!: string | null;
-  rootComponent!: null;
+  rootComponent!: string | null;
   components!: {
-    type: null;
+    type: string | null;
     uid: string;
     author: string;
     name: string;
@@ -45,19 +45,19 @@ export class SBOM implements ISBOM {
       comment: string | null;
     };
     copyright: string;
-    hashes: null;
-    supplier: null;
+    hashes: string | null;
+    supplier: string | null;
     version: string;
     description: string | null;
     cpes: string[];
     purls: string[] | null;
-    externalReferences: null;
+    externalReferences: string | null;
     comment: string | null;
     attributionText: string | null;
     downloadLocation: string;
     fileName: string | null;
     filesAnalyzed: boolean;
-    verificationCode: null;
+    verificationCode: string | null;
     homePage: string | null;
     sourceInfo: string;
     releaseDate: string | null;
@@ -83,17 +83,17 @@ export interface ISBOM {
   name: string;
   uid: string;
   version: string | null;
-  specVersion: string;
+  specVersion: string | null
   licenses: string[];
   creationData: {
-    creationTime: string;
+    creationTime: string | null
     authors: string[];
     manufacture: string | null;
     supplier: {
-      name: string;
+      name: string | null
       url: string | null;
       contacts: {
-        name: string;
+        name: string | null
         email: string | null;
         phone: string | null;
       }[];
@@ -102,49 +102,49 @@ export interface ISBOM {
     properties: {};
     creationTools: {
       vendor: string | null;
-      name: string;
-      version: string;
+      name: string | null
+      version: string | null
       hashes: {};
     }[];
     creatorComment: string | null;
   };
   documentComment: string | null;
-  rootComponent: null;
+  rootComponent: string | null;
   components: {
-    type: null;
-    uid: string;
-    author: string;
-    name: string;
+    type: string | null;
+    uid: string | null
+    author: string | null
+    name: string | null
     licenses: {
       declared: string[];
       infoFromFiles: string[];
       concluded: string[];
       comment: string | null;
     };
-    copyright: string;
-    hashes: null;
-    supplier: null;
-    version: string;
+    copyright: string | null
+    hashes: string | null;
+    supplier: string | null;
+    version: string | null
     description: string | null;
     cpes: string[];
     purls: string[] | null;
-    externalReferences: null;
+    externalReferences: string | null;
     comment: string | null;
     attributionText: string | null;
-    downloadLocation: string;
+    downloadLocation: string | null
     fileName: string | null;
     filesAnalyzed: boolean;
-    verificationCode: null;
+    verificationCode: string | null;
     homePage: string | null;
-    sourceInfo: string;
+    sourceInfo: string | null
     releaseDate: string | null;
     builtDate: string | null;
     validUntilDate: string | null;
   }[];
   relationships: {
     [component: string]: {
-      otherUID: string;
-      relationshipType: string;
+      otherUID: string | null
+      relationshipType: string | null
       comment: string | null;
     }[];
   };

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SVIPService } from './SVIP.service';
+import { SBOM } from '../models/sbom';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +8,8 @@ import { SVIPService } from './SVIP.service';
 export class SbomService {
   private sbomFormats: { [name: string]: boolean } = {};
   public comparison: any;
-  private files: { [path: string]: SBOMInfo } = {};
+  private files: { [path: string]: File } = {};
+  private failedUploadCount = -1;
 
   constructor(private SVIPService: SVIPService) {}
 
@@ -63,10 +65,10 @@ export class SbomService {
       };
       this.SVIPService.getFileData(path).then((contents) => {
         if (contents) {
-          this.saveSBOM(path, contents).subscribe(
+          this.SVIPService.uploadSBOM(path, contents).subscribe(
             (id) => {
               if (id) {
-                this.getSBOM(id).subscribe((sbom) => {
+                this.SVIPService.getSBOM(id).subscribe((sbom) => {
                   sbom as any;
                   this.files[path] = {
                     status: FileStatus.VALID,
@@ -97,7 +99,7 @@ export class SbomService {
   }
 
   GetSBOMFormat(path: string) {
-    return this.files[path].qr.originFormat;
+    return this.files[path].type;
   }
 
   GetSBOMInfo(path: string) {
@@ -132,9 +134,10 @@ export class SbomService {
    * Delete file
    * @param: file ID
    */
-  deleteFile(id: number) {
+  deleteFile(path: string) {
+    const id = this.files[path].id
     // TODO: Add error handling for when file cannot be delted
-    this.fileService.deleteSBOM(id).subscribe(() => delete this.files[id]);
+    this.SVIPService.deleteSBOM(id).subscribe(() => delete this.files[id]);
   }
 
   ConvertSBOM(
@@ -143,7 +146,7 @@ export class SbomService {
     format: string,
     overwrite: boolean
   ) {
-    let sbom = this.files[id];
+    let sbom = this.files[path];
     let id = sbom.id ? sbom.id : -1;
       this.SVIPService.convertSBOM(id, schema, format, overwrite)
       .subscribe((result) => {
@@ -161,20 +164,20 @@ export class SbomService {
   setContents(path: string) {
     const sbom = this.files[path];
     // Hotfix: not returning as string for some reason
-    this.getSBOMContents(sbom.id).subscribe((content) => {
+    this.SVIPService.getSBOMContents(sbom.id).subscribe((content) => {
       this.files[path].contents = JSON.stringify(content);
     });
     return this.files[path].contents;
   }
 }
 
-export enum FileStatus {
-  LOADING = 'LOADING',
-  ERROR = 'ERROR',
-  VALID = 'VALID',
+export interface File {
+  fileName?: string;
+  type: string;
+  contents?: string;
+  sbom?: SBOM;
+  status?: FileStatus;
+  id: number;
+
 }
 
-export interface File {
-  fileName: string;
-  contents: string;
-}
