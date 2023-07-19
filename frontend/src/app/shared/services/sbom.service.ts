@@ -25,6 +25,7 @@ export class SbomService {
           this.SVIPService.getSBOM(id as number).subscribe((sbom) => {
             const file = new File().setValid(id, path, 'n/a', sbom);
             this.files[path] = file;
+            this.SetSBOMSchema(sbom.format, true);
             this.setContents(path);
           });
         });
@@ -49,6 +50,7 @@ export class SbomService {
                 this.SVIPService.getSBOM(id).subscribe((sbom) => {
                   this.files[path].setValid(id, path, contents, sbom);
                   this.SetSBOMSchema(sbom.format, true);
+                  console.log(this.files);
                 });
               }
             },
@@ -100,8 +102,8 @@ export class SbomService {
    * @param: file ID
    */
   deleteFile(path: string) {
-    const id = this.files[path].id;
-    if (id > 0) {
+    const id = this.files[path]?.id;
+    if (id && id > 0) {
       this.SVIPService.deleteSBOM(id);
     }
     // TODO: Add error handling for when file cannot be delted

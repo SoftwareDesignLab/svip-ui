@@ -27,6 +27,7 @@ export class SVIPService {
     }
   }
 
+  //#region SVIP functions
   /**
    * Upload an SBOM in the database for future use
    * @param fileName File name
@@ -87,7 +88,12 @@ export class SVIPService {
    *  Resulting SBOM will have a new id, overwritten or not
    * @param id SBOM id
    */
-  convertSBOM(id: number, schema: string, format: string, overwrite: boolean): Observable<string> {
+  convertSBOM(
+    id: number,
+    schema: string,
+    format: string,
+    overwrite: boolean
+  ): Observable<string> {
     return this.client.get(
       'convert',
       new HttpParams()
@@ -97,6 +103,7 @@ export class SVIPService {
         .set('overwrite', overwrite)
     ) as Observable<string>;
   }
+  //#endregion
   //#region Electron
   /**
    *  Get file information from filepath
