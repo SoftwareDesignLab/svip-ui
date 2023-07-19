@@ -23,21 +23,24 @@ export default class File {
     File.fileCount -= 1;
   }
 
-  setValid(id: number, filePath: string, contents: string, sbom: SBOM) {
+  setValid(id: number, filePath: string, contents: string, sbom: SBOM): File {
     this.status = FileStatus.VALID;
     this.contents = contents;
     this.fileName = filePath;
     this.sbom = sbom;
     this.schema = sbom.format;
     this.id = id;
+    return this;
   }
 
-  setError() {
+  setError(): File {
     this.status = FileStatus.ERROR;
+    return this;
   }
 
-  removeContents() {
+  removeContents(): File {
     this.contents = null;
+    return this;
   }
 }
 
