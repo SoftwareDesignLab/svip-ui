@@ -57,7 +57,9 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.dataHandler.startSVIP();
+  }
 
   /**
    *  Prompts user to select files and tries to upload them
@@ -141,7 +143,7 @@ export class UploadComponent implements OnInit {
       this.routing.data = undefined;
     }
 
-    this.dataHandler.DeleteFile(file);
+    this.dataHandler.deleteFile(file);
   }
 
   setAllSelected(event: any) {
@@ -244,7 +246,7 @@ export class UploadComponent implements OnInit {
    * Get SBOM filename
    */
   getAlias(sbom: string) {
-    return this.dataHandler.getSBOMAlias(sbom);
+    return this.dataHandler.getSBOMAlias(sbom)?.split('.')[0];
   }
 
   /**

@@ -19,7 +19,7 @@
                   <ng-container *ngFor="let item of component | keyvalue">
                     <app-accordion [title]="convertToString(item.key)">
                       <div body>
-                        <pre>{{ formatValue(item.value) }}</pre>
+                        <pre>{{ (item.value === null) ? 'N/A' : formatValue(item.value) }}</pre>
                       </div>
                     </app-accordion>
                   </ng-container>
@@ -61,7 +61,7 @@
     </div>
     <ng-container *ngIf="!pretty">
       <pre class="content">
-        {{routing.data ? dataHandler.GetSBOMInfo(routing.data).contents : ''}}
+        {{ getContents(routing.data)}}
       </pre>
     </ng-container>
   </div>

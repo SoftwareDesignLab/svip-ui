@@ -3,17 +3,18 @@ import { Injectable, OnInit } from '@angular/core';
 import { ClientService } from './client.service';
 import { IpcRenderer } from 'electron';
 import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DataHandlerService implements OnInit {
+export class DataHandlerService{
   private ipc!: IpcRenderer;
   private files: { [path: string]: SBOMInfo } = {};
-
-  private sbomFormats: { [name: string]: boolean} = {};
-
+  private sbomFormats: { [name: string]: boolean } = {};
   public comparison: any;
+
+  sboms = new BehaviorSubject<any[]>([]);
 
   constructor(private client: ClientService) {
     if (window.require) {
@@ -27,7 +28,24 @@ export class DataHandlerService implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  startSVIP() {
+    this.getSavedSBOMs().subscribe((ids) => {
+      if (ids) {
+        ids.forEach((id,index) => {
+          const path = `sbom ${index}`;
+          this.getSBOM(id as number).subscribe((sbom) => {
+            this.files[path] = {
+              status: FileStatus.VALID,
+              id,
+              type: sbom.format,
+              fileName: path,
+            };
+            this.setContents(path)
+          });
+        });
+      }
+    });
+  }
 
   //#region SBOMS/File Endpoints
   /**
@@ -35,11 +53,20 @@ export class DataHandlerService implements OnInit {
    * @param fileName File name
    * @param contents contents of the sbom
    */
-  saveSBOM(fileName: string, contents: string) {
+  saveSBOM(fileName: string, contents: string): Observable<number> {
     return this.client.post('upload', {
       contents: contents,
       fileName: fileName,
-    });
+    }) as Observable<number>;
+  }
+
+  /**
+   * Get an SBOM in the database
+   * @param id SBOM id
+   */
+  getSBOM(id: number): Observable<any> {
+    const params = new HttpParams().set('id', id);
+    return this.client.get('getSBOM', params);
   }
 
   GetSBOMFormats() {
@@ -54,18 +81,22 @@ export class DataHandlerService implements OnInit {
     this.sbomFormats[name] = value;
   }
 
-  getSavedSBOM(id: number) {
-    return new Promise<any>((resolve) => {
-      this.client
-        .get('view', new HttpParams().set('id', id))
-        .subscribe((result) => {
-          resolve(result);
-        });
-    });
+  getSBOMContents(id: number) {
+    return this.client.get('view', new HttpParams().set('id', id));
   }
 
-  DeleteFile(path: string) {
-    delete this.files[path];
+  getSavedSBOMs(): Observable<number[]> {
+    return this.client.get('viewFiles') as Observable<number[]>;
+  }
+
+  deleteFile(path: string) {
+    const id = this.files[path].id;
+    // TODO: Add error handling for when file cannot be delted
+    this._deleteSBOM(id).subscribe(() => delete this.files[path])
+  }
+
+  private _deleteSBOM(id: number) {
+    return this.client.delete('delete', new HttpParams().set('id', id));
   }
 
   downloadSBOM(filePath: string) {
@@ -85,23 +116,29 @@ export class DataHandlerService implements OnInit {
   async AddFiles(paths: string[]) {
     paths.forEach((path) => {
       this.files[path] = {
+        id: -1,
         status: FileStatus.LOADING,
       };
       this.ipc.invoke('getFileData', path).then((contents) => {
         if (contents) {
           this.saveSBOM(path, contents).subscribe(
-            (result) => {
-              if (result) {
-                this.files[path] = {
-                  status: FileStatus.VALID,
-                  id: result as number,
-                  fileName: this.getSBOMAlias(path),
-                  contents: contents,
-                };
+            (id) => {
+              if (id) {
+                this.getSBOM(id).subscribe((sbom) => {
+                  sbom as any;
+                  this.files[path] = {
+                    status: FileStatus.VALID,
+                    id: id,
+                    type: sbom?.format,
+                    fileName: this.getSBOMAlias(path),
+                    contents: contents,
+                  };
+                });
               }
             },
             (error) => {
               this.files[path] = {
+                id: -1,
                 status: FileStatus.ERROR,
               };
             }
@@ -138,38 +175,62 @@ export class DataHandlerService implements OnInit {
 
     let idList = [];
 
-    for(let i = 0; i < others.length; i++) {
+    for (let i = 0; i < others.length; i++) {
       let other = others[i];
       idList.push(this.files[other].id);
     }
 
     idList.unshift(targetID);
 
-    this.client.get('compare', new HttpParams().set('Ids', JSON.stringify(idList))
-    .set('targetIndex', 0)).subscribe((result) => {
-      this.comparison = result;
-    });
+    this.client
+      .get(
+        'compare',
+        new HttpParams()
+          .set('Ids', JSON.stringify(idList))
+          .set('targetIndex', 0)
+      )
+      .subscribe((result) => {
+        this.comparison = result;
+      });
   }
 
-  ConvertSBOM(path: string, schema: string, format: string, overwrite: boolean) {
-
+  ConvertSBOM(
+    path: string,
+    schema: string,
+    format: string,
+    overwrite: boolean
+  ) {
     let sbom = this.files[path];
     let id = sbom.id ? sbom.id : -1;
 
-    this.client.get('convert', new HttpParams().set('id', id)
-    .set('schema', schema)
-    .set('format', format)
-    .set('overwrite', overwrite)).subscribe((result) => {
+    this.client
+      .get(
+        'convert',
+        new HttpParams()
+          .set('id', id)
+          .set('schema', schema)
+          .set('format', format)
+          .set('overwrite', overwrite)
+      )
+      .subscribe((result) => {
+        if (result) {
+          delete this.files[path].contents;
+          if (this.files[path].id !== undefined) {
+            this.files[path].id += 1;
+          }
+          this.setContents(path);
+          this.files[path].type = format;
+        }
+      });
+  }
 
-      //Add error message?
-      if(typeof result !== 'string')
-        return;
-
-        sbom.contents = result;
-        sbom.qr.originFormat = format; //update format, will most likely change
-        this.files[path] = sbom;
+  setContents(path: string) {
+    const sbom = this.files[path];
+    // Hotfix: not returning as string for some reason
+    this.getSBOMContents(sbom.id).subscribe((content) => {
+      this.files[path].contents = JSON.stringify(content);
     });
-
+    return this.files[path].contents;
   }
   //#endregion
 }
@@ -183,17 +244,18 @@ export interface File {
 
 export interface SBOMInfo {
   status: FileStatus;
-  id?: number;
+  id: number;
   metrics?: any;
   qr?: any;
   extra?: string;
   contents?: string;
   fileName?: string;
+  type?: string;
 }
 
 export enum FileStatus {
-  LOADING = "LOADING",
-  ERROR = "ERROR",
-  VALID = "VALID"
+  LOADING = 'LOADING',
+  ERROR = 'ERROR',
+  VALID = 'VALID',
 }
 //#endregion

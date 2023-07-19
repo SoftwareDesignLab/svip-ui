@@ -15,7 +15,7 @@ export class MenuComponent {
   }
 
   RemoveFile() {
-    this.dataHandler.DeleteFile(this.data);
+    this.dataHandler.deleteFile(this.data);
   }
 
   GetSBOMInfo(file: string) {

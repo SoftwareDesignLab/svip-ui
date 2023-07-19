@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataHandlerService } from './data-handler.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,13 @@ import { DataHandlerService } from './data-handler.service';
 
 export class RoutingService {
   private page: PAGES = PAGES.NONE;
-  public data: any;
+  data$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  set data(value: any) {
+    this.data$.next(value);
+  }
+  get data() {
+    return this.data$.value;
+  }
 
   GetPage(): PAGES {
     return this.page;
