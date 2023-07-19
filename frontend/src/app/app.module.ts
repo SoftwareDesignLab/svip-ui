@@ -17,6 +17,7 @@ import { MenuComponent } from './shared/components/menu/menu.component';
 import { AccordionComponent } from './shared/components/accordion/accordion.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ComparisonComponent } from './features/comparison/comparison.component';
+import { ToasterComponent } from './shared/components/toaster/toaster.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ComparisonComponent } from './features/comparison/comparison.component'
     MenuComponent,
     ModalComponent,
     ToastComponent,
-    ComparisonComponent
+    ComparisonComponent,
+    ToasterComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],

@@ -141,9 +141,9 @@
   </div>
 </app-modal>
 
-<app-toast [opened]="downloadModal" (close)="downloadModal = false" >
+<!-- <app-toast [opened]="downloadModal" (close)="downloadModal = false" >
   <div content>Error: Select valid SBOM to download.</div>
-</app-toast>
+</app-toast> -->
 
 <app-modal [opened]="compareModal" (close)="compareModal = false">
   <div title>
@@ -167,3 +167,6 @@
     </div>
   </div>
 </app-modal>
+
+<app-toaster></app-toaster>
+

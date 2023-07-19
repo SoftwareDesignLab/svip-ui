@@ -1,10 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { IpcRenderer } from 'electron';
-import {
-  DataHandlerService,
-  FileStatus,
-} from 'src/app/shared/services/data-handler.service';
+import { EventTypes } from 'src/app/shared/models/event-types';
+import { DataHandlerService, FileStatus } from 'src/app/shared/services/data-handler.service';
 import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-upload',
@@ -15,20 +14,23 @@ export class UploadComponent implements OnInit {
   private ipc!: IpcRenderer;
   private filterSearch: string = '';
   public deleteModal: boolean = false;
-  public show: boolean = false;
-
+  public show: boolean = false
   public convertModal: boolean = false;
   public downloadModal: boolean = false;
+
+  title = 'angular-bootstrap-toast-service';
+
+  EventTypes = EventTypes;
 
   public convertOptions: {
     schema: string;
     format: string;
     overwrite: boolean;
   } = {
-    schema: '',
-    format: '',
-    overwrite: true,
-  };
+      schema: '',
+      format: '',
+      overwrite: true,
+    };
   public formatOptions: string[] = ['TAGVALUE', 'JSON'];
   public schemaOptions: string[] = ['CDX14', 'SPDX23', 'SVIP'];
 
@@ -44,7 +46,8 @@ export class UploadComponent implements OnInit {
 
   constructor(
     private dataHandler: DataHandlerService,
-    public routing: RoutingService
+    public routing: RoutingService,
+    private toastService: ToastService
   ) {
     if (window.require) {
       try {
@@ -311,7 +314,26 @@ export class UploadComponent implements OnInit {
     this.routing.SetPage(PAGES.VIEW);
     this.routing.data = selected[0];
   }
+
+  showToast(type: EventTypes) {
+    switch (type) {
+      case EventTypes.Success:
+        this.toastService.showSuccessToast('Success toast title', 'This is a success toast message.');
+        break;
+      case EventTypes.Warning:
+        this.toastService.showWarningToast('Warning toast title', 'This is a warning toast message.');
+        break;
+      case EventTypes.Error:
+        this.toastService.showErrorToast('Error toast title', 'This is an error toast message.');
+        break;
+      default:
+        this.toastService.showInfoToast('Info toast title', 'This is an info toast message.');
+        break;
+    }
+  }
 }
+
+
 
 export enum SORT_OPTIONS {
   NAME = 'NAME',
