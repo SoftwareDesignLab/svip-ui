@@ -103,11 +103,16 @@ export class SbomService {
    */
   deleteFile(path: string) {
     const id = this.files[path]?.id;
-    if (id && id > 0) {
-      this.SVIPService.deleteSBOM(id);
+    if (id && id > -1) {
+      // TODO: Add error handling for when file cannot be delted
+      this.SVIPService.deleteSBOM(id).subscribe((deleted) => {
+        if (deleted) {
+          delete this.files[path];
+        }
+      });
+    } else {
+      delete this.files[path];
     }
-    // TODO: Add error handling for when file cannot be delted
-    delete this.files[path];
   }
 
   /**
