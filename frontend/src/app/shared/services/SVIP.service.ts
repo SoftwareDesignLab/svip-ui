@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { ClientService } from './client.service';
 import { IpcRenderer } from 'electron';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { SBOM } from '../models/sbom';
 
@@ -12,8 +12,6 @@ import { SBOM } from '../models/sbom';
 })
 export class SVIPService {
   private ipc!: IpcRenderer;
-
-  sboms = new BehaviorSubject<any[]>([]);
 
   constructor(private client: ClientService) {
     if (window.require) {
