@@ -5,6 +5,9 @@ import { FileStatus } from 'src/app/shared/models/file';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { IpcRenderer } from 'electron';
+import { EventTypes } from 'src/app/shared/models/event-types';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-upload',
@@ -17,6 +20,24 @@ export class UploadComponent implements OnInit {
   public downloadModal: boolean = false;
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
+  private ipc!: IpcRenderer;
+
+  title = 'angular-bootstrap-toast-service';
+
+  EventTypes = EventTypes;
+
+  public convertOptions: {
+    schema: string;
+    format: string;
+    overwrite: boolean;
+  } = {
+      schema: '',
+      format: '',
+      overwrite: true,
+    };
+  public formatOptions: string[] = ['TAGVALUE', 'JSON'];
+  public schemaOptions: string[] = ['CDX14', 'SPDX23', 'SVIP'];
+
   public compareModal: boolean = false;
 
   protected sortingOptions: { [type: string]: boolean } = {
@@ -29,6 +50,7 @@ export class UploadComponent implements OnInit {
   constructor(
     private sbomService: SbomService,
     public routing: RoutingService,
+    private toastService: ToastService,
     private svipService: SVIPService,
   ) {}
 
@@ -287,7 +309,25 @@ export class UploadComponent implements OnInit {
     this.routing.data = selected[0];
   }
 
+  showToast(type: EventTypes) {
+    switch (type) {
+      case EventTypes.Success:
+        this.toastService.showSuccessToast('Success toast title', 'This is a success toast message.');
+        break;
+      case EventTypes.Warning:
+        this.toastService.showWarningToast('Warning toast title', 'This is a warning toast message.');
+        break;
+      case EventTypes.Error:
+        this.toastService.showErrorToast('Error toast title', 'This is an error toast message.');
+        break;
+      default:
+        this.toastService.showInfoToast('Info toast title', 'This is an info toast message.');
+        break;
+    }
+  }
 }
+
+
 
 export enum SORT_OPTIONS {
   NAME = 'NAME',
