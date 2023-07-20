@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { DataHandlerService } from '../../services/data-handler.service';
 import { IpcRenderer } from 'electron';
+import { SVIPService } from '../../services/SVIP.service';
+import { SbomService } from '../../services/sbom.service';
 
 @Component({
   selector: 'app-toggle',
@@ -11,25 +12,16 @@ export class ToggleComponent {
   upload: boolean = false;
   private ipc!: IpcRenderer;
 
-  constructor(private dataHandler: DataHandlerService) {
-    if (window.require) {
-      try {
-        this.ipc = window.require('electron').ipcRenderer;
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      console.warn('App not running inside Electron!');
-    }
+  constructor(private svipService: SVIPService, private sbomService: SbomService) {
   }
 
   browse() {
-    this.ipc.invoke('selectFiles').then((files: string[]) => {
+    this.svipService.browseFiles().then((files: string[]) => {
       if (files === undefined || files === null || files.length === 0) {
         return;
       }
 
-      this.dataHandler.AddFiles(files);
+      this.sbomService.AddFiles(files);
     });
   }
 }

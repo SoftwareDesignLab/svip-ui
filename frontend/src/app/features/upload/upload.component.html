@@ -9,8 +9,8 @@
       </div>
       <div class="format-filter">
         <app-multiselect-dropdown
-          title="Filter Formats"
-          [options]="GetSBOMFormats()"
+          title="Filter Schemas"
+          [options]="GetSBOMSchemas()"
           (checkboxChange)="SbomFormatFilterChange($event)"
         >
         </app-multiselect-dropdown>
@@ -21,20 +21,20 @@
         <input type="checkbox" (change)="setAllSelected($event)" value="null"/>
         <h3 (click)="UpdateSort('NAME')">File Name {{sortingOptions['NAME'] ? '▴' : '▾'}}</h3>
       </div>
-      <h3  (click)="UpdateSort('FORMAT')">Format {{sortingOptions['FORMAT'] ? '▴' : '▾'}}</h3>
+      <h3  (click)="UpdateSort('SCHEMA')">Schema {{sortingOptions['SCHEMA'] ? '▴' : '▾'}}</h3>
   </div>
 
   <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
       (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
       <ng-container *ngFor="let item of GetSBOMsOfType('VALID')">
-        <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMFormat(item)">
+        <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMSchema(item)">
           <div class="sbom flex">
             <div class="sbom">
-              <input type="checkbox" [value]="item" />
+              <input type="checkbox" [value]="item" class="sbom-checkbox"/>
               <app-menu text="{{getAlias(item)}}" [data]="item"></app-menu>
             </div>
             <div>
-              {{GetSBOMInfo(item).type}}
+              {{GetSBOMInfo(item).schema}}
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@
       <ng-container *ngFor="let item of GetSBOMsOfType('ERROR')">
         <div  *ngIf="getAlias(item)?.includes(GetFilter())">
           <div class="sbom" style="color: var(--red);">
-            <input type="checkbox" [value]="item" />
+            <input type="checkbox" [value]="item" class="sbom-checkbox"/>
             <span ngbTooltip="SBOM is not valid!">
                 {{ getAlias(item) }}
             </span>
