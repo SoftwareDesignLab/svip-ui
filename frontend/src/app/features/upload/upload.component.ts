@@ -298,6 +298,15 @@ export class UploadComponent implements OnInit {
     this.routing.SetPage(PAGES.VIEW);
     this.routing.data = selected[0];
   }
+
+  gradeSBOM() {
+    let selected = this.GetSelected();
+
+    if (selected.length !== 1) return;
+
+    this.routing.SetPage(PAGES.METRICS);
+    this.routing.data = selected[0];
+  }
 }
 
 export enum SORT_OPTIONS {
