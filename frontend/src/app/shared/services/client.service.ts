@@ -19,7 +19,7 @@ export class ClientService {
     params: new HttpParams(),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   get(path: string, params: HttpParams = new HttpParams()) {
     this.httpOptions.params = params;
@@ -31,8 +31,14 @@ export class ClientService {
     return this.http.delete(this.SERVER_URL + path, this.httpOptions);
   }
 
-  post(path: string, body: any, params: HttpParams = new HttpParams()) {
+  post(path: string, body: any, params: HttpParams = new HttpParams(),) {
     this.httpOptions.params = params;
     return this.http.post(this.SERVER_URL + path, body, this.httpOptions);
+  }
+
+  getTEXT(path: string, params: HttpParams = new HttpParams()) {
+    this.httpOptions.params = params;
+    this.httpOptions.headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+    return this.http.get(this.SERVER_URL + path, {headers: this.httpOptions.headers, params: this.httpOptions.params, responseType: 'text'});
   }
 }

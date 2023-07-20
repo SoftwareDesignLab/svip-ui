@@ -11,7 +11,7 @@ export class SbomService {
   private files: { [path: string]: File } = {};
   ids: number[] = [];
 
-  constructor(private SVIPService: SVIPService) {}
+  constructor(private SVIPService: SVIPService) { }
 
   //#region functionality
   /**
@@ -154,7 +154,7 @@ export class SbomService {
     this.SVIPService.convertSBOM(id, schema, format, overwrite).subscribe(
       (result) => {
         if (result) {
-          this.files[path].contents = JSON.stringify(result, null, '2');
+          this.files[path].contents = result;
           this.files[path].id += 1;
           this.files[path].schema = schema;
           this.files[path].format = format;
@@ -199,7 +199,8 @@ export class SbomService {
     const sbom = this.files[path];
     // Hotfix: not returning as string for some reason
     this.SVIPService.getSBOMContents(sbom.id).subscribe((content) => {
-      this.files[path].contents = JSON.stringify(content, null, 2);
+      console.log(content);
+      this.files[path].contents = content;
     });
     return this.files[path].contents;
   }

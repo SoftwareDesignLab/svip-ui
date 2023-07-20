@@ -51,8 +51,8 @@ export class SVIPService {
    * Get an SBOM's file contents
    * @param id SBOM id
    */
-  getSBOMContents(id: number): Observable<object> {
-    return this.client.get('view', new HttpParams().set('id', id));
+  getSBOMContents(id: number): Observable<string> {
+    return this.client.getTEXT('view', new HttpParams().set('id', id)) as Observable<string>;
   }
 
   /**
@@ -111,7 +111,7 @@ export class SVIPService {
   generateSBOM(
     generator: GENERATORS,
     generateObj: generate
-  ): Observable<number> {
+  ): Observable<string> {
     const params = new HttpParams()
       .set('schema', generateObj.schema)
       .set('projectName', generateObj.projectName)
@@ -120,7 +120,7 @@ export class SVIPService {
       `generators/${generator}`,
       generateObj.files,
       params
-    ) as Observable<number>;
+    ) as Observable<string>;
   }
 
   //#endregion
