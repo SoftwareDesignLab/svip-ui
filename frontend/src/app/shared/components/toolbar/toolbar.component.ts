@@ -11,11 +11,10 @@ import { FileStatus } from '../../models/file';
 
 export class ToolbarComponent {
   constructor(private sbomService: SbomService, public routing: RoutingService) {}
-  
   public deleteModal: boolean = false;
-  public downloadModal: boolean = false;
   public convertModal: boolean = false;
   public compareModal: boolean = false;
+  public downloadModal: boolean = false;
 
   public convertOptions: {
     schema: string;
