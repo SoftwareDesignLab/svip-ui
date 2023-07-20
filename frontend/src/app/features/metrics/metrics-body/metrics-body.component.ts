@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RoutingService } from 'src/app/shared/services/routing.service';
 
 @Component({
   selector: 'app-metrics-body',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./metrics-body.component.css']
 })
 export class MetricsBodyComponent implements OnInit {
-
-  constructor() { }
+  title: string = '';
+  constructor(private routing: RoutingService) {
+    this.title = routing.data.fileName;
+  }
 
   ngOnInit() {
   }

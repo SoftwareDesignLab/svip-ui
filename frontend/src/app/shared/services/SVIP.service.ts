@@ -82,6 +82,14 @@ export class SVIPService {
   }
 
   /**
+   * Grade an  SBOM in the database
+   * @param id SBOM id
+   */
+  gradeSBOM(id: number) {
+    return this.client.get('sboms/qa', new HttpParams().set('id', id));
+  }
+
+  /**
    * Convert an  SBOM to a new format or schema.
    *  Resulting SBOM will have a new id, overwritten or not
    * @param id SBOM id

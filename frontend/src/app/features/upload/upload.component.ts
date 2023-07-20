@@ -305,7 +305,7 @@ export class UploadComponent implements OnInit {
     if (selected.length !== 1) return;
 
     this.routing.SetPage(PAGES.METRICS);
-    this.routing.data = selected[0];
+    this.routing.data = this.sbomService.GetSBOMInfo(selected[0]);
   }
 }
 

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import qualityReport from '../qa';
+import { SVIPService } from 'src/app/shared/services/SVIP.service';
+import { RoutingService } from 'src/app/shared/services/routing.service';
 
 @Component({
   selector: 'app-metrics',
@@ -13,27 +14,35 @@ export class MetricsComponent implements OnInit {
   attributes: { [ProcessorName: string]: { color: string; shown: boolean } } =
     {};
   attributeNames: string[] = [];
-  _sbom: any = null;
   palettes: { [key: string]: string[] } = {
     default: ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink'],
-    wong: ['#000000', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7']
+    wong: [
+      '#000000',
+      '#E69F00',
+      '#56B4E9',
+      '#009E73',
+      '#F0E442',
+      '#0072B2',
+      '#D55E00',
+      '#CC79A7',
+    ],
   };
   selectedPalette = 'default';
   accessibilityModal = false;
 
-  // TODO: why did i make an arrays of names... I could've just used entries/key value in html
-
-  @Input() set sbom(sbom: any) {
-    this.qa = qualityReport;
-    this._sbom = { name: this.qa.fileName };
-    this.getKeys();
-    this.setColor();
+  constructor(private routing: RoutingService, SVIP: SVIPService) {
+    routing.data$.subscribe((data) => {
+      if (data) {
+        SVIP.gradeSBOM(data.id).subscribe((qa) => {
+          if (qa) {
+            this.qa = qa;
+            this.getKeys();
+            this.setColor();
+          }
+        });
+      }
+    });
   }
-  get sbom() {
-    return this._sbom;
-  }
-
-  constructor() {}
 
   ngOnInit() {}
 
