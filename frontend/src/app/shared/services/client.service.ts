@@ -38,7 +38,6 @@ export class ClientService {
 
   getTEXT(path: string, params: HttpParams = new HttpParams()) {
     this.httpOptions.params = params;
-    this.httpOptions.headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
-    return this.http.get(this.SERVER_URL + path, {headers: this.httpOptions.headers, params: this.httpOptions.params, responseType: 'text'});
+    return this.http.get(this.SERVER_URL + path, {params: this.httpOptions.params, responseType: 'text'});
   }
 }

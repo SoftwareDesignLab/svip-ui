@@ -136,6 +136,27 @@ export class SbomService {
     }
   }
 
+  generate(generator: GENERATORS,
+    generateObj: generate) {
+    const res = this.SVIPService.generateSBOM(
+      generator,
+      generateObj,
+    );
+    // Hotfix
+    res.subscribe(res => {
+      if (res) {
+        console.log('gen');
+        console.log(res);
+        this.SVIPService.uploadSBOM(generateObj.projectName + '.spdx', JSON.stringify(res)).subscribe(end => {
+          this.addSBOM(end, generateObj.projectName);
+        })
+      }
+    });
+
+    return res;
+  }
+
+
   /**
    * Convert sbom from one type to another
    * @param path sbom path
@@ -158,6 +179,7 @@ export class SbomService {
           this.files[path].id += 1;
           this.files[path].schema = schema;
           this.files[path].format = format;
+          this.fetch();
         }
       }
     );

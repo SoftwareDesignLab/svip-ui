@@ -83,7 +83,6 @@ export class ToggleComponent {
     this.filePaths.forEach((fileName) => {
       const res = this.svipService.getFileData(fileName).then((contents) => {
         if (contents) {
-          console.log(contents);
           generateObj.files.push({ fileName, contents });
         }
       });
@@ -91,12 +90,11 @@ export class ToggleComponent {
     });
     Promise.all(results).then(
       () =>
-        this.svipService
-          .generateSBOM(GENERATORS.parsers, generateObj)
+        this.sbomService
+          .generate(GENERATORS.parsers, generateObj)
           .subscribe(() => {
             this.loading = false;
             this.generateModal = false;
-            this.sbomService.fetch();
           }),
       () => {
         this.loading = false;
