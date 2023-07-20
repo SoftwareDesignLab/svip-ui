@@ -30,7 +30,7 @@
         <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMSchema(item)">
           <div class="sbom flex">
             <div class="sbom">
-              <input type="checkbox" [value]="item" />
+              <input type="checkbox" [value]="item" class="sbom-checkbox"/>
               <app-menu text="{{getAlias(item)}}" [data]="item"></app-menu>
             </div>
             <div>
@@ -43,7 +43,7 @@
       <ng-container *ngFor="let item of GetSBOMsOfType('ERROR')">
         <div  *ngIf="getAlias(item)?.includes(GetFilter())">
           <div class="sbom" style="color: var(--red);">
-            <input type="checkbox" [value]="item" />
+            <input type="checkbox" [value]="item" class="sbom-checkbox"/>
             <span ngbTooltip="SBOM is not valid!">
                 {{ getAlias(item) }}
             </span>

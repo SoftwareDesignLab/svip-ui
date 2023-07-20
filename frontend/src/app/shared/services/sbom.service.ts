@@ -50,7 +50,6 @@ export class SbomService {
                 this.SVIPService.getSBOM(id).subscribe((sbom) => {
                   this.files[path].setValid(id, path, contents, sbom);
                   this.SetSBOMSchema(sbom.format, true);
-                  console.log(this.files);
                 });
               }
             },

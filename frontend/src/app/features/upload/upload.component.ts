@@ -148,7 +148,8 @@ export class UploadComponent implements OnInit {
   }
 
   GetSelected() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    const checkboxes = document.querySelectorAll('.sbom-checkbox');
     let selected: string[] = [];
 
     for (let i = 0; i < checkboxes.length; i++) {
