@@ -132,12 +132,10 @@ export class SbomService {
     this.SVIPService.convertSBOM(id, schema, format, overwrite).subscribe(
       (result) => {
         if (result) {
-          this.files[path].contents = result;
-          if (this.files[path].id !== undefined) {
-            this.files[path].id += 1;
-          }
-          this.setContents(path);
+          this.files[path].contents = JSON.stringify(result, null, '\t');
+          this.files[path].id += 1;
           this.files[path].schema = schema;
+          this.files[path].format = format;
         }
       }
     );
@@ -179,7 +177,7 @@ export class SbomService {
     const sbom = this.files[path];
     // Hotfix: not returning as string for some reason
     this.SVIPService.getSBOMContents(sbom.id).subscribe((content) => {
-      this.files[path].contents = JSON.stringify(content);
+      this.files[path].contents = JSON.stringify(content, null, '\t');
     });
     return this.files[path].contents;
   }
