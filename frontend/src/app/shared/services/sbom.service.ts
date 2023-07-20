@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SVIPService } from './SVIP.service';
+import { GENERATORS, SVIPService, generate } from './SVIP.service';
 import File, { FileStatus } from '../models/file';
 
 @Injectable({
@@ -9,6 +9,7 @@ export class SbomService {
   private sbomSchemas: { [name: string]: boolean } = {};
   public comparison: any;
   private files: { [path: string]: File } = {};
+  ids: number[] = [];
 
   constructor(private SVIPService: SVIPService) {}
 
@@ -19,17 +20,38 @@ export class SbomService {
   getAllSBOMs() {
     this.SVIPService.getSBOMS().subscribe((ids) => {
       if (ids) {
-        ids.forEach((id, index) => {
-          // Hotfix: talk to backend to get a path/filename sent back
-          const path = `sbom ${index}`;
-          this.SVIPService.getSBOM(id as number).subscribe((sbom) => {
-            const file = new File().setValid(id, path, 'n/a', sbom);
-            this.files[path] = file;
-            this.SetSBOMSchema(sbom.format, true);
-            this.setContents(path);
-          });
+        this.ids = ids;
+        ids.forEach((id) => {
+          this.addSBOM(id);
         });
       }
+    });
+  }
+
+  // Gets all new sboms from database
+  fetch() {
+    this.SVIPService.getSBOMS().subscribe((ids) => {
+      if (ids) {
+        const newIds = ids.filter((id) => this.ids.indexOf(id) === -1);
+        newIds.forEach((id) => {
+          this.addSBOM(id);
+        });
+      }
+    });
+  }
+
+  private addSBOM(id: number, path?: string) {
+    this.SVIPService.getSBOM(id as number).subscribe((sbom) => {
+      // Hotfix: talk to backend to get a path/filename sent back
+      const file = new File().setValid(
+        id,
+        path ? path : `sbom ${id}`,
+        'n/a',
+        sbom
+      );
+      this.files[file.fileName] = file;
+      this.SetSBOMSchema(sbom.format, true);
+      this.setContents(file.fileName);
     });
   }
 

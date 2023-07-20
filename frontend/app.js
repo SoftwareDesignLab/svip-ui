@@ -46,11 +46,10 @@ ipcMain.handle("selectFiles", async () => {
   let files = await dialog.showOpenDialog(mainWindow, {
     properties: ["openFile", "multiSelections"],
   });
-
   return files.filePaths;
 });
 
 ipcMain.handle("getFileData", async (event, ...args) => {
-  let data = fs.readFileSync(args[0], "utf8");
+  const data = fs.readFileSync(args[0], "utf8");
   return data;
 });

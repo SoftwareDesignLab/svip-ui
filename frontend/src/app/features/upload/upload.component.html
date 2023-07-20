@@ -164,36 +164,3 @@
       <span>Compare</span>
     </div>
     <div class="btn-modal button flex center hover" (click)="compareModal = false">
-<app-modal [opened]="generateModal" (close)="generateModal = false">
-  <div title>
-    Generate
-  </div>
-  <div content style="display: flex; gap: 15px; flex-direction: column;">
-    <div>
-      {{ selectedFileAlias }}
-    </div>
-    <div>
-      <div>Schema:</div>
-      <select [(ngModel)]="convertOptions.schema">
-        <option value=""></option>
-        <option *ngFor="let option of schemaOptions" [value]="option">{{ option }}</option>
-      </select>
-    </div>
-    <div>
-      <div>Format:</div>
-      <select [(ngModel)]="convertOptions.format">
-        <option value=""></option>
-        <option *ngFor="let option of formatOptions" [value]="option">{{ option }}</option>
-      </select>
-    </div>
-  </div>
-
-  <div actions style=" display: flex; gap: 15px;">
-    <div class="btn-modal button flex center hover">
-      <span>Generate</span>
-    </div>
-    <div class="btn-modal button flex center hover" (click)="generateModal = false">
-      <span>Cancel</span>
-    </div>
-  </div>
-</app-modal>

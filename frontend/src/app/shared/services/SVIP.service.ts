@@ -100,15 +100,29 @@ export class SVIPService {
     format: string,
     overwrite: boolean
   ): Observable<string> {
-    return this.client.get(
-      'convert',
-      new HttpParams()
-        .set('id', id)
-        .set('schema', schema)
-        .set('format', format)
-        .set('overwrite', overwrite)
-    ) as Observable<string>;
+    const params = new HttpParams()
+      .set('id', id)
+      .set('schema', schema)
+      .set('format', format)
+      .set('overwrite', overwrite);
+    return this.client.get('convert', params) as Observable<string>;
   }
+
+  generateSBOM(
+    generator: GENERATORS,
+    generateObj: generate
+  ): Observable<number> {
+    const params = new HttpParams()
+      .set('schema', generateObj.schema)
+      .set('projectName', generateObj.projectName)
+      .set('format', generateObj.format);
+    return this.client.post(
+      `generators/${generator}`,
+      generateObj.files,
+      params
+    ) as Observable<number>;
+  }
+
   //#endregion
   //#region Electron
   /**
@@ -127,4 +141,19 @@ export class SVIPService {
     return this.ipc.invoke('selectFiles');
   }
   //#endregion
+}
+
+export enum GENERATORS {
+  osi = 'osi',
+  parsers = 'parsers',
+}
+
+export interface generate {
+  files: {
+    fileName: string;
+    contents: string;
+  }[];
+  projectName: string;
+  format: string;
+  schema: string;
 }

@@ -1,52 +1,68 @@
 <div class="body">
-    <div class="header">
-        <div class="option" [id]='upload ? "selected" : ""' (click)="upload = true">Upload</div>
-        <div class="option" [id]='!upload ? "selected" : ""' (click)="upload = false">Generate</div>
+  <div class="header">
+    <div class="option" [id]="upload ? 'selected' : ''" (click)="upload = true">
+      Upload
     </div>
-    <ng-container *ngIf="upload">
-        <div class="dropzone">
-            <app-button text="Select Files" (click)="browse()" />
-            <p class="text-center">or drag and drop SBOMS</p>
-        </div>
-    </ng-container>
+    <div
+      class="option"
+      [id]="!upload ? 'selected' : ''"
+      (click)="upload = false"
+    >
+      Generate
+    </div>
+  </div>
+  <ng-container *ngIf="upload">
+    <div class="dropzone">
+      <app-button text="Select Files" (click)="browse()" />
+      <p class="text-center">or drag and drop SBOMS</p>
+    </div>
+  </ng-container>
 
-    <ng-container *ngIf="!upload" class="dropzone">
-        <div class="dropzone">
-            <app-button text="Generate" (click)="browse()" (drop)="onGenerateDrop($event)"/>
-            <p class="text-center">or drag project directory in here</p>
-        </div>
-    </ng-container>
+  <ng-container *ngIf="!upload" class="dropzone">
+    <div class="dropzone">
+      <app-button text="Generate" (click)="onGenerate()" />
+      <p class="text-center">or drag project directory in here</p>
+    </div>
+  </ng-container>
 </div>
 
 <app-modal [opened]="generateModal" (close)="generateModal = false">
-  <div title>
-    Generate
+  <div title>Generate</div>
+  <div content style="display: flex; gap: 15px; flex-direction: column">
+    <ng-container *ngIf="!loading">
+      <div>
+        <div>Project Name:</div>
+        <input [(ngModel)]="generateOptions.projectName" />
+      </div>
+      <div>
+        <div>Schema:</div>
+        <select [(ngModel)]="generateOptions.schema">
+          <option value=""></option>
+          <option *ngFor="let option of schemaOptions" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <div>Format:</div>
+        <select [(ngModel)]="generateOptions.format">
+          <option value=""></option>
+          <option *ngFor="let option of formatOptions" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+      </div>
+    </ng-container>
+    <div *ngIf="loading">LOADING</div>
   </div>
-  <div content style="display: flex; gap: 15px; flex-direction: column;">
-    <div>
-      {{ selectedFileAlias }}
+  <div actions style="display: flex; gap: 15px">
+    <div *ngIf="!loading" class="btn-modal button flex center hover">
+      <span (click)="generateParser()">Generate</span>
     </div>
-    <div>
-      <div>Schema:</div>
-      <select [(ngModel)]="convertOptions.schema">
-        <option value=""></option>
-        <option *ngFor="let option of schemaOptions" [value]="option">{{ option }}</option>
-      </select>
-    </div>
-    <div>
-      <div>Format:</div>
-      <select [(ngModel)]="convertOptions.format">
-        <option value=""></option>
-        <option *ngFor="let option of formatOptions" [value]="option">{{ option }}</option>
-      </select>
-    </div>
-  </div>
-
-  <div actions style=" display: flex; gap: 15px;">
-    <div class="btn-modal button flex center hover">
-      <span>Generate</span>
-    </div>
-    <div class="btn-modal button flex center hover" (click)="generateModal = false">
+    <div
+      class="btn-modal button flex center hover"
+      (click)="generateModal = false"
+    >
       <span>Cancel</span>
     </div>
   </div>
