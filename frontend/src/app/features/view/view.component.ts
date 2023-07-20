@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
-import { RoutingService } from '../../services/routing.service';
-import { SbomService } from '../../services/sbom.service';
-import { SVIPService } from '../../services/SVIP.service';
+import { RoutingService } from '../../shared/services/routing.service';
+import { SbomService } from '../../shared/services/sbom.service';
+import { SVIPService } from '../../shared/services/SVIP.service';
 
 @Component({
-  selector: 'app-viewer',
-  templateUrl: './viewer.component.html',
-  styleUrls: ['./viewer.component.css'],
+  selector: 'app-view',
+  templateUrl: './view.component.html',
+  styleUrls: ['./view.component.css'],
 })
-export class ViewerComponent {
+export class ViewComponent {
   files: File[] = [];
   pretty: boolean = true;
   data: any;;

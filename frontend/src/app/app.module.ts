@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ButtonComponent } from './shared/components/button/button.component';
 import { UploadComponent } from './features/upload/upload.component';
-import { ViewerComponent } from './shared/components/viewer/viewer.component';
+import { ViewComponent } from './features/view/view.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ToggleComponent } from './shared/components/toggle/toggle.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
@@ -23,7 +23,7 @@ import { ComparisonComponent } from './features/comparison/comparison.component'
     AppComponent,
     ButtonComponent,
     UploadComponent,
-    ViewerComponent,
+    ViewComponent,
     NavbarComponent,
     ToggleComponent,
     MultiselectDropdownComponent,
