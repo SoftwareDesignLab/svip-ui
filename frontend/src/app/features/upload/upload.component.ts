@@ -14,6 +14,7 @@ export class UploadComponent implements OnInit {
   public deleteModal: boolean = false;
   public show: boolean = false;
 
+  public generateModal: boolean = false;
   public convertModal: boolean = false;
   public downloadModal: boolean = false;
 
@@ -31,6 +32,8 @@ export class UploadComponent implements OnInit {
 
   public compareModal: boolean = false;
   protected compareTarget: string = '';
+  public selectedFileAlias: string | undefined = undefined;
+  public selectedFilePath: string | undefined = undefined;
 
   protected sortingOptions: { [type: string]: boolean } = {
     NAME: true,
@@ -282,7 +285,21 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  UpdateSearch(event: any) {
+   onGenerateDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const files = event.dataTransfer?.files;
+    if (files && files.length > 0) {
+      const filePath = files[0].path;
+      this.selectedFilePath = filePath;
+      this.selectedFileAlias = this.getAlias(filePath);
+      this.generateModal = true;
+    }
+  }
+
+
+   UpdateSearch(event: any) {
     this.filterSearch = event.target.value;
   }
 

@@ -10,10 +10,44 @@
         </div>
     </ng-container>
 
-    <ng-container *ngIf="!upload">
+    <ng-container *ngIf="!upload" class="dropzone">
         <div class="dropzone">
-            <app-button text="Generate" (click)="browse()" />
+            <app-button text="Generate" (click)="browse()" (drop)="onGenerateDrop($event)"/>
             <p class="text-center">or drag project directory in here</p>
         </div>
     </ng-container>
 </div>
+
+<app-modal [opened]="generateModal" (close)="generateModal = false">
+  <div title>
+    Generate
+  </div>
+  <div content style="display: flex; gap: 15px; flex-direction: column;">
+    <div>
+      {{ selectedFileAlias }}
+    </div>
+    <div>
+      <div>Schema:</div>
+      <select [(ngModel)]="convertOptions.schema">
+        <option value=""></option>
+        <option *ngFor="let option of schemaOptions" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+    <div>
+      <div>Format:</div>
+      <select [(ngModel)]="convertOptions.format">
+        <option value=""></option>
+        <option *ngFor="let option of formatOptions" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div actions style=" display: flex; gap: 15px;">
+    <div class="btn-modal button flex center hover">
+      <span>Generate</span>
+    </div>
+    <div class="btn-modal button flex center hover" (click)="generateModal = false">
+      <span>Cancel</span>
+    </div>
+  </div>
+</app-modal>
