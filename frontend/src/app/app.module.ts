@@ -18,6 +18,9 @@ import { AccordionComponent } from './shared/components/accordion/accordion.comp
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ComparisonComponent } from './features/comparison/comparison.component';
 import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
+import { CompareModalComponent } from './shared/modals/compare-modal/compare-modal.component';
+import { ConvertModalComponent } from './shared/modals/convert-modal/convert-modal.component';
+import { DeleteModalComponent } from './shared/modals/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { ToolbarComponent } from './shared/components/toolbar/toolbar.component'
     ModalComponent,
     ToastComponent,
     ComparisonComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    CompareModalComponent,
+    ConvertModalComponent,
+    DeleteModalComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
