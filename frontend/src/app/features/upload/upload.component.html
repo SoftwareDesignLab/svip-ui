@@ -58,9 +58,13 @@
       </div>
   </div>
 
-  <div *ngIf="GetAllFiles().length > 0">
-   <app-toolbar></app-toolbar>
-  </div>
+    <div class="buttons flex" *ngIf="GetAllFiles().length > 0">
+      <app-button text="Delete Selected" (click)="deleteModal = true"/>
+      <app-button text="Download Selected" (click)="DownloadSelected()"/>
+      <app-button text="Compare" (click)="this.GetSelected().length >= 1 ? compareModal = true : ''"/>
+      <app-button text="Convert" (click)="this.GetSelected().length >= 1 ? convertModal = true : ''"/>
+      <app-button text="View" (click)="ViewSBOM()"/>
+    </div>
 
   <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
@@ -82,3 +86,6 @@
   </div>
 </div>
 
+<app-compare-modal [opened] = "compareModal" (close)="compareModal = false"></app-compare-modal>
+<app-convert-modal [opened] = "convertModal" (close)="convertModal = false"></app-convert-modal>
+<app-delete-modal [opened] = "deleteModal" (close)="deleteModal = false"></app-delete-modal>

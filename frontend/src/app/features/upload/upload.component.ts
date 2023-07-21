@@ -4,6 +4,7 @@ import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 import { FileStatus } from 'src/app/shared/models/file';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
 
+
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -14,6 +15,9 @@ export class UploadComponent implements OnInit {
   public show: boolean = false;
 
   public downloadModal: boolean = false;
+  public deleteModal: boolean = false;
+  public convertModal: boolean = false;
+  public compareModal: boolean = false;
 
   protected sortingOptions: { [type: string]: boolean } = {
     NAME: true,
@@ -51,6 +55,20 @@ export class UploadComponent implements OnInit {
   ContainsFiles() {
     this.sbomService.GetSBOMsOfStatus(FileStatus.VALID).length > 0 ||
       this.sbomService.GetSBOMsOfStatus(FileStatus.LOADING).length > 0;
+  }
+
+  GetSelected() {
+    const checkboxes = document.querySelectorAll('.sbom-checkbox');
+    let selected: string[] = [];
+
+    for (let i = 0; i < checkboxes.length; i++) {
+      const checkbox = checkboxes[i] as HTMLInputElement;
+      if (checkbox.checked && !checkbox.disabled && checkbox.value != 'null') {
+        selected.push(checkbox.value);
+      }
+    }
+
+    return selected;
   }
 
   GetAllFiles() {
@@ -177,6 +195,49 @@ export class UploadComponent implements OnInit {
 
   GetFilter() {
     return this.filterSearch;
+  }
+
+  DownloadSelected() {
+    const selectedFiles = this.GetSelected();
+    const hasFiles = selectedFiles.length;
+    const hasErroredFiles = selectedFiles.filter(
+      (sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR
+    ).length;
+
+    if (!hasFiles || hasErroredFiles) {
+      this.downloadModal = true;
+      setTimeout(() => {
+        this.downloadModal = false;
+      }, 4000);
+      return;
+    }
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      const name = this.GetSBOMInfo(file).fileName;
+      const sbom = this.sbomService.downloadSBOM(file);
+      if (sbom) {
+        const url = URL.createObjectURL(sbom);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = name as string;
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
+      break;
+    }
+  }
+
+  ViewSBOM() {
+    let selected = this.GetSelected();
+
+    if (selected.length !== 1) return;
+
+    this.routing.SetPage(PAGES.VIEW);
+    this.routing.data = selected[0];
   }
 
 }

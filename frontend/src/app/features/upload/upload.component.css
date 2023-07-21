@@ -175,6 +175,11 @@ hr {
     width: 300px;
     color: var(--primary);
 }
+
+.buttons{
+    gap: 15px;
+}
+
 .btn-modal {
     padding: 5px;
     gap: 10px;
