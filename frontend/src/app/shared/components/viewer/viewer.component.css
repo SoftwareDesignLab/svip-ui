@@ -49,15 +49,23 @@
 }
 
 .component-container{
-  max-height: 50vh;
+  max-height: 95%;
   overflow-y: scroll;
 }
 
-.test-container{
-  border: 1px solid red;
+.component-title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 pre{
     white-space:pre-wrap;
     word-break: break-all;
+}
+
+.metadata {
+  display: block;
+  margin-bottom: 5%;
 }
