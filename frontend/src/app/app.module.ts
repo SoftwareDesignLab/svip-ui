@@ -17,10 +17,9 @@ import { MenuComponent } from './shared/components/menu/menu.component';
 import { AccordionComponent } from './shared/components/accordion/accordion.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ComparisonComponent } from './features/comparison/comparison.component';
-import { ToolbarComponent } from './shared/components/toolbar/toolbar.component';
-import { CompareModalComponent } from './shared/modals/compare-modal/compare-modal.component';
-import { ConvertModalComponent } from './shared/modals/convert-modal/convert-modal.component';
-import { DeleteModalComponent } from './shared/modals/delete-modal/delete-modal.component';
+import { CompareModalComponent } from './shared/components/toolbar/modals/compare-modal/compare-modal.component'
+import { ConvertModalComponent } from './shared/components/toolbar/modals/convert-modal/convert-modal.component';
+import { DeleteModalComponent } from './shared/components/toolbar/modals/delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,6 @@ import { DeleteModalComponent } from './shared/modals/delete-modal/delete-modal.
     ModalComponent,
     ToastComponent,
     ComparisonComponent,
-    ToolbarComponent,
     CompareModalComponent,
     ConvertModalComponent,
     DeleteModalComponent
