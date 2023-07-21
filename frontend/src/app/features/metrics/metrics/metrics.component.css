@@ -74,3 +74,14 @@
 .loading > div {
   width: max-content;
 }
+
+.metadata {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.title{
+  font-size: 20px;
+  padding: 10px;
+  align-self: center;
+}

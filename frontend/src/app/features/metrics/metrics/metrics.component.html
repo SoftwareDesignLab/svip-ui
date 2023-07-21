@@ -4,8 +4,34 @@
   <section class="body">
     <!-- Components -->
     <div class="components scroll-y">
+    <div class="flex center"><div class="title">Metadata</div></div>
+          <ng-container *ngFor="let test of components['metadata']">
+            <!-- Test results -->
+            <ng-container
+              *ngFor="let testResult of getTestResults('metadata', test)"
+            >
+              <app-accordion *ngIf="isFiltered(testResult)">
+                <div title class="test-result">
+                  <span>{{ testResult.message }}</span>
+                </div>
+                <div extra class="attributes">
+                  <div
+                    class="circle"
+                    *ngFor="let tag of testResult.attributes"
+                    [ngStyle]="{ 'background-color': attributes[tag].color }"
+                    [ngbTooltip]="tag"
+                    placement="top"
+                  ></div>
+                </div>
+                <span body>{{ testResult.details }}</span>
+              </app-accordion>
+            </ng-container>
+          </ng-container>
+
+      <div class="flex center"><div class="title">Components</div></div>
+
       <ng-container *ngFor="let component of components | keyvalue">
-        <app-accordion>
+        <app-accordion *ngIf="component.key !== 'metadata'">
           <div title>{{ component.key }}</div>
           <div body class="scroll-y component">
             <!-- Tests -->
