@@ -172,13 +172,15 @@ export class SbomService {
   ) {
     let sbom = this.files[path];
     let id = sbom.id ? sbom.id : -1;
-    this.SVIPService.convertSBOM(id, schema, format, overwrite).subscribe(
+    // Hotfix while overwrite is flipped
+    this.SVIPService.convertSBOM(id, schema, format, !overwrite).subscribe(
       (result) => {
-        if (result) {
+        if (result && overwrite) {
           this.files[path].contents = result;
-          this.files[path].id += 1;
           this.files[path].schema = schema;
           this.files[path].format = format;
+          this.SetSBOMSchema(schema, true);
+        } else {
           this.fetch();
         }
       }
