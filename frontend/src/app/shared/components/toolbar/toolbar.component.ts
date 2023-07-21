@@ -11,10 +11,11 @@ import { FileStatus } from '../../models/file';
 
 export class ToolbarComponent {
   constructor(private sbomService: SbomService, public routing: RoutingService) {}
+  
   public deleteModal: boolean = false;
+  public downloadModal: boolean = false;
   public convertModal: boolean = false;
   public compareModal: boolean = false;
-  public downloadModal: boolean = false;
 
   public convertOptions: {
     schema: string;
@@ -38,7 +39,7 @@ export class ToolbarComponent {
   }
 
   GetSelected() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('.sbom-checkbox');
     let selected: string[] = [];
 
     for (let i = 0; i < checkboxes.length; i++) {
@@ -54,7 +55,9 @@ export class ToolbarComponent {
   DownloadSelected() {
     const selectedFiles = this.GetSelected();
     const hasFiles = selectedFiles.length;
-    const hasErroredFiles = selectedFiles.filter((sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR).length;
+    const hasErroredFiles = selectedFiles.filter(
+      (sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR
+    ).length;
 
     if (!hasFiles || hasErroredFiles) {
       this.downloadModal = true;
