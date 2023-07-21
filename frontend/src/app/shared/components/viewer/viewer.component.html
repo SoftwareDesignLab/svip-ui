@@ -17,7 +17,7 @@
               <app-accordion [title]="component.name">
                 <div body class="component-container">
                   <ng-container *ngFor="let item of component | keyvalue">
-                    <app-accordion [title]="convertToString(item.key)">
+                    <app-accordion *ngIf="isNullOrEmpty(item.value)" [title]="convertToString(item.key)">
                       <div body>
                         <pre>{{ (item.value === null) ? 'N/A' : formatValue(item.value) }}</pre>
                       </div>
@@ -37,7 +37,7 @@
         <ng-template #metadata let-data>
           <ng-container *ngFor="let item of data | keyvalue; let first = first">
             <ng-container *ngIf="!first">
-              <app-accordion [title]="convertToString(item.key)">
+              <app-accordion [title]="convertToString(item.key)" *ngIf="isNullOrEmpty(item.value)">
                 <div body>
                   <ng-container *ngIf="isObjectType(item.value)">
                     <ng-container *ngTemplateOutlet="metadata; context:{ $implicit: item.value }"></ng-container>

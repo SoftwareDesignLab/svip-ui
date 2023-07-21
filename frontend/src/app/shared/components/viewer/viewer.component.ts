@@ -11,7 +11,7 @@ import { SVIPService } from '../../services/SVIP.service';
 export class ViewerComponent {
   files: File[] = [];
   pretty: boolean = true;
-  data: any;;
+  data: any;
   raw: string = '';
   @Input() components: any[] | undefined;
 
@@ -25,12 +25,22 @@ export class ViewerComponent {
       if (data) {
         const sbomData = sbomService.GetSBOMInfo(data);
         if (sbomData.id) {
-          this.svipService.getSBOM(sbomData.id).subscribe(sbom => {
+          this.svipService.getSBOM(sbomData.id).subscribe((sbom) => {
             this.data = sbom;
-          })
+          });
         }
       }
     });
+  }
+
+  isNullOrEmpty(value: any) {
+    if (!value) {
+      return value;
+    }
+    if (Object.hasOwn(value, 'length')) {
+      return value.length
+    }
+    return value;
   }
 
   /**
