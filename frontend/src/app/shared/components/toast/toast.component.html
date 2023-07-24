@@ -1,0 +1,12 @@
+<div class="toast" *ngIf="opened">
+    <div class="content">
+        <div class="title">
+            <ng-content select='[title]'/>
+        </div>
+        <div class="body">
+            <ng-content select='[content]'/>
+        </div>
+    </div>
+    <div class="click-off" (click)="Close()"></div>
+  </div>
+  
