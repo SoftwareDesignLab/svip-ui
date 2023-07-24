@@ -38,7 +38,7 @@ import { ViewerComponent } from './shared/components/viewer/viewer.component';
     ComparisonComponent,
     CompareModalComponent,
     ConvertModalComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
     ViewerComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
