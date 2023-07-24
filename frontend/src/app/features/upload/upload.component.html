@@ -32,7 +32,7 @@
           <div class="sbom flex">
             <div class="sbom" (dblclick)="ViewSBOM(item)">
               <input type="checkbox" [value]="item" class="sbom-checkbox"/>
-              <app-menu text="{{getAlias(item)}}" [data]="item"></app-menu>
+              <app-menu text="{{ truncateFileName(getAlias(item)) }}" [data]="item"></app-menu>
             </div>
             <div class="sbom-view">
               {{GetSBOMInfo(item).schema}}
@@ -46,7 +46,7 @@
           <div class="sbom" style="color: var(--red);">
             <input type="checkbox" [value]="item" class="sbom-checkbox"/>
             <span ngbTooltip="SBOM is not valid!">
-              <app-menu text="{{getAlias(item)}}" [data]="item"></app-menu>
+              <app-menu text="{{ truncateFileName(getAlias(item)) }}" [data]="item"></app-menu>
             </span>
           </div>
         </div>
@@ -54,7 +54,7 @@
 
       <div *ngFor="let item of GetSBOMsOfType('LOADING')">
           <div class="sbom" style="color: var(--accent);">
-              {{getAlias(item)}}
+              {{ truncateFileName(getAlias(item)) }}
           </div>
       </div>
   </div>
