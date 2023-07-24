@@ -6,7 +6,6 @@ import { SVIPService } from 'src/app/shared/services/SVIP.service';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
