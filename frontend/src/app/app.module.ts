@@ -17,6 +17,9 @@ import { MenuComponent } from './shared/components/menu/menu.component';
 import { AccordionComponent } from './shared/components/accordion/accordion.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ComparisonComponent } from './features/comparison/comparison.component';
+import { CompareModalComponent } from './shared/components/toolbar/modals/compare-modal/compare-modal.component'
+import { ConvertModalComponent } from './shared/components/toolbar/modals/convert-modal/convert-modal.component';
+import { DeleteModalComponent } from './shared/components/toolbar/modals/delete-modal/delete-modal.component';
 import { ViewerComponent } from './shared/components/viewer/viewer.component';
 
 @NgModule({
@@ -33,6 +36,9 @@ import { ViewerComponent } from './shared/components/viewer/viewer.component';
     ModalComponent,
     ToastComponent,
     ComparisonComponent,
+    CompareModalComponent,
+    ConvertModalComponent,
+    DeleteModalComponent
     ViewerComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
