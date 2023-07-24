@@ -1,0 +1,61 @@
+<app-viewer
+  [options]="['PRETTY', 'RAW']"
+  title="View SBOM"
+  subTitle="{{getAlias(routing.data)}}"
+  selectedOption="PRETTY"
+>
+  <div body-1 style="width: 100%;">
+    <ng-template #components let-data>
+      <div body *ngFor="let component of data.components">
+        <div body>
+          <app-accordion [title]="component.name">
+            <div body class="component-container">
+              <ng-container *ngFor="let item of component | keyvalue">
+                <app-accordion [title]="convertToString(item.key)">
+                  <div body>
+                    <pre>{{ (item.value === null) ? 'N/A' : formatValue(item.value) }}</pre>
+                  </div>
+                </app-accordion>
+              </ng-container>
+            </div>
+          </app-accordion>
+        </div>
+      </div>
+    </ng-template>
+    <app-accordion [title]="'Components'">
+      <div body class="component-container">
+        <ng-container *ngTemplateOutlet="components; context:{ $implicit: data }"></ng-container>
+      </div>
+    </app-accordion>
+
+    <ng-template #metadata let-data>
+      <ng-container *ngFor="let item of data | keyvalue; let first = first">
+        <ng-container *ngIf="!first">
+          <app-accordion [title]="convertToString(item.key)">
+            <div body>
+              <ng-container *ngIf="isObjectType(item.value)">
+                <ng-container *ngTemplateOutlet="metadata; context:{ $implicit: item.value }"></ng-container>
+              </ng-container>
+              <ng-container *ngIf="isStringOrArray(item.value) && !isObjectType(item.value)">
+                <pre>{{ formatValue(item.value) }}</pre>
+              </ng-container>
+            </div>
+          </app-accordion>
+        </ng-container>
+      </ng-container>
+    </ng-template>
+
+
+    <app-accordion [title]="'Metadata'">
+      <div body class="component-container">
+        <ng-container *ngTemplateOutlet="metadata; context:{ $implicit: data }"></ng-container>
+      </div>
+    </app-accordion>
+  </div>
+
+  <div body-2 style="width: 100%;">
+    <pre class="content">
+      {{ getContents(routing.data)}}
+    </pre>
+  </div>
+</app-viewer>

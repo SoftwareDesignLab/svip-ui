@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ButtonComponent } from './shared/components/button/button.component';
 import { UploadComponent } from './features/upload/upload.component';
-import { ViewerComponent } from './shared/components/viewer/viewer.component';
+import { ViewComponent } from './features/view/view.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ToggleComponent } from './shared/components/toggle/toggle.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
@@ -17,13 +17,14 @@ import { MenuComponent } from './shared/components/menu/menu.component';
 import { AccordionComponent } from './shared/components/accordion/accordion.component';
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ComparisonComponent } from './features/comparison/comparison.component';
+import { ViewerComponent } from './shared/components/viewer/viewer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ButtonComponent,
     UploadComponent,
-    ViewerComponent,
+    ViewComponent,
     NavbarComponent,
     ToggleComponent,
     MultiselectDropdownComponent,
@@ -31,7 +32,8 @@ import { ComparisonComponent } from './features/comparison/comparison.component'
     MenuComponent,
     ModalComponent,
     ToastComponent,
-    ComparisonComponent
+    ComparisonComponent,
+    ViewerComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
