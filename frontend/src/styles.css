@@ -66,6 +66,11 @@ body {
   animation-duration: 1s;
 }
 
+.fade-in {
+  animation-name: fade-in;
+  animation-duration: .5s;
+}
+
 @keyframes scale-in {
   0% {
     scale: 0%;
@@ -75,6 +80,17 @@ body {
     scale: 100%;
   }
 }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
+
 
 @keyframes slide-right {
   0% {
