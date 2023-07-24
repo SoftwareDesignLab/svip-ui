@@ -56,6 +56,12 @@ body {
   animation-duration: .5s;
 }
 
+
+.slide-left {
+  animation-name: slide-left;
+  animation-duration: 1s;
+}
+
 .slide-up {
   animation-name: slide-up;
   animation-duration: .5s;
@@ -68,7 +74,7 @@ body {
 
 .fade-in {
   animation-name: fade-in;
-  animation-duration: .5s;
+  animation-duration: 1s;
 }
 
 @keyframes scale-in {
@@ -95,12 +101,22 @@ body {
 @keyframes slide-right {
   0% {
     transform: translate(-100vw);
-    opacity: 0%;
   }
 
   100% {
     transform: translate(0px);
-    opacity: 100%;
+  }
+}
+
+
+
+@keyframes slide-left {
+  0% {
+    transform: translate(100vw);
+  }
+
+  100% {
+    transform: translate(0px);
   }
 }
 
