@@ -1,4 +1,4 @@
-<div class="upload-container">
+<div class="upload-container slide-up">
   <div class="center">
   </div>
   <h3>SBOM Files</h3>
@@ -71,10 +71,12 @@
 
   <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
-    <span class="material-symbols-outlined">publish</span>
-    <hr>
-    <p class="text-center">Drag and drop SBOMS</p>
-    <app-button text="Select Files" (click)="browse()"></app-button>
+    <div class="scale-in flex col center">
+      <span class="material-symbols-outlined">publish</span>
+      <hr>
+      <p class="text-center">Drag and drop SBOMS</p>
+      <app-button text="Select Files" (click)="browse()"></app-button>
+    </div>
   </div>
 
   <div class="generate-dropzone" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
@@ -84,8 +86,10 @@
 
   <div class="generate-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
-    <app-button text="Generate" (click)="browse()" />
-    <p class="text-center">or drag project directory in here</p>
+    <div class="scale-in flex col center">
+      <app-button text="Generate" (click)="browse()" />
+      <p class="text-center">or drag project directory in here</p>
+    </div>
   </div>
 </div>
 
