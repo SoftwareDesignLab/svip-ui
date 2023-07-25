@@ -45,7 +45,7 @@
           <div class="sbom" style="color: var(--red);">
             <input type="checkbox" [value]="item" class="sbom-checkbox"/>
             <span ngbTooltip="SBOM is not valid!">
-                {{ getAlias(item) }}
+              <app-menu text="{{getAlias(item)}}" [data]="item"></app-menu>
             </span>
           </div>
         </div>

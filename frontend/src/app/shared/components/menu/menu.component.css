@@ -1,13 +1,13 @@
-.dropdown{
-    background-color: transparent;
-    border-color: white;
+.dropdown {
+  background-color: transparent;
+  border-color: white;
 }
 
 .dropdown::after {
-    content: none;
+  content: none;
 }
 
-.dropdown:hover {
+.hoverable:hover {
   color: var(--primary);
   cursor: pointer;
 }
