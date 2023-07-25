@@ -38,6 +38,10 @@
     "@angular/compiler-cli": "^15.2.0",
     "@angular/localize": "^15.2.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    "@types/bootstrap": "^5.2.6",
+>>>>>>> 530e2df (add styling, working on adding toast)
     "@types/file-saver": "^2.0.5",
 =======
     "@types/bootstrap": "^5.2.6",
