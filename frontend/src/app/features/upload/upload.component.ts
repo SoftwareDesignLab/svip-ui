@@ -51,7 +51,7 @@ export class UploadComponent implements OnInit {
     public routing: RoutingService,
     private toastService: ToastService,
     private svipService: SVIPService
-    
+
   ) { }
 
   ngOnInit() {
@@ -180,18 +180,18 @@ export class UploadComponent implements OnInit {
 
   DownloadSelected() {
     const selectedFiles = this.GetSelected();
-    const hasFiles = selectedFiles.length;
-    const hasErroredFiles = selectedFiles.filter(
-      (sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR
-    ).length;
+    // const hasFiles = selectedFiles.length;
+    // const hasErroredFiles = selectedFiles.filter(
+    //   (sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR
+    // ).length;
 
-    if (!hasFiles || hasErroredFiles) {
-      this.downloadModal = true;
-      setTimeout(() => {
-        this.downloadModal = false;
-      }, 4000);
-      return;
-    }
+    // if (!hasFiles || hasErroredFiles) {
+    //   this.downloadModal = true;
+    //   setTimeout(() => {
+    //     this.downloadModal = false;
+    //   }, 4000);
+    //   return;
+    // }
 
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
@@ -303,17 +303,14 @@ export class UploadComponent implements OnInit {
 
   showToast(type: EventTypes) {
     switch (type) {
-      case EventTypes.Success:
-        this.toastService.showSuccessToast('Success toast title', 'This is a success toast message.');
+      case EventTypes.DeleteWarning:
+        this.toastService.showWarningToast('File not selected', 'Select file to delete.');
         break;
-      case EventTypes.Warning:
-        this.toastService.showWarningToast('Warning toast title', 'This is a warning toast message.');
+        case EventTypes.DownloadWarning:
+        this.toastService.showWarningToast('File not selected', 'Select file to download.');
         break;
       case EventTypes.Error:
         this.toastService.showErrorToast('Error toast title', 'This is an error toast message.');
-        break;
-      default:
-        this.toastService.showInfoToast('Info toast title', 'This is an info toast message.');
         break;
     }
   }

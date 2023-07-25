@@ -1,6 +1,7 @@
 export enum EventTypes {
-    Success = 'success',
-    Info = 'info',
-    Warning = 'warning',
-    Error = 'error',
-  }
+  Warning = 'warning',
+  Error = 'error',
+  DeleteWarning = 'deleteWarning',
+  DownloadWarning = 'downloadWarning',
+  Info = "info"
+}

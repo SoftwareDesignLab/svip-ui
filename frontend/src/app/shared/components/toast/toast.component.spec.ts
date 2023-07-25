@@ -38,7 +38,7 @@ describe('ToastComponent', () => {
   it('should emit dispose event on close button click', () => {
 
     component.type = EventTypes.Info;
-    component.title = 'infp';
+    component.title = 'info';
     component.message = 'info';
     spyOn(component.disposeEvent, 'emit');
     const button = debugElement.nativeElement.querySelector('button[class="btn-close"]');
