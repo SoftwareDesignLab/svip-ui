@@ -21,6 +21,7 @@ import { CompareModalComponent } from './shared/components/toolbar/modals/compar
 import { ConvertModalComponent } from './shared/components/toolbar/modals/convert-modal/convert-modal.component';
 import { DeleteModalComponent } from './shared/components/toolbar/modals/delete-modal/delete-modal.component';
 import { ViewerComponent } from './shared/components/viewer/viewer.component';
+import { VexComponent } from './features/vex/vex.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ViewerComponent } from './shared/components/viewer/viewer.component';
     CompareModalComponent,
     ConvertModalComponent,
     DeleteModalComponent,
-    ViewerComponent
+    ViewerComponent,
+    VexComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
