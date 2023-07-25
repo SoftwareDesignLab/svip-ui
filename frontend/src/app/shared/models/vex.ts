@@ -25,12 +25,21 @@ interface VexStatement {
   vulnerability: Vulnerability;
 }
 
-export interface VexData {
-  vexIdentifier: string;
+interface Vex {
+  vexIdentifier: string | null;
   originType: string;
   specVersion: string;
   docVersion: string;
   timeFirstIssued: string;
   timeLastUpdated: string;
   vexstatements: VexStatement[];
+}
+
+interface VexError {
+  [key: string]: string;
+}
+
+export interface VexResponse {
+  vex: Vex,
+  error: VexError
 }
