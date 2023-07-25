@@ -13,22 +13,6 @@ export class ToastService {
   constructor() {
     this.toastEvents = this._toastEvents.asObservable();
   }
-
-  showSuccessToast(title: string, message: string) {
-    this._toastEvents.next({
-      message,
-      title,
-      type: EventTypes.Success,
-    });
-  }
-
-  showInfoToast(title: string, message: string) {
-    this._toastEvents.next({
-      message,
-      title,
-      type: EventTypes.Info,
-    });
-  }
   
   showWarningToast(title: string, message: string) {
     this._toastEvents.next({
