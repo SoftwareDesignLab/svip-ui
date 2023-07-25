@@ -12,9 +12,8 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./upload.component.css'],
 })
 export class UploadComponent implements OnInit {
-  private filterSearch: string = '';
   public show: boolean = false;
-
+  public filterSearch: string = '';
   public downloadModal: boolean = false;
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
@@ -260,6 +259,14 @@ export class UploadComponent implements OnInit {
     if (files && files.length > 0) {
       const filePaths = Array.from(files).map((file) => file.path);
       this.sbomService.AddFiles(filePaths);
+    }
+  }
+
+  ClearSearch() {
+    this.filterSearch = ''; 
+    const searchInput = document.querySelector('input[name="search"]') as HTMLInputElement;
+    if (searchInput) {
+      searchInput.value = '';
     }
   }
 

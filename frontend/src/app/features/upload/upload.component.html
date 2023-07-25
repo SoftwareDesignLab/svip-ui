@@ -4,8 +4,9 @@
   <h3>SBOM Files</h3>
   <div class="search-parent-container" *ngIf="GetAllFiles().length > 0" >
       <div class="search-container">
-          <input type="text" placeholder="Search.." name="search" (input)="UpdateSearch($event)">
-          <button><i class="search-btn material-symbols-outlined">Search</i></button>
+        <input type="text" placeholder="Search.." name="search" (input)="UpdateSearch($event)">
+        <button><i class="search-btn material-symbols-outlined">Search</i></button>
+        <button *ngIf="filterSearch" (click)="ClearSearch()"><i class="search-btn material-symbols-outlined">clear</i></button>
       </div>
       <div class="format-filter">
         <app-multiselect-dropdown
