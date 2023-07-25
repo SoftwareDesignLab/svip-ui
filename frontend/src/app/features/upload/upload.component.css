@@ -212,3 +212,7 @@ hr {
     display: flex;
     align-items: center;
 }
+
+.icons{
+  margin-right: 50px;
+}
