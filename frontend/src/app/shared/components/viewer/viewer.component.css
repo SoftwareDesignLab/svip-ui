@@ -1,7 +1,6 @@
 .viewer-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   width: 80%;
   height: 80%;
   margin: auto;
@@ -39,25 +38,21 @@
   width: 100%;
   padding: 10px;
   word-break: break-word;
-  overflow-y: scroll;
+  background-color: #fff;
 }
 
 .title{
   font-size: 20px;
   padding: 10px;
   align-self: center;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.component-container{
+.body-container {
+  width: 100%;
   max-height: 50vh;
   overflow-y: scroll;
-}
-
-.test-container{
-  border: 1px solid red;
-}
-
-pre{
-    white-space:pre-wrap;
-    word-break: break-all;
 }

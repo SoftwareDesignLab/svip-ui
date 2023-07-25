@@ -1,8 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { IpcRenderer } from 'electron';
-import { EventTypes } from 'src/app/shared/models/event-types';
-import { DataHandlerService, FileStatus } from 'src/app/shared/services/data-handler.service';
+import { SbomService } from 'src/app/shared/services/sbom.service';
 import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
+import { FileStatus } from 'src/app/shared/models/file';
+import { SVIPService } from 'src/app/shared/services/SVIP.service';
+import * as JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import { EventTypes } from 'src/app/shared/models/event-types';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
@@ -11,12 +14,12 @@ import { ToastService } from 'src/app/shared/services/toast.service';
   styleUrls: ['./upload.component.css'],
 })
 export class UploadComponent implements OnInit {
-  private ipc!: IpcRenderer;
   private filterSearch: string = '';
   public deleteModal: boolean = false;
   public show: boolean = false
   public convertModal: boolean = false;
   public downloadModal: boolean = false;
+
 
   title = 'angular-bootstrap-toast-service';
 
@@ -35,7 +38,6 @@ export class UploadComponent implements OnInit {
   public schemaOptions: string[] = ['CDX14', 'SPDX23', 'SVIP'];
 
   public compareModal: boolean = false;
-  protected compareTarget: string = '';
 
   protected sortingOptions: { [type: string]: boolean } = {
     NAME: true,
@@ -45,35 +47,27 @@ export class UploadComponent implements OnInit {
   private selectedSorting: SORT_OPTIONS = SORT_OPTIONS.NAME;
 
   constructor(
-    private dataHandler: DataHandlerService,
+    private sbomService: SbomService,
     public routing: RoutingService,
-    private toastService: ToastService
-  ) {
-    if (window.require) {
-      try {
-        this.ipc = window.require('electron').ipcRenderer;
-      } catch (e) {
-        console.log(e);
-      }
-    } else {
-      console.warn('App not running inside Electron!');
-    }
-  }
+    private toastService: ToastService,
+    private svipService: SVIPService
+    
+  ) { }
 
   ngOnInit() {
-    this.dataHandler.startSVIP();
+    this.sbomService.getAllSBOMs();
   }
 
   /**
    *  Prompts user to select files and tries to upload them
    */
   browse() {
-    this.ipc.invoke('selectFiles').then((files: string[]) => {
+    this.svipService.browseFiles().then((files: string[]) => {
       if (files === undefined || files === null || files.length === 0) {
         return;
       }
 
-      this.dataHandler.AddFiles(files);
+      this.sbomService.AddFiles(files);
     });
   }
 
@@ -81,12 +75,26 @@ export class UploadComponent implements OnInit {
    *  Checks if any files have been uploaded
    */
   ContainsFiles() {
-    this.dataHandler.GetSBOMsOfType(FileStatus.VALID).length > 0 ||
-      this.dataHandler.GetSBOMsOfType(FileStatus.LOADING).length > 0;
+    this.sbomService.GetSBOMsOfStatus(FileStatus.VALID).length > 0 ||
+      this.sbomService.GetSBOMsOfStatus(FileStatus.LOADING).length > 0;
+  }
+
+  GetSelected() {
+    const checkboxes = document.querySelectorAll('.sbom-checkbox');
+    let selected: string[] = [];
+
+    for (let i = 0; i < checkboxes.length; i++) {
+      const checkbox = checkboxes[i] as HTMLInputElement;
+      if (checkbox.checked && !checkbox.disabled && checkbox.value != 'null') {
+        selected.push(checkbox.value);
+      }
+    }
+
+    return selected;
   }
 
   GetAllFiles() {
-    return this.dataHandler.GetAllFiles();
+    return this.sbomService.getSBOMNames();
   }
 
   /**
@@ -96,44 +104,40 @@ export class UploadComponent implements OnInit {
     let status = FileStatus[statusString as keyof typeof FileStatus];
 
     if (this.selectedSorting === SORT_OPTIONS.NAME)
-      return this.dataHandler
-        .GetSBOMsOfType(status)
+      return this.sbomService
+        .GetSBOMsOfStatus(status)
         .sort((a: string, b: string) => {
           return this.sortingOptions[SORT_OPTIONS.NAME]
             ? a.localeCompare(b)
             : b.localeCompare(a);
         });
 
-    return this.dataHandler
-      .GetSBOMsOfType(status)
+    return this.sbomService
+      .GetSBOMsOfStatus(status)
       .sort((a: string, b: string) => {
-        let aFormat = this.dataHandler.GetSBOMFormat(a);
-        let bFormat = this.dataHandler.GetSBOMFormat(b);
+        let aFormat = this.sbomService.GetSBOMSchema(a);
+        let bFormat = this.sbomService.GetSBOMSchema(b);
 
-        return this.sortingOptions[SORT_OPTIONS.FORMAT]
+        return this.sortingOptions[SORT_OPTIONS.SCHEMA]
           ? aFormat.localeCompare(bFormat)
           : bFormat.localeCompare(aFormat);
       });
   }
 
   GetSBOMInfo(file: string) {
-    return this.dataHandler.GetSBOMInfo(file);
+    return this.sbomService.GetSBOMInfo(file);
   }
 
-  GetSBOMFormats() {
-    return this.dataHandler.GetSBOMFormats();
+  GetSBOMSchemas() {
+    return this.sbomService.getSBOMschemas();
   }
 
-  ValidSBOMFormat(path: string) {
-    // @HOTFIX !! No origin format rn
-    return true;
-    return (
-      this.GetSBOMFormats()[this.GetSBOMInfo(path).qr?.originFormat] === true
-    );
+  ValidSBOMSchema(path: string) {
+    return this.GetSBOMSchemas()[this.sbomService.GetSBOMInfo(path).schema];
   }
 
   SbomFormatFilterChange(event: any) {
-    this.dataHandler.SetSBOMFormat(event.name, event.value);
+    this.sbomService.SetSBOMSchema(event.name, event.value);
   }
 
   /**
@@ -145,8 +149,7 @@ export class UploadComponent implements OnInit {
       this.routing.SetPage(PAGES.NONE);
       this.routing.data = undefined;
     }
-
-    this.dataHandler.deleteFile(file);
+    this.sbomService.deleteFile(file);
   }
 
   setAllSelected(event: any) {
@@ -166,19 +169,6 @@ export class UploadComponent implements OnInit {
     this.selectedSorting = sort;
   }
 
-  GetSelected() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let selected: string[] = [];
-
-    for (let i = 0; i < checkboxes.length; i++) {
-      const checkbox = checkboxes[i] as HTMLInputElement;
-      if (checkbox.checked && !checkbox.disabled && checkbox.value != 'null') {
-        selected.push(checkbox.value);
-      }
-    }
-
-    return selected;
-  }
 
   DeleteSelected() {
     this.GetSelected().forEach((file) => {
@@ -188,19 +178,12 @@ export class UploadComponent implements OnInit {
     this.deleteModal = false;
   }
 
-  CompareSelected() {
-    this.routing.SetPage(2);
-
-    let others = this.GetSelected().filter((x) => x !== this.compareTarget);
-    this.dataHandler.CompareSBOMs(this.compareTarget, others);
-
-    this.compareModal = false;
-  }
-
   DownloadSelected() {
     const selectedFiles = this.GetSelected();
     const hasFiles = selectedFiles.length;
-    const hasErroredFiles = selectedFiles.filter((sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR).length;
+    const hasErroredFiles = selectedFiles.filter(
+      (sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR
+    ).length;
 
     if (!hasFiles || hasErroredFiles) {
       this.downloadModal = true;
@@ -213,7 +196,7 @@ export class UploadComponent implements OnInit {
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
       const name = this.GetSBOMInfo(file).fileName;
-      const sbom = this.dataHandler.downloadSBOM(file);
+      const sbom = this.sbomService.downloadSBOM(file);
       if (sbom) {
         const url = URL.createObjectURL(sbom);
         const link = document.createElement('a');
@@ -229,27 +212,30 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  ConvertSelected() {
-    if (this.convertOptions.schema === '' || this.convertOptions.format === '')
-      return;
+  DownloadSelectedAsZip() {
+    const selectedFiles = this.GetSelected();
+    const zip = new JSZip();
 
-    this.GetSelected().forEach((file) => {
-      this.dataHandler.ConvertSBOM(
-        file,
-        this.convertOptions.schema,
-        this.convertOptions.format,
-        this.convertOptions.overwrite
-      );
+    for (let i = 0; i < selectedFiles.length; i++) {
+      const file = selectedFiles[i];
+      const name = this.GetSBOMInfo(file).fileName;
+      const sbom = this.sbomService.downloadSBOM(file);
+
+      if (sbom) {
+        zip.file(name as string, sbom);
+      }
+    }
+
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      saveAs(content, 'files.zip');
     });
-
-    this.convertModal = false;
   }
 
   /**
    * Get SBOM filename
    */
   getAlias(sbom: string) {
-    return this.dataHandler.getSBOMAlias(sbom)?.split('.')[0];
+    return this.sbomService.getSBOMAlias(sbom)?.split('.')[0];
   }
 
   /**
@@ -294,7 +280,7 @@ export class UploadComponent implements OnInit {
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
       const filePaths = Array.from(files).map((file) => file.path);
-      this.dataHandler.AddFiles(filePaths);
+      this.sbomService.AddFiles(filePaths);
     }
   }
 
@@ -337,5 +323,5 @@ export class UploadComponent implements OnInit {
 
 export enum SORT_OPTIONS {
   NAME = 'NAME',
-  FORMAT = 'FORMAT',
+  SCHEMA = 'SCHEMA',
 }

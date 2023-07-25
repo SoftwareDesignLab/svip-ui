@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ButtonComponent } from './shared/components/button/button.component';
 import { UploadComponent } from './features/upload/upload.component';
-import { ViewerComponent } from './shared/components/viewer/viewer.component';
+import { ViewComponent } from './features/view/view.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ToggleComponent } from './shared/components/toggle/toggle.component';
 import { ModalComponent } from './shared/components/modal/modal.component';
@@ -18,13 +18,17 @@ import { AccordionComponent } from './shared/components/accordion/accordion.comp
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ComparisonComponent } from './features/comparison/comparison.component';
 import { ToasterComponent } from './shared/components/toaster/toaster.component';
+import { CompareModalComponent } from './shared/components/toolbar/modals/compare-modal/compare-modal.component'
+import { ConvertModalComponent } from './shared/components/toolbar/modals/convert-modal/convert-modal.component';
+import { DeleteModalComponent } from './shared/components/toolbar/modals/delete-modal/delete-modal.component';
+import { ViewerComponent } from './shared/components/viewer/viewer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ButtonComponent,
     UploadComponent,
-    ViewerComponent,
+    ViewComponent,
     NavbarComponent,
     ToggleComponent,
     MultiselectDropdownComponent,
@@ -33,7 +37,11 @@ import { ToasterComponent } from './shared/components/toaster/toaster.component'
     ModalComponent,
     ToastComponent,
     ComparisonComponent,
-    ToasterComponent
+    ToasterComponent,
+    CompareModalComponent,
+    ConvertModalComponent,
+    DeleteModalComponent,
+    ViewerComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],

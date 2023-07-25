@@ -171,14 +171,15 @@ hr {
     border-color: black;
 }
 
-.buttons {
-  gap: 15px;
-}
-
 .sbom > div {
     width: 300px;
     color: var(--primary);
 }
+
+.buttons{
+    gap: 15px;
+}
+
 .btn-modal {
     padding: 5px;
     gap: 10px;
