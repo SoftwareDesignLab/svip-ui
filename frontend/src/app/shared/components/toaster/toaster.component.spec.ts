@@ -13,7 +13,7 @@ describe('ToasterComponent', () => {
   });
 
   it('should remove toasts on dispose', () => {
-    // given
+
     component.currentToasts = [
       {
         type: EventTypes.Info,
@@ -22,10 +22,8 @@ describe('ToasterComponent', () => {
       },
     ];
 
-    // when
     component.dispose(0);
 
-    // then
     expect(component.currentToasts).toEqual([]);
   });
 });
