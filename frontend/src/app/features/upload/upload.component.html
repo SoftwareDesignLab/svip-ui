@@ -60,9 +60,9 @@
     <app-button text="Download Selected" (click)="GetSelected().length > 1 ? DownloadSelectedAsZip() 
       : GetSelected().length === 1 ? DownloadSelected()
       : showToast(EventTypes.DownloadWarning)"/>
-    <app-button text="Compare" (click)="this.GetSelected().length >= 1 ? compareModal = true : ''" />
-    <app-button text="Convert" (click)="this.GetSelected().length >= 1 ? convertModal = true : ''" />
-    <app-button text="View" (click)="ViewSBOM()" />
+    <app-button text="Compare" (click)="this.GetSelected().length >= 2 ? compareModal = true : showToast(EventTypes.CompareWarning)" />
+    <app-button text="Convert" (click)="this.GetSelected().length >= 1 ? convertModal = true : showToast(EventTypes.ConvertWarning)" />
+    <app-button text="View" (click)="this.GetSelected().length >= 1 ? ViewSBOM() : showToast(EventTypes.ViewWarning)" />
   </div>
 
   <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"

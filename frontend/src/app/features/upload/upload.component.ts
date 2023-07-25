@@ -178,21 +178,25 @@ export class UploadComponent implements OnInit {
     this.deleteModal = false;
   }
 
-  DownloadSelected() {
+  CheckForErroredFiles() {
     const selectedFiles = this.GetSelected();
-    // const hasFiles = selectedFiles.length;
-    // const hasErroredFiles = selectedFiles.filter(
-    //   (sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR
-    // ).length;
+    const hasErroredFiles = selectedFiles.filter(
+      (sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR
+    ).length;
 
-    // if (!hasFiles || hasErroredFiles) {
-    //   this.downloadModal = true;
-    //   setTimeout(() => {
-    //     this.downloadModal = false;
-    //   }, 4000);
-    //   return;
-    // }
+    if (hasErroredFiles) {
+      this.showToast(EventTypes.InvalidWarning)
+      return true;
+    }
+    return false;
+  }
 
+  DownloadSelected() {
+    if (this.CheckForErroredFiles()){
+      return;
+    }
+    
+    const selectedFiles = this.GetSelected();
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
       const name = this.GetSBOMInfo(file).fileName;
@@ -213,6 +217,9 @@ export class UploadComponent implements OnInit {
   }
 
   DownloadSelectedAsZip() {
+    if (this.CheckForErroredFiles()){
+      return;
+    }
     const selectedFiles = this.GetSelected();
     const zip = new JSZip();
 
@@ -307,7 +314,19 @@ export class UploadComponent implements OnInit {
         this.toastService.showWarningToast('File not selected', 'Select file to delete.');
         break;
         case EventTypes.DownloadWarning:
-        this.toastService.showWarningToast('File not selected', 'Select file to download.');
+        this.toastService.showWarningToast('File not selected', 'Select valid file to download.');
+        break;
+        case EventTypes.CompareWarning:
+        this.toastService.showWarningToast('Files not selected', 'Select at least 2 valid files to compare.');
+        break;
+        case EventTypes.ConvertWarning:
+        this.toastService.showWarningToast('File not selected', 'Select valid file to convert.');
+        break;
+        case EventTypes.ViewWarning:
+        this.toastService.showWarningToast('File not selected', 'Select valid file to view.');
+        break;
+        case EventTypes.InvalidWarning:
+        this.toastService.showWarningToast('Valid file not selected', 'Select valid file and try again.');
         break;
       case EventTypes.Error:
         this.toastService.showErrorToast('Error toast title', 'This is an error toast message.');
