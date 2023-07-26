@@ -22,6 +22,7 @@ import { ConvertModalComponent } from './shared/components/toolbar/modals/conver
 import { DeleteModalComponent } from './shared/components/toolbar/modals/delete-modal/delete-modal.component';
 import { ViewerComponent } from './shared/components/viewer/viewer.component';
 import { ToasterComponent } from './shared/components/toaster/toaster.component';
+import { VexComponent } from './features/vex/vex.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ToasterComponent } from './shared/components/toaster/toaster.component'
     CompareModalComponent,
     ConvertModalComponent,
     DeleteModalComponent,
-    ViewerComponent
+    ViewerComponent,
+    VexComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],

@@ -98,6 +98,25 @@ hr {
     padding: 10px;
 }
 
+.files-container::-webkit-scrollbar {
+    width: 12px; 
+    background-color: #f5f5f5;
+    border-radius: 0 0 15px 0px;
+}
+
+.files-container::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 15px;
+}
+
+.files-container::-webkit-scrollbar-thumb:hover {
+    background-color: gray;
+}
+
+.files-container::-webkit-scrollbar-track {
+    border-radius: 0 0 15px 0px;
+}
+
 .search-container button:hover {
     background: #ccc;
     border-radius: 6px;
@@ -206,6 +225,11 @@ hr {
     display: flex;
     align-items: center;
     gap: 10px;
+  }
+
+  .sbom:hover{
+    background-color: lightgray;
+    cursor: default;
   }
 
 .center {

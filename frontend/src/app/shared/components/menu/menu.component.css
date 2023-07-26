@@ -9,7 +9,7 @@
 
 .hoverable:hover {
   color: var(--primary);
-  cursor: default;
+  cursor: context-menu;
 }
 
 .menu {

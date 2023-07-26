@@ -21,6 +21,10 @@ export class ClientService {
 
   constructor(private http: HttpClient) { }
 
+  setAPIKey(key: string) {
+    this.httpOptions.headers.set('apiKey', key);
+  }
+
   get(path: string, params: HttpParams = new HttpParams()) {
     this.httpOptions.params = params;
     return this.http.get(this.SERVER_URL + path, this.httpOptions);

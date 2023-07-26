@@ -33,6 +33,11 @@ export class MenuComponent {
     return this.sbomService.GetSBOMInfo(file);
   }
 
+  ViewOne() {
+    this.routing.data = this.text;
+    this.routing.SetPage(PAGES.VIEW);
+  }
+
   DownloadOne() {
     const sbomInfo = this.GetSBOMInfo(this.data);
     const name = sbomInfo.fileName;
