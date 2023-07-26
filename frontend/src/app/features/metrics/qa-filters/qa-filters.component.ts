@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import palettes, { PALETTE } from '../palette';
-import filter from '../filters';
+import palettes, { PALETTE } from '../models/palette';
+import filter from '../models/filters';
 
 @Component({
   selector: 'app-qa-filters',

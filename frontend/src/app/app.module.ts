@@ -23,8 +23,8 @@ import { DeleteModalComponent } from './shared/components/toolbar/modals/delete-
 import { ViewerComponent } from './shared/components/viewer/viewer.component';
 import { VexComponent } from './features/vex/vex.component';
 import { CircleToggleComponent } from './shared/components/circle-toggle/circle-toggle.component';
-import { MetricsComponent } from './features/metrics/metrics.component';
 import { QaFiltersComponent } from './features/metrics/qa-filters/qa-filters.component';
+import { MetricsComponent } from './features/metrics/metrics/metrics.component';
 
 @NgModule({
   declarations: [

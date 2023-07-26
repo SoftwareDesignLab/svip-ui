@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
 import { RoutingService } from 'src/app/shared/services/routing.service';
 import { SbomService } from 'src/app/shared/services/sbom.service';
-import palettes, { PALETTE, resultStatus } from './palette';
-import filter from './filters';
+import palettes, { PALETTE, resultStatus } from '../models/palette';
+import filter from '../models/filters';
 
 @Component({
   selector: 'app-metrics',
