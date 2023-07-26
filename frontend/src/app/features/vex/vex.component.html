@@ -21,7 +21,7 @@
     <app-button text="Generate Data"/>
   </div>
 
-  <div body-2 style="width: 100%;">
+  <div body-2 *ngIf="vex !== undefined" style="width: 100%;">
     <app-accordion title="General Information">
       <div body>
         <div [innerHTML]="formatValue(removeStatements(vex.vex))"></div>
@@ -46,5 +46,9 @@
         <div [innerHTML]="formatValue(vex.error)"></div>
       </div>
     </app-accordion>
+  </div>
+
+  <div body-2 *ngIf="vex === undefined" style="width: 100%;">
+    Press 'Generate Data' in settings to view data
   </div>
 </app-viewer>
