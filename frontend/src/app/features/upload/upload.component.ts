@@ -51,14 +51,8 @@ export class UploadComponent implements OnInit {
     private sbomService: SbomService,
     public routing: RoutingService,
     private toastService: ToastService,
-<<<<<<< HEAD
     private svipService: SVIPService,
   ) {}
-=======
-    private svipService: SVIPService
-
-  ) { }
->>>>>>> 32a981a (removed unused toast and added scss to toast)
 
   ngOnInit() {
     this.sbomService.getAllSBOMs();
