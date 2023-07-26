@@ -1,7 +1,7 @@
 export enum PALETTE {
   DEFAULT = 'Default',
-  MULTIHUE = '(CVD) Multi Hue',
-  SINGLEHUE = '(CVD) Single Hue',
+  MULTIHUE = 'Multi Hue (CVD)',
+  SINGLEHUE = 'Single Hue (CVD)',
 }
 
 const palettes: { [key: string]: string[] } = {

@@ -20,15 +20,32 @@ export class MetricsComponent implements OnInit {
   get palette() {
     return this._palette;
   }
+
   set palette(value: PALETTE) {
     this._palette = value;
     this.setColor();
+    if (this._palette !== PALETTE.DEFAULT) {
+      this.resultStatus['PASS'].color = 'GRAY';
+      this.resultStatus['FAIL'].color = 'BLACK';
+    } else {
+      this.resultStatus['PASS'].color = this.passColor;
+      this.resultStatus['FAIL'].color = this.failColor;
+    }
   }
 
-  resultStatus: resultStatus = {
-    PASS: { shown: true, color: 'var(--success)' },
-    FAIL: { shown: true, color: 'var(--warn)' },
+  passColor = 'var(--success)';
+  failColor = 'var(--warn)';
+
+  _resultStatus: resultStatus = {
+    PASS: { shown: true, color: this.passColor },
+    FAIL: { shown: true, color: this.failColor },
   };
+  set resultStatus(value: resultStatus) {
+    this.resultStatus = this.resultStatus;
+  }
+  get resultStatus() {
+    return this._resultStatus;
+  }
 
   constructor(
     private routing: RoutingService,
