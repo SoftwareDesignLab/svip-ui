@@ -9,5 +9,6 @@
 
 .hoverable:hover {
   color: var(--primary);
-  cursor: pointer;
+  cursor: default;
+  user-select: none;
 }
