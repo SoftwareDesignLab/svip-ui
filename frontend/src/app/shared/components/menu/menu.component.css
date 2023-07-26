@@ -10,5 +10,8 @@
 .hoverable:hover {
   color: var(--primary);
   cursor: default;
+}
+
+.menu {
   user-select: none;
 }

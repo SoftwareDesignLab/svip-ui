@@ -37,15 +37,15 @@ export class MenuComponent {
     const sbomInfo = this.GetSBOMInfo(this.data);
     const name = sbomInfo.fileName;
     const sbom = this.sbomService.downloadSBOM(this.data);
-  
-    if (sbom && sbomInfo.status === FileStatus.ERROR) {
+
+    if (sbom && sbomInfo.status !== FileStatus.ERROR) {
       this.sbomValid = true;
-  
+
       const url = URL.createObjectURL(sbom);
       const link = document.createElement('a');
       link.href = url;
       link.download = name as string;
-  
+
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -53,5 +53,5 @@ export class MenuComponent {
     } else {
       this.sbomValid = false;
     }
-  }  
+  }
 }
