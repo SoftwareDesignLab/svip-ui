@@ -30,9 +30,9 @@
       <ng-container *ngFor="let item of GetSBOMsOfType('VALID')">
         <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMSchema(item)">
           <div class="sbom flex">
-            <div class="sbom">
+            <div class="sbom" (dblclick)="ViewSBOM(item)">
               <input type="checkbox" [value]="item" class="sbom-checkbox"/>
-              <app-menu text="{{getAlias(item)}}" (click)="ViewSBOM(item)" [data]="item"></app-menu>
+              <app-menu text="{{getAlias(item)}}" [data]="item"></app-menu>
             </div>
             <div class="sbom-view">
               {{GetSBOMInfo(item).schema}}

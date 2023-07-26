@@ -15,8 +15,3 @@
 .menu {
   user-select: none;
 }
-
-.sbom-view:hover{
-  color: black;
-  cursor: pointer;
-}

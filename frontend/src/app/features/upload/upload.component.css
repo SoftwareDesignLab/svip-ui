@@ -208,6 +208,11 @@ hr {
     gap: 10px;
   }
 
+  .sbom:hover{
+    background-color: lightgray;
+    cursor: pointer;
+  }
+
 .center {
     display: flex;
     align-items: center;
