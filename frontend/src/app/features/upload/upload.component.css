@@ -216,3 +216,7 @@ hr {
 .icons{
   margin-right: 50px;
 }
+.hide {
+    opacity: 0;
+    cursor: default !important;
+}
