@@ -1,12 +1,22 @@
-<app-viewer title="VEX" [options]="['DATA', 'SETTINGS']" selectedOption="SETTINGS">
-  <div body-2>
-    <app-multiselect-dropdown
-      title="Choose Database"
-      [options]="this.database"
-    ></app-multiselect-dropdown>
-    <app-multiselect-dropdown
-      title="Choose Format"
-      [options]="this.format"
-    ></app-multiselect-dropdown>
+<app-viewer title="VEX" [options]="['SETTINGS', 'DATA']" selectedOption="SETTINGS">
+  <div body-1 style="display: flex; gap: 15px; flex-direction: column;">
+    <div>
+      <div>Database:</div>
+      <select [(ngModel)]="vexOptions.selectedDatabase">
+        <option value=""></option>
+        <option *ngFor="let option of vexOptions.databases" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+    <div>
+      <div>Format:</div>
+      <select [(ngModel)]="vexOptions.selectedFormat">
+        <option value=""></option>
+        <option *ngFor="let option of vexOptions.formats" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+    <div>
+      <div>API Key:</div>
+      <input [(ngModel)]="vexOptions.apiKey" [disabled]="!vexOptions.requiresAPIKey.includes(vexOptions.selectedDatabase)"/>
+    </div>
   </div>
 </app-viewer>
