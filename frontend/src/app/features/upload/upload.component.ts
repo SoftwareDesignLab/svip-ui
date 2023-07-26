@@ -5,7 +5,10 @@ import { FileStatus } from 'src/app/shared/models/file';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+<<<<<<< HEAD
 import { IpcRenderer } from 'electron';
+=======
+>>>>>>> b6dfe1f32791f805435c8ae428bed03f05ef6abd
 import { EventTypes } from 'src/app/shared/models/event-types';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
@@ -20,7 +23,11 @@ export class UploadComponent implements OnInit {
   public downloadModal: boolean = false;
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
+<<<<<<< HEAD
   private ipc!: IpcRenderer;
+=======
+
+>>>>>>> b6dfe1f32791f805435c8ae428bed03f05ef6abd
 
   title = 'angular-bootstrap-toast-service';
 

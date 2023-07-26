@@ -18,6 +18,10 @@ import { AccordionComponent } from './shared/components/accordion/accordion.comp
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ComparisonComponent } from './features/comparison/comparison.component';
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import { ToasterComponent } from './shared/components/toaster/toaster.component';
+>>>>>>> b6dfe1f32791f805435c8ae428bed03f05ef6abd
 import { CompareModalComponent } from './shared/components/toolbar/modals/compare-modal/compare-modal.component'
 import { ConvertModalComponent } from './shared/components/toolbar/modals/convert-modal/convert-modal.component';
 import { DeleteModalComponent } from './shared/components/toolbar/modals/delete-modal/delete-modal.component';
@@ -41,6 +45,10 @@ import { ToasterComponent } from './shared/components/toaster/toaster.component'
     ToastComponent,
     ComparisonComponent,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    ToasterComponent,
+>>>>>>> b6dfe1f32791f805435c8ae428bed03f05ef6abd
     CompareModalComponent,
     ConvertModalComponent,
     DeleteModalComponent,
