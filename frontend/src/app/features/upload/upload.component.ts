@@ -278,13 +278,9 @@ export class UploadComponent implements OnInit {
     return this.filterSearch;
   }
 
-  ViewSBOM() {
-    let selected = this.GetSelected();
-
-    if (selected.length !== 1) return;
-
+  ViewSBOM(sbom: string) {
     this.routing.SetPage(PAGES.VIEW);
-    this.routing.data = selected[0];
+    this.routing.data = sbom;
   }
 
 }
