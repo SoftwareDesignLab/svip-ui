@@ -37,19 +37,8 @@
     "@angular/cli": "~15.2.0",
     "@angular/compiler-cli": "^15.2.0",
     "@angular/localize": "^15.2.0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    "@types/bootstrap": "^5.2.6",
->>>>>>> 530e2df (add styling, working on adding toast)
-=======
-    "@types/bootstrap": "^5.2.6",
->>>>>>> b6dfe1f32791f805435c8ae428bed03f05ef6abd
     "@types/file-saver": "^2.0.5",
-=======
     "@types/bootstrap": "^5.2.6",
->>>>>>> 44e0917 (add types)
     "@types/jasmine": "~4.3.0",
     "electron": "^24.3.0",
     "jasmine-core": "~4.5.0",
