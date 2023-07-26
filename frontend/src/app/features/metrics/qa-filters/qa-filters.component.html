@@ -1,4 +1,4 @@
-<div class="filters">
+<div class="filters" *ngIf="attributes">
   <div class="title">
     Shown Tests
     <span class="material-symbols-outlined" (click)="accessibilityModal = true">
@@ -15,6 +15,7 @@
     >{{ attribute.key }}</app-circle-toggle
   >
 </div>
+
 
 <app-modal [opened]="accessibilityModal" (close)="accessibilityModal = false">
   <div title>Accessibility Settings</div>

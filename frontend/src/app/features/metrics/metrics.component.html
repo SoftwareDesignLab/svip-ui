@@ -5,8 +5,8 @@
 >
   <!-- METADATA -->
   <div body-1 style="width: 100%">
+    <ng-container *ngTemplateOutlet="loading"></ng-container>
     <div *ngIf="qa" class="wrapper">
-      <ng-container *ngTemplateOutlet="loading"></ng-container>
       <ng-container *ngTemplateOutlet="metadata"></ng-container>
       <ng-container *ngTemplateOutlet="filters"></ng-container>
     </div>
@@ -14,8 +14,8 @@
 
   <!-- COMPONENTS  -->
   <div body-2 style="width: 100%; height: 100%">
+    <ng-container *ngTemplateOutlet="loading"></ng-container>
     <div *ngIf="qa" class="wrapper">
-      <ng-container *ngTemplateOutlet="loading"></ng-container>
       <ng-container *ngTemplateOutlet="displayComponents"></ng-container>
       <ng-container *ngTemplateOutlet="filters"></ng-container>
     </div>
@@ -23,27 +23,34 @@
 
   <ng-template #metadata>
     <div class="list">
-      <ng-container *ngFor="let test of components['metadata']">
-        <!-- Test results -->
-        <ng-container
-          *ngFor="let testResult of getTestResults('metadata', test)"
-        >
-          <app-accordion *ngIf="isFiltered(testResult)">
-            <div title class="test-result">
-              <span>{{ testResult.message }}</span>
-            </div>
-            <div extra class="attributes">
+      <!-- Test results -->
+      <ng-container *ngFor="let testResult of components['metadata']">
+        <app-accordion *ngIf="isFiltered(testResult)">
+          <div title class="test-result">
+            <span>
+              <span
+                *ngIf="testResult.status === 'FAIL'"
+                class="material-symbols-outlined"
+                style="color: var(--warn)"
+              >
+                error
+              </span>
+              {{ testResult.message }}</span
+            >
+          </div>
+          <div extra class="attributes">
+            <ng-container *ngFor="let tag of testResult.attributes">
               <div
                 class="attribute"
-                *ngFor="let tag of testResult.attributes"
+                *ngIf="attributes[tag].shown"
                 [ngStyle]="{ 'background-color': attributes[tag].color }"
                 [ngbTooltip]="tag"
                 placement="top"
               ></div>
-            </div>
-            <span body>{{ testResult.details }}</span>
-          </app-accordion>
-        </ng-container>
+            </ng-container>
+          </div>
+          <span body>{{ testResult.details }}</span>
+        </app-accordion>
       </ng-container>
     </div>
   </ng-template>
@@ -51,33 +58,47 @@
   <ng-template #displayComponents>
     <div class="list">
       <ng-container *ngFor="let component of components | keyvalue">
-        <app-accordion *ngIf="component && component.key !== 'metadata'">
-          <div title>{{ component.key }}</div>
-          <div body class="scroll-y">
-            <!-- Tests -->
-            <ng-container *ngFor="let test of component.value">
-              <!-- Test results -->
-              <ng-container
-                *ngFor="let testResult of getTestResults(component.key, test)"
-              >
-                <app-accordion *ngIf="isFiltered(testResult)">
-                  <div title class="test-result">
-                    <span>{{ testResult.message }}</span>
-                  </div>
-                  <div extra class="attributes">
+        <app-accordion
+          *ngIf="
+            component &&
+            component.key !== 'metadata' &&
+            getTestResults(component.key).length
+          "
+        >
+          <div title class="component-title">{{ component.key }}</div>
+          <div body>
+            <!-- Test results -->
+            <ng-container
+              *ngFor="let testResult of getTestResults(component.key)"
+            >
+              <app-accordion>
+                <div title class="test-result">
+                  <span>
+                    <span
+                      *ngIf="testResult.status === 'FAIL'"
+                      class="material-symbols-outlined"
+                      style="color: var(--warn)"
+                    >
+                      error
+                    </span>
+                    {{ testResult.message }}</span
+                  >
+                </div>
+                <div extra class="attributes">
+                  <ng-container *ngFor="let tag of testResult.attributes">
                     <div
+                      *ngIf="attributes[tag].shown"
                       class="attribute"
-                      *ngFor="let tag of testResult.attributes"
                       [ngStyle]="{
                         'background-color': attributes[tag].color
                       }"
                       [ngbTooltip]="tag"
                       placement="top"
                     ></div>
-                  </div>
-                  <span body>{{ testResult.details }}</span>
-                </app-accordion>
-              </ng-container>
+                  </ng-container>
+                </div>
+                <span body>{{ testResult.details }}</span>
+              </app-accordion>
             </ng-container>
           </div>
         </app-accordion>
@@ -90,9 +111,10 @@
       <div>LOADING</div>
     </div>
   </ng-template>
+
   <ng-template #filters>
     <app-qa-filters
-      [attributes]="attributes"
+      [(attributes)]="attributes"
       [(palette)]="palette"
     ></app-qa-filters>
   </ng-template>

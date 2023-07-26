@@ -1,11 +1,11 @@
-export enum PALETTES {
-  SINGLEHUE = '(CVD) Single Hue',
-  MULTIHUE = '(CVD) Multi Hue',
+export enum PALETTE {
   DEFAULT = 'Default',
+  MULTIHUE = '(CVD) Multi Hue',
+  SINGLEHUE = '(CVD) Single Hue',
 }
 
 const palettes: { [key: string]: string[] } = {
-  [PALETTES.DEFAULT]: [
+  [PALETTE.DEFAULT]: [
     ' #54AD78',
     '#FFD700',
     '#FF6000',
@@ -16,7 +16,7 @@ const palettes: { [key: string]: string[] } = {
     '#FF73DC',
     '#008080',
   ],
-  [PALETTES.MULTIHUE]: [
+  [PALETTE.MULTIHUE]: [
     '#edf8fb',
     '#bfd3e6',
     '#9ebcda',
@@ -25,14 +25,14 @@ const palettes: { [key: string]: string[] } = {
     '#88419d',
     '#6e016b',
   ],
-  [PALETTES.SINGLEHUE]: [
-    '#eff3ff',
-    '#c6dbef',
-    '#9ecae1',
-    '#6baed6',
-    '#4292c6',
-    '#2171b5',
-    '#084594',
+  [PALETTE.SINGLEHUE]: [
+    '#edf8e9',
+    '#c7e9c0',
+    '#a1d99b',
+    '#74c476',
+    '#41ab5d',
+    '#238b45',
+    '#005a32',
   ],
 };
 
