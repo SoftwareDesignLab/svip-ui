@@ -14,8 +14,17 @@
     (click)="attribute.value.shown = !attribute.value.shown"
     >{{ attribute.key }}</app-circle-toggle
   >
-</div>
 
+  <div class="title">Grade</div>
+  <!-- Pass/Fail filters -->
+  <app-circle-toggle
+    *ngFor="let status of resultStatus | keyvalue"
+    [color]="status.value.color"
+    [toggle]="status.value.shown"
+    (click)="status.value.shown = !status.value.shown"
+    >{{status.key}}</app-circle-toggle
+  >
+</div>
 
 <app-modal [opened]="accessibilityModal" (close)="accessibilityModal = false">
   <div title>Accessibility Settings</div>

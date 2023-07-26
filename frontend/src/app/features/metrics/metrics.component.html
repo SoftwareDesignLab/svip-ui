@@ -24,7 +24,7 @@
   <ng-template #metadata>
     <div class="list">
       <!-- Test results -->
-      <ng-container *ngFor="let testResult of components['metadata']">
+      <ng-container *ngFor="let testResult of getTestResults('metadata')">
         <app-accordion *ngIf="isFiltered(testResult)">
           <div title class="test-result">
             <span>
@@ -116,6 +116,7 @@
     <app-qa-filters
       [(attributes)]="attributes"
       [(palette)]="palette"
+      [(resultStatus)]="resultStatus"
     ></app-qa-filters>
   </ng-template>
 </app-viewer>

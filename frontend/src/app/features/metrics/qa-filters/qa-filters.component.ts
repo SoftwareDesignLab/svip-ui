@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import palettes, { PALETTE } from '../palettes';
-import attribute from '../attributes';
+import palettes, { PALETTE } from '../palette';
+import filter from '../filters';
 
 @Component({
   selector: 'app-qa-filters',
@@ -9,12 +9,17 @@ import attribute from '../attributes';
 })
 export class QaFiltersComponent implements OnInit {
   palettes = palettes;
-  @Input() attributes!: attribute;
-  @Output() attributesChange = new EventEmitter<attribute>();
+  @Input() attributes!: filter;
+  @Output() attributesChange = new EventEmitter<filter>();
   accessibilityModal = false;
   selectedPalette!: PALETTE;
   @Input() palette!: PALETTE;
   @Output() paletteChange = new EventEmitter<PALETTE>();
+
+  @Input() resultStatus!: filter;
+  @Output() resultStatusChange = new EventEmitter<filter>();
+
+
 
   constructor() {}
 

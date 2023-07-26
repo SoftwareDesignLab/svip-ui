@@ -1,1 +1,0 @@
-export default interface attribute  {[processorName: string]: { color: string; shown: boolean }};

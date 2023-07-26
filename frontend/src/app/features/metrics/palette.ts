@@ -36,4 +36,8 @@ const palettes: { [key: string]: string[] } = {
   ],
 };
 
+export interface resultStatus {
+  [key: string]: { shown: boolean; color: string };
+}
+
 export default palettes;

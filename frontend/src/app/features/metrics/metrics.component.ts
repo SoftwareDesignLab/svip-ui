@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
 import { RoutingService } from 'src/app/shared/services/routing.service';
 import { SbomService } from 'src/app/shared/services/sbom.service';
-import palettes, { PALETTE } from './palettes';
-import attribute from './attributes';
+import palettes, { PALETTE, resultStatus } from './palette';
+import filter from './filters';
+
 @Component({
   selector: 'app-metrics',
   templateUrl: './metrics.component.html',
@@ -12,7 +13,7 @@ import attribute from './attributes';
 export class MetricsComponent implements OnInit {
   qa: any = null;
   components: { [componentName: string]: testResult[] } = {};
-  attributes: attribute = {};
+  attributes: filter = {};
   name: string = '';
   palettes = palettes;
   private _palette = PALETTE.DEFAULT;
@@ -23,6 +24,11 @@ export class MetricsComponent implements OnInit {
     this._palette = value;
     this.setColor();
   }
+
+  resultStatus: resultStatus = {
+    PASS: { shown: true, color: 'var(--success)' },
+    FAIL: { shown: true, color: 'var(--warn)' },
+  };
 
   constructor(
     private routing: RoutingService,
@@ -70,15 +76,18 @@ export class MetricsComponent implements OnInit {
   }
 
   getTestResults(component: string): any[] {
-    return this.components[component].filter((result) =>
-      this.isFiltered(result)
-    );
+    return this.components[component]
+      .filter((result) => this.isFiltered(result))
+      .sort((a, b) => (a.status > b.status ? 1 : -1));
   }
 
   isFiltered(testResult: any) {
-    return !!testResult.attributes.filter(
-      (attr: string) => this.attributes[attr].shown
-    ).length;
+    return (
+      this.resultStatus[testResult.status].shown &&
+      testResult.attributes.filter(
+        (attr: string) => this.attributes[attr].shown
+      ).length
+    );
   }
 
   setColor() {
