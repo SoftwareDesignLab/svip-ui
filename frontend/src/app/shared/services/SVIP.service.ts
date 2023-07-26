@@ -107,11 +107,11 @@ export class SVIPService {
     if(apiKey)
       this.client.setAPIKey(apiKey);
 
-    return this.client.get("/sboms/vex",
+    return this.client.get("sboms/vex",
       new HttpParams()
         .set('id', id)
         .set('format', format)
-        .set('database', database
+        .set('client', database
     )) as Observable<any>;
   }
   //#endregion
