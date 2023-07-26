@@ -24,6 +24,7 @@ import { ViewerComponent } from './shared/components/viewer/viewer.component';
 import { VexComponent } from './features/vex/vex.component';
 import { MetricsBodyComponent } from './features/metrics/metrics-body/metrics-body.component';
 import { MetricsComponent } from './features/metrics/metrics/metrics.component';
+import { CircleToggleComponent } from './shared/components/circle-toggle/circle-toggle.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { MetricsComponent } from './features/metrics/metrics/metrics.component';
     VexComponent,
     MetricsBodyComponent,
     MetricsComponent,
+    CircleToggleComponent,
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
