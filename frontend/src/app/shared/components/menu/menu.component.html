@@ -8,6 +8,7 @@
 		<div ngbDropdownMenu aria-labelledby="dropdownBasic2">
 			<button (click)="RemoveFile()" ngbDropdownItem>Delete</button>
 			<button *ngIf="sbomValid" class="error" (click)="DownloadOne()" ngbDropdownItem>Download</button>
+			<button *ngIf="sbomValid" class="error" (click)="ViewOne()" ngbDropdownItem>View</button>
 		</div>
 	</div>
 </div>

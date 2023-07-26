@@ -210,7 +210,7 @@ hr {
 
   .sbom:hover{
     background-color: lightgray;
-    cursor: pointer;
+    cursor: default;
   }
 
 .center {
