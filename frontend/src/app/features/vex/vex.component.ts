@@ -10,13 +10,14 @@ import { RoutingService } from 'src/app/shared/services/routing.service';
 })
 export class VexComponent {
   protected vex: VexResponse | undefined;
+  protected loading: boolean = false;
 
   constructor(private client: SVIPService, private routing: RoutingService) {}
 
   protected vexOptions = {
-    databases: ['osv', 'nvd'],
-    formats: ['cyclonedx', 'csaf'],
-    requiresAPIKey: ['nvd'],
+    databases: ['OSV', 'NVD'],
+    formats: ['CycloneDX', 'CSAF'],
+    requiresAPIKey: ['NVD'],
     selectedDatabase: '',
     selectedFormat: '',
     apiKey: '',
@@ -55,7 +56,11 @@ export class VexComponent {
   }
 
   GenerateData() {
-    if(this.vexOptions.selectedDatabase !== '' || this.vexOptions.selectedFormat !== '')
+
+    this.vex = undefined;
+    this.loading = true;
+
+    if(this.vexOptions.selectedDatabase === '' || this.vexOptions.selectedFormat === '')
       return;
 
     if(this.vexOptions.requiresAPIKey.includes(this.vexOptions.selectedDatabase) && this.vexOptions.apiKey === '')
@@ -65,6 +70,8 @@ export class VexComponent {
       if(result) {
         this.vex = result;
       }
+
+      this.loading = false;
     })
   }
 }

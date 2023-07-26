@@ -18,10 +18,10 @@
       <div>API Key:</div>
       <input [(ngModel)]="vexOptions.apiKey" [disabled]="!vexOptions.requiresAPIKey.includes(vexOptions.selectedDatabase)"/>
     </div>
-    <app-button text="Generate Data"/>
+    <app-button text="Generate Data" (click)="this.GenerateData()"/>
   </div>
 
-  <div body-2 *ngIf="vex !== undefined" style="width: 100%;">
+  <div body-2 *ngIf="vex !== undefined && loading === false" style="width: 100%;">
     <app-accordion title="General Information">
       <div body>
         <div [innerHTML]="formatValue(removeStatements(vex.vex))"></div>
@@ -39,6 +39,10 @@
             </div>
           </app-accordion>
         </ng-container>
+
+        <div *ngIf="vex.vex.vexstatements.length === 0">
+          None
+        </div>
       </div>
     </app-accordion>
     <app-accordion title="Errors">
@@ -48,7 +52,11 @@
     </app-accordion>
   </div>
 
-  <div body-2 *ngIf="vex === undefined" style="width: 100%;">
+  <div body-2 *ngIf="vex === undefined && loading === false" style="width: 100%;">
     Press 'Generate Data' in settings to view data
+  </div>
+
+  <div body-2 *ngIf="loading === true" style="width: 100%;">
+    Generating VEX Report...
   </div>
 </app-viewer>
