@@ -66,6 +66,7 @@
     </div>
     <app-button text="Compare" (click)="this.GetSelected().length >= 1 ? compareModal = true : ''"/>
     <app-button text="Convert" (click)="this.GetSelected().length >= 1 ? convertModal = true : ''"/>
+    <app-button text="Vex" (click)="SetPageIfOneSelected(3)"/>
   </div>
 
   <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"

@@ -263,7 +263,7 @@ export class UploadComponent implements OnInit {
   }
 
   ClearSearch() {
-    this.filterSearch = ''; 
+    this.filterSearch = '';
     const searchInput = document.querySelector('input[name="search"]') as HTMLInputElement;
     if (searchInput) {
       searchInput.value = '';
@@ -281,6 +281,15 @@ export class UploadComponent implements OnInit {
   ViewSBOM(sbom: string) {
     this.routing.SetPage(PAGES.VIEW);
     this.routing.data = sbom;
+  }
+
+  SetPageIfOneSelected(page: PAGES) {
+    let selected = this.GetSelected();
+
+    if (selected.length !== 1) return;
+
+    this.routing.SetPage(page);
+    this.routing.data = selected[0];
   }
 
 }
