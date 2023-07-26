@@ -10,4 +10,14 @@ import mockVex from './mock-vex';
 })
 export class VexComponent {
   private vex: VexResponse = mockVex;
+
+  protected database: { [key: string]: boolean } = {
+    'osv': false,
+    'nvd': false
+  };
+
+  protected format: { [key: string]: boolean } = {
+    'cyclonedx': false,
+    'csaf': false
+  };
 }

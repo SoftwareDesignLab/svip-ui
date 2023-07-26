@@ -1,1 +1,12 @@
-<p>vex works!</p>
+<app-viewer title="VEX" [options]="['DATA', 'SETTINGS']" selectedOption="SETTINGS">
+  <div body-2>
+    <app-multiselect-dropdown
+      title="Choose Database"
+      [options]="this.database"
+    ></app-multiselect-dropdown>
+    <app-multiselect-dropdown
+      title="Choose Format"
+      [options]="this.format"
+    ></app-multiselect-dropdown>
+  </div>
+</app-viewer>
