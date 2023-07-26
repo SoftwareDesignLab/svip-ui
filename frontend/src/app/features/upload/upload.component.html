@@ -5,7 +5,7 @@
   <div class="search-parent-container" *ngIf="GetAllFiles().length > 0" >
       <div class="search-container">
         <input type="text" placeholder="Search.." name="search" (input)="UpdateSearch($event)">
-        <button [ngStyle]="{'opacity': filterSearch ? '1' : 0}" (click)="ClearSearch()"><i class="search-btn material-symbols-outlined">clear</i></button>
+        <button (click)="ClearSearch()" [ngClass]="filterSearch ? '' : 'hide'"><i class="search-btn material-symbols-outlined">clear</i></button>
         <button><i class="search-btn material-symbols-outlined">Search</i></button>
       </div>
       <div class="format-filter">
