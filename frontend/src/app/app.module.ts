@@ -22,9 +22,9 @@ import { ConvertModalComponent } from './shared/components/toolbar/modals/conver
 import { DeleteModalComponent } from './shared/components/toolbar/modals/delete-modal/delete-modal.component';
 import { ViewerComponent } from './shared/components/viewer/viewer.component';
 import { VexComponent } from './features/vex/vex.component';
-import { MetricsBodyComponent } from './features/metrics/metrics-body/metrics-body.component';
-import { MetricsComponent } from './features/metrics/metrics/metrics.component';
 import { CircleToggleComponent } from './shared/components/circle-toggle/circle-toggle.component';
+import { MetricsComponent } from './features/metrics/metrics.component';
+import { QaFiltersComponent } from './features/metrics/qa-filters/qa-filters.component';
 
 @NgModule({
   declarations: [
@@ -45,9 +45,9 @@ import { CircleToggleComponent } from './shared/components/circle-toggle/circle-
     DeleteModalComponent,
     ViewerComponent,
     VexComponent,
-    MetricsBodyComponent,
     MetricsComponent,
     CircleToggleComponent,
+    QaFiltersComponent,
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
