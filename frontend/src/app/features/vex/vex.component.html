@@ -18,5 +18,33 @@
       <div>API Key:</div>
       <input [(ngModel)]="vexOptions.apiKey" [disabled]="!vexOptions.requiresAPIKey.includes(vexOptions.selectedDatabase)"/>
     </div>
+    <app-button text="Generate Data"/>
+  </div>
+
+  <div body-2 style="width: 100%;">
+    <app-accordion title="General Information">
+      <div body>
+        <div [innerHTML]="formatValue(removeStatements(vex.vex))"></div>
+      </div>
+    </app-accordion>
+    <app-accordion title="Vex Statements">
+      <div body>
+        <ng-container *ngFor="let item of vex.vex.vexstatements | keyvalue">
+          <app-accordion [title]="castAsAny(item.value).statementID">
+            <div body>
+              <app-accordion *ngFor="let vex of castAsAny(item.value) | keyvalue" [title]="castAsAny(vex.key)">
+                <div body [innerHTML]="formatValue(vex.value)">
+                </div>
+              </app-accordion>
+            </div>
+          </app-accordion>
+        </ng-container>
+      </div>
+    </app-accordion>
+    <app-accordion title="Errors">
+      <div body>
+        <div [innerHTML]="formatValue(vex.error)"></div>
+      </div>
+    </app-accordion>
   </div>
 </app-viewer>
