@@ -101,6 +101,19 @@ export class SVIPService {
         .set('overwrite', overwrite)
     ) as Observable<string>;
   }
+
+  getVex(id: number, format: string, database: string, apiKey: string = '') {
+
+    if(apiKey)
+      this.client.setAPIKey(apiKey);
+
+    return this.client.get("sboms/vex",
+      new HttpParams()
+        .set('id', id)
+        .set('format', format)
+        .set('client', database
+    )) as Observable<any>;
+  }
   //#endregion
   //#region Electron
   /**
