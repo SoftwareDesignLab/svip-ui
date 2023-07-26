@@ -37,16 +37,16 @@
       </div>
     </ng-container>
 
-      <ng-container *ngFor="let item of GetSBOMsOfType('ERROR')">
-        <div  *ngIf="getAlias(item)?.includes(GetFilter())">
-          <div class="sbom" style="color: var(--red);">
-            <input type="checkbox" [value]="item" class="sbom-checkbox"/>
-            <span ngbTooltip="SBOM is not valid!">
-                {{ getAlias(item) }}
-            </span>
-          </div>
+    <ng-container *ngFor="let item of GetSBOMsOfType('ERROR')">
+      <div *ngIf="getAlias(item)?.includes(GetFilter())">
+        <div class="sbom" style="color: var(--red);">
+          <input type="checkbox" [value]="item" class="sbom-checkbox" />
+          <span ngbTooltip="SBOM is not valid!">
+            <app-menu text="{{getAlias(item)}}" [data]="item"></app-menu>
+          </span>
         </div>
-      </ng-container>
+      </div>
+    </ng-container>
 
     <div *ngFor="let item of GetSBOMsOfType('LOADING')">
       <div class="sbom" style="color: var(--accent);">
@@ -56,11 +56,17 @@
   </div>
 
   <div class="buttons flex" *ngIf="GetAllFiles().length > 0">
-    <app-button text="Delete Selected" (click)="deleteModal = true"/>
-    <app-button text="Download Selected" (click)="GetSelected().length > 1 ? DownloadSelectedAsZip() : DownloadSelected()"></app-button>
-    <app-button text="Compare" (click)="this.GetSelected().length >= 1 ? compareModal = true : ''"/>
-    <app-button text="Convert" (click)="this.GetSelected().length >= 1 ? convertModal = true : ''"/>
-    <app-button text="View" (click)="ViewSBOM()"/>
+    <div class="icons flex buttons">
+      <app-button icon="delete" (click)="GetSelected().length > 0 ? deleteModal = true :  showToast(EventTypes.DeleteWarning)"></app-button>
+      <app-button icon="download" (click)="GetSelected().length > 1 ? DownloadSelectedAsZip() 
+        : GetSelected().length === 1 ? DownloadSelected()
+        : showToast(EventTypes.DownloadWarning)">download</app-button>
+    </div>
+    <app-button text="Compare"
+      (click)="this.GetSelected().length >= 2 ? compareModal = true : showToast(EventTypes.CompareWarning)" />
+    <app-button text="Convert"
+      (click)="this.GetSelected().length >= 1 ? convertModal = true : showToast(EventTypes.ConvertWarning)" />
+    <app-button text="View" (click)="this.GetSelected().length >= 1 ? ViewSBOM() : showToast(EventTypes.ViewWarning)" />
   </div>
 
   <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
