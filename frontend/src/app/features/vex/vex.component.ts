@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { VexResponse } from 'src/app/shared/models/vex';
+import { SVIPService } from 'src/app/shared/services/SVIP.service';
+import { RoutingService } from 'src/app/shared/services/routing.service';
 
 @Component({
   selector: 'app-vex',
@@ -8,6 +10,8 @@ import { VexResponse } from 'src/app/shared/models/vex';
 })
 export class VexComponent {
   protected vex: VexResponse | undefined;
+
+  constructor(private client: SVIPService, private routing: RoutingService) {}
 
   protected vexOptions = {
     databases: ['osv', 'nvd'],
@@ -48,5 +52,19 @@ export class VexComponent {
     const copy = { ...value };
     delete copy.vexstatements;
     return [copy];
+  }
+
+  GenerateData() {
+    if(this.vexOptions.selectedDatabase !== '' || this.vexOptions.selectedFormat !== '')
+      return;
+
+    if(this.vexOptions.requiresAPIKey.includes(this.vexOptions.selectedDatabase) && this.vexOptions.apiKey === '')
+      return;
+
+    this.client.getVex(this.routing.data, this.vexOptions.selectedFormat, this.vexOptions.selectedDatabase).subscribe((result) => {
+      if(result) {
+        this.vex = result;
+      }
+    })
   }
 }
