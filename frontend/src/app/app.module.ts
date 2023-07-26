@@ -22,6 +22,8 @@ import { ConvertModalComponent } from './shared/components/toolbar/modals/conver
 import { DeleteModalComponent } from './shared/components/toolbar/modals/delete-modal/delete-modal.component';
 import { ViewerComponent } from './shared/components/viewer/viewer.component';
 import { VexComponent } from './features/vex/vex.component';
+import { MetricsBodyComponent } from './features/metrics/metrics-body/metrics-body.component';
+import { MetricsComponent } from './features/metrics/metrics/metrics.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { VexComponent } from './features/vex/vex.component';
     ConvertModalComponent,
     DeleteModalComponent,
     ViewerComponent,
-    VexComponent
+    VexComponent,
+    MetricsBodyComponent,
+    MetricsComponent,
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
