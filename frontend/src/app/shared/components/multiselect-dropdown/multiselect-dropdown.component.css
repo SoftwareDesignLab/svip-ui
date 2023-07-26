@@ -41,6 +41,7 @@
     width: 100%;
     background-color: white;
     position: absolute;
+    z-index: 100;
 }
 
 .dropdown-check-list ul.items li {
