@@ -18,7 +18,7 @@
 }
 
 .content {
-  width: auto;
+  width: 20%;
   height: auto;
   display: flex;
   flex-direction: column;
