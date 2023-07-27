@@ -5,6 +5,9 @@ import { FileStatus } from 'src/app/shared/models/file';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { IpcRenderer } from 'electron';
+import { EventTypes } from 'src/app/shared/models/event-types';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-upload',
@@ -17,6 +20,24 @@ export class UploadComponent implements OnInit {
   public downloadModal: boolean = false;
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
+  private ipc!: IpcRenderer;
+
+  title = 'angular-bootstrap-toast-service';
+
+  EventTypes = EventTypes;
+
+  public convertOptions: {
+    schema: string;
+    format: string;
+    overwrite: boolean;
+  } = {
+      schema: '',
+      format: '',
+      overwrite: true,
+    };
+  public formatOptions: string[] = ['TAGVALUE', 'JSON'];
+  public schemaOptions: string[] = ['CDX14', 'SPDX23', 'SVIP'];
+
   public compareModal: boolean = false;
 
   protected sortingOptions: { [type: string]: boolean } = {
@@ -29,6 +50,7 @@ export class UploadComponent implements OnInit {
   constructor(
     private sbomService: SbomService,
     public routing: RoutingService,
+    private toastService: ToastService,
     private svipService: SVIPService,
   ) {}
 
@@ -156,21 +178,25 @@ export class UploadComponent implements OnInit {
     this.deleteModal = false;
   }
 
-  DownloadSelected() {
+  CheckForErroredFiles() {
     const selectedFiles = this.GetSelected();
-    const hasFiles = selectedFiles.length;
     const hasErroredFiles = selectedFiles.filter(
       (sbom) => this.GetSBOMInfo(sbom).status === FileStatus.ERROR
     ).length;
 
-    if (!hasFiles || hasErroredFiles) {
-      this.downloadModal = true;
-      setTimeout(() => {
-        this.downloadModal = false;
-      }, 4000);
+    if (hasErroredFiles) {
+      this.showToast(EventTypes.InvalidWarning)
+      return true;
+    }
+    return false;
+  }
+
+  DownloadSelected() {
+    if (this.CheckForErroredFiles()){
       return;
     }
 
+    const selectedFiles = this.GetSelected();
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
       const name = this.GetSBOMInfo(file).fileName;
@@ -191,6 +217,9 @@ export class UploadComponent implements OnInit {
   }
 
   DownloadSelectedAsZip() {
+    if (this.CheckForErroredFiles()){
+      return;
+    }
     const selectedFiles = this.GetSelected();
     const zip = new JSZip();
 
@@ -292,6 +321,32 @@ export class UploadComponent implements OnInit {
     this.routing.data = this.sbomService.GetSBOMInfo(selected[0]).id;
   }
 
+  showToast(type: EventTypes) {
+    switch (type) {
+      case EventTypes.DeleteWarning:
+        this.toastService.showWarningToast('File not selected', 'Select file to delete.');
+        break;
+        case EventTypes.DownloadWarning:
+        this.toastService.showWarningToast('File not selected', 'Select valid file to download.');
+        break;
+        case EventTypes.CompareWarning:
+        this.toastService.showWarningToast('Files not selected', 'Select at least 2 valid files to compare.');
+        break;
+        case EventTypes.ConvertWarning:
+        this.toastService.showWarningToast('File not selected', 'Select valid file to convert.');
+        break;
+        case EventTypes.ViewWarning:
+        this.toastService.showWarningToast('File not selected', 'Select valid file to view.');
+        break;
+        case EventTypes.InvalidWarning:
+        this.toastService.showWarningToast('Valid file not selected', 'Select valid file and try again.');
+        break;
+      case EventTypes.Error:
+        this.toastService.showErrorToast('Error toast title', 'This is an error toast message.');
+        break;
+    }
+  }
+
   gradeSBOM() {
     let selected = this.GetSelected();
 
@@ -302,6 +357,8 @@ export class UploadComponent implements OnInit {
   }
 
 }
+
+
 
 export enum SORT_OPTIONS {
   NAME = 'NAME',
