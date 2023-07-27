@@ -18,7 +18,7 @@
     padding: 10px;
 }
 
-.file-name > div {
+.file-name>div {
     width: 300px;
 }
 
@@ -26,10 +26,11 @@
     margin-right: 10px;
 }
 
-.file-name h3{
+.file-name h3 {
     margin-bottom: 0rem !important;
     cursor: pointer;
 }
+
 .card-title {
     font-weight: bold;
     font-size: 18px;
@@ -147,7 +148,6 @@ hr {
 .search-parent-container {
     display: flex;
     gap: 15px;
-    justify-content: space-between;
 }
 
 .search-container button {
@@ -165,7 +165,7 @@ hr {
 
 .topnav {
     overflow: hidden;
-    background-color: var(--primary) ;
+    background-color: var(--primary);
     width: 100%;
 }
 
@@ -191,12 +191,12 @@ hr {
     border-color: black;
 }
 
-.sbom > div {
+.sbom>div {
     width: 300px;
     color: var(--primary);
 }
 
-.buttons{
+.buttons {
     gap: 15px;
 }
 
@@ -216,8 +216,9 @@ hr {
     align-items: center;
     border-color: black;
     color: black;
-  }
-.sbom > div {
+}
+
+.sbom>div {
     width: 300px;
     color: var(--primary);
 }
@@ -226,21 +227,27 @@ hr {
     display: flex;
     align-items: center;
     gap: 10px;
-  }
+    padding: 4px;
+}
 
-  .sbom:hover{
+.altColors:nth-of-type(odd) {
+    background-color: #7e99b869;
+}
+
+.sbom:hover {
     background-color: lightgray;
     cursor: default;
-  }
+}
 
 .center {
     display: flex;
     align-items: center;
 }
 
-.icons{
-  margin-right: 50px;
+.icons {
+    margin-right: 50px;
 }
+
 .hide {
     opacity: 0;
     cursor: default !important;
