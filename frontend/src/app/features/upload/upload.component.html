@@ -32,9 +32,9 @@
           <div class="sbom flex">
             <div class="sbom" (dblclick)="ViewSBOM(item)">
               <input type="checkbox" [value]="item" class="sbom-checkbox"/>
-              <app-menu text="{{getAlias(item)}}" [data]="item"></app-menu>
+              <app-menu text="{{ getAlias(item) }}" [data]="item" style="width: 100%"></app-menu>
             </div>
-            <div class="sbom-view">
+            <div class="sbom-view" style="width: 100%">
               {{GetSBOMInfo(item).schema}}
             </div>
           </div>
@@ -46,15 +46,15 @@
           <div class="sbom" style="color: var(--red);">
             <input type="checkbox" [value]="item" class="sbom-checkbox"/>
             <span ngbTooltip="SBOM is not valid!">
-              <app-menu text="{{getAlias(item)}}" [data]="item"></app-menu>
+              <app-menu text="{{ getAlias(item) }}" [data]="item" style="width: 100%"></app-menu>
             </span>
           </div>
         </div>
       </ng-container>
 
       <div *ngFor="let item of GetSBOMsOfType('LOADING')">
-          <div class="sbom" style="color: var(--accent);">
-              {{getAlias(item)}}
+          <div class="sbom" style="color: var(--accent); width: 95%;">
+              {{ getAlias(item) }}
           </div>
       </div>
   </div>
