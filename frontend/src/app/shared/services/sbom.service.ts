@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SVIPService } from './SVIP.service';
+import { PAGES, RoutingService } from './routing.service';
 import File, { FileStatus } from '../models/file';
 import diffReport from 'src/app/features/comparison/diffReport';
 
@@ -11,7 +12,7 @@ export class SbomService {
   public comparison: any;
   private files: { [path: string]: File } = {};
 
-  constructor(private SVIPService: SVIPService) {}
+  constructor(private SVIPService: SVIPService, private routingService: RoutingService) {}
 
   //#region functionality
   /**
@@ -108,6 +109,11 @@ export class SbomService {
       // TODO: Add error handling for when file cannot be delted
       this.SVIPService.deleteSBOM(id).subscribe((deleted) => {
         if (deleted) {
+          const data = this.routingService.data;
+          if(data === id || data === path) {
+            this.routingService.data = null;
+            this.routingService.SetPage(PAGES.NONE);
+          }
           delete this.files[path];
         }
       });

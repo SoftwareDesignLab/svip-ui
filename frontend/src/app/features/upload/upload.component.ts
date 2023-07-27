@@ -195,7 +195,7 @@ export class UploadComponent implements OnInit {
     if (this.CheckForErroredFiles()){
       return;
     }
-    
+
     const selectedFiles = this.GetSelected();
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
@@ -346,6 +346,16 @@ export class UploadComponent implements OnInit {
         break;
     }
   }
+
+  gradeSBOM() {
+    let selected = this.GetSelected();
+
+    if (selected.length !== 1) return;
+
+    this.routing.SetPage(PAGES.METRICS);
+    this.routing.data = selected[0];
+  }
+
 }
 
 

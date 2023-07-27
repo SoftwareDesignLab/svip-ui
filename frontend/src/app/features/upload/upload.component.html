@@ -62,13 +62,14 @@
   <div class="buttons flex" *ngIf="GetAllFiles().length > 0">
     <div class="icons flex buttons">
       <app-button icon="delete" (click)="this.GetSelected().length >= 1 ? deleteModal = true : showToast(EventTypes.DeleteWarning)"></app-button>
-      <app-button icon="download" (click)="GetSelected().length > 1 ? DownloadSelectedAsZip() 
+      <app-button icon="download" (click)="GetSelected().length > 1 ? DownloadSelectedAsZip()
         : GetSelected().length === 1 ? DownloadSelected()
         : showToast(EventTypes.DownloadWarning)">download</app-button>
     </div>
-    <app-button text="Compare" (click)="this.GetSelected().length >= 2 ? compareModal = true : showToast(EventTypes.CompareWarning)"/>
-    <app-button text="Convert" (click)="this.GetSelected().length >= 1 ? convertModal = true : showToast(EventTypes.ConvertWarning)"/>
-    <app-button text="View" (click)="this.GetSelected().length >= 1 ? ViewSBOM() : showToast(EventTypes.ViewWarning)"/>
+    <app-button text="Compare" (click)="this.GetSelected().length >= 1 ? compareModal = true : ''"/>
+    <app-button text="Convert" (click)="this.GetSelected().length >= 1 ? convertModal = true : ''"/>
+    <app-button text="Vex" (click)="SetPageIfOneSelected(3)"/>
+    <app-button text="Grade" (click)="gradeSBOM()"/>
   </div>
 
   <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"

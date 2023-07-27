@@ -3,10 +3,11 @@
     <ng-template ngbPanelTitle (click)="toggleExpanded()">
       <div class="accordion-header flex">
         <span>{{ title }}</span>
-        <ng-content select="[title]"></ng-content>
-        <div *ngIf="extra.length > 0" class="accordion-desc flex col">
+        <ng-content select="[title]"/>
+        <div class="accordion-desc flex col">
           <div *ngFor="let item of extra">{{ item }}</div>
         </div>
+        <ng-content select="[extra]" />
       </div>
     </ng-template>
     <ng-template ngbPanelContent>

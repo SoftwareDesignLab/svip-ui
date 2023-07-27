@@ -13,7 +13,7 @@ export class MenuComponent {
   @Input() data: string= '';
   sbomValid: boolean = false;
 
-  constructor(public routing: RoutingService, private sbomService: SbomService) {
+  constructor(private routing: RoutingService, private sbomService: SbomService) {
   }
 
   ngOnInit() {
