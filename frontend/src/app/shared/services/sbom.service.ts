@@ -11,7 +11,14 @@ export class SbomService {
   public comparison: any;
   private files: { [path: string]: File } = {};
 
-  constructor(private SVIPService: SVIPService) {}
+  constructor(private SVIPService: SVIPService) {
+    let f = new File();
+    f.status = FileStatus.VALID;
+    f.schema = 'yeet';
+    f.fileName = 'yeet yelsdfd lksdflkj sdljks fkjls fdjls jlkf sd';
+    this.files['yeet yelsdfd lksdflkj sdljks fkjls fdjls jlkf sd'] = f;
+    this.sbomSchemas['yeet'] = true;
+  }
 
   //#region functionality
   /**

@@ -291,13 +291,6 @@ export class UploadComponent implements OnInit {
     this.routing.SetPage(page);
     this.routing.data = this.sbomService.GetSBOMInfo(selected[0]).id;
   }
-
-  truncateFileName(fileName: string | undefined): string {
-    if (!fileName) {
-      return '';
-    }
-    return fileName.length > 30 ? fileName.slice(0, 30) + '...' : fileName;
-  }
 }
 
 export enum SORT_OPTIONS {
