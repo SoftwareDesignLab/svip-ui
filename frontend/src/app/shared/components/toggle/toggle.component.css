@@ -18,29 +18,28 @@
 }
 
 .header {
-  background-color: transparent;
-  color: var(--primary);
-  width: 150px;
+  background-color: var(--primary);
+  width: 200px;
   margin: auto;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0px;
-  border-style: solid;
   border-radius: 30px;
-  border-width: 2px;
   margin-bottom: 10px;
 }
 
 
 .option {
   cursor: pointer;
-  border-radius: 4px;
   align-items: center;
   justify-content: center;
   display: flex;
   padding: 8px;
+  z-index: 2;
+  color: white;
+  width: 100px;
 }
 .option::before {
   position: absolute;
@@ -48,11 +47,6 @@
 
 #selected {
   color: white;
-  background-color: var(--primary);
-  border-radius: 18px;
-  align-items: center;
-  justify-content: center;
-  width: auto;
   opacity: 80%;
 }
 
@@ -65,4 +59,18 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
+}
+
+.slider {
+  background-color: var(--accent);
+  left: 0px;
+  width: 100px;
+  height: 100%;
+  position: absolute;
+  transition: all .3s ease-in-out;
+  border-radius: 30px;
+}
+
+#slide-right {
+  left: 100px !important;
 }
