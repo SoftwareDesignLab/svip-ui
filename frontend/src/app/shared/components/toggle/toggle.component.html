@@ -1,7 +1,8 @@
 <div class="body">
     <div class="header">
-        <div class="option" [id]='upload ? "selected" : ""' (click)="upload = true">Upload</div>
-        <div class="option" [id]='!upload ? "selected" : ""' (click)="upload = false">Generate</div>
+        <div class="option" [id]='!upload ? "selected" : ""' (click)="upload = true">Upload</div>
+        <div class="option" [id]='upload ? "selected" : ""' (click)="upload = false">Generate</div>
+        <div class="slider" [id]='!upload ? "slide-right" : ""' ></div>
     </div>
     <ng-container *ngIf="upload">
         <div class="dropzone">
