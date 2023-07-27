@@ -1,7 +1,8 @@
 <app-viewer
+  *ngIf="data"
   [options]="['PRETTY', 'RAW']"
   title="View SBOM"
-  subTitle="{{getAlias(routing.data)}}"
+  subTitle="{{getAlias(title)}}"
   selectedOption="PRETTY"
 >
   <div body-1 style="width: 100%;">
@@ -55,7 +56,7 @@
 
   <div body-2 style="width: 100%;">
     <pre class="content">
-      {{ getContents(routing.data)}}
+      {{ getContents(title)}}
     </pre>
   </div>
 </app-viewer>
