@@ -8,15 +8,19 @@
     cursor: pointer;
     display: inline-block;
     padding: 5px 50px 5px 10px;
-    border: 1px solid #ccc;
     background: white;
+    border: var(--primary);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 6px;
+    color: var(--primary);
 }
 
 .dropdown-check-list .anchor:after {
     position: absolute;
     content: "";
-    border-left: 2px solid black;
-    border-top: 2px solid black;
+    border-left: 2px solid var(--primary);
+    border-top: 2px solid var(--primary);
     padding: 5px;
     right: 10px;
     top: 20%;
@@ -36,10 +40,11 @@
     padding: 2px;
     display: none;
     margin: 0;
-    border: 1px solid #ccc;
+    border: 1px solid var(--primary);
+    border-radius: 0px 0px 3px 3px;
     border-top: none;
     width: 100%;
-    background-color: white;
+    background-color: #fff;
     position: absolute;
     z-index: 100;
 }
@@ -54,4 +59,8 @@
 
 ::marker {
     color: transparent !important;
+}
+
+.schema{
+  color: var(--primary);
 }
