@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RoutingService } from '../../shared/services/routing.service';
+import { PAGES, RoutingService } from '../../shared/services/routing.service';
 import { SbomService } from '../../shared/services/sbom.service';
 import { SVIPService } from '../../shared/services/SVIP.service';
 
@@ -13,14 +13,17 @@ export class ViewComponent {
   pretty: boolean = true;
   data: any;;
   raw: string = '';
+  title: string = '';
   @Input() components: any[] | undefined;
 
   constructor(
-    public routing: RoutingService,
+    private routing: RoutingService,
     public sbomService: SbomService,
     private svipService: SVIPService
   ) {
     routing.data$.subscribe((data) => {
+      if (routing.GetPage() === PAGES.VIEW) {
+      this.title = data;
       this.data = data;
       if (data) {
         const sbomData = sbomService.GetSBOMInfo(data);
@@ -29,6 +32,7 @@ export class ViewComponent {
             this.data = sbom;
           })
         }
+      }
       }
     });
   }
