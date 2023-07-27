@@ -83,8 +83,10 @@ export class SVIPService {
 
   /**
    * Convert an  SBOM to a new format or schema.
-   *  Resulting SBOM will have a new id, overwritten or not
    * @param id SBOM id
+   * @param schema SBOM schema
+   * @param format SBOM format
+   * @param overwrite if false, a new sbom will be crated; else overwritten.
    */
   convertSBOM(
     id: number,
@@ -113,6 +115,20 @@ export class SVIPService {
         .set('format', format)
         .set('client', database
     )) as Observable<any>;
+  }
+
+  /**
+   *  Run metrics on an SBOM.
+   * @param id SBOM id
+   */
+  gradeSBOM(
+    id: number,
+  ): Observable<string> {
+    return this.client.get(
+      'sboms/qa',
+      new HttpParams()
+        .set('id', id)
+    ) as Observable<string>;
   }
   //#endregion
   //#region Electron

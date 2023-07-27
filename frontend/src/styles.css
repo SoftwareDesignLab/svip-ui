@@ -7,6 +7,7 @@
     --gray: gray;
     --bg: #c7c7c7;
     --warn: #f44336;
+    --success: #54AD78;
 
   }
 
@@ -17,7 +18,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: 'Noto Sans', 
+  font-family: 'Noto Sans',
 }
 
 .flex {

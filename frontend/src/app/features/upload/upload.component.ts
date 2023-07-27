@@ -292,6 +292,15 @@ export class UploadComponent implements OnInit {
     this.routing.data = this.sbomService.GetSBOMInfo(selected[0]).id;
   }
 
+  gradeSBOM() {
+    let selected = this.GetSelected();
+
+    if (selected.length !== 1) return;
+
+    this.routing.SetPage(PAGES.METRICS);
+    this.routing.data = selected[0];
+  }
+
 }
 
 export enum SORT_OPTIONS {
