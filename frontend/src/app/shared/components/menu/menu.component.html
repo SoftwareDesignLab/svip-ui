@@ -1,9 +1,14 @@
-<div class="col">
-	<div ngbDropdown>
-    <span class="dropdown" ngbDropdownToggle>{{text}}</span>
+<div class="col menu">
+	<div ngbDropdown #myDrop="ngbDropdown">
+		<span class="dropdown" [ngClass]="{'hoverable': sbomValid}" ngbDropdownAnchor (contextmenu)="myDrop.open()">
+			<div class="sbom-view">
+				{{ text }}
+			</div>
+		</span>
 		<div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-      <button (click)="RemoveFile()" ngbDropdownItem>Delete</button>
-      <button (click)="DownloadOne()" ngbDropdownItem>Download</button>
+			<button (click)="RemoveFile()" ngbDropdownItem>Delete</button>
+			<button *ngIf="sbomValid" class="error" (click)="DownloadOne()" ngbDropdownItem>Download</button>
+			<button *ngIf="sbomValid" class="error" (click)="ViewOne()" ngbDropdownItem>View</button>
 		</div>
 	</div>
 </div>

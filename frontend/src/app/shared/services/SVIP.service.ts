@@ -32,7 +32,7 @@ export class SVIPService {
    * @param contents contents of the sbom
    */
   uploadSBOM(fileName: string, contents: string): Observable<number> {
-    return this.client.post('upload', {
+    return this.client.post('sboms', {
       contents: contents,
       fileName: fileName,
     }) as Observable<number>;
@@ -44,7 +44,7 @@ export class SVIPService {
    */
   getSBOM(id: number): Observable<SBOM> {
     const params = new HttpParams().set('id', id);
-    return this.client.get('getSBOM', params) as Observable<SBOM>;
+    return this.client.get('sbom', params) as Observable<SBOM>;
   }
 
   /**
@@ -52,14 +52,14 @@ export class SVIPService {
    * @param id SBOM id
    */
   getSBOMContents(id: number): Observable<object> {
-    return this.client.get('view', new HttpParams().set('id', id));
+    return this.client.get('sboms/content', new HttpParams().set('id', id));
   }
 
   /**
    * Get all sboms IDs in database
    */
   getSBOMS(): Observable<number[]> {
-    return this.client.get('viewFiles') as Observable<number[]>;
+    return this.client.get('sboms') as Observable<number[]>;
   }
 
   /**
@@ -67,19 +67,19 @@ export class SVIPService {
    * @param id SBOM id
    */
   deleteSBOM(id: number): Observable<object> {
-    return this.client.delete('delete', new HttpParams().set('id', id));
+    return this.client.delete('sboms', new HttpParams().set('id', id));
   }
 
-  /**
-   * Delete an  SBOM in the database
-   * @param id SBOM id
-   */
-  compareSBOMs(ids: number[]) {
-    return this.client.get(
-      'compare',
-      new HttpParams().set('Ids', JSON.stringify(ids)).set('targetIndex', 0)
-    );
-  }
+  // /**
+  //  * Delete an  SBOM in the database
+  //  * @param id SBOM id
+  //  */
+  // compareSBOMs(ids: number[]) {
+  //   return this.client.get(
+  //     'compare',
+  //     new HttpParams().set('Ids', JSON.stringify(ids)).set('targetIndex', 0)
+  //   );
+  // }
 
   /**
    * Convert an  SBOM to a new format or schema.
@@ -92,14 +92,27 @@ export class SVIPService {
     format: string,
     overwrite: boolean
   ): Observable<string> {
-    return this.client.get(
-      'convert',
+    return this.client.put(
+      'sboms',
       new HttpParams()
         .set('id', id)
         .set('schema', schema)
         .set('format', format)
         .set('overwrite', overwrite)
     ) as Observable<string>;
+  }
+
+  getVex(id: number, format: string, database: string, apiKey: string = '') {
+
+    if(apiKey)
+      this.client.setAPIKey(apiKey);
+
+    return this.client.get("sboms/vex",
+      new HttpParams()
+        .set('id', id)
+        .set('format', format)
+        .set('client', database
+    )) as Observable<any>;
   }
   //#endregion
   //#region Electron

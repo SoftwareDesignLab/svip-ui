@@ -12,9 +12,8 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./upload.component.css'],
 })
 export class UploadComponent implements OnInit {
-  private filterSearch: string = '';
   public show: boolean = false;
-
+  public filterSearch: string = '';
   public downloadModal: boolean = false;
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
@@ -263,6 +262,14 @@ export class UploadComponent implements OnInit {
     }
   }
 
+  ClearSearch() {
+    this.filterSearch = '';
+    const searchInput = document.querySelector('input[name="search"]') as HTMLInputElement;
+    if (searchInput) {
+      searchInput.value = '';
+    }
+  }
+
   UpdateSearch(event: any) {
     this.filterSearch = event.target.value;
   }
@@ -271,13 +278,18 @@ export class UploadComponent implements OnInit {
     return this.filterSearch;
   }
 
-  ViewSBOM() {
+  ViewSBOM(sbom: string) {
+    this.routing.SetPage(PAGES.VIEW);
+    this.routing.data = sbom;
+  }
+
+  SetPageIfOneSelected(page: PAGES) {
     let selected = this.GetSelected();
 
     if (selected.length !== 1) return;
 
-    this.routing.SetPage(PAGES.VIEW);
-    this.routing.data = selected[0];
+    this.routing.SetPage(page);
+    this.routing.data = this.sbomService.GetSBOMInfo(selected[0]).id;
   }
 
 }

@@ -27,5 +27,6 @@ export class RoutingService {
 export enum PAGES {
   NONE = 0,
   VIEW = 1,
-  COMPARE = 2
+  COMPARE = 2,
+  VEX = 3
 }
