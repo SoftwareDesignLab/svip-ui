@@ -218,7 +218,7 @@ hr {
     color: black;
   }
 .sbom > div {
-    width: 300px;
+    width: 450px;
     color: var(--primary);
 }
 
@@ -229,7 +229,6 @@ hr {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    width: 95%;
   }
 
   .sbom:hover{
