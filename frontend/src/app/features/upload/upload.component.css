@@ -4,6 +4,7 @@
     flex-direction: column;
     gap: 10px;
     width: 75%;
+    height: 80%;
     margin: auto;
     margin-top: 5%;
     overflow: auto;
@@ -93,7 +94,7 @@ hr {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    height: 25vh;
+    height: 100%;
     justify-content: flex-start;
   }
 
