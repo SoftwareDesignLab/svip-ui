@@ -1,12 +1,12 @@
-<app-modal [opened]="opened" (close)="opened = false">
+<app-modal [opened]="open">
     <div title>
         Merging SBOMS
     </div>
-    <div content>
-        Loading...
+    <div content class="flex col">
+        <div *ngFor="let sbom of sboms">{{sbom}}</div>
     </div>
     <div actions style=" display: flex; gap: 15px;">
-        <div class="btn-modal button flex center hover" (click)="opened = false">
+        <div class="btn-modal button flex center hover" (click)="close()">
         <span>Cancel</span>
         </div>
     </div>

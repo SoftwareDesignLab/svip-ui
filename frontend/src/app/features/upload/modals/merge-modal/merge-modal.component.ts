@@ -6,9 +6,10 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./merge-modal.component.css'],
 })
 export class MergeModalComponent {
-  @Input() opened: boolean = false;
-  @Output() openedChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() open!: boolean;
+  @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() set sboms(value: string[]) {
+    if (!this.open) return;
     this._sboms = value;
   }
   get sboms() {
@@ -20,6 +21,6 @@ export class MergeModalComponent {
   constructor() {}
 
   close() {
-    this.openedChanged.emit(this.opened);
+    this.openChange.emit(false);
   }
 }

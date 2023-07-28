@@ -188,7 +188,11 @@ export class UploadComponent implements OnInit {
     ).length;
 
     if (hasErroredFiles) {
-      this.showToast(EventTypes.InvalidWarning);
+      this.showToast(
+        'Invalid File Type',
+        'Cannot download invalid Files',
+        EventTypes.Error
+      );
       return true;
     }
     return false;
@@ -308,6 +312,12 @@ export class UploadComponent implements OnInit {
     this.filterSearch = event.target.value;
   }
 
+  merge() {
+    if (this.CheckForErroredFiles()) return;
+    this.mergeModal = true;
+    console.log(this.mergeModal)
+  }
+
   GetFilter() {
     return this.filterSearch;
   }
@@ -326,15 +336,22 @@ export class UploadComponent implements OnInit {
     this.routing.data = this.sbomService.GetSBOMInfo(selected[0]).id;
   }
 
-  showToast(title:string, message: string, type: EventTypes) {
+  sbomsRequiredMessage(amount: number, orMore: boolean) {
+    const title = `Invalid SBOM Selection`;
+    const message = `${amount}${orMore ? ' or more ' : ' '} SBOM${
+      orMore ? 's are' : ' is'
+    } required to perform this action`;
+    this.showToast(title, message, EventTypes.Error);
+  }
+
+  showToast(title: string, message: string, type: EventTypes) {
     switch (type) {
       case EventTypes.Error:
-
-      break;
+        this.toastService.showErrorToast(title, message);
+        break;
       case EventTypes.Warning:
-      break;
-      case EventTypes.Info:
-      break;
+        this.toastService.showWarningToast(title, message);
+        break;
     }
   }
 
