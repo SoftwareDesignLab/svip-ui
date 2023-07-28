@@ -21,6 +21,7 @@ export class UploadComponent implements OnInit {
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
   private ipc!: IpcRenderer;
+  private lastSelectedIndex: number = -1;
 
   title = 'angular-bootstrap-toast-service';
 
@@ -354,6 +355,29 @@ export class UploadComponent implements OnInit {
 
     this.routing.SetPage(PAGES.METRICS);
     this.routing.data = selected[0];
+  }
+
+  handleCheckboxClick(event: Event, index: number) {
+    const checkboxes = document.querySelectorAll('.sbom-checkbox');
+    const shiftKey = (event as MouseEvent).shiftKey;
+    let startIndex = this.lastSelectedIndex !== -1 ? this.lastSelectedIndex : index;
+    let endIndex = index;
+
+    if (shiftKey && this.lastSelectedIndex !== -1) {
+      startIndex = Math.min(index, this.lastSelectedIndex);
+      endIndex = Math.max(index, this.lastSelectedIndex);
+    }
+
+    for (let i = 0; i < checkboxes.length; i++) {
+      const checkbox = checkboxes[i] as HTMLInputElement;
+      if (i >= startIndex && i <= endIndex) {
+        checkbox.checked = true;
+      } else {
+        checkbox.checked = false;
+      }
+    }
+
+    this.lastSelectedIndex = index;
   }
 
 }

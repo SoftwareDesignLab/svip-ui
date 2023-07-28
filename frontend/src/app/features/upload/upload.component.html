@@ -25,12 +25,12 @@
 
   <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
-    <ng-container *ngFor="let item of GetSBOMsOfType('VALID')">
+    <ng-container *ngFor="let item of GetSBOMsOfType('VALID'); let i = index">
       <div class="altColors">
         <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMSchema(item)">
           <div class="sbom flex">
             <div class="sbom" (dblclick)="ViewSBOM(item)">
-              <input type="checkbox" [value]="item" class="sbom-checkbox" />
+              <input type="checkbox" [value]="item" class="sbom-checkbox" (click)="handleCheckboxClick($event, i)" />
               <app-menu text="{{ getAlias(item) }}" [data]="item" style="width: 100%"></app-menu>
             </div>
             <div class="sbom-view" style="width: 100%">
