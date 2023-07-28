@@ -112,6 +112,13 @@ export class MetricsComponent implements OnInit {
       this.attributes[attr].color = this.palettes[this.palette][index];
     });
   }
+
+  /**
+   * Get SBOM filename
+   */
+  getAlias(sbom: string) {
+    return this.sbomService.getSBOMAlias(sbom);
+  }
 }
 
 interface testResult {
