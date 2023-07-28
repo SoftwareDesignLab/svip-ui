@@ -86,9 +86,7 @@ export class SVIPService {
    * @param ids ids of sboms to merge
    */
   mergeSBOMs(ids: number[]): Observable<number> {
-    return this.client.post('sboms/merge', {
-      ids,
-    }) as Observable<number>;
+    return this.client.post('sboms/merge', ids) as Observable<number>;
   }
 
   /**

@@ -1,4 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { SVIPService } from 'src/app/shared/services/SVIP.service';
+import { SbomService } from 'src/app/shared/services/sbom.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-merge-modal',
@@ -8,17 +11,36 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class MergeModalComponent {
   @Input() open!: boolean;
   @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() set sboms(value: string[]) {
-    if (!this.open) return;
-    this._sboms = value;
-  }
-  get sboms() {
-    return this._sboms;
-  }
+  loading = false;
 
-  private _sboms: string[] = [];
+  @Input() sboms!: string[];
 
-  constructor() {}
+  constructor(
+    private sbomService: SbomService,
+    private SVIPService: SVIPService,
+    private toastService: ToastService
+  ) {}
+
+  merge() {
+    this.loading = true;
+    const ids: number[] = [];
+    this.sboms.forEach((sbom) => {
+      const id = this.sbomService.GetSBOMInfo(sbom).id;
+      ids.push(id);
+    });
+
+    this.SVIPService.mergeSBOMs(ids).subscribe(
+      (id) => {
+        if (id) {
+          this.sbomService.addSBOMbyID(id);
+        }
+      },
+      (error) => {
+        this.toastService.showErrorToast('ERROR', error.message);
+      }
+    );
+    this.close();
+  }
 
   close() {
     this.openChange.emit(false);

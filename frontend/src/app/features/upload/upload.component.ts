@@ -315,7 +315,6 @@ export class UploadComponent implements OnInit {
   merge() {
     if (this.CheckForErroredFiles()) return;
     this.mergeModal = true;
-    console.log(this.mergeModal)
   }
 
   GetFilter() {

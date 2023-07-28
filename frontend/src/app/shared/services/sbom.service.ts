@@ -12,24 +12,36 @@ export class SbomService {
   public comparison: any;
   private files: { [path: string]: File } = {};
 
-  constructor(private SVIPService: SVIPService, private routingService: RoutingService) {}
+  constructor(
+    private SVIPService: SVIPService,
+    private routingService: RoutingService
+  ) {}
 
   //#region functionality
+
+  /**
+   * Gets sbom by ID
+   * @param getSBOM by ID
+   */
+  addSBOMbyID(id: number, path?: string) {
+    const fileName = path ? path : `sbom ${id}`;
+    this.SVIPService.getSBOM(id).subscribe((sbom) => {
+      const file = new File(path).setValid(id, 'n/a', sbom);
+      this.files[fileName] = file;
+      this.SetSBOMSchema(sbom.format, true);
+      this.setContents(fileName);
+    });
+  }
+
   /**
    * Gets all SBOMS in database and sets up SBOM service
    */
   getAllSBOMs() {
     this.SVIPService.getSBOMS().subscribe((ids) => {
       if (ids) {
-        ids.forEach((id, index) => {
+        ids.forEach((id) => {
           // Hotfix: talk to backend to get a path/filename sent back
-          const path = `sbom ${index}`;
-          this.SVIPService.getSBOM(id as number).subscribe((sbom) => {
-            const file = new File().setValid(id, path, 'n/a', sbom);
-            this.files[path] = file;
-            this.SetSBOMSchema(sbom.format, true);
-            this.setContents(path);
-          });
+          this.addSBOMbyID(id);
         });
       }
     });
@@ -42,7 +54,7 @@ export class SbomService {
   async AddFiles(paths: string[]) {
     paths.forEach((path) => {
       // File is loading
-      this.files[path] = new File();
+      this.files[path] = new File(path);
       this.SVIPService.getFileData(path).then((contents) => {
         if (contents) {
           this.SVIPService.uploadSBOM(path, contents).subscribe(
@@ -50,7 +62,7 @@ export class SbomService {
               if (id) {
                 // Successful upload
                 this.SVIPService.getSBOM(id).subscribe((sbom) => {
-                  this.files[path].setValid(id, path, contents, sbom);
+                  this.files[path].setValid(id, contents, sbom);
                   this.SetSBOMSchema(sbom.format, true);
                 });
               }
@@ -110,7 +122,7 @@ export class SbomService {
       this.SVIPService.deleteSBOM(id).subscribe((deleted) => {
         if (deleted) {
           const data = this.routingService.data;
-          if(data === id || data === path) {
+          if (data === id || data === path) {
             this.routingService.data = null;
             this.routingService.SetPage(PAGES.NONE);
           }

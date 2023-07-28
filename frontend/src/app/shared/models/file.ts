@@ -13,20 +13,19 @@ export default class File {
   /**
    * creates a new file. Set to loading on launch
    */
-  constructor() {
+  constructor(path?: string) {
     this.status = FileStatus.LOADING;
     this.format = 'n/a';
     this.schema = 'n/a';
     this.contents = null;
-    this.fileName = 'n/a';
+    this.fileName = path || 'n/a';
     this.id = File.fileCount;
     File.fileCount -= 1;
   }
 
-  setValid(id: number, filePath: string, contents: string, sbom: SBOM): File {
+  setValid(id: number, contents: string, sbom: SBOM): File {
     this.status = FileStatus.VALID;
     this.contents = contents;
-    this.fileName = filePath;
     this.sbom = sbom;
     this.schema = sbom.format;
     this.id = id;
