@@ -26,7 +26,7 @@ import { VexComponent } from './features/vex/vex.component';
 import { CircleToggleComponent } from './shared/components/circle-toggle/circle-toggle.component';
 import { QaFiltersComponent } from './features/metrics/qa-filters/qa-filters.component';
 import { MetricsComponent } from './features/metrics/metrics/metrics.component';
-import { MergeModalComponent } from './features/upload/modals/merge-modal/merge-modal.component';
+import { MergeModalComponent } from './shared/components/toolbar/modals/merge-modal/merge-modal.component';
 
 @NgModule({
   declarations: [
