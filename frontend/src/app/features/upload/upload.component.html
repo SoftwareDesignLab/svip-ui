@@ -65,7 +65,7 @@
       <app-button icon="download" (click)="DownloadSelected()">download</app-button>
     </div>
     <app-button text="Compare" (click)="GetSelected().length >= 2 ? compareModal = true : sbomsRequiredMessage(2, true)"/>
-    <app-button text="Convert" (click)="GetSelected().length !== 1 ? convertModal = true : sbomsRequiredMessage(1, false)"/>
+    <app-button text="Convert" (click)="GetSelected().length === 1 ? convertModal = true : sbomsRequiredMessage(1, false)"/>
     <app-button text="Vex" (click)="GetSelected().length === 1 ? SetPageIfOneSelected(3) : sbomsRequiredMessage(1, false)"/>
     <app-button text="Grade" (click)="GetSelected().length === 1 ?  gradeSBOM() : sbomsRequiredMessage(1, false)"/>
     <app-button text="Merge" (click)="GetSelected().length >= 2 ? merge() : sbomsRequiredMessage(2, true)"/>

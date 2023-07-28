@@ -26,7 +26,7 @@ export class SbomService {
   addSBOMbyID(id: number, path?: string) {
     const fileName = path ? path : `sbom ${id}`;
     this.SVIPService.getSBOM(id).subscribe((sbom) => {
-      const file = new File(path).setValid(id, fileName, sbom);
+      const file = new File(fileName).setValid(id, 'n/a', sbom);
       this.files[fileName] = file;
       this.SetSBOMSchema(sbom.format, true);
       this.setContents(fileName);

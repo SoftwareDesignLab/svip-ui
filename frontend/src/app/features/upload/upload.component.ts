@@ -202,10 +202,12 @@ export class UploadComponent implements OnInit {
     if (this.CheckForErroredFiles()) {
       return;
     }
-
     const selectedFiles = this.GetSelected();
-    for (let i = 0; i < selectedFiles.length; i++) {
-      const file = selectedFiles[i];
+
+    if (selectedFiles.length > 1) {
+      this.DownloadSelectedAsZip();
+    } else {
+      const file = selectedFiles[0];
       const name = this.GetSBOMInfo(file).fileName;
       const sbom = this.sbomService.downloadSBOM(file);
       if (sbom) {
@@ -219,7 +221,6 @@ export class UploadComponent implements OnInit {
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
       }
-      break;
     }
   }
 
