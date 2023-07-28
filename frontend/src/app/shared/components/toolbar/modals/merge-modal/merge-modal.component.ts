@@ -9,8 +9,8 @@ import { ToastService } from 'src/app/shared/services/toast.service';
   styleUrls: ['./merge-modal.component.css'],
 })
 export class MergeModalComponent {
-  @Input() open!: boolean;
-  @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() opened!: boolean;
+  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input() sboms!: string[];
 
@@ -37,10 +37,10 @@ export class MergeModalComponent {
         this.toastService.showErrorToast('ERROR', error.message);
       }
     );
-    this.close();
+    this.Close();
   }
 
-  close() {
-    this.openChange.emit(false);
+  Close() {
+    this.close.emit(false);
   }
 }

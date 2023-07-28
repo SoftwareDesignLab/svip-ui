@@ -98,6 +98,6 @@
 <app-compare-modal [opened] = "compareModal" (close)="compareModal = false"/>
 <app-convert-modal [opened] = "convertModal" (close)="convertModal = false"/>
 <app-delete-modal [opened] = "deleteModal" (close)="deleteModal = false"/>
-<app-merge-modal [(open)] = "mergeModal" [sboms]="GetSelected()"/>
+<app-merge-modal [opened] = "mergeModal" (close)="mergeModal = false" [sboms]="GetSelected()"/>
 
 <app-toaster/>
