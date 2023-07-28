@@ -1,0 +1,13 @@
+<app-modal [opened]="opened" (close)="opened = false">
+    <div title>
+        Merging SBOMS
+    </div>
+    <div content>
+        Loading...
+    </div>
+    <div actions style=" display: flex; gap: 15px;">
+        <div class="btn-modal button flex center hover" (click)="opened = false">
+        <span>Cancel</span>
+        </div>
+    </div>
+</app-modal>

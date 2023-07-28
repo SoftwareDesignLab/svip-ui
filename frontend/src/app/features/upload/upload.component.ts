@@ -20,9 +20,10 @@ export class UploadComponent implements OnInit {
   public downloadModal: boolean = false;
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
+  public mergeModal: boolean = false;
   private ipc!: IpcRenderer;
   private lastSelectedIndex: number = -1;
-  public checkboxes: boolean[] = []; 
+  public checkboxes: boolean[] = [];
 
   title = 'angular-bootstrap-toast-service';
 
@@ -33,10 +34,10 @@ export class UploadComponent implements OnInit {
     format: string;
     overwrite: boolean;
   } = {
-      schema: '',
-      format: '',
-      overwrite: true,
-    };
+    schema: '',
+    format: '',
+    overwrite: true,
+  };
   public formatOptions: string[] = ['TAGVALUE', 'JSON'];
   public schemaOptions: string[] = ['CDX14', 'SPDX23', 'SVIP'];
 
@@ -53,7 +54,7 @@ export class UploadComponent implements OnInit {
     private sbomService: SbomService,
     public routing: RoutingService,
     private toastService: ToastService,
-    private svipService: SVIPService,
+    private svipService: SVIPService
   ) {}
 
   ngOnInit() {
@@ -172,7 +173,6 @@ export class UploadComponent implements OnInit {
     this.selectedSorting = sort;
   }
 
-
   DeleteSelected() {
     this.GetSelected().forEach((file) => {
       this.RemoveFile(file);
@@ -188,14 +188,14 @@ export class UploadComponent implements OnInit {
     ).length;
 
     if (hasErroredFiles) {
-      this.showToast(EventTypes.InvalidWarning)
+      this.showToast(EventTypes.InvalidWarning);
       return true;
     }
     return false;
   }
 
   DownloadSelected() {
-    if (this.CheckForErroredFiles()){
+    if (this.CheckForErroredFiles()) {
       return;
     }
 
@@ -220,7 +220,7 @@ export class UploadComponent implements OnInit {
   }
 
   DownloadSelectedAsZip() {
-    if (this.CheckForErroredFiles()){
+    if (this.CheckForErroredFiles()) {
       return;
     }
     const selectedFiles = this.GetSelected();
@@ -296,7 +296,9 @@ export class UploadComponent implements OnInit {
 
   ClearSearch() {
     this.filterSearch = '';
-    const searchInput = document.querySelector('input[name="search"]') as HTMLInputElement;
+    const searchInput = document.querySelector(
+      'input[name="search"]'
+    ) as HTMLInputElement;
     if (searchInput) {
       searchInput.value = '';
     }
@@ -324,29 +326,15 @@ export class UploadComponent implements OnInit {
     this.routing.data = this.sbomService.GetSBOMInfo(selected[0]).id;
   }
 
-  showToast(type: EventTypes) {
+  showToast(title:string, message: string, type: EventTypes) {
     switch (type) {
-      case EventTypes.DeleteWarning:
-        this.toastService.showWarningToast('File not selected', 'Select file to delete.');
-        break;
-        case EventTypes.DownloadWarning:
-        this.toastService.showWarningToast('File not selected', 'Select valid file to download.');
-        break;
-        case EventTypes.CompareWarning:
-        this.toastService.showWarningToast('Files not selected', 'Select at least 2 valid files to compare.');
-        break;
-        case EventTypes.ConvertWarning:
-        this.toastService.showWarningToast('File not selected', 'Select valid file to convert.');
-        break;
-        case EventTypes.ViewWarning:
-        this.toastService.showWarningToast('File not selected', 'Select valid file to view.');
-        break;
-        case EventTypes.InvalidWarning:
-        this.toastService.showWarningToast('Valid file not selected', 'Select valid file and try again.');
-        break;
       case EventTypes.Error:
-        this.toastService.showErrorToast('Error toast title', 'This is an error toast message.');
-        break;
+
+      break;
+      case EventTypes.Warning:
+      break;
+      case EventTypes.Info:
+      break;
     }
   }
 
@@ -381,8 +369,6 @@ export class UploadComponent implements OnInit {
   }
 
 }
-
-
 
 export enum SORT_OPTIONS {
   NAME = 'NAME',
