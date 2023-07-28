@@ -1,4 +1,4 @@
-<app-modal [opened]="opened" (close)="opened = false">
+<app-modal [opened]="opened" (close)="Close()">
     <div title>
       Convert Selected
     </div>
@@ -29,7 +29,7 @@
       <div class="btn-modal button flex center hover" (click)="ConvertSelected()">
         <span>Convert</span>
       </div>
-      <div class="btn-modal button flex center hover" (click)="opened = false">
+      <div class="btn-modal button flex center hover" (click)="Close()">
         <span>Cancel</span>
       </div>
     </div>

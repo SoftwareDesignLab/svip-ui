@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RoutingService } from 'src/app/shared/services/routing.service';
 import { SbomService } from 'src/app/shared/services/sbom.service';
 
@@ -22,6 +22,7 @@ export class ConvertModalComponent {
   public formatOptions: string[] = ['TAGVALUE', 'JSON'];
   public schemaOptions: string[] = ['CDX14', 'SPDX23', 'SVIP'];
   @Input() opened: boolean = false;
+  @Output() close = new EventEmitter<Boolean>();
 
   GetSelected() {
     const checkboxes = document.querySelectorAll('.sbom-checkbox');
@@ -50,7 +51,12 @@ export class ConvertModalComponent {
       );
     });
 
-    this.opened = false;
+    this.Close();
+  }
+
+
+  Close() {
+    this.close.emit(true);
   }
 
 }
