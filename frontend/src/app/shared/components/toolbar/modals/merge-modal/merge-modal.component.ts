@@ -11,7 +11,6 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 export class MergeModalComponent {
   @Input() open!: boolean;
   @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  loading = false;
 
   @Input() sboms!: string[];
 
@@ -22,7 +21,6 @@ export class MergeModalComponent {
   ) {}
 
   merge() {
-    this.loading = true;
     const ids: number[] = [];
     this.sboms.forEach((sbom) => {
       const id = this.sbomService.GetSBOMInfo(sbom).id;
