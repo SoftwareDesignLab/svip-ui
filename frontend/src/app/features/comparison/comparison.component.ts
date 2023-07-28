@@ -20,8 +20,16 @@ export class ComparisonComponent {
 
   protected formatValue(value: any): string {
     const formattedValue = JSON.stringify(value, null, 2);
-    return formattedValue.replace(/[[\]{},"]/g, '') + '\n';
-  }
+    const replacedValue = formattedValue.replace(/[[\]{},"]/g, '');
+
+    const capitalizeFirstLetter = (word: string) => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    };
+
+    const modifiedValue = replacedValue.replace(/_/g, ' ').replace(/\b\w+\b/g, capitalizeFirstLetter);
+
+    return modifiedValue + '\n';
+}
 
   protected castAsAny(value: unknown): any {
     return value as any;

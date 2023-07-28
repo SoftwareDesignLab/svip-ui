@@ -11,7 +11,7 @@
             <div body>
               <app-accordion *ngFor="let conflict of castAsAny(item.value).componentConflicts | keyvalue" [title]="castToString(conflict.key)">
                 <div body>
-                  <app-accordion *ngFor="let value of castAsAny(conflict.value) | keyvalue" [title]="castToString(castAsAny(value.value).type)">
+                  <app-accordion *ngFor="let value of castAsAny(conflict.value) | keyvalue" [title]="castToString(formatValue(castAsAny(value.value).type))">
                     <div body>
                       <pre>{{formatValue(value.value)}}</pre>
                     </div>
