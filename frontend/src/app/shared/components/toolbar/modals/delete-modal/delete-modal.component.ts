@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 import { SbomService } from 'src/app/shared/services/sbom.service';
 
@@ -9,8 +9,9 @@ import { SbomService } from 'src/app/shared/services/sbom.service';
 })
 export class DeleteModalComponent {
   constructor(private sbomService: SbomService, public routing: RoutingService) {}
-  
+
   @Input() opened: boolean = false;
+  @Output() close = new EventEmitter<Boolean>();
 
   GetSelected() {
     const checkboxes = document.querySelectorAll('.sbom-checkbox');
@@ -38,12 +39,17 @@ export class DeleteModalComponent {
 
     this.sbomService.deleteFile(file);
   }
-  
+
   DeleteSelected() {
     this.GetSelected().forEach((file) => {
       this.RemoveFile(file);
     });
 
-    this.opened = false;
+    this.Close();
+  }
+
+
+  Close() {
+    this.close.emit(true);
   }
 }
