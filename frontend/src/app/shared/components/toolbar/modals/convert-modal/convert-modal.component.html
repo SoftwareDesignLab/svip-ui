@@ -7,14 +7,14 @@
         <div>Schema:</div>
         <select [(ngModel)]="convertOptions.schema">
           <option value=""></option>
-          <option *ngFor="let option of schemaOptions" [value]="option">{{ option }}</option>
+          <option *ngFor="let option of choices | keyvalue" [value]="option.key">{{ option.key }}</option>
         </select>
       </div>
       <div>
         <div>Format:</div>
         <select [(ngModel)]="convertOptions.format">
           <option value=""></option>
-          <option *ngFor="let option of formatOptions" [value]="option">{{ option }}</option>
+          <option *ngFor="let option of choices[convertOptions.schema]" [value]="option">{{ option }}</option>
         </select>
       </div>
       <div>
