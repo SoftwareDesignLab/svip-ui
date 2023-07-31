@@ -23,13 +23,16 @@ export class SbomService {
    * Gets sbom by ID
    * @param getSBOM by ID
    */
-  addSBOMbyID(id: number, path?: string) {
-    const fileName = path ? path : `sbom ${id}`;
-    this.SVIPService.getSBOM(id).subscribe((sbom) => {
-      const file = new File(fileName).setValid(id, 'n/a', sbom);
-      this.files[fileName] = file;
-      this.SetSBOMSchema(sbom.format, true);
-      this.setContents(fileName);
+  addSBOMbyID(id: number) {
+    this.SVIPService.getSBOM(id as number).subscribe((sbom) => {
+      this.SVIPService.getSBOMContents(id as number).subscribe((data: any) => {
+        let path = data.fileName;
+        let contents = data.contents;
+
+        const file = new File(path).setValid(id, contents, sbom);
+        this.files[path] = file;
+        this.SetSBOMSchema(sbom.format, true);
+      });
     });
   }
 
@@ -39,10 +42,7 @@ export class SbomService {
   getAllSBOMs() {
     this.SVIPService.getSBOMS().subscribe((ids) => {
       if (ids) {
-        ids.forEach((id) => {
-          // Hotfix: talk to backend to get a path/filename sent back
-          this.addSBOMbyID(id);
-        });
+        ids.forEach((id) => this.addSBOMbyID(id));
       }
     });
   }
@@ -185,21 +185,6 @@ export class SbomService {
    */
   GetSBOMSchema(path: string) {
     return this.files[path].schema;
-  }
-  //#endregion
-
-  //#region SBOM generic setters
-  /**
-   * Set file contents to match one stored in database
-   * @param path sbom path to reset
-   */
-  setContents(path: string) {
-    const sbom = this.files[path];
-    // Hotfix: not returning as string for some reason
-    this.SVIPService.getSBOMContents(sbom.id).subscribe((content) => {
-      this.files[path].contents = JSON.stringify(content, null, 2);
-    });
-    return this.files[path].contents;
   }
   //#endregion
 
