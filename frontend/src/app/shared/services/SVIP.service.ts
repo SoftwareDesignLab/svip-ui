@@ -70,16 +70,24 @@ export class SVIPService {
     return this.client.delete('sboms', new HttpParams().set('id', id));
   }
 
-  // /**
-  //  * Delete an  SBOM in the database
-  //  * @param id SBOM id
-  //  */
-  // compareSBOMs(ids: number[]) {
-  //   return this.client.get(
-  //     'compare',
-  //     new HttpParams().set('Ids', JSON.stringify(ids)).set('targetIndex', 0)
-  //   );
-  // }
+  /**
+   * Delete an  SBOM in the database
+   * @param id SBOM id
+   */
+  compareSBOMs(ids: number[]) {
+    return this.client.get(
+      'compare',
+      new HttpParams().set('Ids', JSON.stringify(ids)).set('targetIndex', 0)
+    );
+  }
+
+  /**
+   * Merge SBOMs into one SBOM
+   * @param ids ids of sboms to merge
+   */
+  mergeSBOMs(ids: number[]): Observable<number> {
+    return this.client.post('sboms/merge', ids) as Observable<number>;
+  }
 
   /**
    * Convert an  SBOM to a new format or schema.
@@ -105,29 +113,25 @@ export class SVIPService {
   }
 
   getVex(id: number, format: string, database: string, apiKey: string = '') {
+    if (apiKey) this.client.setAPIKey(apiKey);
 
-    if(apiKey)
-      this.client.setAPIKey(apiKey);
-
-    return this.client.get("sboms/vex",
+    return this.client.get(
+      'sboms/vex',
       new HttpParams()
         .set('id', id)
         .set('format', format)
-        .set('client', database
-    )) as Observable<any>;
+        .set('client', database)
+    ) as Observable<any>;
   }
 
   /**
    *  Run metrics on an SBOM.
    * @param id SBOM id
    */
-  gradeSBOM(
-    id: number,
-  ): Observable<string> {
+  gradeSBOM(id: number): Observable<string> {
     return this.client.get(
       'sboms/qa',
-      new HttpParams()
-        .set('id', id)
+      new HttpParams().set('id', id)
     ) as Observable<string>;
   }
   //#endregion
