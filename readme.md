@@ -2,11 +2,18 @@
 > The SBOM Visualization and Integration Platform (**SVIP**) is a unified platform to promote the
 > production, consumption, and utilization of Software Bills of Materials.
 
-### Latest Release: [[VERSION_HERE] - (DATE_HERE)](doc/changelog.md)
-> BRIEF OVERVIEW OF LATEST RELEASE HERE
+### Latest Release: [[V1.0.0] - (7/31/23)](doc/changelog.md)
+> GUI has been reworked
+> Features include:
+> Uploading SBOMS
+> Viewing SBOMS (Pretty and Raw View)
+> Convert SBOM to new schema and document format
+> Run Quality Assurance tests on SBOMs
+> Compare multiple SBOMS
+> Merge multiple SBOMs together
 
 ### System Requirements
-- SYSTEM REQ HERE
+- Requires Node >= 18.12.1
 
 ### Quick Start
 1. Follow the [SVIP API](https://github.com/SoftwareDesignLab/SVIP/tree/main#quick-start) quick start to launch the backend
@@ -23,7 +30,7 @@ BRIEF OVERVIEW OF GUI FEATURES
 - **SBOM Merging:**
 
 ## Development Build
-DETAILS ON DEV BUILD
+1. Run `npm run winBuildExe`
 
 ## Contributors
 **Principal Investigator:** [Mehdi Mirakhorli](mailto:mxmvse@rit.edu)
@@ -34,9 +41,8 @@ DETAILS ON DEV BUILD
 
 **Developer Team Lead**
 - [Orion DiLorenzo](mailto:tnd3015@rit.edu)
+- [Justin Jantzi](mailto:jwj7297@rit.edu)
 
 **Developer Team**
-- [Michael Alfonzetti](mailto:michael.alfonzetti93@gmail.com)
-- [Justin Jantzi](mailto:jwj7297@rit.edu)
 - [Fabi Marrufo](mailto:fm8191@rit.edu)
 - [Max Stein](mailto:mhs8558@rit.edu)
