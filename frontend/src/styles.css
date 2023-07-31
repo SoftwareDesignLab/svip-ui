@@ -1,1 +1,135 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --accent: #58a5ff;
+    --green: #58ff82;
+    --red: #ff5858;
+    --primary: #6889AF;
+    --gray: gray;
+    --bg: #c7c7c7;
+    --warn: #f44336;
+    --success: #54AD78;
+    --highlight: #b3d5eb3f;
+
+  }
+
+html,
+body {
+  background-color: white;
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  font-family: 'Noto Sans',
+}
+
+.flex {
+  display: flex;
+}
+
+.col {
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.hover:hover {
+  transition-duration: 0.35s;
+  transform: translate(0, -3px);
+}
+
+.shadow {
+  box-shadow: 0px 5px 10px #0000006d;
+}
+
+.center {
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-right {
+  animation-name: slide-right;
+  animation-duration: .5s;
+}
+
+
+.slide-left {
+  animation-name: slide-left;
+  animation-duration: 1s;
+}
+
+.slide-up {
+  animation-name: slide-up;
+  animation-duration: .5s;
+}
+
+.scale-in {
+  animation-name: scale-in;
+  animation-duration: 1s;
+}
+
+.fade-in {
+  animation-name: fade-in;
+  animation-duration: 1s;
+}
+
+@keyframes scale-in {
+  0% {
+    scale: 0%;
+  }
+
+  100% {
+    scale: 100%;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
+
+
+@keyframes slide-right {
+  0% {
+    transform: translate(-100vw);
+  }
+
+  100% {
+    transform: translate(0px);
+  }
+}
+
+
+
+@keyframes slide-left {
+  0% {
+    transform: translate(100vw);
+  }
+
+  100% {
+    transform: translate(0px);
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translate(0, 100vh);
+    opacity: 0%;
+  }
+
+  100% {
+    transform: translate(0px);
+    opacity: 100%;
+  }
+}

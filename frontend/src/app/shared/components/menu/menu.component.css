@@ -1,0 +1,25 @@
+.dropdown {
+  background-color: transparent;
+  border-color: white;
+}
+
+.dropdown::after {
+  content: none;
+}
+
+.hoverable:hover {
+  color: var(--primary);
+  cursor: context-menu;
+}
+
+.menu {
+  user-select: none;
+  width: 100%;
+}
+
+.sbom-view {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 95%;
+}
