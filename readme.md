@@ -5,12 +5,13 @@
 ### Latest Release: [[V1.0.0] - (7/31/23)](doc/changelog.md)
 > GUI has been reworked
 > Features include:
-> Uploading SBOMS
+> Uploading\Deleting SBOMS
 > Viewing SBOMS (Pretty and Raw View)
 > Convert SBOM to new schema and document format
 > Run Quality Assurance tests on SBOMs
 > Compare multiple SBOMS
 > Merge multiple SBOMs together
+> Download SBOMs
 
 ### System Requirements
 - Requires Node >= 18.12.1

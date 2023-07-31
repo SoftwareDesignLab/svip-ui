@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `Run Quality` Assurance tests on SBOMs
 - `Compare` multiple SBOMS
 - `Merge` multiple SBOMs together
+- `Download` download SBOMs
 
 ### Known Issues
 - `Main View`: responsiveness issues for viewer, scrollbar goes off page
