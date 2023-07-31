@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { SVIPService } from './SVIP.service';
 import { PAGES, RoutingService } from './routing.service';
 import File, { FileStatus } from '../models/file';
-import diffReport from 'src/app/features/comparison/diffReport';
 
 @Injectable({
   providedIn: 'root',
@@ -105,10 +104,9 @@ export class SbomService {
     }
 
     idList.unshift(targetID);
-    this.comparison = diffReport;
-    // this.SVIPService.compareSBOMs(idList).subscribe((result) => {
-    //   this.comparison = result;
-    // });
+    this.SVIPService.compareSBOMs(idList).subscribe((result) => {
+      this.comparison = result;
+    });
   }
 
   /**

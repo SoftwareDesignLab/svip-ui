@@ -75,9 +75,10 @@ export class SVIPService {
    * @param id SBOM id
    */
   compareSBOMs(ids: number[]) {
-    return this.client.get(
-      'compare',
-      new HttpParams().set('Ids', JSON.stringify(ids)).set('targetIndex', 0)
+    return this.client.post(
+      'sboms/compare',
+      ids,
+      new HttpParams().set('targetIndex', 0)
     );
   }
 
