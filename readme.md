@@ -3,9 +3,8 @@
 > production, consumption, and utilization of Software Bills of Materials.
 
 ### Latest Release: [[V1.0.0] - (7/31/23)](doc/changelog.md)
-> GUI has been reworked
-> Features include:
-> Uploading\Deleting SBOMS
+> GUI has been completely reworked from prototype. New features include: 
+> Uploading\Deleting SBOM
 > Viewing SBOMS (Pretty and Raw View)
 > Convert SBOM to new schema and document format
 > Run Quality Assurance tests on SBOMs
@@ -22,7 +21,6 @@
 3. `npm start`
 
 ## Features
-BRIEF OVERVIEW OF GUI FEATURES
 - **Open Source Integrated SBOM Generation:** Makes use of open source libraries to generate SBOMs
 - **SBOM Generation:** Custom SBOM generation via source file and package manager file analysis
 - **SBOM VEX Generation:**
