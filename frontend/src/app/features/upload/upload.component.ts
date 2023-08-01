@@ -364,21 +364,21 @@ export class UploadComponent implements OnInit {
     this.routing.data = selected[0];
   }
 
-  handleCheckboxClick(event: Event, index: number) {
-    const shiftKey = (event as MouseEvent).shiftKey;
+  // handleCheckboxClick(event: Event, index: number) {
+  //   const shiftKey = (event as MouseEvent).shiftKey;
 
-    if (shiftKey && this.lastSelectedIndex !== -1) {
-      const startIndex = Math.min(index, this.lastSelectedIndex);
-      const endIndex = Math.max(index, this.lastSelectedIndex);
+  //   if (shiftKey && this.lastSelectedIndex !== -1) {
+  //     const startIndex = Math.min(index, this.lastSelectedIndex);
+  //     const endIndex = Math.max(index, this.lastSelectedIndex);
 
-      for (let i = startIndex; i <= endIndex; i++) {
-        this.checkboxes[i] = true;
-      }
-    } else {
-      this.checkboxes[index] = !this.checkboxes[index];
-      this.lastSelectedIndex = index;
-    }
-  }
+  //     for (let i = startIndex; i <= endIndex; i++) {
+  //       this.checkboxes[i] = true;
+  //     }
+  //   } else {
+  //     this.checkboxes[index] = !this.checkboxes[index];
+  //     this.lastSelectedIndex = index;
+  //   }
+  // }
 
   updateCheckboxes() {
     const allFiles = this.GetAllFiles();
