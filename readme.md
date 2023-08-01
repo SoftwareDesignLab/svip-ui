@@ -3,14 +3,6 @@
 > production, consumption, and utilization of Software Bills of Materials.
 
 ### Latest Release: [[V1.0.0] - (7/31/23)](doc/changelog.md)
-> GUI has been completely reworked from prototype. New features include: 
-> Uploading\Deleting SBOM
-> Viewing SBOMS (Pretty and Raw View)
-> Convert SBOM to new schema and document format
-> Run Quality Assurance tests on SBOMs
-> Compare multiple SBOMS
-> Merge multiple SBOMs together
-> Download SBOMs
 
 ### System Requirements
 - Requires Node >= 18.12.1
@@ -23,10 +15,10 @@
 ## Features
 - **Open Source Integrated SBOM Generation:** Makes use of open source libraries to generate SBOMs
 - **SBOM Generation:** Custom SBOM generation via source file and package manager file analysis
-- **SBOM VEX Generation:**
-- **SBOM Metrics:**
-- **SBOM Comparison:**
-- **SBOM Merging:**
+- **SBOM VEX Generation:** Generate VEX documents from uploaded SBOMs
+- **SBOM Metrics:** Grade SBOMs using a series of metric tests
+- **SBOM Comparison:** Compare SBOMs to identify key differences between them
+- **SBOM Merging:** Merge SBOMs into a single unified document
 
 ## Development Build
 1. Run `npm run winBuildExe`
