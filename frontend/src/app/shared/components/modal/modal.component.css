@@ -48,10 +48,6 @@
   justify-content: center;
 }
 
-.body{
-  overflow: auto;
-}
-
 .close {
   position: absolute;
   font-size: 30px;
