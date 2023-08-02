@@ -13,9 +13,6 @@
 3. `npm start`
 
 ## Features
-- **Open Source Integrated SBOM Generation:** Makes use of open source libraries to generate SBOMs
-- **SBOM Generation:** Custom SBOM generation via source file and package manager file analysis
-- **SBOM VEX Generation:** Generate VEX documents from uploaded SBOMs
 - **SBOM Metrics:** Grade SBOMs using a series of metric tests
 - **SBOM Comparison:** Compare SBOMs to identify key differences between them
 - **SBOM Merging:** Merge SBOMs into a single unified document
