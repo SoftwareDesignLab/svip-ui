@@ -2,7 +2,7 @@
 > The SBOM Visualization and Integration Platform (**SVIP**) is a unified platform to promote the
 > production, consumption, and utilization of Software Bills of Materials.
 
-### Latest Release: [[V1.0.0] - (7/31/23)](doc/changelog.md)
+### Latest Release: [[V1.0.0a] - (7/31/23)](doc/changelog.md)
 
 ### System Requirements
 - Requires Node >= 18.12.1
