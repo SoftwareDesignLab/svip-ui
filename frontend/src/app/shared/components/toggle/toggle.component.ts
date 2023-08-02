@@ -25,5 +25,6 @@ export class ToggleComponent {
 
   uploadProject() {
     this.uploadComp.generateModal = true;
+    this.svipService.uploadProjectDirectory();
   }
 }
