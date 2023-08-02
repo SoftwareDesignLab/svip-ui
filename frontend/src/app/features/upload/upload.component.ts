@@ -3,10 +3,11 @@ import { SbomService } from 'src/app/shared/services/sbom.service';
 import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 import { FileStatus } from 'src/app/shared/models/file';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
+import * as JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 import { IpcRenderer } from 'electron';
 import { EventTypes } from 'src/app/shared/models/event-types';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { DownloadService } from 'src/app/shared/services/download.service';
 
 @Component({
   selector: 'app-upload',
@@ -20,7 +21,6 @@ export class UploadComponent implements OnInit {
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
   public mergeModal: boolean = false;
-  public generateModal: boolean = false;
   private ipc!: IpcRenderer;
   private lastSelectedIndex: number = -1;
   public checkboxes: boolean[] = [];
@@ -54,8 +54,7 @@ export class UploadComponent implements OnInit {
     private sbomService: SbomService,
     public routing: RoutingService,
     private toastService: ToastService,
-    private svipService: SVIPService,
-    private downloadService: DownloadService
+    private svipService: SVIPService
   ) {}
 
   ngOnInit() {
@@ -77,7 +76,7 @@ export class UploadComponent implements OnInit {
   }
 
   uploadProject() {
-    this.generateModal = true;
+    this.svipService.uploadProjectDirectory();
   }
 
   /**
@@ -203,15 +202,6 @@ export class UploadComponent implements OnInit {
     return false;
   }
 
-  private downloadFile(file: string) {
-    const fileInfo = this.sbomService.GetSBOMInfo(file);
-    const content = this.sbomService.downloadSBOM(file);
-
-    if (fileInfo && content) {
-      this.downloadService.Download(fileInfo.fileName, content);
-    }
-  }
-
   DownloadSelected() {
     if (this.CheckForErroredFiles()) {
       return;
@@ -222,7 +212,19 @@ export class UploadComponent implements OnInit {
       this.DownloadSelectedAsZip();
     } else {
       const file = selectedFiles[0];
-      this.downloadFile(file);
+      const name = this.GetSBOMInfo(file).fileName;
+      const sbom = this.sbomService.downloadSBOM(file);
+      if (sbom) {
+        const url = URL.createObjectURL(sbom);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = name as string;
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
     }
   }
 
@@ -231,29 +233,28 @@ export class UploadComponent implements OnInit {
       return;
     }
     const selectedFiles = this.GetSelected();
-    let files: any = {};
+    const zip = new JSZip();
 
     for (let i = 0; i < selectedFiles.length; i++) {
-      const name = selectedFiles[i];
+      const file = selectedFiles[i];
+      const name = this.GetSBOMInfo(file).fileName;
+      const sbom = this.sbomService.downloadSBOM(file);
 
-      let path = this.getAlias(name);
-
-      if(!path)
-        path = '';
-
-      const file = this.GetSBOMInfo(name);
-
-      files[path] = file.contents ? file.contents : '';
+      if (sbom) {
+        zip.file(name as string, sbom);
+      }
     }
 
-    this.downloadService.DownloadAsZip(files);
+    zip.generateAsync({ type: 'blob' }).then((content) => {
+      saveAs(content, 'files.zip');
+    });
   }
 
   /**
    * Get SBOM filename
    */
   getAlias(sbom: string) {
-    return this.sbomService.getSBOMAlias(sbom);
+    return this.sbomService.getSBOMAlias(sbom)?.split('.')[0];
   }
 
   /**
