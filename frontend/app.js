@@ -3,14 +3,14 @@ const fs = require("fs");
 const url = require("url");
 const path = require("path");
 
-const { zip } = require("zip-a-folder");
+const zip = require("zip-a-folder");
 
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
     minWidth: 800,
-    minHeight: 780,
+    minHeight: 600,
     show: false,
     webPreferences: {
       nodeIntegration: true,
@@ -59,11 +59,8 @@ ipcMain.handle("getZipFromFolder", async () => {
 
   if(folder.filePaths.length === 1) {
     let zipPath = folder.filePaths[0];
-    let tempPath = path.join(__dirname, "temp.zip");
+    let tempPath = path.join(__dirname, "temp");
     await zip(zipPath, tempPath);
-
-    const fileData = await fs.promises.readFile(filePath);
-    return fileData;
   }
 });
 
