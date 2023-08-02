@@ -145,10 +145,6 @@ export class SVIPService {
     return this.ipc.invoke('getFileData', path);
   }
 
-  getOSITools(): Observable<string[]> {
-    return this.client.get('generators/osi/tools') as Observable<string[]>;
-  }
-
   /**
    * Open file explorer and prompts user to upload fiels
    * @param id SBOM id
@@ -157,35 +153,8 @@ export class SVIPService {
     return this.ipc.invoke('selectFiles');
   }
 
-  async getProjectDirectory() : Promise<any> {
-    return new Promise(async(resolve, reject) => {
-        await this.ipc.invoke('getFolderDirectory').then((value: any) => {
-          return resolve(true);
-        }).catch(() => {
-          return reject(false);
-        })
-    }) 
-  }
-  
-  async zipFileDirectory(data: any) {
-    return new Promise(async(resolve, reject) => {
-      await this.ipc.invoke('zipDirectory').then((value: any) => {
-        return resolve(value);
-      }).catch(() => {
-        return reject(false);
-      })
-  }) 
-  }
-
-  async uploadProject(file: any, projectName: string, schema: string, format: string, type: string) {
-    let formData = new FormData();
-
-    formData.append('zipFile', new Blob([file]), 'temp.zip');
-    formData.append('projectName', projectName);
-    formData.append('schema', schema);
-    formData.append('format', format);
-
-    return this.client.post('generators/' + type.toLowerCase(), formData) as Observable<any>;
+  uploadProjectDirectory() {
+    return this.ipc.invoke('getZipFromFolder');
   }
   //#endregion
 }
