@@ -74,6 +74,10 @@ export class UploadComponent implements OnInit {
     });
   }
 
+  uploadProject() {
+    this.svipService.uploadProjectDirectory();
+  }
+
   /**
    *  Checks if any files have been uploaded
    */
