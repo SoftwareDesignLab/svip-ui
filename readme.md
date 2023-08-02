@@ -2,16 +2,7 @@
 > The SBOM Visualization and Integration Platform (**SVIP**) is a unified platform to promote the
 > production, consumption, and utilization of Software Bills of Materials.
 
-### Latest Release: [[V1.0.0] - (7/31/23)](doc/changelog.md)
-> GUI has been reworked
-> Features include:
-> Uploading\Deleting SBOMS
-> Viewing SBOMS (Pretty and Raw View)
-> Convert SBOM to new schema and document format
-> Run Quality Assurance tests on SBOMs
-> Compare multiple SBOMS
-> Merge multiple SBOMs together
-> Download SBOMs
+### Latest Release: [[V1.0.0a] - (7/31/23)](doc/changelog.md)
 
 ### System Requirements
 - Requires Node >= 18.12.1
@@ -22,13 +13,9 @@
 3. `npm start`
 
 ## Features
-BRIEF OVERVIEW OF GUI FEATURES
-- **Open Source Integrated SBOM Generation:** Makes use of open source libraries to generate SBOMs
-- **SBOM Generation:** Custom SBOM generation via source file and package manager file analysis
-- **SBOM VEX Generation:**
-- **SBOM Metrics:**
-- **SBOM Comparison:**
-- **SBOM Merging:**
+- **SBOM Metrics:** Grade SBOMs using a series of metric tests
+- **SBOM Comparison:** Compare SBOMs to identify key differences between them
+- **SBOM Merging:** Merge SBOMs into a single unified document
 
 ## Development Build
 1. Run `npm run winBuildExe`
