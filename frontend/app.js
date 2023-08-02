@@ -4,7 +4,6 @@ const url = require("url");
 const path = require("path");
 const { zip } = require("zip-a-folder");
 
-let zipPaths = {};
 let mainWindow;
 
 function createWindow() {
