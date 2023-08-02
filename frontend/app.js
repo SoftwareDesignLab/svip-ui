@@ -3,6 +3,8 @@ const fs = require("fs");
 const url = require("url");
 const path = require("path");
 
+const zip = require("zip-a-folder");
+
 let mainWindow;
 
 function createWindow() {
@@ -48,6 +50,18 @@ ipcMain.handle("selectFiles", async () => {
   });
 
   return files.filePaths;
+});
+
+ipcMain.handle("getZipFromFolder", async () => {
+  let folder = await dialog.showOpenDialog(mainWindow, {
+    properties: ["openDirectory"],
+  });
+
+  if(folder.filePaths.length === 1) {
+    let zipPath = folder.filePaths[0];
+    let tempPath = path.join(__dirname, "temp");
+    await zip(zipPath, tempPath);
+  }
 });
 
 ipcMain.handle("getFileData", async (event, ...args) => {
