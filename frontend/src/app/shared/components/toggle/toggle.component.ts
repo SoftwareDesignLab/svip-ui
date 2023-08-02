@@ -24,4 +24,8 @@ export class ToggleComponent {
       this.sbomService.AddFiles(files);
     });
   }
+
+  uploadProject() {
+    this.svipService.uploadProjectDirectory();
+  }
 }

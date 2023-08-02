@@ -152,5 +152,9 @@ export class SVIPService {
   browseFiles() {
     return this.ipc.invoke('selectFiles');
   }
+
+  uploadProjectDirectory() {
+    return this.ipc.invoke('getZipFromFolder');
+  }
   //#endregion
 }
