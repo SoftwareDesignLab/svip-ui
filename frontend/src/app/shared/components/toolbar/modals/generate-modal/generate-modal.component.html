@@ -1,0 +1,40 @@
+<app-modal [opened]="opened" (close)="Close()">
+  <div title>
+    Generate SBOM
+  </div>
+  <div content style="display: flex; gap: 15px; flex-direction: column;">
+    <div>
+      <div>Name:</div>
+      <input [(ngModel)]="options.name" />
+    </div>
+    <div>
+      <div>Schema:</div>
+      <select [(ngModel)]="options.schema">
+        <option value=""></option>
+        <option *ngFor="let option of choices | keyvalue" [value]="option.key">{{ option.key }}</option>
+      </select>
+    </div>
+    <div>
+      <div>Format:</div>
+      <select [(ngModel)]="options.format">
+        <option value=""></option>
+        <option *ngFor="let option of choices[options.schema]" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+    <div>
+      <div>Type:</div>
+      <select [(ngModel)]="options.type">
+        <option value=""></option>
+        <option *ngFor="let option of types" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+  </div>
+  <div actions style=" display: flex; gap: 15px;">
+    <div class="btn-modal button flex center hover" (click)="Generate()">
+      <span>Generate</span>
+    </div>
+    <div class="btn-modal button flex center hover" (click)="Close()">
+      <span>Cancel</span>
+    </div>
+  </div>
+</app-modal>
