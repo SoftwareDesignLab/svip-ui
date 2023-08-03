@@ -8,12 +8,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./generate-modal.component.css']
 })
 export class GenerateModalComponent implements OnInit {
-
   public options: {
-    name: string;
-    schema: string;
-    format: string;
-    type: string;
   } = {
     name: '',
     schema: '',
