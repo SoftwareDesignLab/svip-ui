@@ -55,9 +55,9 @@ import { GenerateModalComponent } from './shared/components/toolbar/modals/gener
     CircleToggleComponent,
     QaFiltersComponent,
     MergeModalComponent,
-    RepairModalComponent,
-    SpinnerComponent,
     GenerateModalComponent,
+    SpinnerComponent,
+    RepairModalComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
