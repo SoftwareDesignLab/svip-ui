@@ -59,8 +59,11 @@ ipcMain.handle("getZipFromFolder", async () => {
 
   if(folder.filePaths.length === 1) {
     let zipPath = folder.filePaths[0];
-    let tempPath = path.join(__dirname, "temp");
+    let tempPath = path.join(__dirname, "temp.zip");
     await zip(zipPath, tempPath);
+
+    const fileData = await fs.promises.readFile(filePath);
+    return fileData;
   }
 });
 
