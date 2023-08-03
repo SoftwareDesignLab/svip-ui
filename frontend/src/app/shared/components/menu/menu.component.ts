@@ -11,6 +11,8 @@ import { FileStatus } from '../../models/file';
 export class MenuComponent {
   @Input() text: string = '';
   @Input() data: string= '';
+  @Input() opened: boolean = false;
+  @Output() close = new EventEmitter<Boolean>();
   sbomValid: boolean = false;
 
   constructor(private routing: RoutingService, private sbomService: SbomService) {
@@ -27,6 +29,7 @@ export class MenuComponent {
 
   RemoveFile() {
     this.sbomService.deleteFile(this.data);
+    this.opened = false;
   }
 
   GetSBOMInfo(file: string) {
@@ -58,5 +61,13 @@ export class MenuComponent {
     } else {
       this.sbomValid = false;
     }
+  }
+
+  Close() {
+    this.opened = false;
+  }
+
+  openDeleteModal() {
+    this.opened = true;
   }
 }

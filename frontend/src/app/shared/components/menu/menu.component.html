@@ -6,9 +6,26 @@
 			</div>
 		</span>
 		<div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-			<button (click)="RemoveFile()" ngbDropdownItem>Delete</button>
+			<button (click)="openDeleteModal()" ngbDropdownItem>Delete</button>
 			<button *ngIf="sbomValid" class="error" (click)="DownloadOne()" ngbDropdownItem>Download</button>
 			<button *ngIf="sbomValid" class="error" (click)="ViewOne()" ngbDropdownItem>View</button>
 		</div>
 	</div>
 </div>
+
+<app-modal [opened]="opened" (close)="Close()">
+    <div title>
+        Delete Selected
+    </div>
+    <div content>
+        Are you sure you want to delete the selected files?
+    </div>
+    <div actions style=" display: flex; gap: 15px;">
+        <div class="btn-modal button flex center hover" (click)="RemoveFile()">
+        <span>Delete</span>
+        </div>
+        <div class="btn-modal button flex center hover" (click)="Close()">
+        <span>Cancel</span>
+        </div>
+    </div>
+</app-modal>
