@@ -153,8 +153,16 @@ export class SVIPService {
     return this.ipc.invoke('selectFiles');
   }
 
-  uploadProjectDirectory() {
-    return this.ipc.invoke('getZipFromFolder');
+  async uploadProjectDirectory(projectName: string, schema: string, format: string, type: string) {
+    let file = await this.ipc.invoke('getZipFromFolder');
+    const formData = new FormData();
+
+    formData.append('zipFile', file, 'temp.zip');
+    formData.append('projectName', projectName);
+    formData.append('schema', schema);
+    formData.append('format', format);
+
+    return this.client.post('generators/' + type.toLowerCase(), formData) as Observable<any>;
   }
   //#endregion
 }
