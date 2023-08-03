@@ -77,7 +77,6 @@ export class UploadComponent implements OnInit {
 
   uploadProject() {
     this.generateModal = true;
-    this.svipService.uploadProjectDirectory();
   }
 
   /**
