@@ -1,13 +1,14 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
-import { Subject } from 'rxjs';
+import { SbomService } from 'src/app/shared/services/sbom.service';
 
 @Component({
   selector: 'app-generate-modal',
   templateUrl: './generate-modal.component.html',
   styleUrls: ['./generate-modal.component.css']
 })
-export class GenerateModalComponent implements OnInit {
+export class GenerateModalComponent {
+  constructor(private service: SVIPService) {}
 
   public options: {
     name: string;
@@ -29,69 +30,22 @@ export class GenerateModalComponent implements OnInit {
 
   public types: string[] = ['OSI', 'PARSERS'];
 
-  public osiTools: {[name: string]: boolean} = {};
-
   @Input() opened: boolean = false;
   @Output() close = new EventEmitter<Boolean>();
-  private openedSubject = new Subject<boolean>();
-
-  public selectingDirectory: boolean = false;
-  public zippedFileData: any;
-
-  constructor(private service: SVIPService) {}
-
-  ngOnInit(): void {
-    this.openedSubject.subscribe((value) => {
-      if(!value)
-        return;
-
-        this.zippedFileData = undefined;
-        this.selectingDirectory = true;
-
-        this.service.getProjectDirectory().then((result) => {
-          this.selectingDirectory = false;
-
-          this.service.zipFileDirectory(result).then((data) => {
-            this.zippedFileData = data;
-          }).catch((error) => {
-            this.Close();
-          })
-        }).catch((error) => {
-          this.Close();
-        })
-    });
-
-    this.service.getOSITools().subscribe((data) => {
-      data.forEach((tool) => {
-        this.osiTools[tool] = true;
-      })
-    })
-  }
-
-  ngOnChanges(): void {
-    this.openedSubject.next(this.opened);
-  }
 
   Generate() {
     if (this.options.schema === '' || this.options.format === '' || this.options.type === '' || this.options.name === '')
       return;
 
-    this.service.uploadProject(this.zippedFileData,
-      this.options.name,
-      this.options.schema,
-      this.options.format,
-      this.options.type);
+    this.service.uploadProjectDirectory(this.options.name, this.options.schema, this.options.format, this.options.type).then((result) => {
+      console.log(result);
+    })
 
     this.Close();
   }
 
-  OSIToolChange(event: any) {
-    this.osiTools[event.name] = event.value;
-  }
-
 
   Close() {
-    this.selectingDirectory = false;
     this.close.emit(true);
   }
 
