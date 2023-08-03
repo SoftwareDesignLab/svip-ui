@@ -95,6 +95,7 @@ hr {
     flex-direction: column;
     overflow-y: scroll;
     height: 100%;
+    min-height: 84px;
     justify-content: flex-start;
   }
 
