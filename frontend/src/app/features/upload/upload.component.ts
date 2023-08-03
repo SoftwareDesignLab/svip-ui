@@ -20,6 +20,7 @@ export class UploadComponent implements OnInit {
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
   public mergeModal: boolean = false;
+  public generateModal: boolean = false;
   private ipc!: IpcRenderer;
   private lastSelectedIndex: number = -1;
   public checkboxes: boolean[] = [];
@@ -76,7 +77,7 @@ export class UploadComponent implements OnInit {
   }
 
   uploadProject() {
-    this.svipService.uploadProjectDirectory();
+    this.generateModal = true;
   }
 
   /**
