@@ -37,9 +37,9 @@ export class GenerateModalComponent {
     if (this.options.schema === '' || this.options.format === '' || this.options.type === '' || this.options.name === '')
       return;
 
-    // this.service.uploadProjectDirectory(this.options.name, this.options.schema, this.options.format, this.options.type).then((result) => {
-    //   console.log(result);
-    // })
+    this.service.uploadProjectDirectory(this.options.name, this.options.schema, this.options.format, this.options.type).then((result) => {
+      console.log(result);
+    })
 
     this.Close();
   }
