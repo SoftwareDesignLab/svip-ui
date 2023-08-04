@@ -8,6 +8,7 @@ import { saveAs } from 'file-saver';
 import { IpcRenderer } from 'electron';
 import { EventTypes } from 'src/app/shared/models/event-types';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { DownloadService } from 'src/app/shared/services/download.service';
 
 @Component({
   selector: 'app-upload',
@@ -54,7 +55,8 @@ export class UploadComponent implements OnInit {
     private sbomService: SbomService,
     public routing: RoutingService,
     private toastService: ToastService,
-    private svipService: SVIPService
+    private svipService: SVIPService,
+    private downloadService: DownloadService
   ) {}
 
   ngOnInit() {
@@ -198,6 +200,15 @@ export class UploadComponent implements OnInit {
     return false;
   }
 
+  private downloadFile(file: string) {
+    const fileInfo = this.sbomService.GetSBOMInfo(file);
+    const content = this.sbomService.downloadSBOM(file);
+
+    if (fileInfo && content) {
+      this.downloadService.Download(fileInfo.fileName, content);
+    }
+  }
+
   DownloadSelected() {
     if (this.CheckForErroredFiles()) {
       return;
@@ -208,19 +219,7 @@ export class UploadComponent implements OnInit {
       this.DownloadSelectedAsZip();
     } else {
       const file = selectedFiles[0];
-      const name = this.GetSBOMInfo(file).fileName;
-      const sbom = this.sbomService.downloadSBOM(file);
-      if (sbom) {
-        const url = URL.createObjectURL(sbom);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = name as string;
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-      }
+      this.downloadFile(file);
     }
   }
 
