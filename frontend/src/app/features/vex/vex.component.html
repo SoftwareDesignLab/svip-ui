@@ -50,16 +50,13 @@
         <div [innerHTML]="formatValue(vex.error)"></div>
       </div>
     </app-accordion>
-    <div class="btn-download">
-      <app-button text="Download Report" (click)="downloadVex()"/>
-    </div>
   </div>
 
-  <div body-2 *ngIf="vex === undefined && loading === false" style="margin:auto;">
+  <div body-2 *ngIf="vex === undefined && loading === false" style="width: 100%;">
     Press 'Generate Data' in settings to view data
   </div>
 
-  <div body-2 *ngIf="loading === true" style="align-items: center; width: 100%;">
-    <app-spinner style="margin: auto;" height="64px" width="64px"></app-spinner>
+  <div body-2 *ngIf="loading === true" style="width: 100%;">
+    <app-spinner></app-spinner>
   </div>
 </app-viewer>
