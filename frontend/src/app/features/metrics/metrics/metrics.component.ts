@@ -4,6 +4,7 @@ import { RoutingService } from 'src/app/shared/services/routing.service';
 import { SbomService } from 'src/app/shared/services/sbom.service';
 import palettes, { PALETTE, resultStatus } from '../models/palette';
 import filter from '../models/filters';
+import { DownloadService } from 'src/app/shared/services/download.service';
 
 @Component({
   selector: 'app-metrics',
@@ -50,7 +51,8 @@ export class MetricsComponent implements OnInit {
   constructor(
     private routing: RoutingService,
     private SVIP: SVIPService,
-    private sbomService: SbomService
+    private sbomService: SbomService,
+    private downloadService: DownloadService
   ) {
     routing.data$.subscribe((data) => {
       if (data) {
@@ -118,6 +120,13 @@ export class MetricsComponent implements OnInit {
    */
   getAlias(sbom: string) {
     return this.sbomService.getSBOMAlias(sbom);
+  }
+
+  downloadReport() {
+    const fileName = 'report.json';
+    const reportData = this.qa; 
+    const reportJson = JSON.stringify(reportData, null, 2);
+    this.downloadService.Download(fileName, new Blob([reportJson], { type: 'application/json' }));
   }
 }
 
