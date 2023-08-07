@@ -30,7 +30,7 @@
         <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMSchema(item)">
           <div class="sbom flex">
             <div class="sbom" (dblclick)="ViewSBOM(item)">
-              <input type="checkbox" [value]="item" class="sbom-checkbox" />
+              <input type="checkbox" [value]="item" class="sbom-checkbox" [checked]="checkboxes[i]" (click)="handleCheckboxClick($event, i)" />
               <app-menu text="{{ getAlias(item) }}" [data]="item" style="width: 100%"></app-menu>
             </div>
             <div class="sbom-view" style="width: 100%">
@@ -44,7 +44,7 @@
     <ng-container *ngFor="let item of GetSBOMsOfType('ERROR'); let i = index">
       <div *ngIf="getAlias(item)?.includes(GetFilter())">
         <div class="sbom" style="color: var(--red);">
-          <input type="checkbox" [value]="item" class="sbom-checkbox" [checked]="checkboxes[i]" />
+          <input type="checkbox" [value]="item" class="sbom-checkbox" [checked]="checkboxes[i]" (click)="handleCheckboxClick($event, i)" />
           <span ngbTooltip="SBOM is not valid!">
             <app-menu text="{{ getAlias(item) }}" [data]="item" style="width: 100%"></app-menu>
           </span>
@@ -55,7 +55,7 @@
     <div *ngFor="let item of GetSBOMsOfType('LOADING')">
       <div class="sbom" style="color: var(--accent); width: 95%;">
         <app-spinner class="spinner"></app-spinner>
-        <span class="spinner-text">{{ getAlias(item) }}</span>
+        {{ getAlias(item) }}
       </div>
     </div>
   </div>
@@ -65,7 +65,6 @@
       <app-button icon="delete" (click)="GetSelected().length >= 1 ? deleteModal = true : sbomsRequiredMessage(1, true)"></app-button>
       <app-button icon="download" (click)="DownloadSelected()">download</app-button>
     </div>
-    <app-button text="Generate" (click)="generateModal = true"/>
     <app-button text="Compare" (click)="GetSelected().length >= 2 ? compareModal = true : sbomsRequiredMessage(2, true)"/>
     <app-button text="Convert" (click)="GetSelected().length === 1 ? convertModal = true : sbomsRequiredMessage(1, false)"/>
     <app-button text="Vex" (click)="GetSelected().length === 1 ? SetPageIfOneSelected(3) : sbomsRequiredMessage(1, false)"/>
@@ -91,13 +90,12 @@
   <div class="generate-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <div class="scale-in flex col center">
-      <app-button text="Generate" (click)="uploadProject()" />
+      <app-button text="Generate" (click)="browse()" />
       <p class="text-center">or drag project directory in here</p>
     </div>
   </div>
 </div>
 
-<app-generate-modal [opened] = "generateModal" (close)="generateModal = false"/>
 <app-compare-modal [opened] = "compareModal" (close)="compareModal = false"/>
 <app-convert-modal [opened] = "convertModal" (close)="convertModal = false"/>
 <app-delete-modal [opened] = "deleteModal" (close)="deleteModal = false"/>
