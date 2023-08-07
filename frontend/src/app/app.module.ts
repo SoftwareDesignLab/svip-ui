@@ -27,6 +27,7 @@ import { CircleToggleComponent } from './shared/components/circle-toggle/circle-
 import { QaFiltersComponent } from './features/metrics/qa-filters/qa-filters.component';
 import { MetricsComponent } from './features/metrics/metrics/metrics.component';
 import { MergeModalComponent } from './shared/components/toolbar/modals/merge-modal/merge-modal.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { MergeModalComponent } from './shared/components/toolbar/modals/merge-mo
     CircleToggleComponent,
     QaFiltersComponent,
     MergeModalComponent,
+    SpinnerComponent,
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
