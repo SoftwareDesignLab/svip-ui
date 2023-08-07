@@ -76,11 +76,9 @@ export class GenerateModalComponent implements OnInit {
     if (this.options.schema === '' || this.options.format === '' || this.options.type === '' || this.options.name === '')
       return;
 
-    this.service.uploadProject(this.zippedFileData,
-      this.options.name,
-      this.options.schema,
-      this.options.format,
-      this.options.type);
+    // this.service.uploadProjectDirectory(this.options.name, this.options.schema, this.options.format, this.options.type).then((result) => {
+    //   console.log(result);
+    // })
 
     this.Close();
   }
