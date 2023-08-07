@@ -118,10 +118,15 @@
   </ng-template>
 
   <ng-template #filters>
-    <app-qa-filters
-      [(attributes)]="attributes"
-      [(palette)]="palette"
-      [(resultStatus)]="resultStatus"
-    ></app-qa-filters>
+    <div class="filters-container">
+      <app-qa-filters
+        [(attributes)]="attributes"
+        [(palette)]="palette"
+        [(resultStatus)]="resultStatus"
+      ></app-qa-filters>
+      <div class="button-container">
+        <app-button text="Download Report" (click)="downloadReport()"></app-button>
+      </div>
+    </div>
   </ng-template>
 </app-viewer>
