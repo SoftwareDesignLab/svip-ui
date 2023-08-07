@@ -52,11 +52,11 @@
     </app-accordion>
   </div>
 
-  <div body-2 *ngIf="vex === undefined && loading === false" style="width: 100%;">
+  <div body-2 *ngIf="vex === undefined && loading === false" style="margin:auto;">
     Press 'Generate Data' in settings to view data
   </div>
 
-  <div body-2 *ngIf="loading === true" style="width: 100%;">
+  <div body-2 *ngIf="loading === true" style="align-items: center; width: 100%;">
     <app-spinner></app-spinner>
   </div>
 </app-viewer>
