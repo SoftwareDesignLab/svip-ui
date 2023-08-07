@@ -130,16 +130,6 @@ export class MetricsComponent implements OnInit {
     const reportJson = JSON.stringify(reportData, null, 2);
     this.downloadService.Download(fileName, new Blob([reportJson], { type: 'application/json' }));
   }
-
-  openRepairModal(errorMessage: string) {
-    console.log('Error Message:', errorMessage);
-    this.selectedErrorMessage = errorMessage;
-    this.repairModal = true;
-  }
-
-  returnMessage(){
-    return this.selectedErrorMessage;
-  }
 }
 
 interface testResult {
