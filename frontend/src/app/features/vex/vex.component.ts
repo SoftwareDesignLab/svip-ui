@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { VexResponse } from 'src/app/shared/models/vex';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
+import { DownloadService } from 'src/app/shared/services/download.service';
 import { RoutingService } from 'src/app/shared/services/routing.service';
+import { SbomService } from 'src/app/shared/services/sbom.service';
 
 @Component({
   selector: 'app-vex',
@@ -12,7 +14,12 @@ export class VexComponent {
   protected vex: VexResponse | undefined;
   protected loading: boolean = false;
 
-  constructor(private client: SVIPService, private routing: RoutingService) {}
+  constructor(
+    private client: SVIPService, 
+    private routing: RoutingService,
+    private sbomService: SbomService,
+    private downloadService: DownloadService
+    ) {}
 
   protected vexOptions = {
     databases: ['OSV', 'NVD'],
@@ -73,5 +80,12 @@ export class VexComponent {
 
       this.loading = false;
     })
+  }
+
+  downloadVex() {
+    const fileName = 'vex.json';
+    const vexData = this.vex; 
+    const vexJson = JSON.stringify(vexData, null, 2);
+    this.downloadService.Download(fileName, new Blob([vexJson], { type: 'application/json' }));
   }
 }
