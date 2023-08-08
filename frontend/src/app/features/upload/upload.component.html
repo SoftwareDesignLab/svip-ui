@@ -55,7 +55,7 @@
     <div *ngFor="let item of GetSBOMsOfType('LOADING')">
       <div class="sbom" style="color: var(--accent); width: 95%;">
         <app-spinner class="spinner"></app-spinner>
-        {{ getAlias(item) }}
+        <span class="spinner-text">{{ getAlias(item) }}</span>      
       </div>
     </div>
   </div>
