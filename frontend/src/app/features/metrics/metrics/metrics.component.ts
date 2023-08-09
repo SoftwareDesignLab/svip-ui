@@ -126,7 +126,7 @@ export class MetricsComponent implements OnInit {
 
   downloadReport() {
     const fileName = 'report.json';
-    const reportData = this.qa; 
+    const reportData = this.qa;
     const reportJson = JSON.stringify(reportData, null, 2);
     this.downloadService.Download(fileName, new Blob([reportJson], { type: 'application/json' }));
   }
