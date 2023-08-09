@@ -3,8 +3,6 @@ import { SbomService } from 'src/app/shared/services/sbom.service';
 import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 import { FileStatus } from 'src/app/shared/models/file';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
-import * as JSZip from 'jszip';
-import { saveAs } from 'file-saver';
 import { IpcRenderer } from 'electron';
 import { EventTypes } from 'src/app/shared/models/event-types';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -228,7 +226,7 @@ export class UploadComponent implements OnInit {
       return;
     }
     const selectedFiles = this.GetSelected();
-    const zip = new JSZip();
+    let files: any = {};
 
     for (let i = 0; i < selectedFiles.length; i++) {
       const name = selectedFiles[i];
@@ -240,12 +238,10 @@ export class UploadComponent implements OnInit {
 
       const file = this.GetSBOMInfo(name);
 
-      zip.file(path, file.contents ? file.contents : '');
+      files[path] = file.contents ? file.contents : '';
     }
 
-    zip.generateAsync({ type: 'blob' }).then((content) => {
-      saveAs(content, 'files.zip');
-    });
+    this.downloadService.DownloadAsZip(files);
   }
 
   /**
