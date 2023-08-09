@@ -9,7 +9,6 @@ export class RepairModalComponent {
 
   @Input() opened!: boolean;
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() selectedErrorMessage: string = ''; 
 
   Close() {
     this.close.emit(false);

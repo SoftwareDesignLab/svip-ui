@@ -1,15 +1,13 @@
 <app-modal [opened]="opened" (close)="Close()">
-    <div title>Repair Selected</div>
+    <div title *ngFor="let sbom of sboms">Repair Selected</div>
     <div content class="flex col">
-      <p>Issue: <br>{{ selectedErrorMessage}}</p>
-      <p>Suggested Change: </p>
     </div>
     <div actions style="display: flex; gap: 15px">
       <div class="btn-modal button flex center hover" (click)="Repair()">
-        <span>Accept</span>
+        <span>Repair</span>
       </div>
       <div class="btn-modal button flex center hover" (click)="Close()">
-        <span>Deny</span>
+        <span>Cancel</span>
       </div>
     </div>
   </app-modal>
