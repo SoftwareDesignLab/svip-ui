@@ -231,13 +231,16 @@ export class UploadComponent implements OnInit {
     const zip = new JSZip();
 
     for (let i = 0; i < selectedFiles.length; i++) {
-      const file = selectedFiles[i];
-      const name = this.GetSBOMInfo(file).fileName;
-      const sbom = this.sbomService.downloadSBOM(file);
+      const name = selectedFiles[i];
 
-      if (sbom) {
-        zip.file(name as string, sbom);
-      }
+      let path = this.getAlias(name);
+
+      if(!path)
+        path = '';
+
+      const file = this.GetSBOMInfo(name);
+
+      zip.file(path, file.contents ? file.contents : '');
     }
 
     zip.generateAsync({ type: 'blob' }).then((content) => {
