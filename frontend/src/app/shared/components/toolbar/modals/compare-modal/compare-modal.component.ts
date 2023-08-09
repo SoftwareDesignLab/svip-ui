@@ -21,7 +21,7 @@ export class CompareModalComponent {
     for (let i = 0; i < checkboxes.length; i++) {
       const checkbox = checkboxes[i] as HTMLInputElement;
       if (checkbox.checked && !checkbox.disabled && checkbox.value != 'null') {
-        selected.push(checkbox.value as string);
+        selected.push(this.getAlias(checkbox.value) as string);
       }
     }
 
@@ -29,11 +29,10 @@ export class CompareModalComponent {
   }
 
   CompareSelected() {
-    this.Close();
     let others = this.GetSelected().filter((x) => x !== this.compareTarget);
     this.sbomService.CompareSBOMs(this.compareTarget, others);
     this.Close();
-
+    
     this.routing.SetPage(2);
   }
 
