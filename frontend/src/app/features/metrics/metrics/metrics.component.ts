@@ -17,6 +17,7 @@ export class MetricsComponent implements OnInit {
   attributes: filter = {};
   name: string = '';
   palettes = palettes;
+  public repairModal: boolean = false;
   private _palette = PALETTE.DEFAULT;
   get palette() {
     return this._palette;
