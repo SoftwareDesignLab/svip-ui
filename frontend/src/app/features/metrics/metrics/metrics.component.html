@@ -52,9 +52,9 @@
               ></div>
             </ng-container>
           </div>
-          <span body class="flex error-result">
+          <span body>
             {{ testResult.details }}
-            <app-button style="margin-left: auto;" text="Repair" (click)="openRepairModal(testResult.details)" *ngIf="testResult.status === 'FAIL'" icon="build"></app-button>
+            <app-button (click) = "repairModal = true" *ngIf="testResult.status === 'FAIL'" icon="build"></app-button>
           </span>
         </app-accordion>
       </ng-container>
@@ -105,10 +105,7 @@
                     ></div>
                   </ng-container>
                 </div>
-                <span body class="flex error-result">
-                  {{ testResult.details }}
-                  <app-button style="margin-left: auto;" text="Repair" (click)="openRepairModal(testResult.details)" *ngIf="testResult.status === 'FAIL'" icon="build"></app-button>
-                </span>
+                <span body>{{ testResult.details }}</span>
               </app-accordion>
             </ng-container>
           </div>
@@ -119,7 +116,7 @@
 
   <ng-template #loading>
     <div *ngIf="!qa" class="loading flex center">
-      <app-spinner height="64px" width="64px"></app-spinner>
+      <div>LOADING</div>
     </div>
   </ng-template>
 
@@ -137,4 +134,4 @@
   </ng-template>
 </app-viewer>
 
-<app-repair-modal [selectedErrorMessage]="returnMessage()" [opened] = "repairModal" (close)="repairModal = false"/>
+<app-repair-modal [opened] = "repairModal" (close)="repairModal = false"/>
