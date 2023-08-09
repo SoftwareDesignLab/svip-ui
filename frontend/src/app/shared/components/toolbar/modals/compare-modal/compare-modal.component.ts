@@ -29,6 +29,7 @@ export class CompareModalComponent {
   }
 
   CompareSelected() {
+    this.Close();
     let others = this.GetSelected().filter((x) => x !== this.compareTarget);
     this.sbomService.CompareSBOMs(this.compareTarget, others);
     this.Close();
