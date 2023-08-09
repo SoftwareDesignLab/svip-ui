@@ -252,7 +252,7 @@ export class UploadComponent implements OnInit {
    * Get SBOM filename
    */
   getAlias(sbom: string) {
-    return this.sbomService.getSBOMAlias(sbom)?.substring(5);
+    return this.sbomService.getSBOMAlias(sbom);
   }
 
   /**
