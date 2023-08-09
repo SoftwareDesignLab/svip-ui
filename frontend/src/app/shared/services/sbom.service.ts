@@ -218,7 +218,8 @@ export class SbomService {
    */
   getSBOMAlias(path: string) {
     const pathChar = path.indexOf('/') !== -1 ? '/' : '\\';
-    return path.split(pathChar).pop();
+    let name = path.split(pathChar).pop();
+    return name?.substring(5);
   }
 
   //#endregion
