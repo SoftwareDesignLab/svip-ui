@@ -37,7 +37,7 @@ export class MenuComponent {
   }
 
   ViewOne() {
-    this.routing.data = this.text;
+    this.routing.data = this.data;
     this.routing.SetPage(PAGES.VIEW);
   }
 
