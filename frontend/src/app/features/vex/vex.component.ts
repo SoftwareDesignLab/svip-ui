@@ -83,6 +83,8 @@ export class VexComponent {
 
   
   downloadVex() {
+    this.GenerateData()
+    
     const fileName = 'vex.json';
     const vexData = this.vex; 
     const vexJson = JSON.stringify(vexData, null, 2);
