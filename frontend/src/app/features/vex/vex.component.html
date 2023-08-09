@@ -16,13 +16,9 @@
     </div>
     <div>
       <div>API Key:</div>
-      <input [(ngModel)]="vexOptions.apiKey"
-        [disabled]="!vexOptions.requiresAPIKey.includes(vexOptions.selectedDatabase)" />
+      <input [(ngModel)]="vexOptions.apiKey" [disabled]="!vexOptions.requiresAPIKey.includes(vexOptions.selectedDatabase)"/>
     </div>
-    <div class="flex buttons">
-      <app-button text="Generate Data" (click)="this.GenerateData()" />
-      <app-button icon="download" (click)="downloadVex()">download</app-button>
-    </div>
+    <app-button text="Generate Data" (click)="this.GenerateData()"/>
   </div>
 
   <div body-2 *ngIf="vex !== undefined && loading === false" style="width: 100%;">
