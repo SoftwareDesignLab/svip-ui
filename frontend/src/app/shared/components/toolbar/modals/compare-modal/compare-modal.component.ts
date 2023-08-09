@@ -28,10 +28,11 @@ export class CompareModalComponent {
     return selected;
   }
 
-  CompareSelected() {    
-    this.Close();
+  CompareSelected() {
     let others = this.GetSelected().filter((x) => x !== this.compareTarget);
     this.sbomService.CompareSBOMs(this.compareTarget, others);
+    this.Close();
+
     this.routing.SetPage(2);
   }
 
