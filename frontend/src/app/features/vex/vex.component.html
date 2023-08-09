@@ -50,7 +50,9 @@
         <div [innerHTML]="formatValue(vex.error)"></div>
       </div>
     </app-accordion>
-    <app-button text="Download Report" (click)="downloadVex()"/>
+    <div class="btn-download">
+      <app-button text="Download Report" (click)="downloadVex()"/>
+    </div>
   </div>
 
   <div body-2 *ngIf="vex === undefined && loading === false" style="margin:auto;">
