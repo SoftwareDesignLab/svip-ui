@@ -1,13 +1,15 @@
 <app-modal [opened]="opened" (close)="Close()">
     <div title>Repair Selected</div>
     <div content class="flex col">
+      <p>Issue: <br>{{ selectedErrorMessage}}</p>
+      <p>Suggested Change: </p>
     </div>
     <div actions style="display: flex; gap: 15px">
       <div class="btn-modal button flex center hover" (click)="Repair()">
-        <span>Repair</span>
+        <span>Accept</span>
       </div>
       <div class="btn-modal button flex center hover" (click)="Close()">
-        <span>Cancel</span>
+        <span>Deny</span>
       </div>
     </div>
   </app-modal>
