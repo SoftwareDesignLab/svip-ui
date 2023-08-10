@@ -17,6 +17,7 @@ export class MetricsComponent implements OnInit {
   attributes: filter = {};
   name: string = '';
   palettes = palettes;
+  selectedErrorMessage: string = '';
   public repairModal: boolean = false;
   private _palette = PALETTE.DEFAULT;
   get palette() {
@@ -128,6 +129,16 @@ export class MetricsComponent implements OnInit {
     const reportData = this.qa; 
     const reportJson = JSON.stringify(reportData, null, 2);
     this.downloadService.Download(fileName, new Blob([reportJson], { type: 'application/json' }));
+  }
+
+  openRepairModal(errorMessage: string) {
+    console.log('Error Message:', errorMessage);
+    this.selectedErrorMessage = errorMessage;
+    this.repairModal = true;
+  }
+
+  returnMessage(){
+    return this.selectedErrorMessage;
   }
 }
 
