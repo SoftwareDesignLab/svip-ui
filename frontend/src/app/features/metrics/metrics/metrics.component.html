@@ -52,9 +52,9 @@
               ></div>
             </ng-container>
           </div>
-          <span body>
+          <span body class="flex error-result">
             {{ testResult.details }}
-            <app-button (click)="openRepairModal(testResult.details)" *ngIf="testResult.status === 'FAIL'" icon="build"></app-button>
+            <app-button style="margin-left: auto;" text="Repair" (click)="openRepairModal(testResult.details)" *ngIf="testResult.status === 'FAIL'" icon="build"></app-button>
           </span>
         </app-accordion>
       </ng-container>
@@ -105,7 +105,10 @@
                     ></div>
                   </ng-container>
                 </div>
-                <span body>{{ testResult.details }}</span>
+                <span body class="flex error-result">
+                  {{ testResult.details }}
+                  <app-button style="margin-left: auto;" text="Repair" (click)="openRepairModal(testResult.details)" *ngIf="testResult.status === 'FAIL'" icon="build"></app-button>
+                </span>
               </app-accordion>
             </ng-container>
           </div>
