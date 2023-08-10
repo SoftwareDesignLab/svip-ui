@@ -54,7 +54,7 @@
           </div>
           <span body>
             {{ testResult.details }}
-            <app-button (click) = "repairModal = true" *ngIf="testResult.status === 'FAIL'" icon="build"></app-button>
+            <app-button (click)="openRepairModal(testResult.details)" *ngIf="testResult.status === 'FAIL'" icon="build"></app-button>
           </span>
         </app-accordion>
       </ng-container>
@@ -134,4 +134,4 @@
   </ng-template>
 </app-viewer>
 
-<app-repair-modal [opened] = "repairModal" (close)="repairModal = false"/>
+<app-repair-modal [selectedErrorMessage]="returnMessage()" [opened] = "repairModal" (close)="repairModal = false"/>
