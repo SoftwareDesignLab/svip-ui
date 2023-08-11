@@ -1,14 +1,13 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
-import { SbomService } from 'src/app/shared/services/sbom.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-generate-modal',
   templateUrl: './generate-modal.component.html',
   styleUrls: ['./generate-modal.component.css']
 })
-export class GenerateModalComponent {
-  constructor(private service: SVIPService) {}
+export class GenerateModalComponent implements OnInit {
 
   public options: {
     name: string;
@@ -32,14 +31,40 @@ export class GenerateModalComponent {
 
   @Input() opened: boolean = false;
   @Output() close = new EventEmitter<Boolean>();
+  private openedSubject = new Subject<boolean>();
+
+  private zippedFileData: any;
+
+  constructor(private service: SVIPService) {}
+
+  ngOnInit(): void {
+    this.openedSubject.subscribe((value) => {
+      if(!value)
+        return;
+
+        this.zippedFileData = undefined;
+
+        this.service.zipProjectDirectory().then((result) => {
+          this.zippedFileData = result;
+        }).catch((error) => {
+          this.Close();
+        })
+    });
+  }
+
+  ngOnChanges(): void {
+    this.openedSubject.next(this.opened);
+  }
 
   Generate() {
     if (this.options.schema === '' || this.options.format === '' || this.options.type === '' || this.options.name === '')
       return;
 
-    // this.service.uploadProjectDirectory(this.options.name, this.options.schema, this.options.format, this.options.type).then((result) => {
-    //   console.log(result);
-    // })
+    this.service.uploadProject(this.zippedFileData, 
+      this.options.name, 
+      this.options.schema, 
+      this.options.format, 
+      this.options.type);
 
     this.Close();
   }
