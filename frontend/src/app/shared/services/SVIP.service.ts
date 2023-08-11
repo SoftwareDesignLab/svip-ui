@@ -157,8 +157,11 @@ export class SVIPService {
     return this.ipc.invoke('selectFiles');
   }
 
-  async uploadProjectDirectory(projectName: string, schema: string, format: string, type: string) {
-    let file = await this.ipc.invoke('getZipFromFolder');
+  async zipProjectDirectory() : Promise<any> {
+    return await this.ipc.invoke('getZipFromFolder');
+  }
+
+  async uploadProject(file: any, projectName: string, schema: string, format: string, type: string) {
     const formData = new FormData();
 
     formData.append('zipFile', file, 'temp.zip');
