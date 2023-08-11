@@ -36,4 +36,10 @@ export class ComparisonComponent {
   protected castAsAny(value: unknown): any {
     return value as any;
   }
+
+  protected removeComment(value: any): any {
+    const valueWithoutComment = { ...value };
+    delete valueWithoutComment.message;
+    return valueWithoutComment;
+  }
 }
