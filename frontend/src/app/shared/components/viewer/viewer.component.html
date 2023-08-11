@@ -7,6 +7,7 @@
         (click)="selectedOption = item">{{item}}</div>
       <div *ngIf="i + 1 < options.length">/</div>
     </ng-container>
+    <div class="close-button" (click)="close()">x</div>
   </div>
   <div class="content">
     <div class="title" *ngIf="subTitle !== ''">
