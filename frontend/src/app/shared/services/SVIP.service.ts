@@ -145,6 +145,10 @@ export class SVIPService {
     return this.ipc.invoke('getFileData', path);
   }
 
+  getOSITools(): Observable<string[]> {
+    return this.client.get('generators/osi/tools') as Observable<string[]>;
+  }
+
   /**
    * Open file explorer and prompts user to upload fiels
    * @param id SBOM id
