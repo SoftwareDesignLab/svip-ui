@@ -30,6 +30,7 @@ import { MergeModalComponent } from './shared/components/toolbar/modals/merge-mo
 import { RepairModalComponent } from './shared/components/toolbar/modals/repair-modal/repair-modal.component';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { GenerateModalComponent } from './shared/components/toolbar/modals/generate-modal/generate-modal.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { GenerateModalComponent } from './shared/components/toolbar/modals/gener
     RepairModalComponent,
     SpinnerComponent,
     GenerateModalComponent,
+    SpinnerComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
