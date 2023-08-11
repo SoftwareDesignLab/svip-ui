@@ -55,6 +55,7 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
     QaFiltersComponent,
     MergeModalComponent,
     RepairModalComponent,
+    SpinnerComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
