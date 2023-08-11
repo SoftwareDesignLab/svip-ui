@@ -23,13 +23,15 @@ export class ComparisonComponent {
     const replacedValue = formattedValue.replace(/[[\]{},"]/g, '');
 
     const capitalizeFirstLetter = (word: string) => {
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        return word.replace(/(\w*)'(\w*)/g, (_, beforeApostrophe, afterApostrophe) => {
+            return beforeApostrophe.toLowerCase() + "'" + afterApostrophe.toLowerCase();
+        });
     };
 
     const modifiedValue = replacedValue.replace(/_/g, ' ').replace(/\b\w+\b/g, capitalizeFirstLetter);
 
     return modifiedValue + '\n';
-}
+  }
 
   protected castAsAny(value: unknown): any {
     return value as any;
