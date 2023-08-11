@@ -14,7 +14,7 @@
                 <div body>
                   <app-accordion *ngFor="let value of castAsAny(conflict.value) | keyvalue" [title]="castToString(formatValue(castAsAny(value.value).message))">
                     <div body>
-                        <pre>{{formatValue(value.value)}}</pre>
+                        <pre>{{formatValue(removeComment(value.value))}}</pre>
                       </div>
                     </app-accordion>
                   </div>
