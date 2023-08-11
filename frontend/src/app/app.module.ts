@@ -31,6 +31,7 @@ import { RepairModalComponent } from './shared/components/toolbar/modals/repair-
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { DiffFiltersComponent } from './features/comparison/diff-filters/diff-filters.component';
 import { GenerateModalComponent } from './shared/components/toolbar/modals/generate-modal/generate-modal.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { GenerateModalComponent } from './shared/components/toolbar/modals/gener
     SpinnerComponent,
     DiffFiltersComponent,
     GenerateModalComponent,
+    SpinnerComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
