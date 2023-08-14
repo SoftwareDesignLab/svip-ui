@@ -33,7 +33,8 @@ export class GenerateModalComponent implements OnInit {
   @Output() close = new EventEmitter<Boolean>();
   private openedSubject = new Subject<boolean>();
 
-  private zippedFileData: any;
+  public selectingDirectory: boolean = false;
+  public zippedFileData: any;
 
   constructor(private service: SVIPService) {}
 
@@ -43,9 +44,16 @@ export class GenerateModalComponent implements OnInit {
         return;
 
         this.zippedFileData = undefined;
+        this.selectingDirectory = true;
 
-        this.service.zipProjectDirectory().then((result) => {
-          this.zippedFileData = result;
+        this.service.getProjectDirectory().then((result) => {
+          this.selectingDirectory = false;
+
+          this.service.zipFileDirectory(result).then((data) => {
+            this.zippedFileData = data;
+          }).catch((error) => {
+            this.Close();
+          })
         }).catch((error) => {
           this.Close();
         })
@@ -71,6 +79,7 @@ export class GenerateModalComponent implements OnInit {
 
 
   Close() {
+    this.selectingDirectory = false;
     this.close.emit(true);
   }
 
