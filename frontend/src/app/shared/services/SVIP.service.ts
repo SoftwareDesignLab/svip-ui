@@ -178,9 +178,9 @@ export class SVIPService {
   }
 
   async uploadProject(file: any, projectName: string, schema: string, format: string, type: string) {
-    const formData = new FormData();
+    let formData = new FormData();
 
-    formData.append('zipFile', file, 'temp.zip');
+    formData.append('zipFile', new Blob([file]), 'temp.zip');
     formData.append('projectName', projectName);
     formData.append('schema', schema);
     formData.append('format', format);
