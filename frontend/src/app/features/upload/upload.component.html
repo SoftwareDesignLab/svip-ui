@@ -30,7 +30,7 @@
         <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMSchema(item)">
           <div class="sbom flex">
             <div class="sbom" (dblclick)="ViewSBOM(item)">
-              <input type="checkbox" [value]="item" class="sbom-checkbox" [checked]="checkboxes[i]" />
+              <input type="checkbox" [value]="item" class="sbom-checkbox" />
               <app-menu text="{{ getAlias(item) }}" [data]="item" style="width: 100%"></app-menu>
             </div>
             <div class="sbom-view" style="width: 100%">
