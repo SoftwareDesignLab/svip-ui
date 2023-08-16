@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { SbomService } from 'src/app/shared/services/sbom.service';
+import filter from '../metrics/models/filters';
+import palettes, { PALETTE, resultStatus } from '../metrics/models/palette';
 
 @Component({
   selector: 'app-comparison',
@@ -7,7 +9,37 @@ import { SbomService } from 'src/app/shared/services/sbom.service';
   styleUrls: ['./comparison.component.css']
 })
 export class ComparisonComponent {
+  attributes: filter = {};
+  palettes = palettes;
+  mismatchColor = '#FFA600';
+  missingColor = 'var(--warn)';
+  private _palette = PALETTE.DEFAULT;
+  get palette() {
+    return this._palette;
+  }
+  set palette(value: PALETTE) {
+    this._palette = value;
+    this.setColor();
+    if (this._palette !== PALETTE.DEFAULT) {
+      this.resultStatus['MISMATCH'].color = 'GRAY';
+      this.resultStatus['MISSING'].color = 'BLACK';
+    } else {
+      this.resultStatus['MISMATCH'].color = this.mismatchColor;
+      this.resultStatus['MISSING'].color = this.missingColor;
+    }
+  }
 
+  _resultStatus: resultStatus = {
+    MISMATCH: { shown: true, color: this.mismatchColor},
+    MISSING: { shown: true, color: this.missingColor},
+  };
+  set resultStatus(value: resultStatus) {
+    this.resultStatus = this.resultStatus;
+  }
+  get resultStatus() {
+    return this._resultStatus;
+  }
+  
   constructor(public sbomService: SbomService) { }
 
   GetComparison() {
@@ -41,5 +73,21 @@ export class ComparisonComponent {
     const valueWithoutComment = { ...value };
     delete valueWithoutComment.message;
     return valueWithoutComment;
+  }
+
+  getFilterType(string: string): boolean {
+    if (string.toLowerCase().includes('mismatch')) {
+      return this.resultStatus['MISMATCH'].shown;
+    } else if (string.toLowerCase().includes('missing')) {
+      return this.resultStatus['MISSING'].shown;
+    } else {
+      return false;
+    }
+  }
+
+  setColor() {
+    Object.keys(this.attributes).forEach((attr, index) => {
+      this.attributes[attr].color = this.palettes[this.palette][index];
+    });
   }
 }
