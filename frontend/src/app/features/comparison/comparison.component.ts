@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SbomService } from 'src/app/shared/services/sbom.service';
 import filter from '../metrics/models/filters';
 import palettes, { PALETTE, resultStatus } from '../metrics/models/palette';
+import { DownloadService } from 'src/app/shared/services/download.service';
 
 @Component({
   selector: 'app-comparison',
@@ -40,7 +41,7 @@ export class ComparisonComponent {
     return this._resultStatus;
   }
   
-  constructor(public sbomService: SbomService) { }
+  constructor(public sbomService: SbomService, public downloadService: DownloadService) { }
 
   GetComparison() {
     return this.sbomService.comparison;
@@ -89,5 +90,12 @@ export class ComparisonComponent {
     Object.keys(this.attributes).forEach((attr, index) => {
       this.attributes[attr].color = this.palettes[this.palette][index];
     });
+  }
+
+  downloadReport() {
+    const fileName = 'report.json';
+    const reportData = this.GetComparison(); 
+    const reportJson = JSON.stringify(reportData, null, 2);
+    this.downloadService.Download(fileName, new Blob([reportJson], { type: 'application/json' }));
   }
 }

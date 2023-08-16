@@ -55,3 +55,7 @@
   width: 100%;
   min-width: 400px;
 }
+
+.button-container {
+  margin-top: 20px;
+}
