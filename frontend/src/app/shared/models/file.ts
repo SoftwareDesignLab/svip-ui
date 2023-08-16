@@ -27,7 +27,7 @@ export default class File {
     this.status = FileStatus.VALID;
     this.contents = contents;
     this.sbom = sbom;
-    this.schema = sbom.format;
+    this.format = sbom.format;
     this.id = id;
     return this;
   }

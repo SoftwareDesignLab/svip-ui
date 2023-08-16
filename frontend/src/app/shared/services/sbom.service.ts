@@ -8,6 +8,7 @@ import File, { FileStatus } from '../models/file';
 })
 export class SbomService {
   private sbomSchemas: { [name: string]: boolean } = {};
+  private sbomFormat: { [name: string]: boolean } = {};
   public comparison: any;
   private files: { [path: string]: File } = {};
 
@@ -30,7 +31,9 @@ export class SbomService {
 
         const file = new File(path).setValid(id, contents, sbom);
         this.files[path] = file;
-        this.SetSBOMSchema(sbom.format, true);
+        this.SetSBOMFormat(sbom.format, true);
+
+        console.log(this.files);
       });
     });
   }
@@ -62,7 +65,7 @@ export class SbomService {
                 // Successful upload
                 this.SVIPService.getSBOM(id).subscribe((sbom) => {
                   this.files[path].setValid(id, contents, sbom);
-                  this.SetSBOMSchema(sbom.format, true);
+                  this.SetSBOMFormat(sbom.format, true);
                 });
               }
             },
@@ -184,6 +187,32 @@ export class SbomService {
   GetSBOMSchema(path: string) {
     return this.files[path].schema;
   }
+
+  //#region SBOM format
+  /**
+   * Gets all SBOM format helpers
+   */
+  getSBOMformat(){
+    return this.sbomFormat;
+  }
+
+  /**
+   * Set valid SBOM formats for filters
+   * @param format SBOM format
+   * @param value true if shown; false if filtered out
+   */
+  SetSBOMFormat(format: string, value: boolean) {
+    this.sbomFormat[format] = value;
+  }
+
+  /**
+   * Gets schema of sbom
+   * @param path sbom to check for
+   */
+  GetSBOMFormat(path: string) {
+    return this.files[path].format;
+  }
+
   //#endregion
 
   //#region SBOM generic Getters
