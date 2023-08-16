@@ -59,7 +59,6 @@ export class UploadComponent implements OnInit {
 
   ngOnInit() {
     this.sbomService.getAllSBOMs();
-    this.updateCheckboxes();
   }
 
   /**
@@ -119,10 +118,10 @@ export class UploadComponent implements OnInit {
     return this.sbomService
       .GetSBOMsOfStatus(status)
       .sort((a: string, b: string) => {
-        let aFormat = this.sbomService.GetSBOMFormat(a);
-        let bFormat = this.sbomService.GetSBOMFormat(b);
+        let aFormat = this.sbomService.GetSBOMSchema(a);
+        let bFormat = this.sbomService.GetSBOMSchema(b);
 
-        return this.sortingOptions[SORT_OPTIONS.FORMAT]
+        return this.sortingOptions[SORT_OPTIONS.SCHEMA]
           ? aFormat.localeCompare(bFormat)
           : bFormat.localeCompare(aFormat);
       });
@@ -136,20 +135,12 @@ export class UploadComponent implements OnInit {
     return this.sbomService.getSBOMschemas();
   }
 
-  GetSBOMFormat(){
-    return this.sbomService.getSBOMformat();
-  }
-
   ValidSBOMSchema(path: string) {
     return this.GetSBOMSchemas()[this.sbomService.GetSBOMInfo(path).schema];
   }
 
-  ValidSBOMFormat(path: string) {
-    return this.GetSBOMFormat()[this.sbomService.GetSBOMInfo(path).format];
-  }
-
   SbomFormatFilterChange(event: any) {
-    this.sbomService.SetSBOMFormat(event.name, event.value);
+    this.sbomService.SetSBOMSchema(event.name, event.value);
   }
 
   /**
@@ -370,31 +361,10 @@ export class UploadComponent implements OnInit {
     this.routing.data = selected[0];
   }
 
-  // handleCheckboxClick(event: Event, index: number) {
-  //   const shiftKey = (event as MouseEvent).shiftKey;
-
-  //   if (shiftKey && this.lastSelectedIndex !== -1) {
-  //     const startIndex = Math.min(index, this.lastSelectedIndex);
-  //     const endIndex = Math.max(index, this.lastSelectedIndex);
-
-  //     for (let i = startIndex; i <= endIndex; i++) {
-  //       this.checkboxes[i] = true;
-  //     }
-  //   } else {
-  //     this.checkboxes[index] = !this.checkboxes[index];
-  //     this.lastSelectedIndex = index;
-  //   }
-  // }
-
-  updateCheckboxes() {
-    const allFiles = this.GetAllFiles();
-    this.checkboxes = allFiles.map((file) => false);
-  }
 
 }
 
 export enum SORT_OPTIONS {
   NAME = 'NAME',
   SCHEMA = 'SCHEMA',
-  FORMAT = 'FORMAT'
 }
