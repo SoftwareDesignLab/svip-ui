@@ -119,10 +119,10 @@ export class UploadComponent implements OnInit {
     return this.sbomService
       .GetSBOMsOfStatus(status)
       .sort((a: string, b: string) => {
-        let aFormat = this.sbomService.GetSBOMSchema(a);
-        let bFormat = this.sbomService.GetSBOMSchema(b);
+        let aFormat = this.sbomService.GetSBOMFormat(a);
+        let bFormat = this.sbomService.GetSBOMFormat(b);
 
-        return this.sortingOptions[SORT_OPTIONS.SCHEMA]
+        return this.sortingOptions[SORT_OPTIONS.FORMAT]
           ? aFormat.localeCompare(bFormat)
           : bFormat.localeCompare(aFormat);
       });
@@ -136,12 +136,20 @@ export class UploadComponent implements OnInit {
     return this.sbomService.getSBOMschemas();
   }
 
+  GetSBOMFormat(){
+    return this.sbomService.getSBOMformat();
+  }
+
   ValidSBOMSchema(path: string) {
     return this.GetSBOMSchemas()[this.sbomService.GetSBOMInfo(path).schema];
   }
 
+  ValidSBOMFormat(path: string) {
+    return this.GetSBOMFormat()[this.sbomService.GetSBOMInfo(path).format];
+  }
+
   SbomFormatFilterChange(event: any) {
-    this.sbomService.SetSBOMSchema(event.name, event.value);
+    this.sbomService.SetSBOMFormat(event.name, event.value);
   }
 
   /**
@@ -388,4 +396,5 @@ export class UploadComponent implements OnInit {
 export enum SORT_OPTIONS {
   NAME = 'NAME',
   SCHEMA = 'SCHEMA',
+  FORMAT = 'FORMAT'
 }
