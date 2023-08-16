@@ -10,7 +10,7 @@
       <button><i class="search-btn material-symbols-outlined">Search</i></button>
     </div>
     <div class="format-filter">
-      <app-multiselect-dropdown title="Filter Schemas" [options]="GetSBOMSchemas()"
+      <app-multiselect-dropdown title="Filter Formats" [options]="GetSBOMFormat()"
         (checkboxChange)="SbomFormatFilterChange($event)">
       </app-multiselect-dropdown>
     </div>
@@ -20,21 +20,21 @@
       <input type="checkbox" (change)="setAllSelected($event)" value="null" />
       <h3 (click)="UpdateSort('NAME')">File Name {{sortingOptions['NAME'] ? '▴' : '▾'}}</h3>
     </div>
-    <h3 (click)="UpdateSort('SCHEMA')">Schema {{sortingOptions['SCHEMA'] ? '▴' : '▾'}}</h3>
+    <h3 (click)="UpdateSort('FORMAT')">Format {{sortingOptions['FORMAT'] ? '▴' : '▾'}}</h3>
   </div>
 
   <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <ng-container *ngFor="let item of GetSBOMsOfType('VALID'); let i = index">
       <div class="altColors">
-        <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMSchema(item)">
+        <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMFormat(item)">
           <div class="sbom flex">
             <div class="sbom" (dblclick)="ViewSBOM(item)">
               <input type="checkbox" [value]="item" class="sbom-checkbox" [checked]="checkboxes[i]" (click)="handleCheckboxClick($event, i)" />
               <app-menu text="{{ getAlias(item) }}" [data]="item" style="width: 100%"></app-menu>
             </div>
             <div class="sbom-view" style="width: 100%">
-              {{GetSBOMInfo(item).schema}}
+              {{GetSBOMInfo(item).format}}
             </div>
           </div>
         </div>
