@@ -40,3 +40,22 @@
   word-break: break-word;
   overflow-y: scroll;
 }
+
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; 
+  padding: 15px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  min-width: 400px;
+}
+
+.button-container {
+  margin-top: 20px;
+}
