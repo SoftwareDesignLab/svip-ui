@@ -246,10 +246,14 @@ export class SbomService {
    * @param path sbom path
    */
   getSBOMAlias(path: string) {
-    const pathChar = path.indexOf('/') !== -1 ? '/' : '\\';
-    let name = path.split(pathChar).pop();
-    return name?.substring(5);
+    const lastBackslashIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
+  
+    if (lastBackslashIndex !== -1) {
+      return path.substring(lastBackslashIndex + 1); 
+    }
+    return path;
   }
+
 
   //#endregion
 }
