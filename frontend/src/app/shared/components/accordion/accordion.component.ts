@@ -34,12 +34,15 @@ export class AccordionComponent {
         //skip the clicked element
         if(sibling === element) return;
 
-        const siblingAccordionButton = sibling.querySelector('.accordion-button') as HTMLElement;
+        //recursively close all accordian-button elements of the sibling
+        const siblingAccordionButtons = sibling.querySelectorAll('.accordion-button') as NodeListOf<HTMLElement>;
 
-        //if the sibling is open, close it
-        if(siblingAccordionButton.getAttribute('aria-expanded') === 'true') {
-          siblingAccordionButton.click();
-        }
+        siblingAccordionButtons.forEach(siblingAccordionButton => {
+          //if the sibling is open, close it
+          if(siblingAccordionButton.getAttribute('aria-expanded') === 'true') {
+            siblingAccordionButton.click();
+          }
+        })
       })
     })
   }
