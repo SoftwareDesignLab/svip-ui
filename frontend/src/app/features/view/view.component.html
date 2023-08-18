@@ -7,21 +7,19 @@
 >
   <div body-1 style="width: 100%;">
     <ng-template #components let-data>
-      <div body *ngFor="let component of data.components">
-        <div body>
-          <app-accordion [title]="component.name">
-            <div body class="component-container">
-              <ng-container *ngFor="let item of component | keyvalue">
-                <app-accordion [title]="convertToString(item.key)">
-                  <div body>
-                    <pre>{{ (item.value === null) ? 'N/A' : formatValue(item.value) }}</pre>
-                  </div>
-                </app-accordion>
-              </ng-container>
-            </div>
-          </app-accordion>
-        </div>
-      </div>
+      <ng-container *ngFor="let component of data.components">
+        <app-accordion [title]="component.name">
+          <div body>
+            <ng-container *ngFor="let item of component | keyvalue">
+              <app-accordion [title]="convertToString(item.key)">
+                <div body>
+                  <pre>{{ (item.value === null) ? 'N/A' : formatValue(item.value) }}</pre>
+                </div>
+              </app-accordion>
+            </ng-container>
+          </div>
+        </app-accordion>
+      </ng-container>
     </ng-template>
     <app-accordion [title]="'Components'">
       <div body class="component-container">

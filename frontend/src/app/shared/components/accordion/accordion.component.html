@@ -1,4 +1,4 @@
-<ngb-accordion [activeIds]="expanded ? ['accordion'] : []">
+<ngb-accordion #accordian>
   <ngb-panel>
     <ng-template ngbPanelTitle (click)="toggleExpanded()">
       <div class="accordion-header flex">

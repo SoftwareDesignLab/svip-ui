@@ -1,6 +1,6 @@
 /** @Author Justin Jantzi, Max Stein */
 
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 
 @Component({
   selector: 'app-accordion',
@@ -11,5 +11,39 @@ export class AccordionComponent {
   @Input() title: string = '';
   @Input() extra: string[] = [];
   @Input() color: string = '';
-  @Input() expanded: boolean = false;
+
+  constructor(private elementRef: ElementRef) {}
+
+  //after render function
+  ngAfterViewInit() {
+    const element = this.elementRef.nativeElement as HTMLElement;
+    const clickAccordionButton = element.querySelector('.accordion-button') as HTMLElement;
+
+    clickAccordionButton.addEventListener('click', (event) => {
+
+      //prgrammatically was clicked
+      if(event.detail === 0) return;
+
+      //get all siblings of the clicked element
+      const siblings = Array.from(element.parentElement?.children as HTMLCollectionOf<HTMLElement>);
+
+      console.log(element.parentElement);
+
+      siblings.forEach(sibling => {
+
+        //skip the clicked element
+        if(sibling === element) return;
+
+        //recursively close all accordian-button elements of the sibling
+        const siblingAccordionButtons = sibling.querySelectorAll('.accordion-button') as NodeListOf<HTMLElement>;
+
+        siblingAccordionButtons.forEach(siblingAccordionButton => {
+          //if the sibling is open, close it
+          if(siblingAccordionButton.getAttribute('aria-expanded') === 'true') {
+            siblingAccordionButton.click();
+          }
+        })
+      })
+    })
+  }
 }
