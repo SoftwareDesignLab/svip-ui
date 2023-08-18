@@ -7,7 +7,7 @@
 >
   <div body-1 style="width: 100%;">
     <ng-template #components let-data>
-      <div body *ngFor="let component of data.components">
+      <ng-container *ngFor="let component of data.components">
         <app-accordion [title]="component.name">
           <div body>
             <ng-container *ngFor="let item of component | keyvalue">
@@ -19,7 +19,7 @@
             </ng-container>
           </div>
         </app-accordion>
-      </div>
+      </ng-container>
     </ng-template>
     <app-accordion [title]="'Components'">
       <div body class="component-container">
