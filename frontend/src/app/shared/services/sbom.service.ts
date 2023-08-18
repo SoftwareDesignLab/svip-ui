@@ -246,12 +246,17 @@ export class SbomService {
    * @param path sbom path
    */
   getSBOMAlias(path: string) {
-    const lastBackslashIndex = path.lastIndexOf('\\');
-    if (lastBackslashIndex !== -1) {
-      return path.substring(lastBackslashIndex + 1); 
+    const lastSlashIndex = path.lastIndexOf('/');
+    if (lastSlashIndex !== -1) {
+      const filename = path.substring(lastSlashIndex + 1);
+
+      const cleanFilename = filename.replace(/[^a-zA-Z0-9._]/g, '');
+
+      return cleanFilename;
     }
     return path;
   }
+
 
   //#endregion
 }
