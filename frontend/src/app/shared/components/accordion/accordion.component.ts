@@ -1,6 +1,6 @@
 /** @Author Justin Jantzi, Max Stein */
 
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 
 @Component({
   selector: 'app-accordion',
