@@ -1,8 +1,6 @@
 /** @Author Justin Jantzi, Max Stein */
 
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { AccordionCommunicationService } from './accordion-communication.service';
-import { NgbAccordion, NgbPanel } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-accordion',
@@ -14,39 +12,35 @@ export class AccordionComponent {
   @Input() extra: string[] = [];
   @Input() color: string = '';
 
-  @ViewChild('accordion', { static: false }) accordion?: NgbAccordion;
+  constructor(private elementRef: ElementRef) {}
 
-  constructor(private elementRef: ElementRef, private broadcast: AccordionCommunicationService) {
-    this.broadcast.closeSiblings$.subscribe((index: number) => {
-      
-      console.log(this.accordion)
-
-      if(!this.accordion)
-        return;
-
-      const element = this.elementRef.nativeElement as HTMLElement;
-
-      if(this.calculateDepth(element) === index) {
-        console.log(this.accordion);
-        this.accordion.collapse('0');
-      }
-    });
-  }
-
-  calculateDepth(node: HTMLElement): number {
-    let depth = 0;
-  
-    while (node.parentNode) {
-      depth++;
-      node = node.parentNode as HTMLElement;
-    }
-  
-    return depth;
-  }
-
-  emitClose() {
+  //after render function
+  ngAfterViewInit() {
     const element = this.elementRef.nativeElement as HTMLElement;
-    let index = this.calculateDepth(element);
-    this.broadcast.emitCloseSiblings(index);
+    const clickAccordionButton = element.querySelector('.accordion-button') as HTMLElement;
+
+    clickAccordionButton.addEventListener('click', (event) => {
+
+      //prgrammatically was clicked
+      if(event.detail === 0) return;
+
+      //get all siblings of the clicked element
+      const siblings = Array.from(element.parentElement?.children as HTMLCollectionOf<HTMLElement>);
+
+      console.log(element.parentElement);
+
+      siblings.forEach(sibling => {
+
+        //skip the clicked element
+        if(sibling === element) return;
+
+        const siblingAccordionButton = sibling.querySelector('.accordion-button') as HTMLElement;
+
+        //if the sibling is open, close it
+        if(siblingAccordionButton.getAttribute('aria-expanded') === 'true') {
+          siblingAccordionButton.click();
+        }
+      })
+    })
   }
 }
