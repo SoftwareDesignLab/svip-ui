@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const fs = require("fs");
 const url = require("url");
 const path = require("path");
-const zip = require("zip-a-folder");
+const { zip } = require("zip-a-folder");
 
 
 let mainWindow;
