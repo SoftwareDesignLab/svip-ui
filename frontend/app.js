@@ -5,6 +5,8 @@ const path = require("path");
 const zip = require("zip-a-folder");
 
 let zipPaths = {};
+const { zip } = require("zip-a-folder");
+
 let mainWindow;
 
 function createWindow() {
@@ -52,7 +54,7 @@ ipcMain.handle("selectFiles", async () => {
   return files.filePaths;
 });
 
-ipcMain.handle("getFolderDirectory", async () => {
+ipcMain.handle("getZipFromFolder", async () => {
   return new Promise(async(resolve, reject) => {
     let folder = await dialog.showOpenDialog(mainWindow, {
       properties: ["openDirectory"],
