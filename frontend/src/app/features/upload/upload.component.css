@@ -200,6 +200,7 @@ hr {
 
 .buttons {
     gap: 15px;
+    flex-wrap: wrap;
 }
 
 .btn-modal {
@@ -259,10 +260,6 @@ hr {
 .center {
     display: flex;
     align-items: center;
-}
-
-.icons {
-    margin-right: 50px;
 }
 
 .hide {
