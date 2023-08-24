@@ -36,6 +36,12 @@
         <option *ngFor="let option of types" [value]="option">{{ option }}</option>
       </select>
     </div>
+    <div *ngIf="options.type === 'OSI'">
+      <div>OSI Tools:</div>
+      <app-multiselect-dropdown title="Filter Tools" [options]="osiTools" style="width: 400px"
+        (checkboxChange)="OSIToolChange($event)">
+      </app-multiselect-dropdown>
+    </div>
   </div>
   <div actions style=" display: flex; gap: 15px;">
     <div class="btn-modal button flex center hover" (click)="Generate()" *ngIf="this.zippedFileData !== undefined">
