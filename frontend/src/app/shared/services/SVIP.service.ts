@@ -159,7 +159,7 @@ export class SVIPService {
 
   async getProjectDirectory() : Promise<any> {
     return new Promise(async(resolve, reject) => {
-        await this.ipc.invoke('getFolderDirectory').then((value: any) => {
+        await this.ipc.invoke('getZipFromFolder').then((value: any) => {
           return resolve(true);
         }).catch(() => {
           return reject(false);
