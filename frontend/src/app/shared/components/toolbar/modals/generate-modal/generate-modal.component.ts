@@ -29,6 +29,8 @@ export class GenerateModalComponent implements OnInit {
 
   public types: string[] = ['OSI', 'PARSERS'];
 
+  public osiTools: {[name: string]: boolean} = {};
+
   @Input() opened: boolean = false;
   @Output() close = new EventEmitter<Boolean>();
   private openedSubject = new Subject<boolean>();
@@ -50,6 +52,12 @@ export class GenerateModalComponent implements OnInit {
           this.Close();
         })
     });
+
+    this.service.getOSITools().subscribe((data) => {
+      data.forEach((tool) => {
+        this.osiTools[tool] = true;
+      })
+    })
   }
 
   ngOnChanges(): void {
@@ -67,6 +75,10 @@ export class GenerateModalComponent implements OnInit {
       this.options.type);
 
     this.Close();
+  }
+
+  OSIToolChange(event: any) {
+    this.osiTools[event.name] = event.value;
   }
 
 
