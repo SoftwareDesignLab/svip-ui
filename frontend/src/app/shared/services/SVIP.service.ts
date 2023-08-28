@@ -178,14 +178,21 @@ export class SVIPService {
   }
 
   async uploadProject(file: any, projectName: string, schema: string, format: string, type: string) {
-    const formData = new FormData();
 
-    formData.append('zipFile', file, 'temp.zip');
+    let formData = new FormData();
+    formData.append('zipFile', new File([file], 'temp.zip'));
     formData.append('projectName', projectName);
     formData.append('schema', schema);
     formData.append('format', format);
 
-    return this.client.post('generators/' + type.toLowerCase(), formData) as Observable<any>;
+    let params = new HttpParams();
+
+    this.client.postFile('generators/' + type.toLowerCase(), formData, params).subscribe((data) => {
+      //TODO: add to sbom list if valid
+    })
+
+
+
   }
   //#endregion
 }
