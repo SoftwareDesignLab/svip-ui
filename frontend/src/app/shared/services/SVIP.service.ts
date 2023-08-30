@@ -168,15 +168,11 @@ export class SVIPService {
     formData.append('projectName', projectName);
     formData.append('schema', schema);
     formData.append('format', format);
-
     let params = new HttpParams();
 
     this.client.postFile('generators/' + type.toLowerCase(), formData, params).subscribe((data) => {
       //TODO: add to sbom list if valid
     })
-
-
-
   }
   //#endregion
 }
