@@ -28,7 +28,7 @@ import { QaFiltersComponent } from './features/metrics/qa-filters/qa-filters.com
 import { MetricsComponent } from './features/metrics/metrics/metrics.component';
 import { MergeModalComponent } from './shared/components/toolbar/modals/merge-modal/merge-modal.component';
 import { GenerateModalComponent } from './shared/components/toolbar/modals/generate-modal/generate-modal.component';
-import { SpinnerComponent } from './shared/components/spinner/spinner.component';
+import { DiffFiltersComponent } from './features/comparison/diff-filters/diff-filters.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +55,8 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
     QaFiltersComponent,
     MergeModalComponent,
     GenerateModalComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DiffFiltersComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
