@@ -5,12 +5,14 @@ const path = require("path");
 const { zip } = require("zip-a-folder");
 
 
+const zip = require("zip-a-folder");
+
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
     minWidth: 800,
-    minHeight: 780,
+    minHeight: 600,
     show: false,
     webPreferences: {
       nodeIntegration: true,
