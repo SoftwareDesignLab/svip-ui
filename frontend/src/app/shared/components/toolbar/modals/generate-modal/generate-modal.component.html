@@ -2,15 +2,19 @@
   <div title>
     Generate SBOM
   </div>
-  <div content *ngIf="this.selectingDirectory === true" style="display: flex; flex-direction: column; align-items: center;">
+  <div content *ngIf="this.status === 1" style="display: flex; flex-direction: column; align-items: center;">
     <app-spinner height="64px" style="height: 64px;"/>
     <div>Waiting for Project Selection...</div>
   </div>
-  <div content *ngIf="this.selectingDirectory === false && this.zippedFileData === undefined" style="display: flex; flex-direction: column; align-items: center;">
+  <div content *ngIf="this.status === 2" style="display: flex; flex-direction: column; align-items: center;">
     <app-spinner height="64px" style="height: 64px;"/>
     <div>Zipping Project Contents...</div>
   </div>
-  <div content style="display: flex; gap: 15px; flex-direction: column;" *ngIf="this.zippedFileData !== undefined">
+  <div content *ngIf="this.status === 4" style="display: flex; flex-direction: column; align-items: center;">
+    <app-spinner height="64px" style="height: 64px;"/>
+    <div>Generating SBOM...</div>
+  </div>
+  <div content style="display: flex; gap: 15px; flex-direction: column;" *ngIf="this.status === 3">
     <div>
       <div>Name:</div>
       <input [(ngModel)]="options.name" />
