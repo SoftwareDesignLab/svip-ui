@@ -1,13 +1,59 @@
-# Frontend
+# SBOM Visualization and Integration Platform GUI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
+> The SBOM Visualization and Integration Platform (**SVIP**) is a unified platform to promote the
+> production, consumption, and utilization of Software Bills of Materials.
 
-## Common Issues
-- Run `npm ci` prior to building or running the app, otherwise you will be met with errors
+### Latest Release: [[V1.0.0] - (7/31/23)](doc/changelog.md)
 
-## Development server
+> GUI has been reworked
+> Features include:
+> Uploading\Deleting SBOMS
+> Viewing SBOMS (Pretty and Raw View)
+> Convert SBOM to new schema and document format
+> Run Quality Assurance tests on SBOMs
+> Compare multiple SBOMS
+> Merge multiple SBOMs together
+> Download SBOMs
 
-- Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files. If file uploading is needed, please refer to `Run App`.
+### System Requirements
 
-## Run App
-- Run `npm start` to launch electron app. This will not automatically reload and will need to be re-launched when code is updated.
+- Requires Node >= 18.12.1
+
+### Quick Start
+
+1. Follow the [SVIP API](https://github.com/SoftwareDesignLab/SVIP/tree/main#quick-start) quick start to launch the backend
+2. `npm ci`
+3. `npm start`
+
+## Features
+
+BRIEF OVERVIEW OF GUI FEATURES
+
+- **Open Source Integrated SBOM Generation:** Makes use of open source libraries to generate SBOMs
+- **SBOM Generation:** Custom SBOM generation via source file and package manager file analysis
+- **SBOM VEX Generation:**
+- **SBOM Metrics:**
+- **SBOM Comparison:**
+- **SBOM Merging:**
+
+## Development Build
+
+1. Run `npm run winBuildExe`
+
+## Contributors
+
+**Principal Investigator:** [Mehdi Mirakhorli](mailto:mxmvse@rit.edu)
+
+**Senior Project Manager:** [Chris Enoch](mailto:ctevse@rit.edu)
+
+**Senior Developer Team Lead:** [Derek Garcia](mailto:dlg1206@rit.edu)
+
+**Developer Team Lead**
+
+- [Orion DiLorenzo](mailto:tnd3015@rit.edu)
+- [Justin Jantzi](mailto:jwj7297@rit.edu)
+
+**Developer Team**
+
+- [Fabi Marrufo](mailto:fm8191@rit.edu)
+- [Max Stein](mailto:mhs8558@rit.edu)
