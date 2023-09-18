@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
 import { Subject } from 'rxjs';
+import { SbomService } from 'src/app/shared/services/sbom.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-generate-modal',
@@ -8,12 +10,11 @@ import { Subject } from 'rxjs';
   styleUrls: ['./generate-modal.component.css']
 })
 export class GenerateModalComponent implements OnInit {
-
   public options: {
-    name: string;
-    schema: string;
-    format: string;
-    type: string;
+    name: string,
+    schema: string,
+    format: string,
+    type: string,
   } = {
     name: '',
     schema: '',
@@ -35,9 +36,10 @@ export class GenerateModalComponent implements OnInit {
   @Output() close = new EventEmitter<Boolean>();
   private openedSubject = new Subject<boolean>();
 
-  private zippedFileData: any;
+  public status: GenerationStatus = GenerationStatus.NULL;
+  public zippedFileData: any;
 
-  constructor(private service: SVIPService) {}
+  constructor(private service: SVIPService, private sbomService: SbomService, private toast: ToastService) {}
 
   ngOnInit(): void {
     this.openedSubject.subscribe((value) => {
@@ -45,9 +47,17 @@ export class GenerateModalComponent implements OnInit {
         return;
 
         this.zippedFileData = undefined;
+        this.status = GenerationStatus.GENERATING;
 
-        this.service.zipProjectDirectory().then((result) => {
-          this.zippedFileData = result;
+        this.service.getProjectDirectory().then((result) => {
+          this.status = GenerationStatus.ZIPPING;
+
+          this.service.zipFileDirectory(result).then((data) => {
+            this.zippedFileData = data;
+            this.status = GenerationStatus.PROJECT_INFO;
+          }).catch((error) => {
+            this.Close();
+          })
         }).catch((error) => {
           this.Close();
         })
@@ -68,13 +78,21 @@ export class GenerateModalComponent implements OnInit {
     if (this.options.schema === '' || this.options.format === '' || this.options.type === '' || this.options.name === '')
       return;
 
+    this.status = GenerationStatus.GENERATING;
+
     this.service.uploadProject(this.zippedFileData, 
       this.options.name, 
       this.options.schema, 
       this.options.format, 
-      this.options.type);
+      this.options.type).then((data: any) => {
+        this.sbomService.addSBOMbyID(data);
+        this.Close();
+      }).catch(() => {
+        this.toast.showErrorToast("SBOM Generation", "Failed");
+        this.Close();
+      })
 
-    this.Close();
+   
   }
 
   OSIToolChange(event: any) {
@@ -83,7 +101,16 @@ export class GenerateModalComponent implements OnInit {
 
 
   Close() {
+    this.status = GenerationStatus.NULL;
     this.close.emit(true);
   }
 
+}
+
+enum GenerationStatus {
+  NULL,
+  SELECTING_DIRECTORY,
+  ZIPPING,
+  PROJECT_INFO,
+  GENERATING,
 }
