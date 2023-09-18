@@ -116,9 +116,12 @@ export class UploadComponent implements OnInit {
       return this.sbomService
         .GetSBOMsOfStatus(status)
         .sort((a: string, b: string) => {
+          let aFormat = this.sbomService.GetSBOMInfo(a).fileName;
+          let bFormat = this.sbomService.GetSBOMInfo(b).fileName;
+  
           return this.sortingOptions[SORT_OPTIONS.NAME]
-            ? a.localeCompare(b)
-            : b.localeCompare(a);
+            ? aFormat.localeCompare(bFormat)
+            : bFormat.localeCompare(aFormat);
         });
 
     return this.sbomService
@@ -153,12 +156,12 @@ export class UploadComponent implements OnInit {
    * Removes file from uploaded files
    * @param file file to remove
    */
-  RemoveFile(file: string) {
-    if (this.routing.GetPage() === PAGES.VIEW && this.routing.data === file) {
+  RemoveFile(id: string) {
+    if (this.routing.GetPage() === PAGES.VIEW && this.routing.data === id) {
       this.routing.SetPage(PAGES.NONE);
       this.routing.data = undefined;
     }
-    this.sbomService.deleteFile(file);
+    this.sbomService.deleteFile(id);
   }
 
   setAllSelected(event: any) {

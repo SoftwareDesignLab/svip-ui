@@ -1,7 +1,7 @@
 <app-viewer
   title="Comparison"
-  [options]="['Target: ' + GetComparison().target]"
-  [selectedOption]="'Target: ' + GetComparison().target"
+  [options]="['Target: ' + getAlias(GetComparison().target)]"
+  [selectedOption]="'Target: ' + getAlias(GetComparison().target)"
 >
 
   <div body-1 style="width: 100%">
@@ -11,7 +11,7 @@
   </div>
 
   <ng-template #compare>
-    <app-accordion *ngFor="let item of GetComparison().diffReport | keyvalue" [title]="castToString(item.key)">
+    <app-accordion *ngFor="let item of GetComparison().diffReport | keyvalue" [title]="getAlias(castToString(item.key))">
       <div body>
         <app-accordion title="Component Conflicts">
           <div body>
