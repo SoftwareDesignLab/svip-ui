@@ -1,1 +1,5 @@
 .DS_Store
+/.angular
+/builds
+/dist
+/node_modules
