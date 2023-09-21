@@ -73,6 +73,7 @@
 hr {
     width: 15%;
     border-top: 3px solid var(--primary);
+    flex-wrap: wrap;
 }
 
 .btn-primary {
@@ -199,6 +200,7 @@ hr {
 
 .buttons {
     gap: 15px;
+    flex-wrap: wrap;
 }
 
 .btn-modal {
@@ -243,13 +245,13 @@ hr {
     margin-right: 10px; /* Add some space between spinner and text */
     align-self: center; /* Center the spinner vertically */
   }
-  
+
 .spinner-text {
     flex: 1; /* Expand to take remaining space */
     display: flex;
     align-items: center; /* Vertically center the text */
 }
-  
+
 
 .altColors:nth-of-type(odd) {
     background-color: var(--highlight);
@@ -258,10 +260,6 @@ hr {
 .center {
     display: flex;
     align-items: center;
-}
-
-.icons {
-    margin-right: 50px;
 }
 
 .hide {
