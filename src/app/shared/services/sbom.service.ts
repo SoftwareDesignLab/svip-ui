@@ -10,7 +10,7 @@ export class SbomService {
   private sbomSchemas: { [name: string]: boolean } = {};
   private sbomFormat: { [name: string]: boolean } = {};
   public comparison: any;
-  private files: { [path: string]: File } = {};
+  private files: { [id: string]: File } = {};
 
   constructor(
     private SVIPService: SVIPService,
@@ -30,7 +30,7 @@ export class SbomService {
         let contents = data.contents;
 
         const file = new File(path).setValid(id, contents, sbom);
-        this.files[path] = file;
+        this.files[id] = file;
         this.SetSBOMFormat(sbom.format, true);
 
         console.log(this.files);
@@ -55,8 +55,9 @@ export class SbomService {
    */
   async AddFiles(paths: string[]) {
     paths.forEach((path) => {
+      let randomID = Math.random().toString();
       // File is loading
-      this.files[path] = new File(path);
+      this.files[randomID] = new File(path);
       this.SVIPService.getFileData(path).then((contents) => {
         if (contents) {
           this.SVIPService.uploadSBOM(path, contents).subscribe(
@@ -64,14 +65,16 @@ export class SbomService {
               if (id) {
                 // Successful upload
                 this.SVIPService.getSBOM(id).subscribe((sbom) => {
-                  this.files[path].setValid(id, contents, sbom);
+                  delete this.files[randomID];
+                  let file = new File(path).setValid(id, contents, sbom);
+                  this.files[id] = file;
                   this.SetSBOMFormat(sbom.format, true);
                 });
               }
             },
             () => {
               // Failed upload
-              this.files[path].setError();
+              this.files[randomID].setError();
             }
           );
         }
@@ -83,8 +86,8 @@ export class SbomService {
    * Download SBOM file
    *
    */
-  downloadSBOM(filePath: string): Blob {
-    const file = this.files[filePath]?.contents;
+  downloadSBOM(id: string): Blob {
+    const file = this.files[id]?.contents;
     if (file !== null) {
       return new Blob([file]);
     }
@@ -116,47 +119,45 @@ export class SbomService {
    * Delete file
    * @param: file ID
    */
-  deleteFile(path: string) {
-    const id = this.files[path]?.id;
-    if (id && id > -1) {
+  deleteFile(id: string) {
+    if (id && Number(id) > -1) {
       // TODO: Add error handling for when file cannot be delted
-      this.SVIPService.deleteSBOM(id).subscribe((deleted) => {
+      this.SVIPService.deleteSBOM(Number(id)).subscribe((deleted) => {
         if (deleted) {
           const data = this.routingService.data;
-          if (data === id || data === path) {
+          if (data === id) {
             this.routingService.data = null;
             this.routingService.SetPage(PAGES.NONE);
           }
-          delete this.files[path];
+          delete this.files[id];
         }
       });
     } else {
-      delete this.files[path];
+      delete this.files[id];
     }
   }
 
   /**
    * Convert sbom from one type to another
-   * @param path sbom path
+   * @param id sbom id
    * @param schema sbom schema
    * @param format file format
    * @param overwrite overwrite or create new sbom
    */
   ConvertSBOM(
-    path: string,
+    id: string,
     schema: string,
     format: string,
     overwrite: boolean
   ) {
-    let sbom = this.files[path];
-    let id = sbom.id ? sbom.id : -1;
-    this.SVIPService.convertSBOM(id, schema, format, overwrite).subscribe(
+    let sbom = this.files[id];
+    this.SVIPService.convertSBOM(Number(id), schema, format, overwrite).subscribe(
       (result) => {
         if (result) {
-          this.files[path].contents = JSON.stringify(result, null, '2');
-          this.files[path].id += 1;
-          this.files[path].schema = schema;
-          this.files[path].format = format;
+          this.files[id].contents = JSON.stringify(result, null, '2');
+          this.files[id].id += 1;
+          this.files[id].schema = schema;
+          this.files[id].format = format;
         }
       }
     );
@@ -182,10 +183,10 @@ export class SbomService {
 
   /**
    * Gets schema of sbom
-   * @param path sbom to check for
+   * @param id sbom to check for
    */
-  GetSBOMSchema(path: string) {
-    return this.files[path].schema;
+  GetSBOMSchema(id: string) {
+    return this.files[id].schema;
   }
 
   //#region SBOM format
@@ -207,10 +208,10 @@ export class SbomService {
 
   /**
    * Gets schema of sbom
-   * @param path sbom to check for
+   * @param id sbom to check for
    */
-  GetSBOMFormat(path: string) {
-    return this.files[path].format;
+  GetSBOMFormat(id: string) {
+    return this.files[id].format;
   }
 
   //#endregion
@@ -225,10 +226,10 @@ export class SbomService {
 
   /**
    * Gets sbom file
-   * @param path sbom path
+   * @param id sbom id
    */
-  GetSBOMInfo(path: string) {
-    return this.files[path];
+  GetSBOMInfo(id: string) {
+    return this.files[id];
   }
 
   /**
@@ -237,7 +238,7 @@ export class SbomService {
    */
   GetSBOMsOfStatus(status: FileStatus) {
     return Object.keys(this.files).filter(
-      (x) => this.files[x].status === status
+      (x: any) => this.files[x].status === status
     );
   }
 
@@ -245,7 +246,8 @@ export class SbomService {
    * Gets sbom file name without the path
    * @param path sbom path
    */
-  getSBOMAlias(path: string) {
+  getSBOMAlias(id: string) {
+    let path = this.files[id].fileName;
     const lastBackslashIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
   
     if (lastBackslashIndex !== -1) {

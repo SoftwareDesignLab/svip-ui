@@ -39,7 +39,14 @@ testem.log
 
 # System files
 .DS_Store
+<<<<<<< HEAD
+/.angular
+/builds
+/dist
+/node_modules
+=======
 Thumbs.db
 
 /.vscode/
 /builds/
+>>>>>>> dev

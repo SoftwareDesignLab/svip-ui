@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IpcRenderer } from 'electron';
 import { SVIPService } from '../../services/SVIP.service';
 import { SbomService } from '../../services/sbom.service';
+import { UploadComponent } from 'src/app/features/upload/upload.component';
 
 @Component({
   selector: 'app-toggle',
@@ -10,9 +10,7 @@ import { SbomService } from '../../services/sbom.service';
 })
 export class ToggleComponent {
   upload: boolean = false;
-  private ipc!: IpcRenderer;
-
-  constructor(private svipService: SVIPService, private sbomService: SbomService) {
+  constructor(private svipService: SVIPService, private sbomService: SbomService, private uploadComp: UploadComponent) {
   }
 
   browse() {
@@ -23,5 +21,9 @@ export class ToggleComponent {
 
       this.sbomService.AddFiles(files);
     });
+  }
+
+  uploadProject() {
+    this.uploadComp.generateModal = true;
   }
 }

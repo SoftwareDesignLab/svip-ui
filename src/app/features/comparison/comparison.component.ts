@@ -98,4 +98,11 @@ export class ComparisonComponent {
     const reportJson = JSON.stringify(reportData, null, 2);
     this.downloadService.Download(fileName, new Blob([reportJson], { type: 'application/json' }));
   }
+
+  /**
+   * Get SBOM filename
+   */
+  getAlias(sbom: string) {
+    return this.sbomService.getSBOMAlias(sbom);
+  }
 }

@@ -15,7 +15,7 @@ export class VexComponent {
   protected loading: boolean = false;
 
   constructor(
-    private client: SVIPService, 
+    private client: SVIPService,
     private routing: RoutingService,
     private sbomService: SbomService,
     private downloadService: DownloadService
@@ -84,7 +84,7 @@ export class VexComponent {
   
   downloadVex() {
     const fileName = 'vex.json';
-    const vexData = this.vex; 
+    const vexData = this.vex;
     const vexJson = JSON.stringify(vexData, null, 2);
     this.downloadService.Download(fileName, new Blob([vexJson], { type: 'application/json' }));
   }
