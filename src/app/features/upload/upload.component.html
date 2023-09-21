@@ -16,7 +16,7 @@
     </div>
   </div>
   <div class="file-name flex" *ngIf="GetAllFiles().length > 0">
-    <div class="flex">
+    <div class="flex" style="width: 20%; min-width: 200px;">
       <input type="checkbox" (change)="setAllSelected($event)" value="null" />
       <h3 (click)="UpdateSort('NAME')">File Name {{sortingOptions['NAME'] ? '▴' : '▾'}}</h3>
     </div>
@@ -28,12 +28,12 @@
     <ng-container *ngFor="let item of GetSBOMsOfType('VALID'); let i = index">
       <div class="altColors">
         <div *ngIf="getAlias(item)?.includes(GetFilter()) && ValidSBOMFormat(item)">
-          <div class="sbom flex">
+          <div class="sbom-row flex">
             <div class="sbom" (dblclick)="ViewSBOM(item)">
               <input type="checkbox" [value]="item" class="sbom-checkbox" />
-              <app-menu text="{{ getAlias(item) }}" [data]="item" style="width: 100%"></app-menu>
+              <app-menu text="{{ getAlias(item) }}" [data]="item" style="width: 90%"></app-menu>
             </div>
-            <div class="sbom-view" style="width: 100%">
+            <div class="sbom-view">
               {{GetSBOMInfo(item).format}}
             </div>
           </div>
