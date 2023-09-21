@@ -61,7 +61,7 @@
   </div>
 
   <div class="buttons flex" *ngIf="GetAllFiles().length > 0">
-    <div class="icons flex buttons">
+    <div class="flex buttons">
       <app-button icon="delete" (click)="GetSelected().length >= 1 ? deleteModal = true : sbomsRequiredMessage(1, true)"></app-button>
       <app-button icon="download" (click)="DownloadSelected()">download</app-button>
     </div>
