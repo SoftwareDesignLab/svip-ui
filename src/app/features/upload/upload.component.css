@@ -221,19 +221,21 @@ hr {
     color: black;
 }
 
-.sbom>div {
-    width: 380px;
-    color: var(--primary);
-}
-
 .sbom {
     display: flex;
     align-items: center;
     gap: 10px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 95%;
+    width: 20%;
+    min-width: 200px;
+    margin-right: 10px;
     padding: 4.5px;
+}
+
+.sbom-row {
+  color: var(--primary);
+  align-items: center;
 }
 
 .sbom:hover {
