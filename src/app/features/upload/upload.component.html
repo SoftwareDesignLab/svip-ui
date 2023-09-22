@@ -1,6 +1,4 @@
 <div class="upload-container slide-up">
-  <div class="center">
-  </div>
   <h3>SBOM Files</h3>
   <div class="search-parent-container" *ngIf="GetAllFiles().length > 0">
     <div class="search-container">
@@ -16,7 +14,7 @@
     </div>
   </div>
   <div class="file-name flex" *ngIf="GetAllFiles().length > 0">
-    <div class="flex" style="width: 20%; min-width: 200px;">
+    <div class="flex" style="width: 30%; min-width: 200px;">
       <input type="checkbox" (change)="setAllSelected($event)" value="null" />
       <h3 (click)="UpdateSort('NAME')">File Name {{sortingOptions['NAME'] ? '▴' : '▾'}}</h3>
     </div>
