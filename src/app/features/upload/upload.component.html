@@ -1,19 +1,19 @@
-<div class="upload-container slide-up">
-  <h3>SBOM Files</h3>
+<div class="upload-container slide-up"  [style]="collapsed ? 'width: 0%; padding: 0;' : ''">
+  <h3 [style]="collapsed ? 'display: none' : ''">SBOM Files</h3>
   <div class="search-parent-container" *ngIf="GetAllFiles().length > 0">
-    <div class="search-container">
+    <div class="search-container" [style]="collapsed ? 'display: none' : ''">
       <input type="text" placeholder="Search.." name="search" (input)="UpdateSearch($event)">
       <button (click)="ClearSearch()" [ngClass]="filterSearch ? '' : 'hide'"><i
           class="search-btn material-symbols-outlined">clear</i></button>
       <button><i class="search-btn material-symbols-outlined">Search</i></button>
     </div>
-    <div class="format-filter">
+    <div class="format-filter"  [style]="collapsed ? 'display: none' : ''">
       <app-multiselect-dropdown title="Filter Formats" [options]="GetSBOMFormat()"
         (checkboxChange)="SbomFormatFilterChange($event)">
       </app-multiselect-dropdown>
     </div>
   </div>
-  <div class="file-name flex" *ngIf="GetAllFiles().length > 0">
+  <div class="file-name flex" *ngIf="GetAllFiles().length > 0"  [style]="collapsed ? 'display: none' : ''">
     <div class="flex" style="width: 30%; min-width: 200px;">
       <input type="checkbox" (change)="setAllSelected($event)" value="null" />
       <h3 (click)="UpdateSort('NAME')">File Name {{sortingOptions['NAME'] ? '▴' : '▾'}}</h3>
@@ -21,7 +21,7 @@
     <h3 (click)="UpdateSort('FORMAT')">Format {{sortingOptions['FORMAT'] ? '▴' : '▾'}}</h3>
   </div>
 
-  <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
+  <div class="files-container" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"  [style]="collapsed ? 'display: none' : ''"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <ng-container *ngFor="let item of GetSBOMsOfType('VALID'); let i = index">
       <div class="altColors">
@@ -39,7 +39,7 @@
       </div>
     </ng-container>
 
-    <ng-container *ngFor="let item of GetSBOMsOfType('ERROR'); let i = index">
+    <ng-container *ngFor="let item of GetSBOMsOfType('ERROR'); let i = index"  [style]="collapsed ? 'display: none' : ''">
       <div *ngIf="getAlias(item)?.includes(GetFilter())">
         <div class="sbom" style="color: var(--red);">
           <input type="checkbox" [value]="item" class="sbom-checkbox" [checked]="checkboxes[i]" />
@@ -50,7 +50,7 @@
       </div>
     </ng-container>
 
-    <div *ngFor="let item of GetSBOMsOfType('LOADING')">
+    <div *ngFor="let item of GetSBOMsOfType('LOADING')"  [style]="collapsed ? 'display: none' : ''">
       <div class="sbom" style="color: var(--accent); width: 95%;">
         <app-spinner class="spinner"></app-spinner>
         <span class="spinner-text">{{ getAlias(item) }}</span>
@@ -58,7 +58,7 @@
     </div>
   </div>
 
-  <div class="buttons flex" *ngIf="GetAllFiles().length > 0">
+  <div class="buttons flex" *ngIf="GetAllFiles().length > 0"  [style]="collapsed ? 'display: none' : ''">
     <div class="flex buttons">
       <app-button icon="delete" (click)="GetSelected().length >= 1 ? deleteModal = true : sbomsRequiredMessage(1, true)"></app-button>
       <app-button icon="download" (click)="DownloadSelected()">download</app-button>
@@ -71,7 +71,7 @@
     <app-button text="Merge" (click)="GetSelected().length >= 2 ? merge() : sbomsRequiredMessage(2, true)"/>
   </div>
 
-  <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
+  <div class="file-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"  [style]="collapsed ? 'display: none' : ''"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <div class="scale-in flex col center">
       <span class="material-symbols-outlined">publish</span>
@@ -81,16 +81,22 @@
     </div>
   </div>
 
-  <div class="generate-dropzone" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"
+  <div class="generate-dropzone" *ngIf="GetAllFiles().length > 0" (drop)="onFileDrop($event)"  [style]="collapsed ? 'display: none' : ''"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <app-toggle></app-toggle>
   </div>
 
-  <div class="generate-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"
+  <div class="generate-dropzone" *ngIf="GetAllFiles().length === 0" (drop)="onFileDrop($event)"  [style]="collapsed ? 'display: none' : ''"
     (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
     <div class="scale-in flex col center">
       <app-button text="Generate" (click)="uploadProject()" />
       <p class="text-center">or drag project directory in here</p>
+    </div>
+  </div>
+
+  <div class="toggle-files" (click)="collapsed = !collapsed">
+    <div class="text">
+      Collapse
     </div>
   </div>
 </div>

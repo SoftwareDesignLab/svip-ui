@@ -3,7 +3,6 @@ import { SbomService } from 'src/app/shared/services/sbom.service';
 import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 import { FileStatus } from 'src/app/shared/models/file';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
-import { IpcRenderer } from 'electron';
 import { EventTypes } from 'src/app/shared/models/event-types';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { DownloadService } from 'src/app/shared/services/download.service';
@@ -12,18 +11,19 @@ import { DownloadService } from 'src/app/shared/services/download.service';
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class UploadComponent implements OnInit {
-  public show: boolean = false;
   public filterSearch: string = '';
   public downloadModal: boolean = false;
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
   public mergeModal: boolean = false;
   public generateModal: boolean = false;
-  private ipc!: IpcRenderer;
-  private lastSelectedIndex: number = -1;
   public checkboxes: boolean[] = [];
+  public collapsed: boolean = false;
 
   title = 'angular-bootstrap-toast-service';
 
@@ -49,6 +49,8 @@ export class UploadComponent implements OnInit {
   };
 
   private selectedSorting: SORT_OPTIONS = SORT_OPTIONS.NAME;
+
+
 
   constructor(
     private sbomService: SbomService,
@@ -310,6 +312,11 @@ export class UploadComponent implements OnInit {
       const filePaths = Array.from(files).map((file) => file.path);
       this.sbomService.AddFiles(filePaths);
     }
+  }
+
+  onResize(event: any){
+    if(event.target.innerWidth > 1000)
+      this.collapsed = false;
   }
 
   ClearSearch() {
