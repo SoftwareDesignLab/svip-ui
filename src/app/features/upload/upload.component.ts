@@ -3,28 +3,27 @@ import { SbomService } from 'src/app/shared/services/sbom.service';
 import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 import { FileStatus } from 'src/app/shared/models/file';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
-import * as JSZip from 'jszip';
-import { saveAs } from 'file-saver';
-import { IpcRenderer } from 'electron';
 import { EventTypes } from 'src/app/shared/models/event-types';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { DownloadService } from 'src/app/shared/services/download.service';
 
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
   styleUrls: ['./upload.component.css'],
+  host: {
+    '(window:resize)': 'onResize($event)'
+  }
 })
 export class UploadComponent implements OnInit {
-  public show: boolean = false;
   public filterSearch: string = '';
   public downloadModal: boolean = false;
   public deleteModal: boolean = false;
   public convertModal: boolean = false;
   public mergeModal: boolean = false;
   public generateModal: boolean = false;
-  private ipc!: IpcRenderer;
-  private lastSelectedIndex: number = -1;
   public checkboxes: boolean[] = [];
+  public collapsed: boolean = false;
 
   title = 'angular-bootstrap-toast-service';
 
@@ -51,16 +50,18 @@ export class UploadComponent implements OnInit {
 
   private selectedSorting: SORT_OPTIONS = SORT_OPTIONS.NAME;
 
+
+
   constructor(
     private sbomService: SbomService,
     public routing: RoutingService,
     private toastService: ToastService,
-    private svipService: SVIPService
+    private svipService: SVIPService,
+    private downloadService: DownloadService
   ) {}
 
   ngOnInit() {
     this.sbomService.getAllSBOMs();
-    this.updateCheckboxes();
   }
 
   /**
@@ -127,10 +128,10 @@ export class UploadComponent implements OnInit {
     return this.sbomService
       .GetSBOMsOfStatus(status)
       .sort((a: string, b: string) => {
-        let aFormat = this.sbomService.GetSBOMSchema(a);
-        let bFormat = this.sbomService.GetSBOMSchema(b);
+        let aFormat = this.sbomService.GetSBOMFormat(a);
+        let bFormat = this.sbomService.GetSBOMFormat(b);
 
-        return this.sortingOptions[SORT_OPTIONS.SCHEMA]
+        return this.sortingOptions[SORT_OPTIONS.FORMAT]
           ? aFormat.localeCompare(bFormat)
           : bFormat.localeCompare(aFormat);
       });
@@ -144,12 +145,20 @@ export class UploadComponent implements OnInit {
     return this.sbomService.getSBOMschemas();
   }
 
+  GetSBOMFormat(){
+    return this.sbomService.getSBOMformat();
+  }
+
   ValidSBOMSchema(path: string) {
     return this.GetSBOMSchemas()[this.sbomService.GetSBOMInfo(path).schema];
   }
 
+  ValidSBOMFormat(path: string) {
+    return this.GetSBOMFormat()[this.sbomService.GetSBOMInfo(path).format];
+  }
+
   SbomFormatFilterChange(event: any) {
-    this.sbomService.SetSBOMSchema(event.name, event.value);
+    this.sbomService.SetSBOMFormat(event.name, event.value);
   }
 
   /**
@@ -206,6 +215,15 @@ export class UploadComponent implements OnInit {
     return false;
   }
 
+  private downloadFile(file: string) {
+    const fileInfo = this.sbomService.GetSBOMInfo(file);
+    const content = this.sbomService.downloadSBOM(file);
+
+    if (fileInfo && content) {
+      this.downloadService.Download(fileInfo.fileName, content);
+    }
+  }
+
   DownloadSelected() {
     if (this.CheckForErroredFiles()) {
       return;
@@ -216,19 +234,7 @@ export class UploadComponent implements OnInit {
       this.DownloadSelectedAsZip();
     } else {
       const file = selectedFiles[0];
-      const name = this.GetSBOMInfo(file).fileName;
-      const sbom = this.sbomService.downloadSBOM(file);
-      if (sbom) {
-        const url = URL.createObjectURL(sbom);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = name as string;
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-      }
+      this.downloadFile(file);
     }
   }
 
@@ -237,28 +243,29 @@ export class UploadComponent implements OnInit {
       return;
     }
     const selectedFiles = this.GetSelected();
-    const zip = new JSZip();
+    let files: any = {};
 
     for (let i = 0; i < selectedFiles.length; i++) {
-      const file = selectedFiles[i];
-      const name = this.GetSBOMInfo(file).fileName;
-      const sbom = this.sbomService.downloadSBOM(file);
+      const name = selectedFiles[i];
 
-      if (sbom) {
-        zip.file(name as string, sbom);
-      }
+      let path = this.getAlias(name);
+
+      if(!path)
+        path = '';
+
+      const file = this.GetSBOMInfo(name);
+
+      files[path] = file.contents ? file.contents : '';
     }
 
-    zip.generateAsync({ type: 'blob' }).then((content) => {
-      saveAs(content, 'files.zip');
-    });
+    this.downloadService.DownloadAsZip(files);
   }
 
   /**
    * Get SBOM filename
    */
   getAlias(sbom: string) {
-    return this.sbomService.getSBOMAlias(sbom)?.split('.')[0];
+    return this.sbomService.getSBOMAlias(sbom);
   }
 
   /**
@@ -305,6 +312,11 @@ export class UploadComponent implements OnInit {
       const filePaths = Array.from(files).map((file) => file.path);
       this.sbomService.AddFiles(filePaths);
     }
+  }
+
+  onResize(event: any){
+    if(event.target.innerWidth > 1000)
+      this.collapsed = false;
   }
 
   ClearSearch() {
@@ -372,30 +384,11 @@ export class UploadComponent implements OnInit {
     this.routing.data = selected[0];
   }
 
-  handleCheckboxClick(event: Event, index: number) {
-    const shiftKey = (event as MouseEvent).shiftKey;
-
-    if (shiftKey && this.lastSelectedIndex !== -1) {
-      const startIndex = Math.min(index, this.lastSelectedIndex);
-      const endIndex = Math.max(index, this.lastSelectedIndex);
-
-      for (let i = startIndex; i <= endIndex; i++) {
-        this.checkboxes[i] = true;
-      }
-    } else {
-      this.checkboxes[index] = !this.checkboxes[index];
-      this.lastSelectedIndex = index;
-    }
-  }
-
-  updateCheckboxes() {
-    const allFiles = this.GetAllFiles();
-    this.checkboxes = allFiles.map((file) => false);
-  }
 
 }
 
 export enum SORT_OPTIONS {
   NAME = 'NAME',
   SCHEMA = 'SCHEMA',
+  FORMAT = 'FORMAT'
 }

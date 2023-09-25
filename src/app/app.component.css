@@ -22,3 +22,9 @@
 .col{
   flex-direction: column;
 }
+
+@media screen and (max-width: 1000px) {
+  .body > *:first-child {
+    width: 0%;
+  }
+}

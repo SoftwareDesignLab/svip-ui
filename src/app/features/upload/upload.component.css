@@ -239,7 +239,7 @@ hr {
   align-items: center;
 }
 
-.sbom:hover {
+.sbom-row:hover {
     background-color: lightgray;
     cursor: default;
 }
@@ -268,4 +268,37 @@ hr {
 .hide {
     opacity: 0;
     cursor: default !important;
+}
+
+.toggle-files {
+    position: absolute;
+    width: 20px;
+    border-radius: 0px 16px 16px 0px;
+    height: 50%;
+    top: 25%;
+    background-color: var(--primary);
+    right: 0;
+    margin: auto;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transform: translateX(20px);
+}
+
+.toggle-files > .text {
+    transform: rotate(90deg);
+}
+
+@media screen and (max-width: 1000px) {
+    .upload-container {
+        position: absolute;
+        z-index: 2;
+        background-color: var(--gray);
+        width: 90%;
+    }
+
+    .toggle-files {
+        display: flex;
+    }
 }
