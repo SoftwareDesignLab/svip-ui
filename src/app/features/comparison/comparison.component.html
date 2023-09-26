@@ -12,7 +12,7 @@
   </div>
 
   <ng-template #compare>
-    <app-accordion *ngFor="let item of GetComparison().diffReport | keyvalue" [title]="getAlias(castToString(item.key))">
+    <app-accordion *ngFor="let item of GetComparison().diffReport | keyvalue" [title]="getAlias(castToString(item.key))" style="width: 100%">
       <div body>
         <app-accordion title="Component Conflicts">
           <div body>
@@ -24,7 +24,7 @@
                       <div body>
                         <pre>{{formatValue(removeComment(value.value))}}</pre>
                       </div>
-                    </app-accordion>   
+                    </app-accordion>
                   </ng-container>
                 </div>
               </app-accordion>
