@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.1.0] - (9/28/23)
+### Added
+- Can download `vex` and `metrics` reports
+- `Generate` SBOMS with both `OSI` and `Parsers`
+- `Filter` added to metrics
+- Can close opened menus on the right
+- Loading spinners added as indicators
+  
+### Changed
+- Corrected `Schema` header in file upload to `Format`
+- Fixed various scaling issues with all display resolutions
+- Removed `/frontend` folder and put `src` in root directory
+- Accordions now automatically close when a sibling is opened
+
+### Known Issues
+- Repair Button doesn't do anything currently on metrics
+- Generation modal may get stuck open on errors
+
 ## [v1.0.0] - (7/31/23)
 ### Added
 - `Uploading` SBOMS
