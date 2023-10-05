@@ -29,6 +29,8 @@ import { MetricsComponent } from './features/metrics/metrics/metrics.component';
 import { MergeModalComponent } from './shared/components/toolbar/modals/merge-modal/merge-modal.component';
 import { GenerateModalComponent } from './shared/components/toolbar/modals/generate-modal/generate-modal.component';
 import { DiffFiltersComponent } from './features/comparison/diff-filters/diff-filters.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
+import { RepairModalComponent } from './shared/components/toolbar/modals/repair-modal/repair-modal.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { DiffFiltersComponent } from './features/comparison/diff-filters/diff-fi
     MergeModalComponent,
     GenerateModalComponent,
     SpinnerComponent,
-    DiffFiltersComponent
+    DiffFiltersComponent,
+    RepairModalComponent
   ],
   imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
   providers: [],
