@@ -344,7 +344,7 @@ export class UploadComponent implements OnInit {
 
   ViewSBOM(sbom: string) {
     this.routing.SetPage(PAGES.VIEW);
-    this.routing.data = sbom;
+    this.routing.data = this.sbomService.GetSBOMInfo(sbom);
   }
 
   SetPageIfOneSelected(page: PAGES) {

@@ -2,12 +2,12 @@
   *ngIf="data"
   [options]="['PRETTY', 'RAW']"
   title="View SBOM"
-  subTitle="{{getAlias(title)}}"
+  subTitle="{{getAlias()}}"
   selectedOption="PRETTY"
 >
   <div body-1 style="width: 100%;">
     <ng-template #components let-data>
-      <ng-container *ngFor="let component of data.components">
+      <ng-container *ngFor="let component of data.sbom.components">
         <app-accordion [title]="component.name">
           <div body>
             <ng-container *ngFor="let item of component | keyvalue">
@@ -54,7 +54,7 @@
 
   <div body-2 style="width: 100%;">
     <pre class="content">
-      {{ getContents(title)}}
+      {{ getContents()}}
     </pre>
   </div>
 </app-viewer>
