@@ -99,17 +99,16 @@ export class SbomService {
    * @param target target sbom, others will be tested against it
    * @param others sboms to compare against target
    */
-  CompareSBOMs(target: string, others: string[]) {
-    let targetID = this.files[target].id;
-
-    let idList = [];
+  CompareSBOMs(targetID: string, others: string[]) {
+    let idList: number[] = [];
 
     for (let i = 0; i < others.length; i++) {
-      let other = others[i];
-      idList.push(this.files[other].id);
+      let other = Number(others[i]);
+      idList.push(other);
     }
 
-    idList.unshift(targetID);
+    idList.unshift(Number(targetID));
+
     this.SVIPService.compareSBOMs(idList).subscribe((result) => {
       this.comparison = result;
     });
@@ -121,7 +120,7 @@ export class SbomService {
    */
   deleteFile(id: string) {
     if (id && Number(id) > -1) {
-      // TODO: Add error handling for when file cannot be delted
+      // TODO: Add error handling for when file cannot be deleted
       this.SVIPService.deleteSBOM(Number(id)).subscribe((deleted) => {
         if (deleted) {
           const data = this.routingService.data;
@@ -246,12 +245,24 @@ export class SbomService {
    * Gets sbom file name without the path
    * @param path sbom path
    */
-  getSBOMAlias(id: string) {
+  getSBOMAliasByPath(path: string) {
+    const lastBackslashIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
+
+    if (lastBackslashIndex !== -1) {
+      return path.substring(lastBackslashIndex + 1);
+    }
+    return path;
+  }
+
+  /***
+   * Gets sbom file name by index in sbom list
+   */
+  getSBOMAliasByID(id: string) {
     let path = this.files[id].fileName;
     const lastBackslashIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
-  
+
     if (lastBackslashIndex !== -1) {
-      return path.substring(lastBackslashIndex + 1); 
+      return path.substring(lastBackslashIndex + 1);
     }
     return path;
   }

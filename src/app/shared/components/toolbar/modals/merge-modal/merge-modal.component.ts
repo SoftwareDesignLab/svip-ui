@@ -48,6 +48,6 @@ export class MergeModalComponent {
    * Get SBOM filename
    */
   getAlias(sbom: string) {
-    return this.sbomService.getSBOMAlias(sbom);
+    return this.sbomService.getSBOMAliasByID(sbom);
   }
 }

@@ -31,7 +31,7 @@ export class ViewComponent {
    * Get SBOM filename
    */
   getAlias() {
-    return this.sbomService.getSBOMAlias(this.data.id);
+    return this.sbomService.getSBOMAliasByID(this.data.id);
   }
 
   isObjectType(value: any): boolean {

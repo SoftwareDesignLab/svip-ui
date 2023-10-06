@@ -42,6 +42,6 @@ export class CompareModalComponent {
   }
 
   getAlias(sbom: string) {
-    return this.sbomService.getSBOMAlias(sbom);
+    return this.sbomService.getSBOMAliasByID(sbom);
   }
 }
