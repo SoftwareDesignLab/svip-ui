@@ -119,7 +119,7 @@ export class UploadComponent implements OnInit {
         .sort((a: string, b: string) => {
           let aFormat = this.sbomService.GetSBOMInfo(a).fileName;
           let bFormat = this.sbomService.GetSBOMInfo(b).fileName;
-  
+
           return this.sortingOptions[SORT_OPTIONS.NAME]
             ? aFormat.localeCompare(bFormat)
             : bFormat.localeCompare(aFormat);
@@ -265,7 +265,7 @@ export class UploadComponent implements OnInit {
    * Get SBOM filename
    */
   getAlias(sbom: string) {
-    return this.sbomService.getSBOMAlias(sbom);
+    return this.sbomService.getSBOMAliasByID(sbom);
   }
 
   /**
@@ -344,7 +344,7 @@ export class UploadComponent implements OnInit {
 
   ViewSBOM(sbom: string) {
     this.routing.SetPage(PAGES.VIEW);
-    this.routing.data = sbom;
+    this.routing.data = this.sbomService.GetSBOMInfo(sbom);
   }
 
   SetPageIfOneSelected(page: PAGES) {
@@ -353,7 +353,7 @@ export class UploadComponent implements OnInit {
     if (selected.length !== 1) return;
 
     this.routing.SetPage(page);
-    this.routing.data = this.sbomService.GetSBOMInfo(selected[0]).id;
+    this.routing.data = this.sbomService.GetSBOMInfo(selected[0]);
   }
 
   sbomsRequiredMessage(amount: number, orMore: boolean) {
@@ -381,7 +381,7 @@ export class UploadComponent implements OnInit {
     if (selected.length !== 1) return;
 
     this.routing.SetPage(PAGES.METRICS);
-    this.routing.data = selected[0];
+    this.routing.data = this.sbomService.GetSBOMInfo(selected[0]);
   }
 
 

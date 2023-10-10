@@ -40,7 +40,7 @@ export class ComparisonComponent {
   get resultStatus() {
     return this._resultStatus;
   }
-  
+
   constructor(public sbomService: SbomService, public downloadService: DownloadService) { }
 
   GetComparison() {
@@ -94,7 +94,7 @@ export class ComparisonComponent {
 
   downloadReport() {
     const fileName = 'report.json';
-    const reportData = this.GetComparison(); 
+    const reportData = this.GetComparison();
     const reportJson = JSON.stringify(reportData, null, 2);
     this.downloadService.Download(fileName, new Blob([reportJson], { type: 'application/json' }));
   }
@@ -103,6 +103,6 @@ export class ComparisonComponent {
    * Get SBOM filename
    */
   getAlias(sbom: string) {
-    return this.sbomService.getSBOMAlias(sbom);
+    return this.sbomService.getSBOMAliasByID(sbom);
   }
 }

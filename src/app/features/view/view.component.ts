@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { PAGES, RoutingService } from '../../shared/services/routing.service';
 import { SbomService } from '../../shared/services/sbom.service';
 import { SVIPService } from '../../shared/services/SVIP.service';
+import File from 'src/app/shared/models/file';
 
 @Component({
   selector: 'app-view',
@@ -13,34 +14,24 @@ export class ViewComponent {
   pretty: boolean = true;
   data: any;
   raw: string = '';
-  title: string = '';
   @Input() components: any[] | undefined;
 
   constructor(
     private routing: RoutingService,
     public sbomService: SbomService,
-    private svipService: SVIPService
   ) {
-    routing.data$.subscribe((data) => {
+    routing.data$.subscribe((data: File) => {
       if (routing.GetPage() !== PAGES.VIEW) return;
-      this.title = data;
+      if (!data) return;
       this.data = data;
-      if (data) {
-        const sbomData = sbomService.GetSBOMInfo(data);
-        if (sbomData.id) {
-          this.svipService.getSBOM(sbomData.id).subscribe((sbom) => {
-            this.data = sbom;
-          });
-        }
-      }
     });
   }
 
   /**
    * Get SBOM filename
    */
-  getAlias(sbom: string) {
-    return this.sbomService.getSBOMAlias(sbom);
+  getAlias() {
+    return this.sbomService.getSBOMAliasByID(this.data.id);
   }
 
   isObjectType(value: any): boolean {
@@ -70,7 +61,7 @@ export class ViewComponent {
     return formattedValue.replace(/[[\]{},"]/g, '') + '\n';
   }
 
-  getContents(path: string) {
-    return this.sbomService.GetSBOMInfo(path).contents;
+  getContents() {
+    return this.data.contents;
   }
 }

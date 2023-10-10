@@ -58,8 +58,9 @@ export class MetricsComponent implements OnInit {
   ) {
     routing.data$.subscribe((data) => {
       if (data) {
-        this.name = data;
-        const sbom = sbomService.GetSBOMInfo(data);
+        const sbom = data;
+
+        this.name = data.fileName;
         SVIP.gradeSBOM(sbom.id).subscribe((qa) => {
           if (qa) {
             this.qa = qa;
@@ -121,7 +122,7 @@ export class MetricsComponent implements OnInit {
    * Get SBOM filename
    */
   getAlias(sbom: string) {
-    return this.sbomService.getSBOMAlias(sbom);
+    return this.sbomService.getSBOMAliasByPath(sbom);
   }
 
   downloadReport() {
