@@ -103,12 +103,13 @@ export class SVIPService {
     format: string,
     overwrite: boolean
   ): Observable<string> {
+    //NOTE: The server params are backwards hence why they are reversed here.
     return this.client.put(
       'sboms',
       new HttpParams()
         .set('id', id)
-        .set('schema', schema)
-        .set('format', format)
+        .set('schema', format)
+        .set('format', schema)
         .set('overwrite', overwrite)
     ) as Observable<string>;
   }
@@ -164,9 +165,9 @@ export class SVIPService {
         }).catch(() => {
           return reject(false);
         })
-    }) 
+    })
   }
-  
+
   async zipFileDirectory(data: any) {
     return new Promise(async(resolve, reject) => {
       await this.ipc.invoke('zipDirectory').then((value: any) => {
@@ -174,18 +175,18 @@ export class SVIPService {
       }).catch(() => {
         return reject(false);
       })
-  }) 
+  })
   }
 
   async uploadProject(file: any, projectName: string, schema: string, format: string, type: string) {
-    
+
     return new Promise(async(resolve, reject) => {
       let formData = new FormData();
       formData.append('zipFile', new File([file], 'temp.zip'));
       formData.append('projectName', projectName);
       formData.append('schema', schema);
       formData.append('format', format);
-      
+
       let params = new HttpParams();
 
       this.client.postFile('generators/' + type.toLowerCase(), formData, params).subscribe((data) => {
@@ -197,7 +198,7 @@ export class SVIPService {
       })
     });
 
-    
+
   }
   //#endregion
 }
