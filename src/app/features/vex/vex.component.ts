@@ -72,7 +72,7 @@ export class VexComponent {
     if(this.vexOptions.requiresAPIKey.includes(this.vexOptions.selectedDatabase) && this.vexOptions.apiKey === '')
       return;
 
-    this.client.getVex(this.routing.data, this.vexOptions.selectedFormat, this.vexOptions.selectedDatabase).subscribe((result) => {
+    this.client.getVex(this.routing.data.id, this.vexOptions.selectedFormat, this.vexOptions.selectedDatabase).subscribe((result) => {
       if(result) {
         this.vex = result;
       }
@@ -81,7 +81,7 @@ export class VexComponent {
     })
   }
 
-  
+
   downloadVex() {
     const fileName = 'vex.json';
     const vexData = this.vex;
