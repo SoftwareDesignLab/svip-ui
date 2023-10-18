@@ -42,7 +42,6 @@ export class UploadComponent implements OnInit {
   public convertChoices: {[key: string]: string[]} = {
     'CDX14': ['JSON'],
     'SPDX23': ['TAGVALUE', 'JSON'],
-    'SVIP': ['TAGVALUE', 'JSON']
   }
   public compareModal: boolean = false;
 
