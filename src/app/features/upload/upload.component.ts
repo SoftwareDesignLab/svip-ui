@@ -38,9 +38,11 @@ export class UploadComponent implements OnInit {
     format: '',
     overwrite: true,
   };
-  public formatOptions: string[] = ['TAGVALUE', 'JSON'];
-  public schemaOptions: string[] = ['CDX14', 'SPDX23', 'SVIP'];
 
+  public convertChoices: {[key: string]: string[]} = {
+    'CDX14': ['JSON'],
+    'SPDX23': ['TAGVALUE', 'JSON'],
+  }
   public compareModal: boolean = false;
 
   protected sortingOptions: { [type: string]: boolean } = {
@@ -49,8 +51,6 @@ export class UploadComponent implements OnInit {
   };
 
   private selectedSorting: SORT_OPTIONS = SORT_OPTIONS.NAME;
-
-
 
   constructor(
     private sbomService: SbomService,
@@ -105,6 +105,19 @@ export class UploadComponent implements OnInit {
 
   GetAllFiles() {
     return this.sbomService.getSBOMNames();
+  }
+
+  openConvert() {
+
+    let id = this.GetSelected()[0];
+
+    //Hide CX14 from convert options if selected is CDX14 as only has one format option
+    if(this.GetSBOMInfo(id).format == 'CycloneDX')
+      delete this.convertChoices['CDX14'];
+    else
+      this.convertChoices['CDX14'] = ['JSON'];
+
+    this.convertModal = true;
   }
 
   /**

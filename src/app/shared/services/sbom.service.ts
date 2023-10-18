@@ -149,14 +149,13 @@ export class SbomService {
     format: string,
     overwrite: boolean
   ) {
-    let sbom = this.files[id];
     this.SVIPService.convertSBOM(Number(id), schema, format, overwrite).subscribe(
       (result) => {
         if (result) {
-          this.files[id].contents = JSON.stringify(result, null, '2');
-          this.files[id].id += 1;
-          this.files[id].schema = schema;
-          this.files[id].format = format;
+          this.addSBOMbyID(Number(result));
+
+          if(overwrite)
+            delete this.files[id];
         }
       }
     );

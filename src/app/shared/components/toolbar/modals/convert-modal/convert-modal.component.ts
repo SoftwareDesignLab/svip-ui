@@ -20,11 +20,7 @@ export class ConvertModalComponent {
     overwrite: true,
   };
 
-  public choices: {[key: string]: string[]} = {
-    'CDX14': ['JSON'],
-    'SPDX23': ['TAGVALUE', 'JSON'],
-    'SVIP': ['TAGVALUE', 'JSON']
-  }
+  @Input() choices!: {[key: string]: string[]};
 
   @Input() opened: boolean = false;
   @Output() close = new EventEmitter<Boolean>();
