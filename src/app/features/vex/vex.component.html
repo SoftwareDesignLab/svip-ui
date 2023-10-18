@@ -1,0 +1,65 @@
+<app-viewer title="VEX" [options]="['SETTINGS', 'DATA']" selectedOption="SETTINGS">
+  <div body-1 style="display: flex; gap: 15px; flex-direction: column;">
+    <div>
+      <div>Database:</div>
+      <select [(ngModel)]="vexOptions.selectedDatabase">
+        <option value=""></option>
+        <option *ngFor="let option of vexOptions.databases" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+    <div>
+      <div>Format:</div>
+      <select [(ngModel)]="vexOptions.selectedFormat">
+        <option value=""></option>
+        <option *ngFor="let option of vexOptions.formats" [value]="option">{{ option }}</option>
+      </select>
+    </div>
+    <div>
+      <div>API Key:</div>
+      <input [(ngModel)]="vexOptions.apiKey" [disabled]="!vexOptions.requiresAPIKey.includes(vexOptions.selectedDatabase)"/>
+    </div>
+    <app-button text="Generate Data" (click)="this.GenerateData()"/>
+  </div>
+
+  <div body-2 *ngIf="vex !== undefined && loading === false" style="width: 100%;">
+    <app-accordion title="General Information" *ngIf="vex.vex">
+      <div body>
+        <div [innerHTML]="formatValue(removeStatements(vex.vex))"></div>
+      </div>
+    </app-accordion>
+    <app-accordion title="Vex Statements" *ngIf="vex.vex && vex.vex.vexstatements">
+      <div body>
+        <ng-container *ngFor="let item of vex?.vex?.vexstatements | keyvalue">
+          <app-accordion [title]="castAsAny(item.value).statementID">
+            <div body>
+              <app-accordion *ngFor="let vex of castAsAny(item.value) | keyvalue" [title]="castAsAny(vex.key)">
+                <div body [innerHTML]="formatValue(vex.value)">
+                </div>
+              </app-accordion>
+            </div>
+          </app-accordion>
+        </ng-container>
+
+        <div *ngIf="vex.vex.vexstatements.length === 0">
+          None
+        </div>
+      </div>
+    </app-accordion>
+    <app-accordion title="Errors" *ngIf="vex.error">
+      <div body>
+        <div [innerHTML]="formatValue(vex.error)"></div>
+      </div>
+    </app-accordion>
+    <div class="btn-download">
+      <app-button text="Download Report" (click)="downloadVex()"/>
+    </div>
+  </div>
+
+  <div body-2 *ngIf="vex === undefined && loading === false" style="margin:auto;">
+    Press 'Generate Data' in settings to view data
+  </div>
+
+  <div body-2 *ngIf="loading === true" style="align-items: center; width: 100%;">
+    <app-spinner style="margin: auto;" height="64px" width="64px"></app-spinner>
+  </div>
+</app-viewer>

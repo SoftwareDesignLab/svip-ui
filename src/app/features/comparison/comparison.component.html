@@ -1,0 +1,55 @@
+<app-viewer
+  title="Comparison"
+  [options]="['Target: ' + getAlias(GetComparison()?.target)]"
+  [selectedOption]="'Target: ' + getAlias(GetComparison()?.target)"
+>
+
+  <div body-1 style="width: 100%">
+    <div *ngIf="GetComparison().target" class="wrapper">
+      <ng-container *ngTemplateOutlet="compare"></ng-container>
+      <ng-container *ngTemplateOutlet="filters"></ng-container>
+    </div>
+  </div>
+
+  <ng-template #compare>
+    <app-accordion *ngFor="let item of GetComparison().diffReport | keyvalue" [title]="getAlias(castToString(item.key))" style="width: 100%">
+      <div body>
+        <app-accordion title="Component Conflicts">
+          <div body>
+            <ng-container *ngFor="let conflict of castAsAny(item.value).componentConflicts | keyvalue">
+              <app-accordion *ngIf="castAsAny(conflict.value)?.length" [title]="castToString(conflict.key)">
+                <div body>
+                  <ng-container *ngFor="let value of castAsAny(conflict.value) | keyvalue">
+                    <app-accordion *ngIf="getFilterType(formatValue(castAsAny(value.value).type))" [title]="castToString(formatValue(castAsAny(value.value).message))" >
+                      <div body>
+                        <pre>{{formatValue(removeComment(value.value))}}</pre>
+                      </div>
+                    </app-accordion>
+                  </ng-container>
+                </div>
+              </app-accordion>
+            </ng-container>
+          </div>
+        </app-accordion>
+        <app-accordion title="Missing Components" *ngIf="castAsAny(item.value)?.missingComponents?.length">
+          <div body>
+            <pre>{{formatValue(castAsAny(item.value).missingComponents)}}</pre>
+          </div>
+        </app-accordion>
+      </div>
+    </app-accordion>
+  </ng-template>
+
+  <ng-template #filters>
+    <div class="filters-container">
+      <app-diff-filters
+        [(attributes)]="attributes"
+        [(palette)]="palette"
+        [(resultStatus)]="resultStatus"
+      ></app-diff-filters>
+      <div class="button-container">
+        <app-button text="Download Report" (click)="downloadReport()"></app-button>
+      </div>
+    </div>
+  </ng-template>
+</app-viewer>

@@ -1,0 +1,69 @@
+.modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  color: black;
+}
+
+.click-off {
+  width: 100%;
+  height: 100%;
+  background: #0000008e;
+  position: absolute;
+  z-index: -1;
+}
+
+.content {
+  width: 40%;
+  height: 60%;
+  min-width: 250px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  background: white;
+  position: relative;
+  padding: 50px;
+  border-radius: 15px;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+  overflow: hidden;
+  z-index: 1;
+  overflow-y: auto;
+}
+
+.actions {
+  margin-top: auto;
+  display: flex;
+  float: right;
+  color: black;
+  justify-content: flex-end;
+}
+
+.title {
+  width: 100%;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+.close {
+  position: absolute;
+  font-size: 30px;
+  right: 35px;
+  top: 15px;
+  cursor: pointer;
+  background-color: transparent;
+  color: black;
+}
+
+.body{
+  white-space: initial;
+}
