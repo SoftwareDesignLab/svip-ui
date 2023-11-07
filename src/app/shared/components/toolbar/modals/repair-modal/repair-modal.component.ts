@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { SVIPService } from 'src/app/shared/services/SVIP.service';
 
 @Component({
   selector: 'app-repair-modal',
@@ -7,16 +8,27 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class RepairModalComponent {
 
+  @Input() sbomID: number = 0;
   @Input() opened!: boolean;
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() selectedErrorMessage: string = '';
+  @Input() error: any = {};
+  selectedFix: any = {};
+
+  constructor(private svipService: SVIPService) {}
 
   Close() {
     this.close.emit(false);
   }
 
   Repair() {
-    this.close.emit(false);
+    let fix: {[id: number]: any[]} = {};
+
+    fix[this.error.id] = this.error.fixes.filter((x: any) => x.fixed === this.selectedFix);
+    delete fix[this.error.id][0].new;
+    this.svipService.repairSBOM(this.sbomID, fix).then((data: any) => {
+      this.close.emit(false);
+    })
+    
   }
 
 }

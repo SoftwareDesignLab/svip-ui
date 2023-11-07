@@ -25,7 +25,7 @@
   <ng-template #metadata>
     <div class="list">
       <!-- Test results -->
-      <ng-container *ngFor="let testResult of getTestResults('metadata')">
+      <ng-container *ngFor="let testResult of getTestResults('0')">
         <app-accordion *ngIf="isFiltered(testResult)">
           <div title class="test-result">
             <span>
@@ -54,7 +54,7 @@
           </div>
           <span body class="flex error-result">
             {{ testResult.details }}
-            <app-button style="margin-left: auto;" text="Repair" (click)="openRepairModal(testResult.details)" *ngIf="testResult.status === 'FAIL'" icon="build"></app-button>
+            <app-button style="margin-left: auto;" text="Repair" (click)="openRepairModal(testResult, '0')" *ngIf="testResult.status === 'FAIL' && testResult.fixes.length > 0" icon="build"></app-button>
           </span>
         </app-accordion>
       </ng-container>
@@ -67,11 +67,11 @@
         <app-accordion
           *ngIf="
             component &&
-            component.key !== 'metadata' &&
+            component.key !== '0' &&
             getTestResults(component.key).length
           "
         >
-          <div title class="component-title">{{ component.key }}</div>
+          <div title class="component-title">{{ this.qa.hashCodeMapping[component.key] }}</div>
           <div body>
             <!-- Test results -->
             <ng-container
@@ -107,7 +107,7 @@
                 </div>
                 <span body class="flex error-result">
                   {{ testResult.details }}
-                  <app-button style="margin-left: auto;" text="Repair" (click)="openRepairModal(testResult.details)" *ngIf="testResult.status === 'FAIL'" icon="build"></app-button>
+                  <app-button style="margin-left: auto;" text="Repair" (click)="openRepairModal(testResult, component.key)" *ngIf="testResult.status === 'FAIL' && testResult.fixes.length > 0" icon="build"></app-button>
                 </span>
               </app-accordion>
             </ng-container>
@@ -137,4 +137,4 @@
   </ng-template>
 </app-viewer>
 
-<app-repair-modal [selectedErrorMessage]="returnMessage()" [opened] = "repairModal" (close)="repairModal = false"/>
+<app-repair-modal [sbomID]="sbomID" [error]="selectedError" [opened] = "repairModal" (close)="repairModal = false"/>
