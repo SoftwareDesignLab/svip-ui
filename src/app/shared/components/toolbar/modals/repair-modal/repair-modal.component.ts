@@ -23,8 +23,9 @@ export class RepairModalComponent {
   Repair() {
     let fix: {[id: number]: any[]} = {};
 
-    fix[this.error.id] = this.error.fixes.filter((x: any) => x.fixed === this.selectedFix);
+    fix[this.error.id] = this.error.fixes.filter((x: any) => x.newString === this.selectedFix);
     delete fix[this.error.id][0].new;
+    delete fix[this.error.id][0].newString;
     this.svipService.repairSBOM(this.sbomID, fix).then((data: any) => {
       this.close.emit(false);
     })

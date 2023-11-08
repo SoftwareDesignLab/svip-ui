@@ -5,7 +5,7 @@
       <p>Suggested Change:</p>
       <select [(ngModel)]="selectedFix">
         <option value=""></option>
-        <option *ngFor="let option of error.fixes">{{ option.new }}</option>
+        <option *ngFor="let option of error.fixes">{{ option.newString }}</option>
       </select>
     </div>
     <div actions style="display: flex; gap: 15px">
