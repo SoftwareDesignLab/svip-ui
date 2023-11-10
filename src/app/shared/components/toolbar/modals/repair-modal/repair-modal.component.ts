@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SVIPService } from 'src/app/shared/services/SVIP.service';
+import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
+import { SbomService } from 'src/app/shared/services/sbom.service';
 
 @Component({
   selector: 'app-repair-modal',
@@ -14,7 +16,7 @@ export class RepairModalComponent {
   @Input() error: any = {};
   selectedFix: any = {};
 
-  constructor(private svipService: SVIPService) {}
+  constructor(private svipService: SVIPService, private routing: RoutingService, private sbomService: SbomService) {}
 
   Close() {
     this.close.emit(false);
@@ -28,6 +30,17 @@ export class RepairModalComponent {
     delete fix[this.error.id][0].newString;
     this.svipService.repairSBOM(this.sbomID, fix).then((data: any) => {
       this.close.emit(false);
+
+      if(data && !isNaN(data)) {
+        this.sbomService.addSBOMbyID(data);
+        this.routing.Clear();
+
+        setTimeout(() => {
+          this.routing.SetPage(PAGES.METRICS);
+          this.routing.data = this.sbomService.GetSBOMInfo(data);
+        }, 50)
+        
+      }
     })
     
   }

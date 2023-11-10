@@ -32,8 +32,6 @@ export class SbomService {
         const file = new File(path).setValid(id, contents, sbom);
         this.files[id] = file;
         this.SetSBOMFormat(sbom.format, true);
-
-        console.log(this.files);
       });
     });
   }
