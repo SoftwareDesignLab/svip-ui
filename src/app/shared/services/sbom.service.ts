@@ -53,7 +53,7 @@ export class SbomService {
    */
   async AddFiles(paths: string[]) {
     paths.forEach((path) => {
-      let randomID = Math.random().toString();
+      let randomID = -Math.random().toString() + "-loading";
       // File is loading
       this.files[randomID] = new File(path);
       this.SVIPService.getFileData(path).then((contents) => {
@@ -117,7 +117,7 @@ export class SbomService {
    * @param: file ID
    */
   deleteFile(id: string) {
-    if (id && Number(id) > -1) {
+    if (id && !isNaN(Number(id))) {
       // TODO: Add error handling for when file cannot be deleted
       this.SVIPService.deleteSBOM(Number(id)).subscribe((deleted) => {
         if (deleted) {
@@ -255,6 +255,9 @@ export class SbomService {
    * Gets sbom file name by index in sbom list
    */
   getSBOMAliasByID(id: string) {
+    if(this.files[id].fileName === undefined)
+      return "";
+
     let path = this.files[id].fileName;
     const lastBackslashIndex = Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\'));
 
