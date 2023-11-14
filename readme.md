@@ -1,4 +1,4 @@
-# SBOM-in-a-Box
+# SBOM-in-a-Box GUI
 
 > The **SBOM-in-a-Box** is a unified platform to promote the
 > production, consumption, and utilization of Software Bills of Materials.
