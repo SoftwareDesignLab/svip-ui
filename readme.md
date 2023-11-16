@@ -1,6 +1,6 @@
-# SBOM Visualization and Integration Platform GUI
+# SBOM-in-a-Box GUI
 
-> The SBOM Visualization and Integration Platform (**SVIP**) is a unified platform to promote the
+> The **SBOM-in-a-Box** is a unified platform to promote the
 > production, consumption, and utilization of Software Bills of Materials.
 
 
@@ -12,7 +12,7 @@
 
 ### Quick Start
 
-1. Follow the [SVIP API](https://github.com/SoftwareDesignLab/SVIP/tree/main#quick-start) quick start to launch the backend
+1. Follow the [SBOM-in-a-Box API](https://github.com/SoftwareDesignLab/SVIP/tree/main#quick-start) quick start to launch the backend
 2. `npm ci`
 3. `npm start`
 

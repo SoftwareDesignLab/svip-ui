@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
  - Repair Button shows Repair Modal for fixing issues
 
+## [v1.1.1] - (11/10/23)
+- Change name from SVIP to SBOM-in-a-Box to better represent the platform
+
 ## [v1.1.0] - (9/28/23)
 ### Added
 - Can download `vex` and `metrics` reports
