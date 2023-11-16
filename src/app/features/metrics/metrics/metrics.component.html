@@ -54,7 +54,7 @@
           </div>
           <span body class="flex error-result">
             {{ testResult.details }}
-            <app-button style="margin-left: auto;" text="Repair" (click)="openRepairModal(testResult, '0')" *ngIf="testResult.status === 'FAIL' && testResult.fixes.length > 0" icon="build"></app-button>
+            <app-button style="margin-left: auto;" (click)="openRepairModal(testResult, '0')" *ngIf="testResult.status === 'FAIL' && testResult.fixes.length > 0" icon="build"></app-button>
           </span>
         </app-accordion>
       </ng-container>
