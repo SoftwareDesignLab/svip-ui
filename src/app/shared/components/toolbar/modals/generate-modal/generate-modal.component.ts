@@ -25,7 +25,6 @@ export class GenerateModalComponent implements OnInit {
   public choices: {[key: string]: string[]} = {
     'CDX14': ['JSON'],
     'SPDX23': ['TAGVALUE', 'JSON'],
-    'SVIP': ['TAGVALUE', 'JSON']
   }
 
   public types: string[] = ['OSI', 'PARSERS'];
@@ -80,10 +79,10 @@ export class GenerateModalComponent implements OnInit {
 
     this.status = GenerationStatus.GENERATING;
 
-    this.service.uploadProject(this.zippedFileData, 
-      this.options.name, 
-      this.options.schema, 
-      this.options.format, 
+    this.service.uploadProject(this.zippedFileData,
+      this.options.name,
+      this.options.schema,
+      this.options.format,
       this.options.type).then((data: any) => {
         this.sbomService.addSBOMbyID(data);
         this.Close();

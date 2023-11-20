@@ -127,15 +127,31 @@ export class SVIPService {
   }
 
   /**
-   *  Run metrics on an SBOM.
+   *  Run metrics on an SBOM (with repair).
    * @param id SBOM id
    */
   gradeSBOM(id: number): Observable<string> {
     return this.client.get(
-      'sboms/qa',
+      'sboms/repair/statement',
       new HttpParams().set('id', id)
     ) as Observable<string>;
   }
+
+  async repairSBOM(sbom: number, fix: {[id: number]: any[]}) {
+    return new Promise(async(resolve, reject) => {
+      this.client.get('sboms/repair',
+        new HttpParams().set('id', sbom)
+        .set('repairStatement', JSON.stringify(fix))
+        .set('overwrite', true)).subscribe((data) => {
+          if(data) {
+            return resolve(data);
+          }
+          return reject(false);
+        })
+    })
+  }
+    
+  
   //#endregion
   //#region Electron
   /**

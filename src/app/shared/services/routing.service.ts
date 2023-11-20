@@ -22,6 +22,11 @@ export class RoutingService {
   SetPage(page: PAGES) {
     this.page = page;
   }
+
+  Clear() {
+    this.page = PAGES.NONE;
+    this.data = null;
+  }
 }
 
 export enum PAGES {
