@@ -52,8 +52,20 @@ export class GenerateModalComponent implements OnInit {
           this.status = GenerationStatus.ZIPPING;
 
           this.service.zipFileDirectory(result).then((data) => {
-            this.zippedFileData = data;
-            this.status = GenerationStatus.PROJECT_INFO;
+
+            //TODO: Prompt user beforehand on OSI or Parsers so don't need to upload project if don't have to OR the backend should be reworked for parsers
+            this.service.uploadProject(data, 'osi').then((tools: any) => {
+
+              tools.forEach((tool: any) => {
+                this.osiTools[tool] = true;
+              })
+
+              this.zippedFileData = data;
+              this.status = GenerationStatus.PROJECT_INFO;
+
+            }).catch((error) => {
+              this.Close();
+            })
           }).catch((error) => {
             this.Close();
           })
@@ -61,12 +73,6 @@ export class GenerateModalComponent implements OnInit {
           this.Close();
         })
     });
-
-    this.service.getOSITools().subscribe((data) => {
-      data.forEach((tool) => {
-        this.osiTools[tool] = true;
-      })
-    })
   }
 
   ngOnChanges(): void {
@@ -79,11 +85,19 @@ export class GenerateModalComponent implements OnInit {
 
     this.status = GenerationStatus.GENERATING;
 
-    this.service.uploadProject(this.zippedFileData,
+    let tools = [];
+
+    for (let key in this.osiTools) {
+      if (this.osiTools[key])
+        tools.push(key);
+    }
+
+    this.service.generateFile(this.zippedFileData,
       this.options.name,
       this.options.schema,
       this.options.format,
-      this.options.type).then((data: any) => {
+      this.options.type,
+      tools).then((data: any) => {
         this.sbomService.addSBOMbyID(data);
         this.Close();
       }).catch(() => {
