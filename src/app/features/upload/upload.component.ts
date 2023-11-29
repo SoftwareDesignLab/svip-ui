@@ -40,7 +40,7 @@ export class UploadComponent implements OnInit {
   };
 
   public convertChoices: {[key: string]: string[]} = {
-    'CDX14': ['JSON'],
+    'CDX14': ['JSON', 'XML'],
     'SPDX23': ['TAGVALUE', 'JSON'],
   }
   public compareModal: boolean = false;
