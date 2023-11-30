@@ -9,7 +9,7 @@
 # SBOM-in-a-Box GUI 
 This serves as the front-end and human interaction with our software.
 
-### Latest Release: [[v1.1.0] - (9/28/23)](doc/changelog.md)
+### Latest Release: [[v1.2.1] - (11/30/23)](doc/changelog.md)
 
 ### System Requirements
 
