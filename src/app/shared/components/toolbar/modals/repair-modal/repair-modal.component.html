@@ -1,8 +1,12 @@
 <app-modal [opened]="opened" (close)="Close()">
     <div title>Repair Selected</div>
     <div content class="flex col">
-      <p>Issue: <br>{{ selectedErrorMessage}}</p>
-      <p>Suggested Change: </p>
+      <p>Issue: <br>{{ error.details}}</p>
+      <p>Suggested Change:</p>
+      <select [(ngModel)]="selectedFix">
+        <option value=""></option>
+        <option *ngFor="let option of error.fixes">{{ option.newString }}</option>
+      </select>
     </div>
     <div actions style="display: flex; gap: 15px">
       <div class="btn-modal button flex center hover" (click)="Repair()">

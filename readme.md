@@ -1,10 +1,15 @@
-# SBOM Visualization and Integration Platform GUI
-
-> The SBOM Visualization and Integration Platform (**SVIP**) is a unified platform to promote the
+# SBOM-in-a-Box GUI
+> The **SBOM-in-a-Box** is a unified platform to promote the
 > production, consumption, and utilization of Software Bills of Materials.
+> This includes conversion between schemas, generation, comparision and evaluation of quality.
 
+# Purpose of SBOM-in-a-Box
+> SBOM-in-a-box has unique features including generation of SBOMs using multiple tools that allow for a more a complete SBOM to be created. There is also a feature within metrics, where the tool provides suggestions if there is a potential better way to showcase the attributes. There is also the ability to convert between SPDX and CycloneDX SBOM schemas, and to gain insight into vulnerabilities of software through SBOMs. These features allow for developers to create an SBOM that is the most relevant and suits their needs.
 
-### Latest Release: [[v1.1.0] - (9/28/23)](doc/changelog.md)
+# SBOM-in-a-Box GUI 
+This serves as the front-end and human interaction with our software.
+
+### Latest Release: [[v1.2.1] - (11/30/23)](doc/changelog.md)
 
 ### System Requirements
 
@@ -12,7 +17,7 @@
 
 ### Quick Start
 
-1. Follow the [SVIP API](https://github.com/SoftwareDesignLab/SVIP/tree/main#quick-start) quick start to launch the backend
+1. Follow the [SBOM-in-a-Box API](https://github.com/SoftwareDesignLab/SVIP/tree/main#quick-start) quick start to launch the backend
 2. `npm ci`
 3. `npm start`
 

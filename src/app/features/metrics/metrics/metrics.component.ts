@@ -16,8 +16,9 @@ export class MetricsComponent implements OnInit {
   components: { [componentName: string]: testResult[] } = {};
   attributes: filter = {};
   name: string = '';
+  sbomID: number = 0;
   palettes = palettes;
-  selectedErrorMessage: string = '';
+  selectedError: any = {};
   public repairModal: boolean = false;
   private _palette = PALETTE.DEFAULT;
   get palette() {
@@ -61,6 +62,7 @@ export class MetricsComponent implements OnInit {
         const sbom = data;
 
         this.name = data.fileName;
+        this.sbomID = sbom.id;
         SVIP.gradeSBOM(sbom.id).subscribe((qa) => {
           if (qa) {
             this.qa = qa;
@@ -75,23 +77,18 @@ export class MetricsComponent implements OnInit {
 
   getKeys() {
     // Components
-    Object.keys(this.qa.components).forEach((component) => {
+    Object.keys(this.qa.results).forEach((component) => {
       this.components[component] = [];
-      const componentTestNames = Object.keys(this.qa.components[component]);
-      const tests = componentTestNames;
-      // Component tests
-      tests.forEach((test: any) => {
-        // test results
-        this.qa.components[component][test].forEach((testResult: any) => {
-          this.components[component].push(testResult);
-          if (testResult.status !== 'ERROR') {
-            const processors = testResult.attributes as string[];
-            // Processors/Attributes
-            processors.forEach((processor: string) => {
-              this.attributes[processor] = { shown: true, color: '' };
-            });
-          }
-        });
+      
+      this.qa.results[component].forEach((testResult: any) => {
+        this.components[component].push(testResult);
+        if (testResult.status !== 'ERROR') {
+          const processors = testResult.attributes as string[];
+          // Processors/Attributes
+          processors.forEach((processor: string) => {
+            this.attributes[processor] = { shown: true, color: '' };
+          });
+        }
       });
     });
     this.setColor();
@@ -132,14 +129,14 @@ export class MetricsComponent implements OnInit {
     this.downloadService.Download(fileName, new Blob([reportJson], { type: 'application/json' }));
   }
 
-  openRepairModal(errorMessage: string) {
-    console.log('Error Message:', errorMessage);
-    this.selectedErrorMessage = errorMessage;
+  openRepairModal(test: any, id: string) {
+    this.selectedError = test;
+    this.selectedError.id = id;
     this.repairModal = true;
   }
 
-  returnMessage(){
-    return this.selectedErrorMessage;
+  selectedTest(){
+    return this.selectedError;
   }
 }
 
@@ -149,4 +146,11 @@ interface testResult {
   message: string;
   details: string;
   status: string;
+  fixes: fix<Object>[];
+}
+
+interface fix<T> {
+  old: T;
+  new: T;
+  type: any;
 }

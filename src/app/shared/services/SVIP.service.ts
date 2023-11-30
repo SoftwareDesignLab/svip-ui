@@ -127,15 +127,31 @@ export class SVIPService {
   }
 
   /**
-   *  Run metrics on an SBOM.
+   *  Run metrics on an SBOM (with repair).
    * @param id SBOM id
    */
   gradeSBOM(id: number): Observable<string> {
     return this.client.get(
-      'sboms/qa',
+      'sboms/repair/statement',
       new HttpParams().set('id', id)
     ) as Observable<string>;
   }
+
+  async repairSBOM(sbom: number, fix: {[id: number]: any[]}) {
+    return new Promise(async(resolve, reject) => {
+      this.client.get('sboms/repair',
+        new HttpParams().set('id', sbom)
+        .set('repairStatement', JSON.stringify(fix))
+        .set('overwrite', true)).subscribe((data) => {
+          if(data) {
+            return resolve(data);
+          }
+          return reject(false);
+        })
+    })
+  }
+
+
   //#endregion
   //#region Electron
   /**
@@ -178,14 +194,18 @@ export class SVIPService {
   })
   }
 
-  async uploadProject(file: any, projectName: string, schema: string, format: string, type: string) {
-
+  async generateFile(file: any, projectName: string, schema: string, format: string, type: string, osiTools: string[]) {
     return new Promise(async(resolve, reject) => {
       let formData = new FormData();
-      formData.append('zipFile', new File([file], 'temp.zip'));
+
       formData.append('projectName', projectName);
       formData.append('schema', schema);
       formData.append('format', format);
+
+      if(type.toLowerCase() === 'osi')
+        formData.append('toolNames', JSON.stringify(osiTools));
+      else
+        formData.append('zipFile', new File([file], 'temp.zip'));
 
       let params = new HttpParams();
 
@@ -197,8 +217,23 @@ export class SVIPService {
         return reject(false);
       })
     });
+  }
 
+  async uploadProject(file: any, type: string) {
+    return new Promise(async(resolve, reject) => {
+      let formData = new FormData();
+      formData.append('project', new File([file], 'temp.zip'));
 
+      let params = new HttpParams();
+
+      this.client.postFile('generators/' + type.toLowerCase() + "/project", formData, params).subscribe((data) => {
+        if(data) {
+          return resolve(data);
+        }
+
+        return reject(false);
+      })
+    });
   }
   //#endregion
 }
