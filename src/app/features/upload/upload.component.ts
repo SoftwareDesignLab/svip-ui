@@ -40,7 +40,7 @@ export class UploadComponent implements OnInit {
   };
 
   public convertChoices: {[key: string]: string[]} = {
-    'CDX14': ['JSON'],
+    'CDX14': ['JSON', 'XML'],
     'SPDX23': ['TAGVALUE', 'JSON'],
   }
   public compareModal: boolean = false;
@@ -108,15 +108,6 @@ export class UploadComponent implements OnInit {
   }
 
   openConvert() {
-
-    let id = this.GetSelected()[0];
-
-    //Hide CX14 from convert options if selected is CDX14 as only has one format option
-    if(this.GetSBOMInfo(id).format == 'CycloneDX')
-      delete this.convertChoices['CDX14'];
-    else
-      this.convertChoices['CDX14'] = ['JSON'];
-
     this.convertModal = true;
   }
 

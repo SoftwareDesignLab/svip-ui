@@ -23,7 +23,7 @@ export class GenerateModalComponent implements OnInit {
   };
 
   public choices: {[key: string]: string[]} = {
-    'CDX14': ['JSON'],
+    'CDX14': ['JSON', 'XML'],
     'SPDX23': ['TAGVALUE', 'JSON'],
   }
 
