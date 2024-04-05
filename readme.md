@@ -36,19 +36,15 @@ This serves as the front-end and human interaction with our software.
 1. Run `npm run winBuildExe`
 
 ## Contributors
+**Project Lead:** [Mehdi Tarrit Mirakhorli](https://mehdimirakhorli.github.io/)
 
-**Principal Investigator:** [Mehdi Mirakhorli](mailto:mxmvse@rit.edu)
+**Senior Project Manager:** Chris Enoch 
 
-**Senior Project Manager:** [Chris Enoch](mailto:ctevse@rit.edu)
-
-**Senior Developer Team Lead:** [Derek Garcia](mailto:dlg1206@rit.edu)
-
-**Developer Team Lead**
-
-- [Orion DiLorenzo](mailto:tnd3015@rit.edu)
-- [Justin Jantzi](mailto:jwj7297@rit.edu)
+**Senior Developer Team Lead:** Derek Garcia
 
 **Developer Team**
 
-- [Fabi Marrufo](mailto:fm8191@rit.edu)
-- [Max Stein](mailto:mhs8558@rit.edu)
+- Orion DiLorenzo
+- Justin Jantzi
+- Fabi Marrufo
+- Max Stein
