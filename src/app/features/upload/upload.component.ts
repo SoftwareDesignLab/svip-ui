@@ -306,7 +306,7 @@ export class UploadComponent implements OnInit {
 
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
-      const filePaths = Array.from(files).map((file) => file.path);
+      const filePaths = Array.from(files).map((file) => (file as any).path);
       this.sbomService.AddFiles(filePaths);
     }
   }
