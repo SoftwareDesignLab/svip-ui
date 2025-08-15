@@ -6,9 +6,10 @@ import { RoutingService } from 'src/app/shared/services/routing.service';
 import { SbomService } from 'src/app/shared/services/sbom.service';
 
 @Component({
-  selector: 'app-vex',
-  templateUrl: './vex.component.html',
-  styleUrls: ['./vex.component.css']
+    selector: 'app-vex',
+    templateUrl: './vex.component.html',
+    styleUrls: ['./vex.component.css'],
+    standalone: false
 })
 export class VexComponent {
   protected vex: VexResponse | undefined;

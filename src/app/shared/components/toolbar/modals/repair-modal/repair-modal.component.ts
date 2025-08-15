@@ -4,9 +4,10 @@ import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 import { SbomService } from 'src/app/shared/services/sbom.service';
 
 @Component({
-  selector: 'app-repair-modal',
-  templateUrl: './repair-modal.component.html',
-  styleUrls: ['./repair-modal.component.css']
+    selector: 'app-repair-modal',
+    templateUrl: './repair-modal.component.html',
+    styleUrls: ['./repair-modal.component.css'],
+    standalone: false
 })
 export class RepairModalComponent {
 

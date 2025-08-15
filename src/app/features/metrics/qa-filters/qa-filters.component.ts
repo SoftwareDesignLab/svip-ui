@@ -3,9 +3,10 @@ import palettes, { PALETTE } from '../models/palette';
 import filter from '../models/filters';
 
 @Component({
-  selector: 'app-qa-filters',
-  templateUrl: './qa-filters.component.html',
-  styleUrls: ['./qa-filters.component.css'],
+    selector: 'app-qa-filters',
+    templateUrl: './qa-filters.component.html',
+    styleUrls: ['./qa-filters.component.css'],
+    standalone: false
 })
 export class QaFiltersComponent implements OnInit {
   palettes = palettes;

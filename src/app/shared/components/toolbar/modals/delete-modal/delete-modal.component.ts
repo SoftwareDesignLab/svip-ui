@@ -3,9 +3,10 @@ import { PAGES, RoutingService } from 'src/app/shared/services/routing.service';
 import { SbomService } from 'src/app/shared/services/sbom.service';
 
 @Component({
-  selector: 'app-delete-modal',
-  templateUrl: './delete-modal.component.html',
-  styleUrls: ['./delete-modal.component.css']
+    selector: 'app-delete-modal',
+    templateUrl: './delete-modal.component.html',
+    styleUrls: ['./delete-modal.component.css'],
+    standalone: false
 })
 export class DeleteModalComponent {
   constructor(private sbomService: SbomService, public routing: RoutingService) {}

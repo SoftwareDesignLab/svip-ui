@@ -5,9 +5,10 @@ import palettes, { PALETTE, resultStatus } from '../metrics/models/palette';
 import { DownloadService } from 'src/app/shared/services/download.service';
 
 @Component({
-  selector: 'app-comparison',
-  templateUrl: './comparison.component.html',
-  styleUrls: ['./comparison.component.css']
+    selector: 'app-comparison',
+    templateUrl: './comparison.component.html',
+    styleUrls: ['./comparison.component.css'],
+    standalone: false
 })
 export class ComparisonComponent {
   attributes: filter = {};

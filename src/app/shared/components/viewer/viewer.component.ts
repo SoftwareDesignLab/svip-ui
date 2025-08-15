@@ -2,9 +2,10 @@ import { Component, Input } from '@angular/core';
 import { RoutingService } from '../../services/routing.service';
 
 @Component({
-  selector: 'app-viewer',
-  templateUrl: './viewer.component.html',
-  styleUrls: ['./viewer.component.css']
+    selector: 'app-viewer',
+    templateUrl: './viewer.component.html',
+    styleUrls: ['./viewer.component.css'],
+    standalone: false
 })
 export class ViewerComponent {
   constructor(private routingService: RoutingService) {}

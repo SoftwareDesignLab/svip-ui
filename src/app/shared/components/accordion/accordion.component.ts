@@ -3,9 +3,10 @@
 import { Component, ElementRef, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-accordion',
-  templateUrl: './accordion.component.html',
-  styleUrls: ['../components.css']
+    selector: 'app-accordion',
+    templateUrl: './accordion.component.html',
+    styleUrls: ['../components.css'],
+    standalone: false
 })
 export class AccordionComponent {
   @Input() title: string = '';

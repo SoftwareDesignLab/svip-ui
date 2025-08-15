@@ -4,9 +4,10 @@ import palettes, { PALETTE } from '../../metrics/models/palette';
 
 
 @Component({
-  selector: 'app-diff-filters',
-  templateUrl: './diff-filters.component.html',
-  styleUrls: ['./diff-filters.component.css']
+    selector: 'app-diff-filters',
+    templateUrl: './diff-filters.component.html',
+    styleUrls: ['./diff-filters.component.css'],
+    standalone: false
 })
 export class DiffFiltersComponent {
   palettes = palettes;

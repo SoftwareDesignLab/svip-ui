@@ -5,9 +5,10 @@ import { SVIPService } from '../../shared/services/SVIP.service';
 import File from 'src/app/shared/models/file';
 
 @Component({
-  selector: 'app-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css'],
+    selector: 'app-view',
+    templateUrl: './view.component.html',
+    styleUrls: ['./view.component.css'],
+    standalone: false
 })
 export class ViewComponent {
   files: File[] = [];

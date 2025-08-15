@@ -3,9 +3,10 @@ import { RoutingService } from 'src/app/shared/services/routing.service';
 import { SbomService } from 'src/app/shared/services/sbom.service';
 
 @Component({
-  selector: 'app-convert-modal',
-  templateUrl: './convert-modal.component.html',
-  styleUrls: ['./convert-modal.component.css']
+    selector: 'app-convert-modal',
+    templateUrl: './convert-modal.component.html',
+    styleUrls: ['./convert-modal.component.css'],
+    standalone: false
 })
 export class ConvertModalComponent {
   constructor(private sbomService: SbomService, public routing: RoutingService) {}

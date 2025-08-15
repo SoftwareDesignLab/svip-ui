@@ -3,9 +3,10 @@ import { RoutingService } from 'src/app/shared/services/routing.service';
 import { SbomService } from 'src/app/shared/services/sbom.service';
 
 @Component({
-  selector: 'app-compare-modal',
-  templateUrl: './compare-modal.component.html',
-  styleUrls: ['./compare-modal.component.css']
+    selector: 'app-compare-modal',
+    templateUrl: './compare-modal.component.html',
+    styleUrls: ['./compare-modal.component.css'],
+    standalone: false
 })
 export class CompareModalComponent {
   protected compareTarget: string = '';

@@ -7,9 +7,10 @@ import filter from '../models/filters';
 import { DownloadService } from 'src/app/shared/services/download.service';
 
 @Component({
-  selector: 'app-metrics',
-  templateUrl: './metrics.component.html',
-  styleUrls: ['./metrics.component.css'],
+    selector: 'app-metrics',
+    templateUrl: './metrics.component.html',
+    styleUrls: ['./metrics.component.css'],
+    standalone: false
 })
 export class MetricsComponent implements OnInit {
   qa: any = null;

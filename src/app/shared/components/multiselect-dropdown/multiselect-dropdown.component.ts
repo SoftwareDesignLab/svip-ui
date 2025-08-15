@@ -1,9 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-multiselect-dropdown',
-  templateUrl: './multiselect-dropdown.component.html',
-  styleUrls: ['./multiselect-dropdown.component.css']
+    selector: 'app-multiselect-dropdown',
+    templateUrl: './multiselect-dropdown.component.html',
+    styleUrls: ['./multiselect-dropdown.component.css'],
+    standalone: false
 })
 export class MultiselectDropdownComponent {
   @Input() title: string = 'Select Options';

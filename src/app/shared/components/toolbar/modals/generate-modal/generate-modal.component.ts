@@ -5,9 +5,10 @@ import { SbomService } from 'src/app/shared/services/sbom.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
-  selector: 'app-generate-modal',
-  templateUrl: './generate-modal.component.html',
-  styleUrls: ['./generate-modal.component.css']
+    selector: 'app-generate-modal',
+    templateUrl: './generate-modal.component.html',
+    styleUrls: ['./generate-modal.component.css'],
+    standalone: false
 })
 export class GenerateModalComponent implements OnInit {
   public options: {

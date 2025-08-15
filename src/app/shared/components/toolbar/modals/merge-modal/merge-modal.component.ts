@@ -4,9 +4,10 @@ import { SbomService } from 'src/app/shared/services/sbom.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
-  selector: 'app-merge-modal',
-  templateUrl: './merge-modal.component.html',
-  styleUrls: ['./merge-modal.component.css'],
+    selector: 'app-merge-modal',
+    templateUrl: './merge-modal.component.html',
+    styleUrls: ['./merge-modal.component.css'],
+    standalone: false
 })
 export class MergeModalComponent {
   @Input() opened!: boolean;

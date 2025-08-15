@@ -8,12 +8,13 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 import { DownloadService } from 'src/app/shared/services/download.service';
 
 @Component({
-  selector: 'app-upload',
-  templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.css'],
-  host: {
-    '(window:resize)': 'onResize($event)'
-  }
+    selector: 'app-upload',
+    templateUrl: './upload.component.html',
+    styleUrls: ['./upload.component.css'],
+    host: {
+        '(window:resize)': 'onResize($event)'
+    },
+    standalone: false
 })
 export class UploadComponent implements OnInit {
   public filterSearch: string = '';
