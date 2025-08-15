@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as JSZip from 'jszip';
-import { saveAs } from 'file-saver';
+import { zipSync, strToU8 } from 'fflate';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +7,14 @@ import { saveAs } from 'file-saver';
 export class DownloadService {
 
   constructor() { }
+
+  #saveAs(blob: Blob, filename: string) {
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
 
   Download(fileName: string, content: Blob) {
     const blob = new Blob([content], { type: 'text/plain' });
@@ -22,7 +29,7 @@ export class DownloadService {
   }
 
   DownloadAsZip(files: {[key: string]: string}) {
-    const zip = new JSZip();
+    const zipData: Record<string, Uint8Array> = {};
 
     let keys = Object.keys(files);
 
@@ -30,11 +37,10 @@ export class DownloadService {
       let key = keys[i];
       let contents = files[key];
 
-      zip.file(key, contents);
+      zipData[key] = strToU8(contents);
     }
 
-    zip.generateAsync({ type: 'blob' }).then((content) => {
-    saveAs(content, 'files.zip');
-  });
+    const content = new Blob([zipSync(zipData)], { type: 'application/zip' });
+    this.#saveAs(content, 'files.zip');
   }
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
@@ -32,37 +32,33 @@ import { DiffFiltersComponent } from './features/comparison/diff-filters/diff-fi
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { RepairModalComponent } from './shared/components/toolbar/modals/repair-modal/repair-modal.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    ButtonComponent,
-    UploadComponent,
-    ViewComponent,
-    NavbarComponent,
-    ToggleComponent,
-    MultiselectDropdownComponent,
-    AccordionComponent,
-    MenuComponent,
-    ModalComponent,
-    ToastComponent,
-    ComparisonComponent,
-    ToasterComponent,
-    CompareModalComponent,
-    ConvertModalComponent,
-    DeleteModalComponent,
-    ViewerComponent,
-    VexComponent,
-    MetricsComponent,
-    CircleToggleComponent,
-    QaFiltersComponent,
-    MergeModalComponent,
-    GenerateModalComponent,
-    SpinnerComponent,
-    DiffFiltersComponent,
-    RepairModalComponent
-  ],
-  imports: [BrowserModule, NgbModule, HttpClientModule, NgbTooltipModule, FormsModule],
-  providers: [],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        ButtonComponent,
+        UploadComponent,
+        ViewComponent,
+        NavbarComponent,
+        ToggleComponent,
+        MultiselectDropdownComponent,
+        AccordionComponent,
+        MenuComponent,
+        ModalComponent,
+        ToastComponent,
+        ComparisonComponent,
+        ToasterComponent,
+        CompareModalComponent,
+        ConvertModalComponent,
+        DeleteModalComponent,
+        ViewerComponent,
+        VexComponent,
+        MetricsComponent,
+        CircleToggleComponent,
+        QaFiltersComponent,
+        MergeModalComponent,
+        GenerateModalComponent,
+        SpinnerComponent,
+        DiffFiltersComponent,
+        RepairModalComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule, NgbModule, NgbTooltipModule, FormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}
