@@ -21,7 +21,7 @@ export class AccordionComponent {
 
     clickAccordionButton.addEventListener('click', (event) => {
 
-      //prgrammatically was clicked
+      // programmatically was clicked
       if(event.detail === 0) return;
 
       //get all siblings of the clicked element
