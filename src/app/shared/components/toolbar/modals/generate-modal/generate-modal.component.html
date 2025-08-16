@@ -1,58 +1,58 @@
-<app-modal [opened]="opened" (close)="Close()">
-    <div title>
-      Generate SBOM
+<app-modal (close)="Close()" [opened]="opened">
+  <div title>
+    Generate SBOM
+  </div>
+  <div *ngIf="this.status === 1" content style="display: flex; flex-direction: column; align-items: center;">
+    <app-spinner height="64px" style="height: 64px;"/>
+    <div>Waiting for Project Selection...</div>
+  </div>
+  <div *ngIf="this.status === 2" content style="display: flex; flex-direction: column; align-items: center;">
+    <app-spinner height="64px" style="height: 64px;"/>
+    <div>Zipping Project Contents...</div>
+  </div>
+  <div *ngIf="this.status === 4" content style="display: flex; flex-direction: column; align-items: center;">
+    <app-spinner height="64px" style="height: 64px;"/>
+    <div>Generating SBOM...</div>
+  </div>
+  <div *ngIf="this.status === 3" content style="display: flex; gap: 15px; flex-direction: column;">
+    <div>
+      <div>Name:</div>
+      <input [(ngModel)]="options.name"/>
     </div>
-    <div content *ngIf="this.status === 1" style="display: flex; flex-direction: column; align-items: center;">
-      <app-spinner height="64px" style="height: 64px;"/>
-      <div>Waiting for Project Selection...</div>
+    <div>
+      <div>Schema:</div>
+      <select [(ngModel)]="options.schema">
+        <option value=""></option>
+        <option *ngFor="let option of choices | keyvalue" [value]="option.key">{{ option.key }}</option>
+      </select>
     </div>
-    <div content *ngIf="this.status === 2" style="display: flex; flex-direction: column; align-items: center;">
-      <app-spinner height="64px" style="height: 64px;"/>
-      <div>Zipping Project Contents...</div>
+    <div>
+      <div>Format:</div>
+      <select [(ngModel)]="options.format">
+        <option value=""></option>
+        <option *ngFor="let option of choices[options.schema]" [value]="option">{{ option }}</option>
+      </select>
     </div>
-    <div content *ngIf="this.status === 4" style="display: flex; flex-direction: column; align-items: center;">
-      <app-spinner height="64px" style="height: 64px;"/>
-      <div>Generating SBOM...</div>
+    <div>
+      <div>Type:</div>
+      <select [(ngModel)]="options.type">
+        <option value=""></option>
+        <option *ngFor="let option of types" [value]="option">{{ option }}</option>
+      </select>
     </div>
-    <div content style="display: flex; gap: 15px; flex-direction: column;" *ngIf="this.status === 3">
-      <div>
-        <div>Name:</div>
-        <input [(ngModel)]="options.name" />
-      </div>
-      <div>
-        <div>Schema:</div>
-        <select [(ngModel)]="options.schema">
-          <option value=""></option>
-          <option *ngFor="let option of choices | keyvalue" [value]="option.key">{{ option.key }}</option>
-        </select>
-      </div>
-      <div>
-        <div>Format:</div>
-        <select [(ngModel)]="options.format">
-          <option value=""></option>
-          <option *ngFor="let option of choices[options.schema]" [value]="option">{{ option }}</option>
-        </select>
-      </div>
-      <div>
-        <div>Type:</div>
-        <select [(ngModel)]="options.type">
-          <option value=""></option>
-          <option *ngFor="let option of types" [value]="option">{{ option }}</option>
-        </select>
-      </div>
-      <div *ngIf="options.type === 'OSI'">
-        <div>OSI Tools:</div>
-        <app-multiselect-dropdown title="Filter Tools" [options]="osiTools" style="width: 400px"
-          (checkboxChange)="OSIToolChange($event)">
-        </app-multiselect-dropdown>
-      </div>
+    <div *ngIf="options.type === 'OSI'">
+      <div>OSI Tools:</div>
+      <app-multiselect-dropdown (checkboxChange)="OSIToolChange($event)" [options]="osiTools" style="width: 400px"
+                                title="Filter Tools">
+      </app-multiselect-dropdown>
     </div>
-    <div actions style=" display: flex; gap: 15px;">
-      <div class="btn-modal button flex center hover" (click)="Generate()" *ngIf="this.zippedFileData !== undefined">
-        <span>Generate</span>
-      </div>
-      <div class="btn-modal button flex center hover" (click)="Close()">
-        <span>Cancel</span>
-      </div>
+  </div>
+  <div actions style=" display: flex; gap: 15px;">
+    <div (click)="Generate()" *ngIf="this.zippedFileData !== undefined" class="btn-modal button flex center hover">
+      <span>Generate</span>
     </div>
-  </app-modal>
+    <div (click)="Close()" class="btn-modal button flex center hover">
+      <span>Cancel</span>
+    </div>
+  </div>
+</app-modal>
